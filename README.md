@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/los-expositores-remotos/expo-virtual.svg?branch=master)](https://travis-ci.org/los-expositores-remotos/expo-virtual)
 
+
 # Expo Virtual
 Armar el setup inicial del proyecto
 
