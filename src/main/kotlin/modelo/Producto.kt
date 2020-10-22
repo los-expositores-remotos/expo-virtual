@@ -1,0 +1,5 @@
+package modelo
+
+class Producto() {
+
+}
