@@ -7,10 +7,15 @@ import services.ProveedorService
 
 class ProveedorServiceImp(
         private val proveedorDAO: ProveedorDAO
-        //private val dataDAO: DataDAO     creo que lo vamos a necesitar
 ) : ProveedorService {
-    override fun crearProveedor(proveedor: Proveedor): Int {
-        TODO("Not yet implemented")
+    override fun crearProveedor(proveedor: Proveedor) {
+        val document = org.bson.Document()
+        document.put("companyName", proveedor.companyName)
+        document.put("companyImage", proveedor.companyImage)
+        document.put("facebook", proveedor.facebook)
+        document.put("instagram", proveedor.instagram)
+        document.put("web", proveedor.web)
+        //collection.insertOne(document)
     }
 
     override fun recuperarProveedor(id: Int): Proveedor {
