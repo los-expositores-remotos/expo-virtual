@@ -9,34 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Sidenav.init(elems, {});
 });
 
-const elems = () => {
-    return (
-        <div className="row">
-                    <div className="col">
-                        <Link to="/">Inicio</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/suppliers">Empresas</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/live">En Vivo</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/faqs">Preguntas Frecuentes</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/howtobuy">Como comprar?</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/aboutus">Quienes Somos?</Link>
-                    </div>
-                    <div className="col">
-                        <Link to="/contact">Contacto</Link>
-                    </div>
-                </div>
-    )
-}
-
 const NavBar = () => {
     
 
@@ -62,7 +34,7 @@ const NavBar = () => {
            <nav>
                 <div class="nav-wrapper">
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="right hide-on-med-and-down">
+                <ul class="left hide-on-med-and-down">
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/suppliers">Empresas</Link></li>
                     <li><Link to="/live">En Vivo</Link></li>

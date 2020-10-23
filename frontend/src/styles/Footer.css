@@ -8,9 +8,6 @@
   width: 100%;
 }
 
-.SocialIcon {
-}
-
 #wpFooter {
   margin-top: -13px;
   margin-bottom: -15px;
@@ -19,4 +16,10 @@
 
 #iconFooter {
   margin-left: inherit;
+}
+
+#linkList {
+  color: aliceblue !important;
+}
+.container {
 }

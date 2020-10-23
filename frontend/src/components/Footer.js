@@ -3,34 +3,6 @@ import {Link} from 'react-router-dom'
 import {SocialIcon} from 'react-social-icons';
 import '../styles/Footer.css'
 
-const x = () => {
-  return (
-    <div className="footer-copyright">
-    <div className="container">
-      <div className='row'>
-        <div className='col'>
-          
-        </div>
-        <div className='col'>
-        
-        </div>
-        <div className='col'>
-          
-        </div>
-        <div className='col'>
-          
-        </div>
-      </div>
-    </div>
-    <div className="container">
-      © 2020 Copyright Expo Virtual
-    <a className="grey-text text-lighten-4 right" href="#!">More Links</a>
-    </div>
-  </div>
-  )
-}
-
-
 const Footer = () => {
   return (
     <footer class="page-footer">
@@ -43,12 +15,12 @@ const Footer = () => {
         <div class="col s3">
           <h5 class="white-text" id="footerT">Categorias</h5>
           <ul>
-            <li><Link class="linkList"to="/contact">Contacto</Link></li>
-            <li><Link class="linkList"to="/aboutus">Quienes Somos?</Link></li>
-            <li><Link class="linkList"to="/suppliers">Empresas</Link></li>
-            <li><Link class="linkList"to="/live">En Vivo</Link></li>
-            <li><Link class="linkList"to="/faqs">Preguntas Frecuentes</Link></li>
-            <li><Link class="linkList"to="/howtobuy">Como comprar?</Link></li>
+            <li><Link id="linkList"to="/contact">Contacto</Link></li>
+            <li><Link id="linkList"to="/aboutus">Quienes Somos?</Link></li>
+            <li><Link id="linkList"to="/suppliers">Empresas</Link></li>
+            <li><Link id="linkList"to="/live">En Vivo</Link></li>
+            <li><Link id="linkList"to="/faqs">Preguntas Frecuentes</Link></li>
+            <li><Link id="linkList"to="/howtobuy">Como comprar?</Link></li>
           </ul>
         </div>
         <div class="col s3">
