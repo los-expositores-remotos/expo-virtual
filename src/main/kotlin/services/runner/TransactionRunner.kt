@@ -1,9 +1,12 @@
 package services.runner
 
 import com.mongodb.client.ClientSession
+import services.runner.sessionfactoryprovider.MongoSessionFactoryProvider
+import services.runner.sessionfactoryprovider.MongoSessionFactoryProviderProduccion
+import services.runner.sessionfactoryprovider.MongoSessionFactoryProviderTest
 
 interface Transaction {
-    fun start()
+    fun start(dataBaseType: DataBaseType)
     fun commit()
     fun rollback()
 }
@@ -21,8 +24,8 @@ class MongoDBTransaction: Transaction {
             }
     }
 
-    override fun start() {
-        sessionFactoryProvider = MongoSessionFactoryProvider.instance
+    override fun start(dataBaseType: DataBaseType) {
+        sessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
         session = sessionFactoryProvider!!.createSession()
         session?.startTransaction()
     }
@@ -49,6 +52,19 @@ class MongoDBTransaction: Transaction {
 
 }
 
+enum class DataBaseType {
+    TEST {
+        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
+            return MongoSessionFactoryProviderTest.instance
+        }
+    },
+    PRODUCCION {
+        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
+            return MongoSessionFactoryProviderProduccion.instance
+        }
+    };
+    abstract fun getSessionFactoryProvider(): MongoSessionFactoryProvider
+}
 
 enum class TransactionType {
     MONGO {
@@ -67,10 +83,10 @@ object TransactionRunner {
     }
 
 
-    fun <T> runTrx(bloque: ()->T, types: List<TransactionType> = listOf()): T {
+    fun <T> runTrx(bloque: ()->T, types: List<TransactionType> = listOf(), dataBaseType: DataBaseType): T {
         transactions = types.map { it.getTransaction() }
         try{
-            transactions.forEach { it.start() }
+            transactions.forEach { it.start(dataBaseType) }
             val result = bloque()
             transactions.forEach { it.commit() }
             return result

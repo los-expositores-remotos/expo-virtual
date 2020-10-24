@@ -1,4 +1,4 @@
-package services.runner
+package services.runner.sessionfactoryprovider
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
@@ -10,25 +10,27 @@ import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.PojoCodecProvider
 
-class MongoSessionFactoryProvider {
-    private var client : MongoClient
-    private var dataBase : MongoDatabase
-    private val session : ClientSession? = null
+abstract class MongoSessionFactoryProvider {
+    var client : MongoClient
+    protected var dataBase : MongoDatabase
+    val session : ClientSession? = null
 
     init {
         val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
                 MongoClientSettings.getDefaultCodecRegistry(),
                 CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
         )
-        val uri = System.getenv().getOrDefault("MONGO_URI", "mongodb+srv://Gustavo:99z2CEj2xWnR4Ntw@cluster0.agdwn.mongodb.net/pruebasback?retryWrites=true&w=majority")
+        val uri = System.getenv().getOrDefault("MONGO_URI", "mongodb+srv://Gustavo:99z2CEj2xWnR4Ntw@cluster0.agdwn.mongodb.net/" + this.dataBaseName() + "?retryWrites=true&w=majority")
         val connectionString = ConnectionString(uri)
         var settings = MongoClientSettings.builder()
                 .codecRegistry(codecRegistry)
                 .applyConnectionString(connectionString)
                 .build()
         client = MongoClients.create(settings)
-        dataBase = client.getDatabase("pruebasback")
+        dataBase = client.getDatabase(this.dataBaseName())
     }
+
+    abstract fun dataBaseName(): String
 
     fun getDatabase(): MongoDatabase{
         return dataBase
@@ -36,25 +38,5 @@ class MongoSessionFactoryProvider {
 
     fun createSession(): ClientSession {
         return this.client.startSession()
-    }
-
-    companion object {
-
-        private var INSTANCE: MongoSessionFactoryProvider? = null
-
-        val instance: MongoSessionFactoryProvider
-            get() {
-                if (INSTANCE == null) {
-                    INSTANCE = MongoSessionFactoryProvider()
-                }
-                return INSTANCE!!
-            }
-
-        fun destroy() {
-            if (INSTANCE != null && INSTANCE!!.session != null) {
-                INSTANCE!!.client.close()
-            }
-            INSTANCE = null
-        }
     }
 }
