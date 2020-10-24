@@ -7,7 +7,7 @@ Feature:  Visualizacion de productos
     Then Los productos del proveedor son "producto1" y "producto2"
 
   Scenario: Al seleccionar un producto se muestran las caracteristicas y precio del mismo
-    Given Un producto vacío
+    Given Un producto vacio
     When Le asigno la descripcion "descripcion"
     When ALe asigno el precio 45
     Then La descripción del producto es "descripción"
