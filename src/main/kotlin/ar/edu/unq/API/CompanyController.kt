@@ -9,38 +9,56 @@ class CompanyController(val backend: Expo) {
 
     fun imagesCompanies(ctx: Context) {
 
-        var imagesC = backend.companies.map { it.imagenDeLaEmpresa }
+        var imagesC = backend.companies.map { CompanyImageViewMapper(it.imagenDeLaEmpresa) }
         ctx.status(200)
         ctx.json(imagesC)
     }
 
     fun namesCompanies(ctx: Context) {
 
-        var namesC = backend.companies.map { it.nombreDeEmpresa }
+        var namesC = backend.companies.map { CompanyNameViewMapper(it.nombreDeEmpresa) }
         ctx.status(200)
         ctx.json(namesC)
     }
 
     fun producstBestSellers(ctx: Context) {
-  /*
-        var bestSellersP = backend.//traer los productos mas vendidos
+    /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
+    * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
+        var bestSellersP = backend.companies.map{ ProductsViewMapper(it.productos.first().nombreDelArticulo,
+                                                                        it.productos.first().description,
+                                                                            it.productos.first().imagenes,
+                                                                                it.productos.first().stock,
+                                                                                    it.productos.first().precio,
+                                                                                        it.productos.first().precioPromocional) }
         ctx.status(200)
         ctx.json(bestSellersP)
-  */  }
+    }
 
     fun productsNewest(ctx: Context) {
-        /*
-         var bestSellersP = backend.//traer los productos mas vendidos
-         ctx.status(200)
-         ctx.json(bestSellersP)
-   */  }
+        /*traer los productos mas nuevos  EN ESTE CASO ME TRAE EL ULTIMO DE CADA EMPRESA
+        * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
+        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.last().nombreDelArticulo,
+                it.productos.last().description,
+                it.productos.last().imagenes,
+                it.productos.last().stock,
+                it.productos.last().precio,
+                it.productos.last().precioPromocional) }
+        ctx.status(200)
+        ctx.json(newestP)
+    }
 
     fun productsWPromoPrice(ctx: Context) {
-        /*
-         var bestSellersP = backend.//traer los productos mas vendidos
-         ctx.status(200)
-         ctx.json(bestSellersP)
-*/  }
+        /*traer los productos con precio promocional  EN ESTE CASO ME TRAE UNO RANDOM DE CADA EMPRESA
+        * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
+        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.random().nombreDelArticulo,
+                it.productos.random().description,
+                it.productos.random().imagenes,
+                it.productos.random().stock,
+                it.productos.random().precio,
+                it.productos.random().precioPromocional) }
+        ctx.status(200)
+        ctx.json(newestP)
+    }
 
 
 

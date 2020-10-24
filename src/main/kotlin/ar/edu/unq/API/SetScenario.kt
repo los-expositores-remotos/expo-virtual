@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import modelo.Company
 import modelo.Expo
+import modelo.Product
 
 class SetScenario {
 
@@ -26,10 +27,24 @@ class SetScenario {
                     it.imagenDeLaEmpresa,
                     it.facebook,
                     it.instagram,
-                    it.web
+                    it.web,
+                    getProducts(it.productos)
                 )
             )
         }
+    }
+
+    private fun getProducts(products: List<ProductData>): MutableList<Product> {
+        return products.map {
+            Product(
+                    it.nombreDelArticulo,
+                    it.description,
+                    it.imagenes,
+                    it.stock,
+                    it.precio,
+                    it.precioPromocional
+            )
+        }.toMutableList()
     }
 
     fun getExpo(): Expo {
