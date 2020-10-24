@@ -19,17 +19,17 @@ fun main(args: Array<String>) {
     app.start(7000)
     app.routes {
 
-        path("companies") {
-            path(":images") {
+        path("/companies") {
+            path("/images") {
                 get(companyController::imagesCompanies)
             }
-            path(":nombres") {
+            path("/names") {
                 get(companyController::namesCompanies)
             }
         }
 
-        path("products") {
-            path(":productsBestSellers") {
+        path("/products") {
+            path("/productsBestSellers") {
                 get(companyController::producstBestSellers)
             }
             path(":productsNewest") {
