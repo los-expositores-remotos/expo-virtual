@@ -59,13 +59,13 @@ class MongoConnection {
             MongoClientSettings.getDefaultCodecRegistry(),
             CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())
         )
-        val uri = System.getenv().getOrDefault("MONGO_URI", "mongodb+srv://Gustavo:99z2CEj2xWnR4Ntw@cluster0.agdwn.mongodb.net/feriavirtualdb?retryWrites=true&w=majority")
+        val uri = System.getenv().getOrDefault("MONGO_URI", "mongodb+srv://Gustavo:99z2CEj2xWnR4Ntw@cluster0.agdwn.mongodb.net/pruebasback?retryWrites=true&w=majority")
         val connectionString = ConnectionString(uri)
         val settings = MongoClientSettings.builder()
             .codecRegistry(codecRegistry)
             .applyConnectionString(connectionString)
             .build()
         client = MongoClients.create(settings)
-        dataBase = client.getDatabase("feriavirtualdb")
+        dataBase = client.getDatabase("pruebasback")
     }
 }

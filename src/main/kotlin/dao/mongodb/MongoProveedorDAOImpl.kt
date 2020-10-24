@@ -14,6 +14,7 @@ class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor
         val proveedores: ArrayList<Proveedor> = ArrayList<Proveedor>()
         val cursor: com.mongodb.client.MongoCursor<Proveedor> = collection.find().cursor()
         for(proveedor: Proveedor in cursor){
+            println(proveedor)
             proveedores.add(proveedor)
         }
         return proveedores
