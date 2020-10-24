@@ -1,26 +1,44 @@
 package dao.mongodb
 
 import com.mongodb.MongoCommandException
+import com.mongodb.WriteConcern
+import com.mongodb.client.ClientSession
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import modelo.Proveedor
 import org.bson.conversions.Bson
+import org.eclipse.jetty.io.ssl.ALPNProcessor
+import services.runner.TransactionRunner
 
 open class GenericMongoDAO<T>(entityType: Class<T>) {
 
-    protected var connection: MongoConnection = MongoConnection()
-    protected var collection:MongoCollection<T>
+    val entityType: Class<T> = entityType
 
-    init {
-        collection = connection.getCollection(entityType.simpleName, entityType)
-    }
 
     fun deleteAll() {
-        if(connection.session != null) {
-            collection.drop(connection.session!!)
-        }else{
-            collection.drop()
+        this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.drop()
+    }
+
+     fun getAll(): List<T> {
+        this.session_check()
+        val items: java.util.ArrayList<T> = java.util.ArrayList<T>()
+        val cursor: com.mongodb.client.MongoCursor<T> = this.getCollection(entityType.simpleName, entityType)!!.find().cursor()
+        for(item: T in cursor){
+            items.add(item)
         }
+        return items
+    }
+
+    fun getCollection(objectType: String, entityType: Class<T>): MongoCollection<T>?{
+        // Precondición: Debe haber una sesión en el contexto
+        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+        try {
+            database?.createCollection(objectType)
+        }catch (exception: MongoCommandException){
+
+        }
+        return database?.getCollection(objectType, entityType)
     }
 
     fun save(anObject: T) {
@@ -28,20 +46,13 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
     }
 
     fun update(anObject: T, id: String?) {
-        if(connection.session != null) {
-            collection.replaceOne(connection.session!!, eq("id", id), anObject)
-        }else{
-            collection.replaceOne(eq("id", id), anObject)
-        }
+        val session:ClientSession = this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(session, eq("id", id), anObject)
     }
 
     fun save(objects: List<T>) {
-        if(connection.session != null) {
-            collection.insertMany(connection.session!!, objects)
-        }else{
-            collection.insertMany(objects)
-        }
-
+        val session:ClientSession = this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.insertMany(session, objects)
     }
 
     operator fun get(id: String?): T? {
@@ -49,10 +60,8 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
     }
 
     fun getBy(property:String, value: String?): T? {
-        if(connection.session != null) {
-            return collection.find(connection.session!!, eq(property, value)).first()
-        }
-        return collection.find(eq(property, value)).first()
+        val session:ClientSession = this.session_check()
+        return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {
@@ -60,29 +69,20 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
     }
 
     fun find(filter:Bson): List<T> {
-        if(connection.session != null) {
-            return collection.find(connection.session!!, filter).into(mutableListOf())
-        }
-        return collection.find(filter).into(mutableListOf())
+        val session:ClientSession = this.session_check()
+        return this.getCollection(entityType.simpleName, entityType)!!.find(session, filter).into(mutableListOf())
     }
 
     fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {
-        if(connection.session != null) {
-            return collection.aggregate(connection.session, pipeline, resultClass).into(ArrayList())
-        }
-        return collection.aggregate(pipeline, resultClass).into(ArrayList())
+        val session:ClientSession = this.session_check()
+        //if(session != null) {
+        return this.getCollection(entityType.simpleName, entityType)!!.aggregate(session, pipeline, resultClass).into(ArrayList())
+        //}
+        //return this.getCollection(entityType.simpleName, entityType)!!.aggregate(pipeline, resultClass).into(ArrayList())
     }
 
-    fun startTransaction(){
-        connection.startTransaction()
+    fun session_check(): ClientSession{
+        val session: ClientSession? = TransactionRunner.getTransaction()!!.currentSession()
+        return session ?: throw Exception("No hay una sesión en el contexto")
     }
-
-    fun commit(){
-        connection.commitTransaction()
-    }
-
-    fun rollack(){
-        connection.rollbackTransaction()
-    }
-
 }
