@@ -1,0 +1,22 @@
+.NavBar {
+  background-color: #ee6e73;
+}
+
+#inputSearch {
+  margin-top: 40px;
+}
+
+.img-logo {
+  max-width: 100px;
+  max-height: 100px;
+  margin-left: 30px;
+}
+
+#iconSearch {
+  margin-top: 50px;
+  color: antiquewhite;
+}
+
+.row .col {
+  margin-left: 7%;
+}

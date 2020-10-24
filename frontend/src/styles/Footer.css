@@ -1,0 +1,25 @@
+.a {
+  color: aliceblue;
+}
+#footerT {
+}
+
+#contFooter {
+  width: 100%;
+}
+
+#wpFooter {
+  margin-top: -13px;
+  margin-bottom: -15px;
+  margin-left: -21px;
+}
+
+#iconFooter {
+  margin-left: inherit;
+}
+
+#linkList {
+  color: aliceblue !important;
+}
+.container {
+}
