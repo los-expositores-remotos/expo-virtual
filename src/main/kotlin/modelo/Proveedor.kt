@@ -1,6 +1,11 @@
 package modelo
 
+import org.bson.codecs.pojo.annotations.BsonProperty
+import org.bson.types.ObjectId
+
 class Proveedor {
+    @BsonProperty("id")
+    val id: ObjectId = ObjectId.get()
     lateinit var companyName: String
     lateinit var companyImage: String
     lateinit var facebook: String
