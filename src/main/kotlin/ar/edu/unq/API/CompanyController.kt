@@ -2,9 +2,7 @@ package ar.edu.unq.API
 
 import io.javalin.http.Context
 import modelo.Expo
-import modelo.Product
 import java.util.*
-import java.util.Collections.list
 
 
 class CompanyController(val backend: Expo) {
