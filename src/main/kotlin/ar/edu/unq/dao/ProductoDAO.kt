@@ -1,6 +1,7 @@
 package ar.edu.unq.dao
 
 import ar.edu.unq.modelo.Producto
+import ar.edu.unq.services.runner.DataBaseType
 
 interface ProductoDAO {
     fun save(anObject: Producto)
@@ -9,4 +10,5 @@ interface ProductoDAO {
     fun get(id: String?): Producto?
     fun getAll() : List<Producto>
     fun deleteAll()
+    fun saveOrUpdate(productos: List<Producto>, dataBaseType: DataBaseType)
 }
