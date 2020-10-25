@@ -17,13 +17,7 @@ class Proveedor {
     var facebook: String = ""
     var instagram: String = ""
     var web: String = ""
-//    @Transient
-//    @JsonSerialize
-//    @JsonDeserialize
-    //@BsonIgnore
-    //@Transient
     var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
-    //val productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     constructor(){}
     constructor(companyName: String) {
         this.companyName = companyName
@@ -36,6 +30,7 @@ class Proveedor {
         this.instagram = instagram
         this.web = web
     }
+
 
 //    fun addProduct(productoNuevo: Producto) {
 //        productos.add(productoNuevo)

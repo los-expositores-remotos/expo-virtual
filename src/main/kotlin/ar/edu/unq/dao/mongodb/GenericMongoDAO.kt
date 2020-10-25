@@ -7,6 +7,7 @@ import com.mongodb.client.model.Filters.eq
 import org.bson.conversions.Bson
 import ar.edu.unq.services.runner.TransactionRunner
 import com.mongodb.BasicDBObject
+import org.bson.BSONObject
 import org.bson.Document
 
 abstract class GenericMongoDAO<T>(entityType: Class<T>) {

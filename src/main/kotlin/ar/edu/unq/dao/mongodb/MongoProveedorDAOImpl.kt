@@ -94,5 +94,4 @@ class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor
     private fun completarProveedor(proveedor: Proveedor?, dataBaseType: DataBaseType){
         proveedor?.productos = TransactionRunner.runTrx({ this.productoDAO.findEq("idProveedor", proveedor?.id.toString()).toMutableList() }, listOf(TransactionType.MONGO), dataBaseType)
     }
-
 }

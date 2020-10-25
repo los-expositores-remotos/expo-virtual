@@ -12,20 +12,18 @@ class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType
 ) : ProveedorService {
-    override fun crearProveedor(proveedor: Proveedor) {
-        val document = org.bson.Document()
-        document.put("companyName", proveedor.companyName)
-        document.put("companyImage", proveedor.companyImage)
-        document.put("facebook", proveedor.facebook)
-        document.put("instagram", proveedor.instagram)
-        document.put("web", proveedor.web)
-        //collection.insertOne(document)
-    }
+//    override fun crearProveedor(proveedor: Proveedor) {
+//        val document = org.bson.Document()
+//        document.put("companyName", proveedor.companyName)
+//        document.put("companyImage", proveedor.companyImage)
+//        document.put("facebook", proveedor.facebook)
+//        document.put("instagram", proveedor.instagram)
+//        document.put("web", proveedor.web)
+//        //collection.insertOne(document)
+//    }
 
-    override fun crearProveedor(companyName: String): Proveedor {
-        val proveedor = Proveedor(companyName)
+    override fun crearProveedor(proveedor: Proveedor) {
         TransactionRunner.runTrx({ this.proveedorDAO.save(proveedor) }, listOf(TransactionType.MONGO), this.dataBaseType)
-        return proveedor
     }
 
     override fun recuperarProveedor(id: Int): Proveedor {

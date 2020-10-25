@@ -37,19 +37,7 @@ class Producto{
         this.promotionalPrice = promotionalPrice
     }
 
-    fun getStock() {
-        this.stock
-    }
-
     fun removeStock(quantity: Int) {
         this.stock -= quantity
-    }
-
-    fun changeItemPrice(newPrice: Int) {
-        this.itemPrice = newPrice
-    }
-
-    fun changePromotionalPrice(newPrice: Int) {
-        this.itemPrice = newPrice
     }
 }

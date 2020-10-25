@@ -11,7 +11,6 @@ interface ProveedorService {
 
     fun agregarProducto(idProveedor: Int, producto: Producto): Producto
     fun recuperarProducto(id: Int, nombreProducto: String): Producto
-    fun crearProveedor(LaCompany: String): Proveedor
 
     fun nuevoProducto(proveedor: String, producto: String): Producto
     fun obtenerProveedor(proveedor: String): Proveedor
