@@ -7,6 +7,7 @@ import com.mongodb.client.model.Filters.eq
 import org.bson.conversions.Bson
 import ar.edu.unq.services.runner.TransactionRunner
 import com.mongodb.BasicDBObject
+import org.bson.BSONObject
 import org.bson.Document
 
 abstract class GenericMongoDAO<T>(entityType: Class<T>) {
@@ -19,14 +20,9 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         this.getCollection(entityType.simpleName, entityType)!!.drop()
     }
 
-     fun getAll(): List<T> {
+    fun getAll(): List<T> {
         this.session_check()
-        val items: java.util.ArrayList<T> = java.util.ArrayList<T>()
-        val cursor: com.mongodb.client.MongoCursor<T> = this.getCollection(entityType.simpleName, entityType)!!.find().cursor()
-        for(item: T in cursor){
-            items.add(item)
-        }
-        return items
+        return this.getCollection(entityType.simpleName, entityType)!!.find().toList()
     }
 
     fun getCollection(objectType: String, entityType: Class<T>): MongoCollection<T>?{
@@ -84,11 +80,9 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
     fun getBy(property:String, value: String?): T? {
         val session:ClientSession = this.session_check()
 
-        //return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
-        this.getProveedorFromDocument(this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first())
+        return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
+        //this.getProveedorFromDocument(this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first())
     }
-
-    abstract fun getProveedorFromDocument(document: Document?): T
 
     fun <E> findEq(field:String, value:E ): List<T> {
         return find(eq(field, value))

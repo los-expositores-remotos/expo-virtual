@@ -3,7 +3,7 @@ package ar.edu.unq.modelo
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
-class Proveedor {
+class Proveedor {   //(var companyName: String, var companyImage: String, var facebook: String, var instagram: String, var web: String)
 
     @BsonProperty("id")
     var id: ObjectId = ObjectId.get()
@@ -12,11 +12,9 @@ class Proveedor {
     var facebook: String = ""
     var instagram: String = ""
     var web: String = ""
-    var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
-    //val productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
-    protected constructor(){}
-    constructor(companyName: String) {
-        this.companyName = companyName
+    val productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
+
+    constructor() {
     }
 
     constructor(companyName: String, companyImage: String, facebook: String, instagram: String, web: String) {
@@ -26,6 +24,7 @@ class Proveedor {
         this.instagram = instagram
         this.web = web
     }
+
 
 //    fun addProduct(productoNuevo: Producto) {
 //        productos.add(productoNuevo)
