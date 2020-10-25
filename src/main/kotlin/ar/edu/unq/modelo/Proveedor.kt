@@ -1,5 +1,7 @@
 package ar.edu.unq.modelo
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
@@ -12,6 +14,9 @@ class Proveedor {
     var facebook: String = ""
     var instagram: String = ""
     var web: String = ""
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
     var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     //val productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     protected constructor(){}

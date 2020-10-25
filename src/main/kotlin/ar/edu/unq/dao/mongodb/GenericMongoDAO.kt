@@ -24,12 +24,15 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         val items: java.util.ArrayList<T> = java.util.ArrayList<T>()
         val cursor: com.mongodb.client.MongoCursor<T> = this.getCollection(entityType.simpleName, entityType)!!.find().cursor()
         for(item: T in cursor){
+            this.traerLoQueFalte(item)
             items.add(item)
         }
         return items
     }
 
-    fun getCollection(objectType: String, entityType: Class<T>): MongoCollection<T>?{
+    abstract fun traerLoQueFalte(item: T)
+
+    private fun getCollection(objectType: String, entityType: Class<T>): MongoCollection<T>?{
         // Precondición: Debe haber una sesión en el contexto
         val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
         try {
@@ -40,16 +43,17 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         return database?.getCollection(objectType, entityType)
     }
 
-    fun getCollection(objectType: String): MongoCollection<Document>?{
-        // Precondición: Debe haber una sesión en el contexto
-        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        try {
-            database?.createCollection(objectType)
-        }catch (exception: MongoCommandException){
-
-        }
-        return database?.getCollection(objectType)
-    }
+//
+//    fun getCollection(objectType: String): MongoCollection<Document>?{
+//        // Precondición: Debe haber una sesión en el contexto
+//        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+//        try {
+//            database?.createCollection(objectType)
+//        }catch (exception: MongoCommandException){
+//
+//        }
+//        return database?.getCollection(objectType)
+//    }
 
     fun save(anObject: T) {
         save(listOf(anObject))
@@ -57,25 +61,31 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun update(anObject: T, id: String?) {
         val session:ClientSession = this.session_check()
+        this.guardarLoQueFalte(anObject)
         this.getCollection(entityType.simpleName, entityType)!!.replaceOne(session, eq("id", id), anObject)
     }
 
+    abstract fun guardarLoQueFalte(anObject: T)
+
     fun save(objects: List<T>) {
         val session:ClientSession = this.session_check()
-        //this.getCollection(entityType.simpleName, entityType)!!.insertMany(session, objects)
-        this.getCollection(entityType.simpleName)!!.insertMany(session, getBsonDocumentsFrom(objects))
-    }
-
-    fun getBsonDocumentsFrom(objects: List<T>): List<Document>{
-        val documents = emptyList<Document>().toMutableList()
         for(obj in objects){
-            documents.add(this.getBsonDocumentFrom(obj))
+            this.guardarLoQueFalte(obj)
         }
-        return documents
+        this.getCollection(entityType.simpleName, entityType)!!.insertMany(session, objects)
+        //this.getCollection(entityType.simpleName)!!.insertMany(session, getBsonDocumentsFrom(objects))
     }
 
+//    fun getBsonDocumentsFrom(objects: List<T>): List<Document>{
+//        val documents = emptyList<Document>().toMutableList()
+//        for(obj in objects){
+//            documents.add(this.getBsonDocumentFrom(obj))
+//        }
+//        return documents
+//    }
 
-    abstract fun getBsonDocumentFrom(obj: T): Document
+
+    //abstract fun getBsonDocumentFrom(obj: T): Document
 
     operator fun get(id: String?): T? {
         return getBy("id", id)
@@ -83,12 +93,12 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun getBy(property:String, value: String?): T? {
         val session:ClientSession = this.session_check()
-
-        //return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
-        this.getProveedorFromDocument(this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first())
+        val item = this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
+        this.traerLoQueFalte(item)
+        return item
+        //this.getProveedorFromDocument(this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first())
     }
 
-    abstract fun getProveedorFromDocument(document: Document?): T
 
     fun <E> findEq(field:String, value:E ): List<T> {
         return find(eq(field, value))
@@ -96,7 +106,11 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun find(filter:Bson): List<T> {
         val session:ClientSession = this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(session, filter).into(mutableListOf())
+        val items = this.getCollection(entityType.simpleName, entityType)!!.find(session, filter).into(mutableListOf())
+        for(item in items){
+            this.traerLoQueFalte(item)
+        }
+        return items
     }
 
     fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {

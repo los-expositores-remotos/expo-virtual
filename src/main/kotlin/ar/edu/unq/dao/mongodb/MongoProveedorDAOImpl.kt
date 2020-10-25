@@ -4,10 +4,30 @@ import ar.edu.unq.dao.ProveedorDAO
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
 import com.mongodb.BasicDBObject
+import com.mongodb.client.MongoCollection
 import org.bson.Document
 import org.bson.types.ObjectId
 
 class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor::class.java) {
+    val productoDAO = MongoProductoDAOImpl()
+
+    override fun traerLoQueFalte(item: Proveedor) {
+        item.productos.addAll(productoDAO.findEq("idProveedor", item.id))
+    }
+
+    override fun guardarLoQueFalte(anObject: Proveedor) {
+        for(producto in anObject.productos){
+            try{
+                productoDAO.update(producto, producto.id.toString())
+            }catch (exception: Throwable){
+                productoDAO.save(producto)
+            }catch (exception:Throwable){
+                throw exception
+            }
+        }
+
+    }
+
 //    override fun getBsonDocumentFrom(obj: Proveedor): Document {
 //        val basicDBObject = BasicDBObject()
 //        basicDBObject["id"] = obj.id
@@ -16,7 +36,7 @@ class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor
 //        basicDBObject["facebook"] = obj.facebook
 //        basicDBObject["instagram"] = obj.instagram
 //        basicDBObject["web"] = obj.web
-//        basicDBObject["productos"] = this.getBsonProductList(obj.productos)
+////        basicDBObject["productos"] = this.getBsonProductList(obj.productos)
 //        return Document.parse(basicDBObject.toJson())
 //    }
 //

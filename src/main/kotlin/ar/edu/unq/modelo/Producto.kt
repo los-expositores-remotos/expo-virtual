@@ -5,7 +5,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
 
-data class Producto(val itemName: String, var description: String, val image: String, var stock: Int, var itemPrice: Int, var promotionalPrice: Int) {
+data class Producto(val idProveedor: ObjectId, val itemName: String, var description: String, val image: String, var stock: Int, var itemPrice: Int, var promotionalPrice: Int) {
 
     @BsonProperty("id")
     val id: ObjectId = ObjectId.get()
