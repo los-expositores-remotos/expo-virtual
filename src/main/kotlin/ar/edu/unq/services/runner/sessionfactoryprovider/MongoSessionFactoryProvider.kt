@@ -1,4 +1,4 @@
-package services.runner.sessionfactoryprovider
+package ar.edu.unq.services.runner.sessionfactoryprovider
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings

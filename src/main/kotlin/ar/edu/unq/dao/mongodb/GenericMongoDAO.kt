@@ -1,16 +1,15 @@
-package dao.mongodb
+package ar.edu.unq.dao.mongodb
 
 import com.mongodb.MongoCommandException
-import com.mongodb.WriteConcern
 import com.mongodb.client.ClientSession
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
-import modelo.Proveedor
 import org.bson.conversions.Bson
-import org.eclipse.jetty.io.ssl.ALPNProcessor
-import services.runner.TransactionRunner
+import ar.edu.unq.services.runner.TransactionRunner
+import com.mongodb.BasicDBObject
+import org.bson.Document
 
-open class GenericMongoDAO<T>(entityType: Class<T>) {
+abstract class GenericMongoDAO<T>(entityType: Class<T>) {
 
     val entityType: Class<T> = entityType
 
@@ -41,6 +40,17 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
         return database?.getCollection(objectType, entityType)
     }
 
+    fun getCollection(objectType: String): MongoCollection<Document>?{
+        // Precondición: Debe haber una sesión en el contexto
+        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+        try {
+            database?.createCollection(objectType)
+        }catch (exception: MongoCommandException){
+
+        }
+        return database?.getCollection(objectType)
+    }
+
     fun save(anObject: T) {
         save(listOf(anObject))
     }
@@ -52,8 +62,20 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun save(objects: List<T>) {
         val session:ClientSession = this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.insertMany(session, objects)
+        //this.getCollection(entityType.simpleName, entityType)!!.insertMany(session, objects)
+        this.getCollection(entityType.simpleName)!!.insertMany(session, getBsonDocumentsFrom(objects))
     }
+
+    fun getBsonDocumentsFrom(objects: List<T>): List<Document>{
+        val documents = emptyList<Document>().toMutableList()
+        for(obj in objects){
+            documents.add(this.getBsonDocumentFrom(obj))
+        }
+        return documents
+    }
+
+
+    abstract fun getBsonDocumentFrom(obj: T): Document
 
     operator fun get(id: String?): T? {
         return getBy("id", id)
@@ -61,8 +83,12 @@ open class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun getBy(property:String, value: String?): T? {
         val session:ClientSession = this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
+
+        //return this.getCollection(entityType.simpleName, entityType)!!.find(session, eq(property, value)).first()
+        this.getProveedorFromDocument(this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first())
     }
+
+    abstract fun getProveedorFromDocument(document: Document?): T
 
     fun <E> findEq(field:String, value:E ): List<T> {
         return find(eq(field, value))

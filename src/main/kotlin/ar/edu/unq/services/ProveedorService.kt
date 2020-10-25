@@ -1,7 +1,8 @@
-package services
+package ar.edu.unq.services
 
-import modelo.Proveedor
-import modelo.Producto
+import ar.edu.unq.modelo.Proveedor
+import ar.edu.unq.modelo.Producto
+import org.bson.types.ObjectId
 
 interface ProveedorService {
     fun crearProveedor(proveedor: Proveedor)
@@ -10,4 +11,8 @@ interface ProveedorService {
 
     fun agregarProducto(idProveedor: Int, producto: Producto): Producto
     fun recuperarProducto(id: Int, nombreProducto: String): Producto
+    fun crearProveedor(LaCompany: String): Proveedor
+
+    fun nuevoProducto(proveedor: String, producto: String): Producto
+    fun obtenerProveedor(proveedor: String): Proveedor
 }

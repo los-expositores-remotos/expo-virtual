@@ -1,4 +1,4 @@
-package services.runner.sessionfactoryprovider
+package ar.edu.unq.services.runner.sessionfactoryprovider
 
 class MongoSessionFactoryProviderProduccion : MongoSessionFactoryProvider() {
     override fun dataBaseName(): String {

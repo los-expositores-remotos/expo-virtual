@@ -1,7 +1,6 @@
-package dao
+package ar.edu.unq.dao
 
-import modelo.Proveedor
-import modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 
 interface ProveedorDAO {
     fun save(anObject: Proveedor)

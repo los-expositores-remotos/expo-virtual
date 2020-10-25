@@ -1,9 +1,9 @@
-package services.runner
+package ar.edu.unq.services.runner
 
 import com.mongodb.client.ClientSession
-import services.runner.sessionfactoryprovider.MongoSessionFactoryProvider
-import services.runner.sessionfactoryprovider.MongoSessionFactoryProviderProduccion
-import services.runner.sessionfactoryprovider.MongoSessionFactoryProviderTest
+import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProvider
+import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProviderProduccion
+import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProviderTest
 
 interface Transaction {
     fun start(dataBaseType: DataBaseType)

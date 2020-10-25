@@ -1,18 +1,24 @@
-package modelo
+package ar.edu.unq.modelo
 
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
 class Proveedor {
+
     @BsonProperty("id")
-    val id: ObjectId = ObjectId.get()
-    lateinit var companyName: String
-    lateinit var companyImage: String
-    lateinit var facebook: String
-    lateinit var instagram: String
-    lateinit var web: String
+    var id: ObjectId = ObjectId.get()
+    var companyName: String = ""
+    var companyImage: String = ""
+    var facebook: String = ""
+    var instagram: String = ""
+    var web: String = ""
+    var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     //val productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     protected constructor(){}
+    constructor(companyName: String) {
+        this.companyName = companyName
+    }
+
     constructor(companyName: String, companyImage: String, facebook: String, instagram: String, web: String) {
         this.companyName = companyName
         this.companyImage = companyImage
