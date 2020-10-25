@@ -1,17 +1,62 @@
 import React from "react";
 import M from 'materialize-css'
 import '../../styles/Home.css'
+import data from '../../data/empresas-productos.json'
 
 document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.slider');
-  var instances = M.Slider.init(elems, {});
+  var elems = document.querySelectorAll('.carousel');
+  var instances = M.Carousel.init(elems, {});
+  var elems2 = document.querySelectorAll('.slider');
+  var instances2 = M.Slider.init(elems2, {});
 });
+  var instance = M.Carousel.init({
+    fullWidth: true,
+    indicators: true
+  });
+
+const CarouselofProdocts = () => {
+  const dataAux = data.map((suppliers) => {
+    return suppliers.productos
+  });
+  console.log(dataAux)
+  let index = 0
+  const products = dataAux.map((product)=>   
+  <div class="carousel-item red white-text" href="#one!">
+        <h2>Panel Nro {index++}</h2>
+        <p class="white-text">This is your first panel</p>
+      </div>
+  )
+    return (
+      <div class="carousel carousel-slider center">
+      <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2">button</a>
+      </div>
+        {products}
+    </div>
+
+    )
+}
 
 
-
+const CarouselSuppliers =() =>{
+  const dataAux = data
+  const result = dataAux.map((suppliers) => 
+  <li>
+       <a class="carousel-item" href="#one!">
+         <img alt="card" src={suppliers.imagenDeLaEmpresa}/>
+       </a>
+     </li> 
+    )
+    return (
+      <ul>{result}</ul>
+    )
+  } 
 
 const Home = () => {
+  
   return (
+    <div class="conteiner">
+
     <div class="slider">
     <ul class="slides">
       <li>
@@ -35,6 +80,13 @@ const Home = () => {
       </li>
     </ul>
     </div>
+    <div>
+      <CarouselofProdocts/>
+    </div>
+    <div class="carousel">
+        <CarouselSuppliers/>
+      </div>
+  </div>
   );
 };
 
