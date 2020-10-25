@@ -9,6 +9,6 @@ Feature:  Visualizacion de productos
   Scenario: Al seleccionar un producto se muestran las caracteristicas y precio del mismo
     Given Un producto vacio
     When Le asigno la descripcion "descripcion"
-    When ALe asigno el precio 45
-    Then La descripción del producto es "descripción"
+    When Le asigno el precio 45
+    Then La descripción del producto es "descripcion"
     And El precio del producto es 45

@@ -7,46 +7,24 @@ import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
+import org.bson.types.ObjectId
+import javax.xml.crypto.dsig.TransformService
 
 class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType
 ) : ProveedorService {
-//    override fun crearProveedor(proveedor: Proveedor) {
-//        val document = org.bson.Document()
-//        document.put("companyName", proveedor.companyName)
-//        document.put("companyImage", proveedor.companyImage)
-//        document.put("facebook", proveedor.facebook)
-//        document.put("instagram", proveedor.instagram)
-//        document.put("web", proveedor.web)
-//        //collection.insertOne(document)
-//    }
 
     override fun crearProveedor(proveedor: Proveedor) {
-        TransactionRunner.runTrx({ this.proveedorDAO.save(proveedor) }, listOf(TransactionType.MONGO), this.dataBaseType)
+        this.proveedorDAO.saveInTrx(proveedor, this.dataBaseType)
     }
 
-    override fun recuperarProveedor(id: Int): Proveedor {
-        TODO("Not yet implemented")
+    override fun recuperarProveedor(id: Int): Proveedor? {
+        return this.proveedorDAO.getByInTrx("id", id.toString(), this.dataBaseType)
     }
 
     override fun recuperarATodosLosProveedores(): Collection<Proveedor> {
-        TODO("Not yet implemented")
+        return this.proveedorDAO.getAllInTrx(this.dataBaseType)
     }
 
-    override fun agregarProducto(idProveedor: Int, producto: Producto): Producto {
-        TODO("Not yet implemented")
-    }
-
-    override fun recuperarProducto(id: Int, nombreProducto: String): Producto {
-        TODO("Not yet implemented")
-    }
-
-    override fun nuevoProducto(proveedor: String, producto: String): Producto {
-        TODO("Not yet implemented")
-    }
-
-    override fun obtenerProveedor(proveedor: String): Proveedor {
-        TODO("Not yet implemented")
-    }
 }
