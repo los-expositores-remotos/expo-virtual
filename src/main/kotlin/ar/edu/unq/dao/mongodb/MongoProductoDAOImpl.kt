@@ -38,6 +38,10 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         return producto
     }
 
+    override fun get(idProveedor: String, nombreProducto: String): Producto? {
+        return this.findEq("idProveedor", idProveedor).filter { it.itemName == nombreProducto }.first()
+    }
+
     override fun saveOrUpdate(productos: List<Producto>, dataBaseType: DataBaseType) {
         for(producto in productos){
             try {

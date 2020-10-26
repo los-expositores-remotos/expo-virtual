@@ -59,15 +59,17 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         return getBy("id", id)
     }
 
-     fun getBy(property:String, value: String?): T? {
-            val session:ClientSession = this.session_check()
-            val document = this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first()
-         return if(document != null){
-                    this.mapFromDocument(document)
-                }else{
-                    null
-                }
+    fun getBy(property:String, value: String?): T? {
+        val result: T?
+        val session:ClientSession = this.session_check()
+        val document = this.getCollection(entityType.simpleName)!!.find(session, eq(property, value)).first()
+        if(document != null) {
+            result = this.mapFromDocument(document)
+        }else {
+            result = null
         }
+        return result
+    }
 
     fun <E> findEq(field:String, value:E ): List<T> {
         return find(eq(field, value))
