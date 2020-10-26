@@ -1,16 +1,17 @@
 package ar.edu.unq
 
 import ar.edu.unq.API.CompanyController
-import ar.edu.unq.API.SetScenario
+import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
+import ar.edu.unq.services.impl.ProveedorServiceImpl
+import ar.edu.unq.services.runner.DataBaseType
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
-import modelo.Expo
 
 fun main(args: Array<String>) {
 
-    val backend = SetScenario().getExpo()
-    val companyController = CompanyController(backend)
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(),DataBaseType.PRODUCCION)
+    val companyController = CompanyController(backendProveedorService)
     val app = Javalin.create {
         it.defaultContentType = "application/json"
         it.enableCorsForAllOrigins()
@@ -20,6 +21,7 @@ fun main(args: Array<String>) {
     app.routes {
 
         path("companies") {
+            get(companyController::allCompanies)
             path("images") {
                 get(companyController::imagesCompanies)
             }
