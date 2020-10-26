@@ -2,29 +2,36 @@
 
 
 # Expo Virtual
-Armar el setup inicial del proyecto
 
-a) Elegir el proyecto: nombre y tipo de producto a desarrollar
-- Nombre: Feria Virtual
-- Tipo: Aplicación web
+- **Nombre**: Expo Virtual
+- **Tipo**: Aplicación web
 
-b) Elegir la tecnología con la cual desarrollar
+## Tecnologías uitlizadas al desarrollar
 
-BACKEND
+**BACKEND**
 - Kotlin
 - Maven
 - MongoCloud
 - Javalin
-- NodeJS
 
-FRONTEND
+**FRONTEND**
 - React
 - Bootstrap
 - Materialize
 - JavaScript
+- NodeJS
 
-c) Armar el entorno adecuado para comenzar con el desarrollo (instalaciones, configuraciones, etc)
+#Links:
 
-d) Definir el MVP: realizar un storyMapping con las funcionalidades (épicas y US) que entrarán en el MVP
+_Product backlog_: https://trello.com/b/WThDtqJH/expo-virtual-history-mapping
 
-3. Armar una presentación con el setup del proyecto para presentar en clase (incluir una página / slide) con los participantes.
+_Sprint backlog Sprint 1_: https://trello.com/b/8B6v2Cgm/expo-virtual-1
+
+_Reportes Sprint 1_: https://docs.google.com/document/d/1cqkFNUo3ot9SJ5EK9f-kbiya6-scX6bp/edit#
+
+_Repositorio_: https://github.com/los-expositores-remotos/expo-virtual
+
+_URL del producto_: localhost:3000
+
+
+
