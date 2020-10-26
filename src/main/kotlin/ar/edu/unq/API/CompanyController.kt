@@ -1,8 +1,11 @@
 package ar.edu.unq.API
 
-import ar.edu.unq.agregarVariosProveedores
-import modelo.Expo
 import io.javalin.http.Context
+import modelo.Expo
+import modelo.Product
+import java.util.*
+import java.util.Collections.list
+
 
 class CompanyController(val backend: Expo) {
 
@@ -25,11 +28,11 @@ class CompanyController(val backend: Expo) {
     /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
     * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
         var bestSellersP = backend.companies.map{ ProductsViewMapper(it.productos.first().nombreDelArticulo,
-                                                                        it.productos.first().description,
-                                                                            it.productos.first().imagenes,
-                                                                                it.productos.first().stock,
-                                                                                    it.productos.first().precio,
-                                                                                        it.productos.first().precioPromocional) }
+                it.productos.first().description,
+                it.productos.first().imagenes,
+                it.productos.first().stock,
+                it.productos.first().precio,
+                it.productos.first().precioPromocional) }
         ctx.status(200)
         ctx.json(bestSellersP)
     }
@@ -60,6 +63,31 @@ class CompanyController(val backend: Expo) {
         ctx.json(newestP)
     }
 
+    fun allProducts(ctx: Context) {
+
+        var productsLists = backend.companies.map { it.productos }
+        var allProducts = makeListFromListofList(productsLists)
+
+        var allP = allProducts!!.map{ ProductsViewMapper(it.nombreDelArticulo,
+                it.description,
+                it.imagenes,
+                it.stock,
+                it.precio,
+                it.precioPromocional) }
+        ctx.status(200)
+        ctx.json(allP)
+    }
+
+    //funciones auxiliares
+    fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
+        val list: MutableList<E> = ArrayList()
+        for (item in iter) {
+            item.forEach { list.add(it) }
+        }
+        return list
+    }
+}
+
 
 
 //data class BannersRelatedViewMapper(val banners: Collection<BannerRelatedData>)
@@ -76,5 +104,3 @@ class CompanyController(val backend: Expo) {
     //orderByBestSellers
     //orderByAlphabeticDesc
     //orderByAlphabeticAsc
-
-}

@@ -29,6 +29,7 @@ fun main(args: Array<String>) {
         }
 
         path("products") {
+            get(companyController::allProducts)
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
