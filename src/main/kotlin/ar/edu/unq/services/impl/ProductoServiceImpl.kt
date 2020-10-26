@@ -31,4 +31,8 @@ class ProductoServiceImpl(
         TransactionRunner.runTrx({ this.productoDAO.update(producto, producto.id.toString()) }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
+    override fun deleteAll() {
+        TransactionRunner.runTrx({ this.productoDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
 }

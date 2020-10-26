@@ -8,4 +8,5 @@ interface ProveedorService {
     fun crearProveedor(proveedor: Proveedor)
     fun recuperarProveedor(id: Int): Proveedor?
     fun recuperarATodosLosProveedores(): Collection<Proveedor>
+    fun deleteAll()
 }
