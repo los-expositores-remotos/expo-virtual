@@ -56,7 +56,7 @@ class MongoConnection {
     fun countItemsFromCollection(collection: String): Int {
         var result: Int = 0
         try {
-            result = database.getCollection(collection).count().toInt()
+            result = database.getCollection(collection).countDocuments().toInt()
         } catch (exception: MongoCommandException) {
             println("No se puedo obtener el resultado en la coleccion $collection ")
         }
