@@ -1,9 +1,14 @@
 package ar.edu.unq.cucumber.visualizacion_de_proveedores;
 
+import ar.edu.unq.dao.ProveedorDAO;
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl;
 import ar.edu.unq.modelo.Proveedor;
 import ar.edu.unq.services.ProductoService;
 import ar.edu.unq.services.impl.ProductoServiceImpl;
+import ar.edu.unq.services.runner.TransactionRunner;
+import ar.edu.unq.services.runner.TransactionType;
+import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -16,6 +21,7 @@ import ar.edu.unq.services.runner.DataBaseType;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -82,5 +88,11 @@ public class VisualizacionDeProveedoresStepdefs {
     public void elPrecioDelProductoEs(int precio) {
         Producto producto = this.productoService.obtenerProducto(this.proveedorId, this.productoNombre);
         assertEquals(precio, producto.getItemPrice());
+    }
+
+    @After
+    public void doSomethingAfter(Scenario scenario){
+        this.proveedorService.deleteAll();
+        this.productoService.deleteAll();
     }
 }

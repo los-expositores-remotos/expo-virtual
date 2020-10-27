@@ -27,4 +27,8 @@ class ProveedorServiceImpl(
         return this.proveedorDAO.getAllInTrx(this.dataBaseType)
     }
 
+    override fun deleteAll() {
+        TransactionRunner.runTrx({ this.proveedorDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
 }
