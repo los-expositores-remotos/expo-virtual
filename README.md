@@ -29,7 +29,7 @@ La inversión en si es muy rentable, ya que no solo el flujo de concurrentes hab
 - JavaScript
 - NodeJS
 
-#Links:
+# Links:
 
 _Product backlog_: https://trello.com/b/WThDtqJH/expo-virtual-history-mapping
 
