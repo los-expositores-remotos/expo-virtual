@@ -1,3 +1,6 @@
 language: java
 jdk:
   - openjdk8
+script:
+  - mvn -B test
+  - bash <(curl -s https://codecov.io/bash)
