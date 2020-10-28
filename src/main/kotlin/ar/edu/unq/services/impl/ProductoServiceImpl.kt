@@ -7,7 +7,7 @@ import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
-import org.omg.CORBA.Object
+//import org.omg.CORBA.Object
 import java.lang.Exception
 
 class ProductoServiceImpl(
