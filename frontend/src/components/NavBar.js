@@ -17,7 +17,7 @@ const NavBar = () => {
        <div className="NavBar"> 
            <div className="row">
                <div className="col s4">
-                   <img className='img-logo' src={require('../images/logo.png')} alt="logo"/>
+                   <Link to='/'><img className='img-logo' src={require('../images/logo.png')} alt="logo"/></Link>
                </div>
                <div className="col s4">
                    <form className="form-inline">

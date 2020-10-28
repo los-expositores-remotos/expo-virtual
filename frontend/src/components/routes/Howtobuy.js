@@ -1,10 +1,10 @@
 import React from "react";
 
 const Howtobuy = () => {
+ 
+  
   return (
-
-   <p> estoy en el Howtobuy </p>
-
+    <p> Soy el Como comprar</p>
   );
 };
 

@@ -1,0 +1,29 @@
+.prodImg {
+  height: 100% !important;
+  width: 20% !important;
+  background-size: cover;
+  background-position: center;
+  min-width: 20% !important;
+  min-height: 100% !important;
+  margin: 0px 40%;
+}
+.liImg {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: aliceblue !important;
+}
+
+#slider .slides li .caption {
+  color: lightslategray !important;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  opacity: 0;
+}
