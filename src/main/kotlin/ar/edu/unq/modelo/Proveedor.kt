@@ -31,12 +31,11 @@ class Proveedor {
         this.web = web
     }
 
+    fun addProduct(productoNuevo: Producto) {
+        productos.add(productoNuevo)
+    }
 
-//    fun addProduct(productoNuevo: Producto) {
-//        productos.add(productoNuevo)
-//    }
-//
-//    fun removeProduct(productoNuevo: Producto) {
-//        productos.remove(productoNuevo)
-//    }
+    fun removeProduct(productoNuevo: Producto) {
+        productos.remove(productoNuevo)
+    }
 }

@@ -3,6 +3,7 @@ package ar.edu.unq.services.impl
 import ar.edu.unq.dao.ProductoDAO
 import ar.edu.unq.dao.ProveedorDAO
 import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
@@ -29,6 +30,10 @@ class ProductoServiceImpl(
 
     override fun actualizarProducto(producto: Producto) {
         TransactionRunner.runTrx({ this.productoDAO.update(producto, producto.id.toString()) }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
+    override fun recuperarATodosLosProductos(): Collection<Producto> {
+        return TransactionRunner.runTrx({ this.productoDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun deleteAll() {

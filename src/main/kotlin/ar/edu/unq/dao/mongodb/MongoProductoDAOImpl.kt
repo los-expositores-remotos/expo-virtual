@@ -2,6 +2,7 @@ package ar.edu.unq.dao.mongodb
 
 import ar.edu.unq.dao.ProductoDAO
 import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
@@ -16,7 +17,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         document["idProveedor"] = obj.idProveedor.toString()
         document["itemName"] = obj.itemName
         document["description"] = obj.description
-        document["image"] = obj.image
+        document["listImages"] = obj.listImages
         document["stock"] = obj.stock.toString()
         document["itemPrice"] = obj.itemPrice.toString()
         document["promotionalPrice"] = obj.promotionalPrice.toString()
@@ -31,7 +32,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         producto.idProveedor = ObjectId(document["idProveedor"].toString())
         producto.itemName = document["itemName"].toString()
         producto.description = document["description"].toString()
-        producto.image = document["image"].toString()
+        producto.listImages = document["listImages"] as MutableList<String>
         producto.stock = document["stock"].toString().toInt()
         producto.itemPrice = document["itemPrice"].toString().toInt()
         producto.promotionalPrice = document["promotionalPrice"].toString().toInt()

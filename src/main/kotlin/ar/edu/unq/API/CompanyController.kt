@@ -34,21 +34,21 @@ class CompanyController(val backendProveedorService: ProveedorService) {
 
     fun allCompanies(ctx: Context) {
 
-    var companiesList = backendProveedorService.recuperarATodosLosProveedores()
+    val companiesList = backendProveedorService.recuperarATodosLosProveedores()
     ctx.status(200)
     ctx.json(companiesList)
     }
 
     fun imagesCompanies(ctx: Context) {
 
-        var imagesC = backendProveedorService.recuperarATodosLosProveedores().map { CompanyImageViewMapper(it.companyImage) }
+        val imagesC = backendProveedorService.recuperarATodosLosProveedores().map { CompanyImageViewMapper(it.companyImage) }
         ctx.status(200)
         ctx.json(imagesC)
     }
 
     fun namesCompanies(ctx: Context) {
 
-        var namesC = backendProveedorService.recuperarATodosLosProveedores().map { CompanyNameViewMapper(it.companyName) }
+        val namesC = backendProveedorService.recuperarATodosLosProveedores().map { CompanyNameViewMapper(it.companyName) }
         ctx.status(200)
         ctx.json(namesC)
     }
@@ -56,9 +56,9 @@ class CompanyController(val backendProveedorService: ProveedorService) {
     fun producstBestSellers(ctx: Context) {
         /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
     * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var bestSellersP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.first().id, it.productos.first().idProveedor, it.productos.first().itemName,
+        val bestSellersP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.first().id, it.productos.first().idProveedor, it.productos.first().itemName,
             it.productos.first().description,
-            mutableListOf(it.productos.first().image), //debe cambiar !!!!!
+            mutableListOf(it.productos.first().listImages.first()), //debe cambiar TODO: revisar
             it.productos.first().stock,
             it.productos.first().itemPrice,
             it.productos.first().promotionalPrice) }
@@ -69,9 +69,9 @@ class CompanyController(val backendProveedorService: ProveedorService) {
     fun productsNewest(ctx: Context) {
         /*traer los productos mas nuevos  EN ESTE CASO ME TRAE EL ULTIMO DE CADA EMPRESA
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var newestP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.last().id, it.productos.last().idProveedor, it.productos.last().itemName,
+        val newestP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.last().id, it.productos.last().idProveedor, it.productos.last().itemName,
             it.productos.last().description,
-            mutableListOf(it.productos.last().image), //debe cambiar !!!!!
+            mutableListOf(it.productos.last().listImages.first()), //debe cambiar !!!!! TODO: revisar
             it.productos.last().stock,
             it.productos.last().itemPrice,
             it.productos.last().promotionalPrice) }
@@ -82,9 +82,9 @@ class CompanyController(val backendProveedorService: ProveedorService) {
     fun productsWPromoPrice(ctx: Context) {
         /*traer los productos con precio promocional  EN ESTE CASO ME TRAE UNO RANDOM DE CADA EMPRESA
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var newestP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.random().id, it.productos.random().idProveedor, it.productos.random().itemName,
+        val newestP = backendProveedorService.recuperarATodosLosProveedores().map{ ProductsViewMapper(it.productos.random().id, it.productos.random().idProveedor, it.productos.random().itemName,
             it.productos.random().description,
-            mutableListOf(it.productos.random().image), //debe cambiar !!!!!
+            mutableListOf(it.productos.random().listImages.first()), //debe cambiar !!!!! TODO: revisar
             it.productos.random().stock,
             it.productos.random().itemPrice,
             it.productos.random().promotionalPrice) }
@@ -94,12 +94,12 @@ class CompanyController(val backendProveedorService: ProveedorService) {
 
     fun allProducts(ctx: Context) {
 
-        var productsLists = backendProveedorService.recuperarATodosLosProveedores().map { it.productos }
-        var allProducts = makeListFromListofList(productsLists)
+        val productsLists = backendProveedorService.recuperarATodosLosProveedores().map { it.productos }
+        val allProducts = makeListFromListofList(productsLists)
 
-        var allP = allProducts!!.map{ ProductsViewMapper(it.id, it.idProveedor, it.itemName,
+        val allP = allProducts!!.map{ ProductsViewMapper(it.id, it.idProveedor, it.itemName,
             it.description,
-            mutableListOf(it.image), //debe cambiar !!!!!
+            mutableListOf(it.listImages.first()), //debe cambiar !!!!! TODO: revisar
             it.stock,
             it.itemPrice,
             it.promotionalPrice) }

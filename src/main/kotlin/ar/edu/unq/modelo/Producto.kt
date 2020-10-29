@@ -12,7 +12,7 @@ class Producto{
     lateinit var idProveedor: ObjectId
     lateinit var itemName: String
     lateinit var description: String
-    lateinit var image: String
+    var listImages: MutableList<String> = emptyList<String>().toMutableList()
     var stock: Int = 0
     var itemPrice: Int = 0
     var promotionalPrice: Int = 0
@@ -23,7 +23,6 @@ class Producto{
         idProveedor: ObjectId,
         itemName: String,
         description: String,
-        image: String,
         stock: Int,
         itemPrice: Int,
         promotionalPrice: Int
@@ -31,10 +30,19 @@ class Producto{
         this.idProveedor = idProveedor
         this.itemName = itemName
         this.description = description
-        this.image = image
         this.stock = stock
         this.itemPrice = itemPrice
         this.promotionalPrice = promotionalPrice
+    }
+
+    fun addImage(imageUrl: String) {
+        listImages.add(imageUrl)
+    }
+
+    fun addImage(imagesUrl: List<String>) {
+        for (img in imagesUrl) {
+            listImages.add(img)
+        }
     }
 
     fun removeStock(quantity: Int) {
