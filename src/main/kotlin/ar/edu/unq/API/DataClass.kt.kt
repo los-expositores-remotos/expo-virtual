@@ -19,3 +19,7 @@ data class ProductData(
     val precio: Int,
     val precioPromocional: Int
 )
+
+data class BannerData(
+    val image: String
+)

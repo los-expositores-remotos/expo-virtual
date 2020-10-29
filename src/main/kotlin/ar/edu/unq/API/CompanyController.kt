@@ -76,6 +76,13 @@ class CompanyController(val backend: Expo) {
         ctx.json(allP)
     }
 
+    fun allBanners(ctx: Context) {
+
+        var imagesList = backend.banners.map { BannerImageViewMapper(it.image) }
+        ctx.status(200)
+        ctx.json(imagesList)
+    }
+
     //funciones auxiliares
     fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
         val list: MutableList<E> = ArrayList()
@@ -85,8 +92,6 @@ class CompanyController(val backend: Expo) {
         return list
     }
 }
-
-
 
 //data class BannersRelatedViewMapper(val banners: Collection<BannerRelatedData>)
 //    open fun toBannerData(lista: MutableCollection<Content>): List<BannerRelatedData> {

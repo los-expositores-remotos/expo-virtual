@@ -40,6 +40,10 @@ fun main(args: Array<String>) {
                 get(companyController::productsWPromoPrice)
             }
         }
+
+        path("banners") {
+            get(companyController::allBanners)
+        }
 /*        path("order") {
             path(":byLowerPrice") {
                 get(companyController::orderByLowerPrice)

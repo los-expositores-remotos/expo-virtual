@@ -2,6 +2,7 @@ package ar.edu.unq.API
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import modelo.Banner
 import modelo.Company
 import modelo.Expo
 import modelo.Product
@@ -16,6 +17,12 @@ class SetScenario {
         val companiesString = readFile("empresas-productos.json")
         val companyDataType = object : TypeToken<MutableList<CompanyData>>() {}.type
         return Gson().fromJson(companiesString, companyDataType)
+    }
+
+    private fun getBanners(): MutableList<BannerData> {
+        val bannersString = readFile("banners.json")
+        val bannerDataType = object : TypeToken<MutableList<BannerData>>() {}.type
+        return Gson().fromJson(bannersString, bannerDataType)
     }
 
     private fun addAllCompanies(expo: Expo) {
@@ -47,9 +54,21 @@ class SetScenario {
         }.toMutableList()
     }
 
+    private fun addAllBanners(expo: Expo) {
+        val banners = getBanners()
+        banners.forEach {
+            expo.addBanner(
+                Banner(
+                    it.image
+                )
+            )
+        }
+    }
+
     fun getExpo(): Expo {
         val expo = Expo()
         addAllCompanies(expo)
+        addAllBanners(expo)
         return expo
     }
 }

@@ -11,6 +11,7 @@ data class CompanyNameViewMapper(val companyName: String)
 
 data class CompanyImageViewMapper(val companyImage: String)
 
+data class BannerImageViewMapper(val bannerImages: String)
 
 data class ProductsViewMapper(val nombreDelArticulo: String,
                               val description: String,
