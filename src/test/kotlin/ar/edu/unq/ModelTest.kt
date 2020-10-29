@@ -33,7 +33,7 @@ class ModelTest {
     }
 
     @Test
-    fun removeProductoToProveedor() {
+    fun removeProductToProvider() {
         proveedorA.addProduct(productoA)
         Assert.assertEquals(1, proveedorA.productos.count())
         proveedorA.removeProduct(productoA)
@@ -41,7 +41,7 @@ class ModelTest {
     }
 
     @Test
-    fun addImageToProducto() {
+    fun addImageToProduct() {
         Assert.assertEquals(0, productoA.listImages.count())
         productoA.addImage("urlfalsa123")
         Assert.assertEquals(1, productoA.listImages.count())
@@ -51,28 +51,28 @@ class ModelTest {
     }
 
     @Test
-    fun removeStockToProducto() {
+    fun removeStockToProduct() {
         productoA.removeStock(2)
         Assert.assertEquals(5, productoA.stock)
     }
 
     @Test
-    fun getProductoDescription() {
+    fun getProductDescription() {
         Assert.assertEquals("SARASA", productoA.description)
     }
 
     @Test
-    fun getProductoItemPrice() {
+    fun getProductItemPrice() {
         Assert.assertEquals(1000000, productoA.itemPrice)
     }
 
     @Test
-    fun getProductoPromotionalItemPrice() {
+    fun getProductPromotionalItemPrice() {
         Assert.assertEquals(800000, productoA.promotionalPrice)
     }
 
     @Test
-    fun getProductoProveedorId() {
+    fun getProductProviderId() {
         Assert.assertEquals(proveedorA.id, productoA.idProveedor)
     }
 }
