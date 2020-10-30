@@ -33,6 +33,13 @@ fun main(args: Array<String>) {
         }
 
         path("products") {
+   //         post(productController::agregarProduct)
+            path(":productId") {
+    //            get(productController::getProductById)
+    //            delete(productController::deleteProduct)
+    //            put(productController::modifyProduct)
+            }
+
             get(companyController::allProducts)
             path(":supplierId") {
                 get(supplierController::getProductsBySuppId)
@@ -61,6 +68,7 @@ fun main(args: Array<String>) {
             path(":supplierId") {
                 get(supplierController::getSupplierById)
                 delete(supplierController::deleteSupplier)
+                put(supplierController::modifySupplier)
             }
         }
 

@@ -99,6 +99,33 @@ class SupplierController(val backend: Expo) {
         }
     }
 
+    fun modifySupplier(ctx: Context) {
+        try {
+        val id = ctx.pathParam("supplierId")
+        val newSupplier = ctx.bodyValidator<SupplierRegisterMapper>()
+            .check(
+                { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null },
+                "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+            )
+            .get()
+        val supplier: Company = this.searchContentById(id)
+        println(supplier)
+        backend.updateCompanyWithId(id, Company(supplier.id, newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, supplier.productos)
+        )
+        val updated = this.searchContentById(id)
+        ctx.json(CompanyViewMapper(
+            updated.id.toString(),
+            updated.nombreDeEmpresa,
+            updated.imagenDeLaEmpresa,
+            updated.facebook,
+            updated.instagram,
+            updated.web,
+            toSimpleData(updated.productos)
+        )) } catch (e: NotFoundException) {
+            throw NotFoundResponse(e.message.toString())
+        }
+    }
+
 //////funciones auxiliares
     fun searchContentById(supplierId: String?): Company {
         return backend.companies.find { it.id.toString() == supplierId } ?: throw NotFoundException("Supplier", "id", supplierId!!)
