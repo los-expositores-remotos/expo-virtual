@@ -62,6 +62,29 @@ class ProductController(val backend: Expo) {
             throw NotFoundResponse(e.message.toString())
         }
     }
-
-
+    fun modifyProduct(ctx: Context) {
+        try {
+            val id = ctx.pathParam("productId")
+            val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
+                .check(
+                    { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null },
+                    "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
+                )
+                .get()
+            backend.updateProductWithId(id, Product(id.toInt(), newProduct.idProveedor!!.toInt(), newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+            )
+            val updated = this.backend.getProduct(id)
+            ctx.json(ProductsViewMapper(
+                updated.id.toString(),
+                updated.idProveedor.toString(),
+                updated.nombreDelArticulo,
+                updated.description,
+                updated.imagenes,
+                updated.stock,
+                updated.precio,
+                updated.precioPromocional))
+        } catch (e: NotFoundException) {
+            throw NotFoundResponse(e.message.toString())
+        }
+    }
 }

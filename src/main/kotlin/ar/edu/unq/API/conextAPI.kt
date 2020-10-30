@@ -39,7 +39,7 @@ fun main(args: Array<String>) {
             path(":productId") {
                 get(productController::getProductById)
                 delete(productController::deleteProduct)
-    //            put(productController::modifyProduct)
+                put(productController::modifyProduct)  //verlo a fondo no funciona bien
             }
 
             get(companyController::allProducts)

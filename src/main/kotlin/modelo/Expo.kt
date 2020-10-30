@@ -22,28 +22,49 @@ class Expo(
         companies.removeIf { it.id.toString() == id }
         companies.add(company)
     }
-    fun removeProduct(id: String) {
-        var products: List<Product> = this.makeListFromListofList(companies.map{ it.productos})!!
-        var product: Product = products.find { it.id.toString() == id  }!!
-        var idProveedor = product.idProveedor
-        var company = companies.find { it.id.toString() == idProveedor.toString() }
-        this.updateCompanyWithId(product.idProveedor.toString(), Company(idProveedor, company!!.nombreDeEmpresa, company!!.imagenDeLaEmpresa, company!!.facebook, company!!.instagram, company!!.web, company!!.productos.filterNot { it.id.toString() == id }.toMutableList()))
+
+    fun updateProductWithId(id: String, newProduct: Product) {
+/*        var products: List<Product> = this.makeListFromListofList(companies.map { it.productos })!!
+        var productsFiltrados: MutableList<Product> = products.filterNot { it.id.toString() == id }!!.toMutableList()
+        productsFiltrados.add(newProduct)*/
+        var company = companies.find { it.id.toString() == newProduct.idProveedor.toString() }
+        company!!.productos.filterNot { it.id.toString() == id }
+        company.productos.add(newProduct)
+        this.updateCompanyWithId(company.id.toString(), company)
     }
 
-    fun addProduct(product: Product){
+    fun removeProduct(id: String) {
+        var products: List<Product> = this.makeListFromListofList(companies.map { it.productos })!!
+        var product: Product = products.find { it.id.toString() == id }!!
+        var idProveedor = product.idProveedor
+        var company = companies.find { it.id.toString() == idProveedor.toString() }
+        this.updateCompanyWithId(
+            product.idProveedor.toString(),
+            Company(
+                idProveedor,
+                company!!.nombreDeEmpresa,
+                company!!.imagenDeLaEmpresa,
+                company!!.facebook,
+                company!!.instagram,
+                company!!.web,
+                company!!.productos.filterNot { it.id.toString() == id }.toMutableList()
+            )
+        )
+    }
+
+    fun addProduct(product: Product) {
         var company = companies.find { it.id.toString() == product.idProveedor.toString() }
         company!!.productos.add(product)
         //this.updateCompanyWithId(product.idProveedor.toString(), Company(product.idProveedor, company!!.nombreDeEmpresa, company!!.imagenDeLaEmpresa, company!!.facebook, company!!.instagram, company!!.web, company!!.productos.filterNot { it.id.toString() == id }.toMutableList()) )
     }
 
     fun getProduct(id: String): Product {
-        var products: List<Product> = this.makeListFromListofList(companies.map{ it.productos})!!
+        var products: List<Product> = this.makeListFromListofList(companies.map { it.productos })!!
         var product: Product = products.find { it.id.toString() == id }!!
-        println(product)
         return product
     }
 
-    fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
+    fun <E> makeListFromListofList(iter: List<List<E>>): List<E>? {
         val list: MutableList<E> = ArrayList()
         for (item in iter) {
             item.forEach { list.add(it) }

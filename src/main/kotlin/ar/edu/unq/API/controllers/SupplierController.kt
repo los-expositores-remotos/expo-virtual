@@ -109,7 +109,6 @@ class SupplierController(val backend: Expo) {
             )
             .get()
         val supplier: Company = this.searchContentById(id)
-        println(supplier)
         backend.updateCompanyWithId(id, Company(supplier.id, newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, supplier.productos)
         )
         val updated = this.searchContentById(id)
