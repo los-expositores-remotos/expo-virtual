@@ -2,6 +2,7 @@ package ar.edu.unq
 
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.SetScenario
+import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.SupplierController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
@@ -12,6 +13,7 @@ fun main(args: Array<String>) {
     val backend = SetScenario().getExpo()
     val companyController = CompanyController(backend)
     val supplierController = SupplierController(backend)
+    val bannerController = BannerController(backend)
     val app = Javalin.create {
         it.defaultContentType = "application/json"
         it.enableCorsForAllOrigins()
@@ -31,6 +33,9 @@ fun main(args: Array<String>) {
 
         path("products") {
             get(companyController::allProducts)
+            path(":supplierId") {
+                get(supplierController::getProductsBySuppId)
+            }
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
@@ -43,7 +48,11 @@ fun main(args: Array<String>) {
         }
 
         path("banners") {
-            get(companyController::allBanners)
+            get(bannerController::allBanners)
+            post(bannerController::agregarBanner)
+            path(":bannerId") {
+                delete(bannerController::deleteBanner)
+            }
         }
 
         path("supplier") {

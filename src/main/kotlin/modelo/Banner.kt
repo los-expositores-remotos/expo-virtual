@@ -1,3 +1,3 @@
 package modelo
 
-data class Banner(val image: String)
+data class Banner(val id: Int, val image: String)

@@ -12,7 +12,7 @@ data class CompanyNameViewMapper(val companyName: String)
 
 data class CompanyImageViewMapper(val companyImage: String)
 
-data class BannerImageViewMapper(val bannerImages: String)
+data class BannerImageViewMapper(val id: String, val image: String)
 
 data class ProductsViewMapper(val id: String,
                               val idProveedor: String,
@@ -30,3 +30,5 @@ data class SupplierRegisterMapper(val companyName: String?,
                                   val facebook: String?,
                                   val instagram: String?,
                                   val web: String?)
+
+data class BannerRegisterMapper(val image: String?)

@@ -34,6 +34,7 @@ class SupplierController(val backend: Expo) {
             throw BadRequestResponse(e.message.toString())
         }
     }
+
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
@@ -51,6 +52,24 @@ class SupplierController(val backend: Expo) {
                     toSimpleData(supplier.productos)
                 )
             )
+        } catch (e: NotFoundException) {
+            throw NotFoundResponse(e.message.toString())
+        }
+    }
+    fun getProductsBySuppId(ctx: Context) {
+        try {
+            val supplierId: String = ctx.pathParam("supplierId")
+            val supplier: Company = this.searchContentById(supplierId) as Company
+            val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
+                it.idProveedor.toString(),
+                it.nombreDelArticulo,
+                it.description,
+                it.imagenes,
+                it.stock,
+                it.precio,
+                it.precioPromocional) }
+            ctx.status(200)
+            ctx.json(products)
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }

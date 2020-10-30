@@ -63,6 +63,7 @@ class SetScenario {
         banners.forEach {
             expo.addBanner(
                 Banner(
+                    expo.setBannerId(),
                     it.image
                 )
             )
