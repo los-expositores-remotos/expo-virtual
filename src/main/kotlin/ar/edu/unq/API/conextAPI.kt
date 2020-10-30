@@ -3,6 +3,7 @@ package ar.edu.unq
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.SetScenario
 import ar.edu.unq.API.controllers.BannerController
+import ar.edu.unq.API.controllers.ProductController
 import ar.edu.unq.API.controllers.SupplierController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
@@ -14,6 +15,7 @@ fun main(args: Array<String>) {
     val companyController = CompanyController(backend)
     val supplierController = SupplierController(backend)
     val bannerController = BannerController(backend)
+    val productController = ProductController(backend)
     val app = Javalin.create {
         it.defaultContentType = "application/json"
         it.enableCorsForAllOrigins()
@@ -36,7 +38,7 @@ fun main(args: Array<String>) {
    //         post(productController::agregarProduct)
             path(":productId") {
     //            get(productController::getProductById)
-    //            delete(productController::deleteProduct)
+                delete(productController::deleteProduct)
     //            put(productController::modifyProduct)
             }
 
