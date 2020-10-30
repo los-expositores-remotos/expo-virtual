@@ -1,11 +1,9 @@
 package ar.edu.unq.API.controllers
 
-import ar.edu.unq.API.ExistsException
-import ar.edu.unq.API.OkResultMapper
-import ar.edu.unq.API.ProductRegisterMapper
-import ar.edu.unq.API.SupplierRegisterMapper
+import ar.edu.unq.API.*
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
+import io.javalin.http.NotFoundResponse
 import modelo.Company
 import modelo.Expo
 import modelo.Product
@@ -45,4 +43,25 @@ class ProductController(val backend: Expo) {
             throw BadRequestResponse(e.message.toString())
         }
     }
+
+    fun getProductById(ctx: Context) { //falta validacion de que el id exista
+        try {
+            val productId: String = ctx.pathParam("productId")
+            val product: Product = this.backend.getProduct(productId)
+            ctx.status(200)
+            println(product)
+            ctx.json( ProductsViewMapper(product.id.toString(),
+                product.idProveedor.toString(),
+                product.nombreDelArticulo,
+                product.description,
+                product.imagenes,
+                product.stock,
+                product.precio,
+                product.precioPromocional) )
+        } catch (e: NotFoundException) {
+            throw NotFoundResponse(e.message.toString())
+        }
+    }
+
+
 }

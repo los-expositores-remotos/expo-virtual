@@ -36,6 +36,13 @@ class Expo(
         //this.updateCompanyWithId(product.idProveedor.toString(), Company(product.idProveedor, company!!.nombreDeEmpresa, company!!.imagenDeLaEmpresa, company!!.facebook, company!!.instagram, company!!.web, company!!.productos.filterNot { it.id.toString() == id }.toMutableList()) )
     }
 
+    fun getProduct(id: String): Product {
+        var products: List<Product> = this.makeListFromListofList(companies.map{ it.productos})!!
+        var product: Product = products.find { it.id.toString() == id }!!
+        println(product)
+        return product
+    }
+
     fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
         val list: MutableList<E> = ArrayList()
         for (item in iter) {

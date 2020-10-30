@@ -37,7 +37,7 @@ fun main(args: Array<String>) {
         path("products") {
             post(productController::addProduct)
             path(":productId") {
-    //            get(productController::getProductById)
+                get(productController::getProductById)
                 delete(productController::deleteProduct)
     //            put(productController::modifyProduct)
             }
