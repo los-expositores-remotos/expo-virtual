@@ -23,6 +23,7 @@ fun main(args: Array<String>) {
     app.routes {
 
         path("companies") {
+            get(supplierController::allSupliers)
             path("images") {
                 get(companyController::imagesCompanies)
             }
@@ -59,6 +60,7 @@ fun main(args: Array<String>) {
             post(supplierController::createSupplier)
             path(":supplierId") {
                 get(supplierController::getSupplierById)
+                delete(supplierController::deleteSupplier)
             }
         }
 

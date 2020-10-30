@@ -26,7 +26,6 @@ class SupplierController(val backend: Expo) {
                 .get()
             val supplier = Company(
                 backend.setCompanyId(), newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, mutableListOf())
-            println(supplier)
             backend.addCompany(supplier)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
@@ -75,6 +74,32 @@ class SupplierController(val backend: Expo) {
         }
     }
 
+    fun allSupliers(ctx: Context) {
+
+        val suppliers = backend.companies.map{ CompanyViewMapper(
+            it.id.toString(),
+            it.nombreDeEmpresa,
+            it.imagenDeLaEmpresa,
+            it.facebook,
+            it.instagram,
+            it.web,
+            toSimpleData(it.productos)
+        )}
+        ctx.status(200)
+        ctx.json(suppliers)
+    }
+
+    fun deleteSupplier(ctx: Context) {
+        try {
+            val id = ctx.pathParam("supplierId")
+            backend.removeSupplier(id)
+            ctx.status(204)
+        } catch (e: ExistsException) {
+            throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+//////funciones auxiliares
     fun searchContentById(supplierId: String?): Company {
         return backend.companies.find { it.id.toString() == supplierId } ?: throw NotFoundException("Supplier", "id", supplierId!!)
     }
@@ -83,4 +108,3 @@ class SupplierController(val backend: Expo) {
         return lista.map { ProductsViewMapper(it.id.toString(), it.idProveedor.toString(), it.nombreDelArticulo, it.description, it.imagenes, it.stock, it.precio, it.precioPromocional) }
     }
 }
-

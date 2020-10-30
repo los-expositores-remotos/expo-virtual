@@ -16,5 +16,5 @@ class Expo(
     fun addCompany(company: Company) = addToList(companies, company)
     fun addBanner(banner: Banner) = addToList(banners, banner)
     fun removeBanner(id: String) = banners.removeIf { it.id.toString() == id }
-
+    fun removeSupplier(id: String) = companies.removeIf { it.id.toString() == id }
 }
