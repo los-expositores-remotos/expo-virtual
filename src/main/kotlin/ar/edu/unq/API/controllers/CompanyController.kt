@@ -1,11 +1,10 @@
 package ar.edu.unq.API.controllers
 
-import ar.edu.unq.API.BannerImageViewMapper
 import ar.edu.unq.API.CompanyImageViewMapper
 import ar.edu.unq.API.CompanyNameViewMapper
 import ar.edu.unq.API.ProductsViewMapper
 import io.javalin.http.Context
-import modelo.Expo
+import ar.edu.unq.modelo.Expo
 import java.util.*
 
 
@@ -14,14 +13,14 @@ class CompanyController(val backend: Expo) {
 
     fun imagesCompanies(ctx: Context) {
 
-        var imagesC = backend.companies.map { CompanyImageViewMapper(it.imagenDeLaEmpresa) }
+        var imagesC = backend.companies.map { CompanyImageViewMapper(it.companyImage) }
         ctx.status(200)
         ctx.json(imagesC)
     }
 
     fun namesCompanies(ctx: Context) {
 
-        var namesC = backend.companies.map { CompanyNameViewMapper(it.nombreDeEmpresa) }
+        var namesC = backend.companies.map { CompanyNameViewMapper(it.companyName) }
         ctx.status(200)
         ctx.json(namesC)
     }
@@ -31,12 +30,12 @@ class CompanyController(val backend: Expo) {
     * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
         var bestSellersP = backend.companies.map{ ProductsViewMapper(it.productos.first().id.toString(),
                 it.productos.first().idProveedor.toString(),
-                it.productos.first().nombreDelArticulo,
+                it.productos.first().itemName,
                 it.productos.first().description,
-                it.productos.first().imagenes,
+                it.productos.first().images,
                 it.productos.first().stock,
-                it.productos.first().precio,
-                it.productos.first().precioPromocional) }
+                it.productos.first().itemPrice,
+                it.productos.first().promotionalPrice) }
         ctx.status(200)
         ctx.json(bestSellersP)
     }
@@ -46,12 +45,12 @@ class CompanyController(val backend: Expo) {
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
         var newestP = backend.companies.map{ ProductsViewMapper(it.productos.last().id.toString(),
                 it.productos.last().idProveedor.toString(),
-                it.productos.last().nombreDelArticulo,
+                it.productos.last().itemName,
                 it.productos.last().description,
-                it.productos.last().imagenes,
+                it.productos.last().images,
                 it.productos.last().stock,
-                it.productos.last().precio,
-                it.productos.last().precioPromocional) }
+                it.productos.last().itemPrice,
+                it.productos.last().promotionalPrice) }
         ctx.status(200)
         ctx.json(newestP)
     }
@@ -61,12 +60,12 @@ class CompanyController(val backend: Expo) {
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
         var newestP = backend.companies.map{ ProductsViewMapper(it.productos.random().id.toString(),
                 it.productos.random().idProveedor.toString(),
-                it.productos.random().nombreDelArticulo,
+                it.productos.random().itemName,
                 it.productos.random().description,
-                it.productos.random().imagenes,
+                it.productos.random().images,
                 it.productos.random().stock,
-                it.productos.random().precio,
-                it.productos.random().precioPromocional) }
+                it.productos.random().itemPrice,
+                it.productos.random().promotionalPrice) }
         ctx.status(200)
         ctx.json(newestP)
     }
@@ -78,12 +77,12 @@ class CompanyController(val backend: Expo) {
 
         var allP = allProducts!!.map{ ProductsViewMapper(it.id.toString(),
                 it.idProveedor.toString(),
-                it.nombreDelArticulo,
+                it.itemName,
                 it.description,
-                it.imagenes,
+                it.images,
                 it.stock,
-                it.precio,
-                it.precioPromocional) }
+                it.itemPrice,
+                it.promotionalPrice) }
         ctx.status(200)
         ctx.json(allP)
     }

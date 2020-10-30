@@ -4,9 +4,8 @@ import ar.edu.unq.API.*
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
-import modelo.Company
-import modelo.Expo
-import modelo.Product
+import ar.edu.unq.modelo.Expo
+import ar.edu.unq.modelo.Producto
 
 class ProductController(val backend: Expo) {
 
@@ -34,7 +33,7 @@ class ProductController(val backend: Expo) {
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            val product = Product(
+            val product = Producto(
                 backend.setProductId(), newProduct.idProveedor!!.toInt(), newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
             backend.addProduct(product)
             ctx.status(201)
@@ -47,17 +46,17 @@ class ProductController(val backend: Expo) {
     fun getProductById(ctx: Context) { //falta validacion de que el id exista
         try {
             val productId: String = ctx.pathParam("productId")
-            val product: Product = this.backend.getProduct(productId)
+            val product: Producto = this.backend.getProduct(productId)
             ctx.status(200)
             println(product)
             ctx.json( ProductsViewMapper(product.id.toString(),
                 product.idProveedor.toString(),
-                product.nombreDelArticulo,
+                product.itemName,
                 product.description,
-                product.imagenes,
+                product.images,
                 product.stock,
-                product.precio,
-                product.precioPromocional) )
+                product.itemPrice,
+                product.promotionalPrice) )
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
@@ -71,18 +70,18 @@ class ProductController(val backend: Expo) {
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            backend.updateProductWithId(id, Product(id.toInt(), newProduct.idProveedor!!.toInt(), newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+            backend.updateProductWithId(id, Producto(id.toInt(), newProduct.idProveedor!!.toInt(), newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
             )
             val updated = this.backend.getProduct(id)
             ctx.json(ProductsViewMapper(
                 updated.id.toString(),
                 updated.idProveedor.toString(),
-                updated.nombreDelArticulo,
+                updated.itemName,
                 updated.description,
-                updated.imagenes,
+                updated.images,
                 updated.stock,
-                updated.precio,
-                updated.precioPromocional))
+                updated.itemPrice,
+                updated.promotionalPrice))
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }

@@ -30,7 +30,7 @@ class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor
 
     override fun mapFromDocument(document: Document): Proveedor {
         val proveedor = Proveedor()
-        proveedor.id = ObjectId(document["id"].toString())
+   //     proveedor.id = ObjectId(document["id"].toString())
         proveedor.companyName = document["companyName"].toString()
         proveedor.companyImage = document["companyImage"].toString()
         proveedor.facebook = document["facebook"].toString()

@@ -16,7 +16,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         document["idProveedor"] = obj.idProveedor.toString()
         document["itemName"] = obj.itemName
         document["description"] = obj.description
-        document["image"] = obj.image
+        document["image"] = obj.images
         document["stock"] = obj.stock.toString()
         document["itemPrice"] = obj.itemPrice.toString()
         document["promotionalPrice"] = obj.promotionalPrice.toString()
@@ -27,11 +27,11 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
 
     override fun mapFromDocument(document: Document): Producto {
         val producto = Producto()
-        producto.id = ObjectId(document["id"].toString())
-        producto.idProveedor = ObjectId(document["idProveedor"].toString())
+     //   producto.id = ObjectId(document["id"].toString())
+     //   producto.idProveedor = ObjectId(document["idProveedor"].toString())
         producto.itemName = document["itemName"].toString()
         producto.description = document["description"].toString()
-        producto.image = document["image"].toString()
+       // producto.images = document["image"].toString()
         producto.stock = document["stock"].toString().toInt()
         producto.itemPrice = document["itemPrice"].toString().toInt()
         producto.promotionalPrice = document["promotionalPrice"].toString().toInt()

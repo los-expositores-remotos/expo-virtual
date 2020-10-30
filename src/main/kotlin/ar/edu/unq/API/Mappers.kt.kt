@@ -16,12 +16,12 @@ data class BannerImageViewMapper(val id: String, val image: String)
 
 data class ProductsViewMapper(val id: String,
                               val idProveedor: String,
-                              val nombreDelArticulo: String,
+                              val itemName: String,
                               val description: String,
-                              val imagenes: List<String>,
+                              val images: List<String>,
                               val stock: Int,
-                              val precio: Int,
-                              val precioPromocional: Int)
+                              val itemPrice: Int,
+                              val promotionalPrice: Int)
 
 data class OkResultMapper(val result: String)
 

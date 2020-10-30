@@ -1,5 +1,6 @@
 package modelo
 
+/*
 data class Company(
 
     val id: Int,
@@ -9,4 +10,4 @@ data class Company(
     val instagram: String,
     val web: String,
     val productos: MutableList<Product> = mutableListOf()
-)
+)*/

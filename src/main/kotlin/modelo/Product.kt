@@ -1,4 +1,5 @@
 package modelo
+/*
 
 data class Product(
         val id: Int,
@@ -9,4 +10,4 @@ data class Product(
         val stock: Int,
         val precio: Int,
         val precioPromocional: Int
-)
+)*/

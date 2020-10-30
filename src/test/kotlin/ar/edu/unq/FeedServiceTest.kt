@@ -18,6 +18,7 @@ import org.bson.Document
 import org.bson.types.ObjectId
 
 class FeedServiceTest {
+/*
 
     private val proveedorDAO: ProveedorDAO = MongoProveedorDAOImpl()
     private val productoDAO: ProductoDAO = MongoProductoDAOImpl()
@@ -61,8 +62,10 @@ class FeedServiceTest {
 
         // conexion.deleteCollection("pruebaV2")
         //conexion.createCollection("pruebaVV")
-        /*conexion.deleteCollection("pruebaVV")
-          conexion.deleteCollection("prueba2")*/
+        */
+/*conexion.deleteCollection("pruebaVV")
+          conexion.deleteCollection("prueba2")*//*
+
     }
 
     @Test
@@ -137,4 +140,5 @@ class FeedServiceTest {
         TransactionRunner.runTrx({ proveedorDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         TransactionRunner.runTrx({ productoDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
+*/
 }

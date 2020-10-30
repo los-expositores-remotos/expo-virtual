@@ -1,11 +1,11 @@
 package ar.edu.unq.API
 
+import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import modelo.Banner
-import modelo.Company
-import modelo.Expo
-import modelo.Product
+import ar.edu.unq.modelo.Banner
+import ar.edu.unq.modelo.Expo
 
 class SetScenario {
 
@@ -13,9 +13,9 @@ class SetScenario {
         return object {}::class.java.classLoader.getResource(name).readText()
     }
 
-    private fun getCompanies(): MutableList<CompanyData> {
-        val companiesString = readFile("empresas-productos.json")
-        val companyDataType = object : TypeToken<MutableList<CompanyData>>() {}.type
+    private fun getCompanies(): MutableList<Proveedor> {
+        val companiesString = readFile("empresas-productosING.json")
+        val companyDataType = object : TypeToken<MutableList<Proveedor>>() {}.type
         return Gson().fromJson(companiesString, companyDataType)
     }
 
@@ -30,10 +30,10 @@ class SetScenario {
         companies.forEach {
             val companyId: Int = expo.setCompanyId()
             expo.addCompany(
-                Company(
+                Proveedor(
                     companyId,
-                    it.nombreDeEmpresa,
-                    it.imagenDeLaEmpresa,
+                    it.companyName,
+                    it.companyImage,
                     it.facebook,
                     it.instagram,
                     it.web,
@@ -43,17 +43,17 @@ class SetScenario {
         }
     }
 
-    private fun getProducts(products: List<ProductData>, expo: Expo, companyId: Int): MutableList<Product> {
+    private fun getProducts(products: List<Producto>, expo: Expo, companyId: Int): MutableList<Producto> {
         return products.map {
-            Product(
-                    expo.setProductId(),
+            Producto(
+                    expo.setProductId().toInt(),
                     companyId,
-                    it.nombreDelArticulo,
+                    it.itemName,
                     it.description,
-                    it.imagenes,
+                    it.images,
                     it.stock,
-                    it.precio,
-                    it.precioPromocional
+                    it.itemPrice,
+                    it.promotionalPrice
             )
         }.toMutableList()
     }

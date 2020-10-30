@@ -3,9 +3,8 @@ package ar.edu.unq.API.controllers
 import ar.edu.unq.API.*
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
-import modelo.Banner
-import modelo.Company
-import modelo.Expo
+import ar.edu.unq.modelo.Banner
+import ar.edu.unq.modelo.Expo
 
 class BannerController(val backend: Expo) {
 

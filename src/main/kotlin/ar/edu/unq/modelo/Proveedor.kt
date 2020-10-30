@@ -1,17 +1,14 @@
 package ar.edu.unq.modelo
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import kotlin.properties.Delegates
 
-import org.bson.codecs.pojo.annotations.BsonIgnore
-import org.bson.codecs.pojo.annotations.BsonProperty
-import org.bson.types.ObjectId
 
 
 class Proveedor {
-
+    val expo: Expo = Expo()
     //@BsonProperty("id")
-    var id: ObjectId = ObjectId.get()
+//    var id: ObjectId = ObjectId.get()
+    var id by Delegates.notNull<Int>()
     var companyName: String = ""
     var companyImage: String = ""
     var facebook: String = ""
@@ -30,7 +27,15 @@ class Proveedor {
         this.instagram = instagram
         this.web = web
     }
-
+    constructor(id: Int, companyName: String, companyImage: String, facebook: String, instagram: String, web: String, productos: MutableList<Producto>){
+        this.id = id
+        this.companyName = companyName
+        this.companyImage = companyImage
+        this.facebook = facebook
+        this.instagram = instagram
+        this.web = web
+        this.productos = productos
+    }
 
 //    fun addProduct(productoNuevo: Producto) {
 //        productos.add(productoNuevo)

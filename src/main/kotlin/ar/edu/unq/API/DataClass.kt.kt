@@ -1,4 +1,5 @@
 package ar.edu.unq.API
+/*
 
 data class CompanyData(
 
@@ -10,6 +11,7 @@ data class CompanyData(
     val productos: List<ProductData>
 
 )
+*/
 
 data class ProductData(
     val nombreDelArticulo: String,

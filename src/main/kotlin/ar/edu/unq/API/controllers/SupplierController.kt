@@ -1,12 +1,13 @@
 package ar.edu.unq.API.controllers
 
 import ar.edu.unq.API.*
-import modelo.Expo
+import ar.edu.unq.modelo.Expo
+import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
-import modelo.Company
-import modelo.Product
+
 
 class SupplierController(val backend: Expo) {
 
@@ -24,7 +25,7 @@ class SupplierController(val backend: Expo) {
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier = Company(
+            val supplier = Proveedor(
                 backend.setCompanyId(), newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, mutableListOf())
             backend.addCompany(supplier)
             ctx.status(201)
@@ -37,14 +38,14 @@ class SupplierController(val backend: Expo) {
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Company = this.searchContentById(supplierId) as Company
+            val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
 
             ctx.status(200)
             ctx.json(
                 CompanyViewMapper(
                     supplier.id.toString(),
-                    supplier.nombreDeEmpresa,
-                    supplier.imagenDeLaEmpresa,
+                    supplier.companyName,
+                    supplier.companyImage,
                     supplier.facebook,
                     supplier.instagram,
                     supplier.web,
@@ -58,15 +59,15 @@ class SupplierController(val backend: Expo) {
     fun getProductsBySuppId(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Company = this.searchContentById(supplierId) as Company
+            val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
             val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
                 it.idProveedor.toString(),
-                it.nombreDelArticulo,
+                it.itemName,
                 it.description,
-                it.imagenes,
+                it.images,
                 it.stock,
-                it.precio,
-                it.precioPromocional) }
+                it.itemPrice,
+                it.promotionalPrice) }
             ctx.status(200)
             ctx.json(products)
         } catch (e: NotFoundException) {
@@ -78,8 +79,8 @@ class SupplierController(val backend: Expo) {
 
         val suppliers = backend.companies.map{ CompanyViewMapper(
             it.id.toString(),
-            it.nombreDeEmpresa,
-            it.imagenDeLaEmpresa,
+            it.companyName,
+            it.companyImage,
             it.facebook,
             it.instagram,
             it.web,
@@ -108,14 +109,14 @@ class SupplierController(val backend: Expo) {
                 "Invalid body : companyName, companyImage, facebook, instagram and web are required"
             )
             .get()
-        val supplier: Company = this.searchContentById(id)
-        backend.updateCompanyWithId(id, Company(supplier.id, newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, supplier.productos)
+        val supplier: Proveedor = this.searchContentById(id)
+        backend.updateCompanyWithId(id, Proveedor(supplier.id, newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!, supplier.productos)
         )
         val updated = this.searchContentById(id)
         ctx.json(CompanyViewMapper(
             updated.id.toString(),
-            updated.nombreDeEmpresa,
-            updated.imagenDeLaEmpresa,
+            updated.companyName,
+            updated.companyImage,
             updated.facebook,
             updated.instagram,
             updated.web,
@@ -126,11 +127,11 @@ class SupplierController(val backend: Expo) {
     }
 
 //////funciones auxiliares
-    fun searchContentById(supplierId: String?): Company {
+    fun searchContentById(supplierId: String?): Proveedor {
         return backend.companies.find { it.id.toString() == supplierId } ?: throw NotFoundException("Supplier", "id", supplierId!!)
     }
 
-    fun toSimpleData(lista: MutableCollection<Product>): List<ProductsViewMapper> {
-        return lista.map { ProductsViewMapper(it.id.toString(), it.idProveedor.toString(), it.nombreDelArticulo, it.description, it.imagenes, it.stock, it.precio, it.precioPromocional) }
+    fun toSimpleData(lista: MutableCollection<Producto>): List<ProductsViewMapper> {
+        return lista.map { ProductsViewMapper(it.id.toString(), it.idProveedor.toString(), it.itemName, it.description, it.images, it.stock, it.itemPrice, it.promotionalPrice) }
     }
 }
