@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
         }
 
         path("products") {
-   //         post(productController::agregarProduct)
+            post(productController::addProduct)
             path(":productId") {
     //            get(productController::getProductById)
                 delete(productController::deleteProduct)

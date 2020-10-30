@@ -32,3 +32,12 @@ data class SupplierRegisterMapper(val companyName: String?,
                                   val web: String?)
 
 data class BannerRegisterMapper(val image: String?)
+
+data class ProductRegisterMapper(val idProveedor: String?,
+                                 val itemName: String?,
+                                 val description: String?,
+                                 val images: List<String>?,
+                                 val stock: Int?,
+                                 val itemPrice: Int?,
+                                 val promotionalPrice: Int?)
+

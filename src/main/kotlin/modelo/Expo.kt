@@ -30,6 +30,12 @@ class Expo(
         this.updateCompanyWithId(product.idProveedor.toString(), Company(idProveedor, company!!.nombreDeEmpresa, company!!.imagenDeLaEmpresa, company!!.facebook, company!!.instagram, company!!.web, company!!.productos.filterNot { it.id.toString() == id }.toMutableList()))
     }
 
+    fun addProduct(product: Product){
+        var company = companies.find { it.id.toString() == product.idProveedor.toString() }
+        company!!.productos.add(product)
+        //this.updateCompanyWithId(product.idProveedor.toString(), Company(product.idProveedor, company!!.nombreDeEmpresa, company!!.imagenDeLaEmpresa, company!!.facebook, company!!.instagram, company!!.web, company!!.productos.filterNot { it.id.toString() == id }.toMutableList()) )
+    }
+
     fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
         val list: MutableList<E> = ArrayList()
         for (item in iter) {
