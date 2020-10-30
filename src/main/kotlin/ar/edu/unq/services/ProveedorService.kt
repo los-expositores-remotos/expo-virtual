@@ -6,7 +6,7 @@ import org.bson.types.ObjectId
 
 interface ProveedorService {
     fun crearProveedor(proveedor: Proveedor)
-    fun recuperarProveedor(id: Int): Proveedor?
+    fun recuperarProveedor(id: String): Proveedor?
     fun recuperarATodosLosProveedores(): Collection<Proveedor>
     fun deleteAll()
 }

@@ -19,8 +19,8 @@ class ProveedorServiceImpl(
         this.proveedorDAO.saveInTrx(proveedor, this.dataBaseType)
     }
 
-    override fun recuperarProveedor(id: Int): Proveedor? {
-        return this.proveedorDAO.getByInTrx("id", id.toString(), this.dataBaseType)
+    override fun recuperarProveedor(id: String): Proveedor? {
+        return this.proveedorDAO.getByInTrx("id", id, this.dataBaseType)
     }
 
     override fun recuperarATodosLosProveedores(): Collection<Proveedor> {
