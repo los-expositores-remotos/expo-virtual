@@ -1,16 +1,17 @@
 package ar.edu.unq
 
-import ar.edu.unq.API.CompanyController
+import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.SetScenario
+import ar.edu.unq.API.controllers.SupplierController
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
-import modelo.Expo
 
 fun main(args: Array<String>) {
 
     val backend = SetScenario().getExpo()
     val companyController = CompanyController(backend)
+    val supplierController = SupplierController(backend)
     val app = Javalin.create {
         it.defaultContentType = "application/json"
         it.enableCorsForAllOrigins()
@@ -44,6 +45,14 @@ fun main(args: Array<String>) {
         path("banners") {
             get(companyController::allBanners)
         }
+
+        path("supplier") {
+            post(supplierController::createSupplier)
+            path(":supplierId") {
+                get(supplierController::getSupplierById)
+            }
+        }
+
 /*        path("order") {
             path(":byLowerPrice") {
                 get(companyController::orderByLowerPrice)

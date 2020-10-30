@@ -28,22 +28,26 @@ class SetScenario {
     private fun addAllCompanies(expo: Expo) {
         val companies = getCompanies()
         companies.forEach {
+            val companyId: Int = expo.setCompanyId()
             expo.addCompany(
                 Company(
+                    companyId,
                     it.nombreDeEmpresa,
                     it.imagenDeLaEmpresa,
                     it.facebook,
                     it.instagram,
                     it.web,
-                    getProducts(it.productos)
+                    getProducts(it.productos, expo, companyId)
                 )
             )
         }
     }
 
-    private fun getProducts(products: List<ProductData>): MutableList<Product> {
+    private fun getProducts(products: List<ProductData>, expo: Expo, companyId: Int): MutableList<Product> {
         return products.map {
             Product(
+                    expo.setProductId(),
+                    companyId,
                     it.nombreDelArticulo,
                     it.description,
                     it.imagenes,

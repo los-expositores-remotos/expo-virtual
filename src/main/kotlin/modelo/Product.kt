@@ -1,6 +1,8 @@
 package modelo
 
 data class Product(
+        val id: Int,
+        val idProveedor: Int,
         val nombreDelArticulo: String,
         val description: String,
         val imagenes: List<String>,

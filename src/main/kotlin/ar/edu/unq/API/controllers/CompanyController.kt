@@ -1,5 +1,9 @@
-package ar.edu.unq.API
+package ar.edu.unq.API.controllers
 
+import ar.edu.unq.API.BannerImageViewMapper
+import ar.edu.unq.API.CompanyImageViewMapper
+import ar.edu.unq.API.CompanyNameViewMapper
+import ar.edu.unq.API.ProductsViewMapper
 import io.javalin.http.Context
 import modelo.Expo
 import java.util.*
@@ -25,7 +29,9 @@ class CompanyController(val backend: Expo) {
     fun producstBestSellers(ctx: Context) {
     /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
     * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var bestSellersP = backend.companies.map{ ProductsViewMapper(it.productos.first().nombreDelArticulo,
+        var bestSellersP = backend.companies.map{ ProductsViewMapper(it.productos.first().id.toString(),
+                it.productos.first().idProveedor.toString(),
+                it.productos.first().nombreDelArticulo,
                 it.productos.first().description,
                 it.productos.first().imagenes,
                 it.productos.first().stock,
@@ -38,7 +44,9 @@ class CompanyController(val backend: Expo) {
     fun productsNewest(ctx: Context) {
         /*traer los productos mas nuevos  EN ESTE CASO ME TRAE EL ULTIMO DE CADA EMPRESA
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.last().nombreDelArticulo,
+        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.last().id.toString(),
+                it.productos.last().idProveedor.toString(),
+                it.productos.last().nombreDelArticulo,
                 it.productos.last().description,
                 it.productos.last().imagenes,
                 it.productos.last().stock,
@@ -51,7 +59,9 @@ class CompanyController(val backend: Expo) {
     fun productsWPromoPrice(ctx: Context) {
         /*traer los productos con precio promocional  EN ESTE CASO ME TRAE UNO RANDOM DE CADA EMPRESA
         * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.random().nombreDelArticulo,
+        var newestP = backend.companies.map{ ProductsViewMapper(it.productos.random().id.toString(),
+                it.productos.random().idProveedor.toString(),
+                it.productos.random().nombreDelArticulo,
                 it.productos.random().description,
                 it.productos.random().imagenes,
                 it.productos.random().stock,
@@ -66,7 +76,9 @@ class CompanyController(val backend: Expo) {
         var productsLists = backend.companies.map { it.productos }
         var allProducts = makeListFromListofList(productsLists)
 
-        var allP = allProducts!!.map{ ProductsViewMapper(it.nombreDelArticulo,
+        var allP = allProducts!!.map{ ProductsViewMapper(it.id.toString(),
+                it.idProveedor.toString(),
+                it.nombreDelArticulo,
                 it.description,
                 it.imagenes,
                 it.stock,
