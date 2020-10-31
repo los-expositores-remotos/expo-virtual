@@ -55,6 +55,14 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         this.getCollection(entityType.simpleName)!!.insertMany(mapAllToDocument(objects))
     }
 
+    fun delete(id: String){// TODO: testear
+        this.getCollection(entityType.simpleName)!!.deleteOne(eq("id", id))
+    }
+
+    fun deleteBy(property:String, value: String?){// TODO: testear
+        this.getCollection(entityType.simpleName)!!.deleteOne(eq(property, value))
+    }
+
     operator fun get(id: String?): T? {
         return getBy("id", id)
     }
