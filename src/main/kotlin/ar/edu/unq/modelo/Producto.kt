@@ -7,7 +7,7 @@ import org.bson.types.ObjectId
 
 
 class Producto{
-    //@BsonProperty("id")
+    @BsonProperty("id")
     var id: ObjectId = ObjectId()
     lateinit var idProveedor: ObjectId
     lateinit var itemName: String
