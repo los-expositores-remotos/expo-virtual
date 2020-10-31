@@ -2,36 +2,14 @@ import React from "react";
 import {useEffect, useState} from "react"
 import M from 'materialize-css'
 import '../../styles/Home.css'
-import {Carousel, Button} from "react-materialize"
-import data from '../../data/empresas-productos.json'
+import {Carousel} from "react-materialize"
 import SliderProducts from '../SliderProducts'
 
 
   document.addEventListener('DOMContentLoaded', function() {
     var elems2 = document.querySelectorAll('.slider');
     var instances2 = M.Slider.init(elems2, {});
-
   });
-  const CarouselofProdocts = () => {
-    const dataAux = data.map((suppliers) => suppliers.productos.flat());
-    
-    console.log(dataAux.flat())
-    let index = 0
-    const products = dataAux.flat().map((product)=>   
-        <div class="carousel-item red white-text" href="#one!">
-          <h2>{product.nombreDelArticulo}</h2>
-          <p class="white-text">{product.description}</p>
-          <a class="btn waves-effect white grey-text darken-text-2">button</a>
-        </div>
-    )
-    {console.log(products)}
-      return (
-        <div class="carousel carousel-slider center" id="carousel-product" >
-          {products}
-        </div>
-  
-      )
-  }
 
 const Home = () => {
   const [companyImage, setConpanyImage] = useState([])
@@ -43,7 +21,10 @@ const Home = () => {
           "Content-Type":"application/json"
         }
       })
-        .then((res)=> res.json())
+        .then((res)=> {
+          if(res.ok){
+            return res.json()
+        }})
         .then((result)=>{
           console.log(result)
           const rta = result.map((image)=> 
@@ -87,14 +68,24 @@ const Home = () => {
    <div>
       <h5 className='productos'>Productos Destacados</h5>
    </div>
-    <SliderProducts/>
+    <SliderProducts />
     <div>
         <h5 className='productos'> Nuestras Empresas</h5>
     </div>
    <div>
       {
         companyImage.length === 0 ? 
-        <p>loanding...</p>
+        <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
         :
         <Carousel
       carouselId="Carousel-2"
@@ -103,11 +94,11 @@ const Home = () => {
         dist: -100,
         duration: 200,
         fullWidth: false,
-        indicators: false,
+        indicators: true,
         noWrap: false,
-        numVisible: 5,
+        numVisible: 4,
         onCycleTo: null,
-        padding: 0,
+        padding: 10,
         shift: 0
       }}
     />
