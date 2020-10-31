@@ -19,6 +19,7 @@ interface ProveedorDAO {
     fun <E> findEqInTrx(field:String, value:E, dataBaseType: DataBaseType): List<Proveedor>
     fun findInTrx(filter: Bson, dataBaseType: DataBaseType): List<Proveedor>
     fun getInTrx(id: String?, dataBaseType: DataBaseType): Proveedor?
+    fun deleteInTrx(id: String, dataBaseType: DataBaseType)
 
     /* Operaciones sobre Productos*/
     // fun agregarProducto(proveedor: Proveedor, producto: Producto)

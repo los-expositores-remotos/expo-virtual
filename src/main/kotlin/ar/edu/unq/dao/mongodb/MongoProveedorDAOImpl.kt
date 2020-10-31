@@ -72,6 +72,12 @@ class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor
         return getByInTrx("id", id, dataBaseType)
     }
 
+    override fun deleteInTrx(id: String, dataBaseType: DataBaseType) {
+        TransactionRunner.runTrx({ this.productoDAO.deleteBy("idProveedor", id) }, listOf(TransactionType.MONGO),
+                dataBaseType)
+        TransactionRunner.runTrx({ this.delete(id) }, listOf(TransactionType.MONGO), dataBaseType)
+    }
+
     override fun getByInTrx(property:String, value: String?, dataBaseType: DataBaseType): Proveedor?{
         val proveedor = TransactionRunner.runTrx({ this.getBy(property, value) }, listOf(TransactionType.MONGO), dataBaseType)
         this.completarProveedor(proveedor, dataBaseType)

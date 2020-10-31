@@ -36,6 +36,19 @@ class ProductoServiceImpl(
         return TransactionRunner.runTrx({ this.productoDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
+    override fun recuperarProducto(id: String): Producto {
+        return TransactionRunner.runTrx({ this.productoDAO.get(id) }, listOf(TransactionType.MONGO), this
+                .dataBaseType)!! //TODO: testear
+    }
+
+
+
+    override fun borrarProducto(id: String) {
+        TransactionRunner.runTrx({
+            this.productoDAO.delete(id)
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
     override fun deleteAll() {
         TransactionRunner.runTrx({ this.productoDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
