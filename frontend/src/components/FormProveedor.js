@@ -1,13 +1,13 @@
 import React from "react";
 import M from 'materialize-css'
-import '../../styles/Howtobuy.css'
+import '../styles/FormProveedor.css'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
   var instances = M.Autocomplete.init(elems, {});
 });
 
-const Howtobuy = () => {
+const FormProveedor = () => {
  
   
   return (
@@ -62,4 +62,4 @@ const Howtobuy = () => {
   );
 };
 
-export default Howtobuy;
+export default FormProveedor;

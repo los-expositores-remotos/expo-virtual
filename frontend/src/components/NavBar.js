@@ -16,17 +16,27 @@ const NavBar = () => {
     
        <div className="NavBar"> 
            <div className="row">
-               <div className="col s4">
+               <div className="col s2">
                    <Link to='/'><img className='img-logo' src={require('../images/logo.png')} alt="logo"/></Link>
                </div>
-               <div className="col s4">
+               <div className="col s6">
                    <form className="form-inline">
                        <input className="form-control sm-2" id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
                    </form>
                </div>
-               <div className="col s4">
+               <div className="col s1">
                    <Link to="/">
-                       <i className="material-icons left" id="iconSearch">search</i>
+                       <i className="small material-icons left" id="iconSearch">search</i>
+                   </Link>     
+               </div>
+               <div className="col s1">
+                   <Link to="/admin">
+                       <i className="small material-icons left" id="iconSearch">settings</i>
+                   </Link>     
+               </div>
+               <div className="col s1">
+                   <Link to="/myaccount">
+                       <i className="small material-icons left" id="iconSearch">account_box</i>
                    </Link>     
                </div>
            </div>           
