@@ -8,5 +8,6 @@ interface ProductoService {
     fun actualizarProducto(producto: Producto)
     fun recuperarATodosLosProductos(): Collection<Producto>
     fun borrarProducto(id: String)
+    fun recuperarProducto(id: String): Producto
     fun deleteAll()
 }
