@@ -52,9 +52,10 @@ fun main(args: Array<String>) {
                 delete(productController::deleteProduct)
                 put(productController::modifyProduct)  //verlo a fondo no funciona bien
             }
-/*            path(":supplierId") {
-                get(supplierController::getProductsBySuppId)
-            }
+            path("supplier") {
+                path(":supplierId") {
+                get(productController::getProductsBySuppId)
+            }/*
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
@@ -99,5 +100,7 @@ fun main(args: Array<String>) {
         //  path("/user") {
         //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
 
+        }
     }
 }
+

@@ -52,24 +52,6 @@ class CompanyController(val backendProveedorService: ProveedorService) {
             throw NotFoundResponse(e.message.toString())
         }
     }
-    fun getProductsBySuppId(ctx: Context) {
-        try {
-            val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
-            val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
-                it.idProveedor.toString(),
-                it.itemName,
-                it.description,
-                it.listImages,
-                it.stock,
-                it.itemPrice,
-                it.promotionalPrice) }
-            ctx.status(200)
-            ctx.json(products)
-        } catch (e: NotFoundException) {
-            throw NotFoundResponse(e.message.toString())
-        }
-    }
 
     fun allCompanies(ctx: Context) {
 

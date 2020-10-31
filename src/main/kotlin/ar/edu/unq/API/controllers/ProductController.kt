@@ -5,6 +5,7 @@ import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
 import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
 
@@ -37,7 +38,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                 )
                 .get()
             val product = Producto(
-                newProduct.idProveedor!!, newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+                , newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
             backend.addProduct(product)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
@@ -49,7 +50,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
 
-    fun getProductById(ctx: Context) { //falta validacion de que el id exista
+    fun getProductById(ctx: Context) {                              //falta validacion de que el id exista
 /*
         try {
             val productId: String = ctx.pathParam("productId")
@@ -71,8 +72,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
     fun modifyProduct(ctx: Context) {
-/*
-    }
         try {
             val id = ctx.pathParam("productId")
             val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
@@ -81,8 +80,17 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            backendProductoService.actualizarProducto(Producto(id, newProduct.idProveedor!!, newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
-            )
+            val producto = this.searchProductById(id)
+
+            producto.itemName = newProduct.itemName!!
+            producto.description = newProduct.description!!
+            producto.listImages = newProduct.images!!.toMutableList()
+            producto.stock = newProduct.stock!!
+            producto.itemPrice = newProduct.itemPrice!!
+            producto.promotionalPrice = newProduct.promotionalPrice!!
+
+            backendProductoService.actualizarProducto(producto)
+
             val updated = this.backendProductoService.obtenerProducto(id, newProduct.idProveedor!!)
             ctx.json(ProductsViewMapper(
                 updated.id.toString(),
@@ -96,7 +104,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
-        */
     }
 
     fun allProducts(ctx: Context) {
@@ -112,5 +119,32 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             it.promotionalPrice) }
         ctx.status(200)
         ctx.json(allP)
+    }
+
+    fun getProductsBySuppId(ctx: Context) {
+        try {
+            val supplierId: String = ctx.pathParam("supplierId")
+            val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
+            val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
+                it.idProveedor.toString(),
+                it.itemName,
+                it.description,
+                it.listImages,
+                it.stock,
+                it.itemPrice,
+                it.promotionalPrice) }
+            ctx.status(200)
+            ctx.json(products)
+        } catch (e: NotFoundException) {
+            throw NotFoundResponse(e.message.toString())
+        }
+    }
+
+    fun searchContentById(supplierId: String?): Proveedor {
+        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId!!)
+    }
+
+    fun searchProductById(productId: String?): Producto {
+        return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
     }
 }
