@@ -90,15 +90,18 @@ class CompanyController(val backendProveedorService: ProveedorService) {
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier: Proveedor = this.searchContentById(id)
-            supplier.companyName
-            supplier.companyImage
-            supplier.facebook
-            supplier.instagram
-            supplier.web
-
+            val supplier = this.searchContentById(id)
+            println(supplier.companyName)
+            supplier.companyName = newSupplier.companyName!!
+            supplier.companyImage = newSupplier.companyImage!!
+            supplier.facebook = newSupplier.facebook!!
+            supplier.instagram = newSupplier.instagram!!
+            supplier.web = newSupplier.web!!
+            println(supplier.companyImage)
             backendProveedorService.actualizarProveedor(supplier)
-            val updated = this.searchContentById(id)
+            println(supplier.companyName)
+            val updated = this.backendProveedorService.recuperarProveedor(id)
+            println(updated!!.companyName)
             ctx.json(
                 CompanyViewMapper(
                 updated.id.toString(),

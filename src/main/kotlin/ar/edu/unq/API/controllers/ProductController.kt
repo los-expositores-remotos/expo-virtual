@@ -41,13 +41,13 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
 
-    fun getProductById(ctx: Context) {                              //falta validacion de que el id exista
+    fun getProductById(ctx: Context) {   //falta validacion de que el id exista PRODUCTO X ID DE PRODUCTO
 
         try {
             val productId: String = ctx.pathParam("productId")
             val product: Producto = backendProductoService.recuperarProducto(productId)
             ctx.status(200)
-            println(product)
+            println(product.id.toString())
             ctx.json( ProductsViewMapper(product.id.toString(),
                 product.idProveedor.toString(),
                 product.itemName,
@@ -81,13 +81,14 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             producto.promotionalPrice = newProduct.promotionalPrice!!
 
             backendProductoService.actualizarProducto(producto)
-
-            val updated = this.backendProductoService.obtenerProducto(id, newProduct.idProveedor!!)
+            println(producto)
+            println(newProduct.idProveedor)
+            val updated = this.backendProductoService.recuperarProducto(id)
             ctx.json(ProductsViewMapper(
                 updated.id.toString(),
                 updated.idProveedor.toString(),
                 updated.itemName,
-                updated.description,
+                updated.description,               //     VER ID No existe el proveedor en la coleccion
                 updated.listImages,
                 updated.stock,
                 updated.itemPrice,
@@ -116,6 +117,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         try {
             val supplierId: String = ctx.pathParam("supplierId")
             val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
+            println(supplier)
             val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
                 it.idProveedor.toString(),
                 it.itemName,
@@ -132,7 +134,10 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
     fun searchContentById(supplierId: String?): Proveedor {
-        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId!!)
+        println(supplierId)
+        val supplier = backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId!!)
+        println(supplier)
+        return supplier
     }
 
     fun searchProductById(productId: String?): Producto {
