@@ -47,7 +47,6 @@ class BannerController(val backendProveedorService: ProveedorService) {
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
-
  */
         }
     }
