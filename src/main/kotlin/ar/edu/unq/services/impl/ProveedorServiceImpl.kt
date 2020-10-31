@@ -27,6 +27,14 @@ class ProveedorServiceImpl(
         return this.proveedorDAO.getAllInTrx(this.dataBaseType)
     }
 
+    override fun actualizarProveedor(proveedor: Proveedor) {
+        this.proveedorDAO.updateInTrx(proveedor, proveedor.id.toString(), this.dataBaseType)
+    }
+
+    override fun borrarProveedor(id: String) {
+        this.proveedorDAO.deleteInTrx(id, this.dataBaseType)
+    }
+
     override fun deleteAll() {
         TransactionRunner.runTrx({ this.proveedorDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }

@@ -13,4 +13,5 @@ interface ProductoDAO {
     fun getAll() : List<Producto>
     fun deleteAll()
     fun saveOrUpdate(productos: List<Producto>, dataBaseType: DataBaseType)
+    fun delete(id: String)
 }
