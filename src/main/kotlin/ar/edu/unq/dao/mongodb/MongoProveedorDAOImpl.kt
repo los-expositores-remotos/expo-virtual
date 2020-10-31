@@ -16,6 +16,11 @@ import org.bson.types.ObjectId
 class MongoProveedorDAOImpl : ProveedorDAO, GenericMongoDAO<Proveedor>(Proveedor::class.java) {
     val productoDAO = MongoProductoDAOImpl()
 
+    override fun save(objects: List<Proveedor>){
+        super.save(objects)
+        this.productoDAO.saveOrUpdate(objects.flatMap { proveedor -> proveedor.productos })
+    }
+
     override fun mapToDocument(obj: Proveedor): Document {
         val document = Document()
         document["id"] = obj.id.toString()

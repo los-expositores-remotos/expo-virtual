@@ -40,6 +40,16 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
         }
         return database?.getCollection(objectType)
     }
+     private fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>?{
+        // Precondición: Debe haber una sesión en el contexto
+        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+        try {
+            database?.createCollection(objectType)
+        }catch (exception: MongoCommandException){
+
+        }
+        return database?.getCollection(objectType, classType)
+    }
 
     fun save(anObject: T) {
         save(listOf(anObject))
@@ -47,12 +57,12 @@ abstract class GenericMongoDAO<T>(entityType: Class<T>) {
 
     fun update(anObject: T, id: String?) {
         val session:ClientSession = this.session_check()
-        this.getCollection(entityType.simpleName)!!.replaceOne(session, eq("id", id), this.mapToDocument(anObject))
+        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(session, eq("id", id), anObject)
     }
 
-    fun save(objects: List<T>) {
-        val session:ClientSession = this.session_check()
-        this.getCollection(entityType.simpleName)!!.insertMany(mapAllToDocument(objects))
+    open fun save(objects: List<T>) {
+        this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.insertMany(objects)
     }
 
     operator fun get(id: String?): T? {

@@ -52,4 +52,14 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
             }
         }
     }
+
+    fun saveOrUpdate(productos: List<Producto>){
+        for(producto in productos){
+            try {
+                this.save(producto)
+            }catch (exception: Throwable){
+                this.update(producto, producto.id.toString())
+            }
+        }
+    }
 }
