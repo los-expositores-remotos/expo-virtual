@@ -70,19 +70,18 @@ class CompanyController(val backendProveedorService: ProveedorService) {
     }
 
     fun deleteSupplier(ctx: Context) {
-/*
+
         try {
             val id = ctx.pathParam("supplierId")
-            backendProveedorService.removeSupplier(id)
+            backendProveedorService.borrarProveedor(id)
             ctx.status(204)
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
-        */
     }
 
     fun modifySupplier(ctx: Context) {
-/*
+
         try {
             val id = ctx.pathParam("supplierId")
             val newSupplier = ctx.bodyValidator<SupplierRegisterMapper>()
@@ -92,7 +91,13 @@ class CompanyController(val backendProveedorService: ProveedorService) {
                 )
                 .get()
             val supplier: Proveedor = this.searchContentById(id)
-            backendProveedorService.updateASupplierWithId(id.toInt(), newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
+            supplier.companyName
+            supplier.companyImage
+            supplier.facebook
+            supplier.instagram
+            supplier.web
+
+            backendProveedorService.actualizarProveedor(supplier)
             val updated = this.searchContentById(id)
             ctx.json(
                 CompanyViewMapper(
@@ -107,7 +112,6 @@ class CompanyController(val backendProveedorService: ProveedorService) {
             ) } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
-        */
     }
 
     fun imagesCompanies(ctx: Context) {

@@ -8,28 +8,21 @@ import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
+import org.bson.types.ObjectId
 
 class ProductController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    /*
-    fun nuevoProducto(producto: Producto)
-    fun obtenerProducto(proveedorId: String, nombreItem: String): Producto
-    fun actualizarProducto(producto: Producto)
-    */
-
     fun deleteProduct(ctx: Context){
-/*        try {
+       try {
             val id = ctx.pathParam("productId")
-            backendProductoService.removeProduct(id.toInt())
+            backendProductoService.borrarProducto(id)
             ctx.status(204)
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
-        }*/
+        }
     }
 
-    fun addProduct(ctx: Context){   //falta validacion para no agregar 2 veces al mismo producto
-/*
-
+    fun addProduct(ctx: Context){
         try {
             val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
                 .check(
@@ -37,24 +30,22 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            val product = Producto(
-                , newProduct.itemName!!, newProduct.description!!, newProduct.images!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
-            backend.addProduct(product)
+            val product = Producto(ObjectId(newProduct.idProveedor), newProduct.itemName!!, newProduct.description!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+            product.addImage(newProduct.images!!)
+            backendProductoService.nuevoProducto(product)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
-
- */
     }
 
 
     fun getProductById(ctx: Context) {                              //falta validacion de que el id exista
-/*
+
         try {
             val productId: String = ctx.pathParam("productId")
-            val product: Producto = this.backend.getProduct(productId)
+            val product: Producto = backendProductoService.recuperarProducto(productId)
             ctx.status(200)
             println(product)
             ctx.json( ProductsViewMapper(product.id.toString(),
@@ -68,7 +59,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
-        */
+
     }
 
     fun modifyProduct(ctx: Context) {
