@@ -118,6 +118,5 @@ class ServiceTest {
     @After
     fun dropAll() {
         TransactionRunner.runTrx({ proveedorDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        TransactionRunner.runTrx({ productoDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
 }

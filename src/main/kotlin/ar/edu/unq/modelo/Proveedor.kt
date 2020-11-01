@@ -10,7 +10,7 @@ import org.bson.types.ObjectId
 
 class Proveedor {
 
-    //@BsonProperty("id")
+    @BsonProperty("id")
     var id: ObjectId = ObjectId.get()
     var companyName: String = ""
     var companyImage: String = ""

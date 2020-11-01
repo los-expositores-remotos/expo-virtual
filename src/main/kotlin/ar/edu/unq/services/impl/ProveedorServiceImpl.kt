@@ -16,23 +16,26 @@ class ProveedorServiceImpl(
 ) : ProveedorService {
 
     override fun crearProveedor(proveedor: Proveedor) {
-        this.proveedorDAO.saveInTrx(proveedor, this.dataBaseType)
+        TransactionRunner.runTrx({ this.proveedorDAO.save(proveedor) }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun recuperarProveedor(id: String): Proveedor? {
-        return this.proveedorDAO.getByInTrx("id", id, this.dataBaseType)
+        return TransactionRunner.runTrx({ this.proveedorDAO.get(id) }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun recuperarATodosLosProveedores(): Collection<Proveedor> {
-        return this.proveedorDAO.getAllInTrx(this.dataBaseType)
+        return TransactionRunner.runTrx({ this.proveedorDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun actualizarProveedor(proveedor: Proveedor) {
-        this.proveedorDAO.updateInTrx(proveedor, proveedor.id.toString(), this.dataBaseType)
+        TransactionRunner.runTrx({ this.proveedorDAO.update(proveedor, proveedor.id.toString()) }, listOf(TransactionType
+                .MONGO),
+                this
+                .dataBaseType)
     }
 
     override fun borrarProveedor(id: String) {
-        this.proveedorDAO.deleteInTrx(id, this.dataBaseType)
+        TransactionRunner.runTrx({ this.proveedorDAO.delete(id) }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun deleteAll() {

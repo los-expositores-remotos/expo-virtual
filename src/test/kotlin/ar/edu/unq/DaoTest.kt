@@ -13,6 +13,7 @@ import org.junit.Test
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
+import org.bson.Document
 
 class DaoTest {
 
@@ -42,39 +43,44 @@ class DaoTest {
 
     @Test
     fun returnAClearProviderCollection() {
-        val result = proveedorDAO.getAllInTrx(DataBaseType.TEST)
+        val result = TransactionRunner.runTrx({ proveedorDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertEquals(0, result.count())
     }
 
     @Test
     fun returnANoClearProviderCollection() {
-        proveedorDAO.saveInTrx(proveedorA, DataBaseType.TEST)
-        val result = proveedorDAO.getAllInTrx(DataBaseType.TEST)
+        TransactionRunner.runTrx({ proveedorDAO.save(proveedorA) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        val result = TransactionRunner.runTrx({ proveedorDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertEquals(1, result.count())
     }
 
     @Test
     fun testCountingProviders() {
-       proveedorDAO.saveInTrx(proveedorB, DataBaseType.TEST)
-        proveedorDAO.saveInTrx(proveedorC, DataBaseType.TEST)
-        proveedorDAO.saveInTrx(proveedorD, DataBaseType.TEST)
-        val result = proveedorDAO.getAllInTrx(DataBaseType.TEST)
+        TransactionRunner.runTrx({
+            proveedorDAO.save(proveedorB)
+            proveedorDAO.save(proveedorC)
+            proveedorDAO.save(proveedorD)
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        val result = TransactionRunner.runTrx({ proveedorDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertEquals(3, result.count())
     }
 
     @Test
     fun searchProvidersWithACriterion() {
         val idProveedorE = proveedorE.id.toString()
-        proveedorDAO.saveInTrx(proveedorE, DataBaseType.TEST)
-        val result = proveedorDAO.getInTrx(idProveedorE, DataBaseType.TEST)
+        TransactionRunner.runTrx({ proveedorDAO.save(proveedorE) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        val result = TransactionRunner.runTrx({ proveedorDAO.get(idProveedorE) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertEquals(idProveedorE, result!!.id.toString())
     }
 
     @Test
     fun getAllProviders() {
-        proveedorDAO.saveInTrx(proveedorF, DataBaseType.TEST)
-        proveedorDAO.saveInTrx(proveedorG, DataBaseType.TEST)
-        val resultList = proveedorDAO.getAllInTrx(DataBaseType.TEST)
+        TransactionRunner.runTrx({
+            proveedorDAO.save(proveedorF)
+            proveedorDAO.save(proveedorG)
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        val resultList = TransactionRunner.runTrx({ proveedorDAO.getAll() }, listOf(TransactionType.MONGO),
+                DataBaseType.TEST)
         val expectedList = listOf(proveedorF.id.toString(), proveedorG.id.toString())
         val resultListModified = resultList.map { it.id.toString() }
         Assert.assertEquals(expectedList, resultListModified)
@@ -90,7 +96,7 @@ class DaoTest {
     fun returnAProduct() {
         val productoA = Producto(proveedorA.id, "Les Paul", "A electric guitar.", 7, 1000000, 800000)
         proveedorA.addProduct(productoA)
-        proveedorDAO.saveInTrx(proveedorA, DataBaseType.TEST)
+        TransactionRunner.runTrx({ proveedorDAO.save(proveedorA) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         val result = TransactionRunner.runTrx({ productoDAO.get(proveedorA.id.toString(), productoA.itemName) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertNotNull(result)
     }
@@ -101,14 +107,22 @@ class DaoTest {
         val productoB = Producto(proveedorB.id, "Les PaulB", "A electric guitar.", 7, 1000000, 800000)
         proveedorB.addProduct(productoA)
         proveedorB.addProduct(productoB)
-        proveedorDAO.saveInTrx(proveedorB, DataBaseType.TEST)
-        val result = TransactionRunner.runTrx({ productoDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        TransactionRunner.runTrx({ proveedorDAO.save(proveedorB) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        var result = TransactionRunner.runTrx({ productoDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType
+                .TEST)
         Assert.assertEquals(2, result.count())
+        TransactionRunner.runTrx({
+            val proveedorRecuperado = proveedorDAO.get(proveedorB.id.toString())
+            proveedorRecuperado!!.removeProduct(productoA)
+            proveedorDAO.update(proveedorRecuperado, proveedorRecuperado.id.toString())
+        }, listOf(TransactionType.MONGO), DataBaseType
+                .TEST)
+        result = TransactionRunner.runTrx({ productoDAO.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        Assert.assertEquals(1, result.count())
     }
 
     @After
-    fun dropAll() {
+    fun deleteAll() {
         TransactionRunner.runTrx({ proveedorDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        TransactionRunner.runTrx({ productoDAO.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
 }

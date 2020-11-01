@@ -18,7 +18,11 @@ class ProductoServiceImpl(
 ) : ProductoService {
 
     override fun nuevoProducto(producto: Producto) {
-        TransactionRunner.runTrx({ this.productoDAO.save(producto) }, listOf(TransactionType.MONGO), this.dataBaseType)
+        TransactionRunner.runTrx({
+            val proveedor: Proveedor = this.proveedorDAO.get(producto.idProveedor.toString())!!
+            proveedor.addProduct(producto)
+            this.proveedorDAO.update(proveedor, proveedor.id.toString())
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun obtenerProducto(proveedorId: String, nombreItem: String): Producto {
@@ -29,7 +33,16 @@ class ProductoServiceImpl(
     }
 
     override fun actualizarProducto(producto: Producto) {
-        TransactionRunner.runTrx({ this.productoDAO.update(producto, producto.id.toString()) }, listOf(TransactionType.MONGO), this.dataBaseType)
+        TransactionRunner.runTrx({
+            val proveedor: Proveedor = this.proveedorDAO.get(producto.idProveedor.toString())!!
+            if(proveedor.productos.contains(producto)){
+                proveedor.removeProduct(producto)
+                proveedor.addProduct(producto)
+            }else{
+                throw Exception("No existe el producto en la coleccion del proveedor")
+            }
+            this.proveedorDAO.update(proveedor, proveedor.id.toString())
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun recuperarATodosLosProductos(): Collection<Producto> {
@@ -45,12 +58,21 @@ class ProductoServiceImpl(
 
     override fun borrarProducto(id: String) {
         TransactionRunner.runTrx({
-            this.productoDAO.delete(id)
+            val producto: Producto = this.productoDAO.get(id)!!
+            val proveedor: Proveedor = this.proveedorDAO.get(producto.idProveedor.toString())!!
+            proveedor.removeProduct(producto)
+            this.proveedorDAO.update(proveedor,proveedor.id.toString())
         }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun deleteAll() {
-        TransactionRunner.runTrx({ this.productoDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
+        TransactionRunner.runTrx({
+            val proveedores = this.proveedorDAO.getAll()
+            for(proveedor in proveedores){
+                proveedor.productos.clear()
+                this.proveedorDAO.update(proveedor,proveedor.id.toString())
+            }
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
 }
