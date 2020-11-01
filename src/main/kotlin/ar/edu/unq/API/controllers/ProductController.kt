@@ -64,7 +64,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            val producto = aux.searchProductById(id)
+            val producto = aux.searchProductoById(id)
 
             producto.itemName = newProduct.itemName!!
             producto.description = newProduct.description!!
@@ -93,7 +93,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun getProductsBySuppId(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = aux.searchContentById(supplierId) as Proveedor
+            val supplier: Proveedor = aux.searchProveedorById(supplierId) as Proveedor
             println(supplier)
             val products = aux.productoClassListToProductoViewList(supplier.productos)
             ctx.status(200)

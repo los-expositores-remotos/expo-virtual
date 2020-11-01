@@ -11,7 +11,6 @@ import java.util.ArrayList
 
 class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-
     fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
         val list: MutableList<E> = ArrayList()
         for (item in iter) {
@@ -19,6 +18,7 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
         }
         return list
     }
+
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
         return  ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice)
     }
@@ -49,11 +49,11 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
         }       INTENTO DE PARAMETRIZAR CLASES CON SUS MAPPERS
     }*/
 
-    fun searchContentById(supplierId: String?): Proveedor {
+    fun searchProveedorById(supplierId: String?): Proveedor {
         return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
     }
 
-    fun searchProductById(productId: String?): Producto {
+    fun searchProductoById(productId: String?): Producto {
         return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
     }
 }

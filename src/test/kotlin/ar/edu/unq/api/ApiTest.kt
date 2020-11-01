@@ -25,6 +25,7 @@ class ApiTest {
     lateinit var productoB: Producto
     var listaProv: MutableCollection<Proveedor> = mutableListOf()
     var listaProd: MutableCollection<Producto> = mutableListOf()
+    var listaDeListaProd: MutableList<MutableList<Producto>> = mutableListOf()
 
     val backendProductoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
@@ -43,6 +44,8 @@ class ApiTest {
         listaProv.add(proveedorB)
         listaProd.add(productoA)
         listaProd.add(productoB)
+        listaDeListaProd.add(listaProd as MutableList<Producto>)
+        listaDeListaProd.add(listaProd as MutableList<Producto>)
 
     }
 
@@ -70,6 +73,13 @@ class ApiTest {
         val provMappList = auxFuc.proveedorClassListToProveedorViewList(listaProv)
         Assert.assertTrue(provMappList is MutableList<*>)
         Assert.assertTrue(provMappList.random() is CompanyViewMapper)
+    }
+
+    @Test
+    fun convertListOfLIstToAList(){
+        val prodList = auxFuc.makeListFromListofList(listaDeListaProd)
+        Assert.assertTrue(prodList is MutableList<*>)
+        Assert.assertTrue(prodList!!.random() is Producto)
     }
 
     @After

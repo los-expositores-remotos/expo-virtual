@@ -35,7 +35,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = aux.searchContentById(supplierId) as Proveedor
+            val supplier: Proveedor = aux.searchProveedorById(supplierId) as Proveedor
 
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
@@ -69,7 +69,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier = aux.searchContentById(id)
+            val supplier = aux.searchProveedorById(id)
             println(supplier.companyName)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
