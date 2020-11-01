@@ -12,8 +12,10 @@ import org.bson.types.ObjectId
 
 class ProductController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+
     fun deleteProduct(ctx: Context){
-       try {
+        try {
             val id = ctx.pathParam("productId")
             backendProductoService.borrarProducto(id)
             ctx.status(204)
@@ -42,24 +44,15 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
 
 
     fun getProductById(ctx: Context) {   //falta validacion de que el id exista PRODUCTO X ID DE PRODUCTO
-
         try {
             val productId: String = ctx.pathParam("productId")
             val product: Producto = backendProductoService.recuperarProducto(productId)
             ctx.status(200)
             println(product.id.toString())
-            ctx.json( ProductsViewMapper(product.id.toString(),
-                product.idProveedor.toString(),
-                product.itemName,
-                product.description,
-                product.listImages,
-                product.stock,
-                product.itemPrice,
-                product.promotionalPrice) )
+            ctx.json(aux.productoClassToProductoView(product))
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
-
     }
 
     fun modifyProduct(ctx: Context) {
@@ -71,7 +64,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            val producto = this.searchProductById(id)
+            val producto = aux.searchProductById(id)
 
             producto.itemName = newProduct.itemName!!
             producto.description = newProduct.description!!
@@ -84,31 +77,15 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             println(producto)
             println(newProduct.idProveedor)
             val updated = this.backendProductoService.recuperarProducto(id)
-            ctx.json(ProductsViewMapper(
-                updated.id.toString(),
-                updated.idProveedor.toString(),
-                updated.itemName,
-                updated.description,               //     VER ID No existe el proveedor en la coleccion
-                updated.listImages,
-                updated.stock,
-                updated.itemPrice,
-                updated.promotionalPrice))
+            ctx.json(aux.productoClassToProductoView(updated))
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
     }
 
     fun allProducts(ctx: Context) {
-
         val productsLists = backendProductoService.recuperarATodosLosProductos()
-        var allP = productsLists.map{ ProductsViewMapper(it.id.toString(),
-            it.idProveedor.toString(),
-            it.itemName,
-            it.description,
-            it.listImages,
-            it.stock,
-            it.itemPrice,
-            it.promotionalPrice) }
+        var allP = aux.productoClassListToProductoViewList(productsLists as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(allP)
     }
@@ -116,31 +93,13 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun getProductsBySuppId(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = this.searchContentById(supplierId) as Proveedor
+            val supplier: Proveedor = aux.searchContentById(supplierId) as Proveedor
             println(supplier)
-            val products = supplier.productos.map{ ProductsViewMapper(it.id.toString(),
-                it.idProveedor.toString(),
-                it.itemName,
-                it.description,
-                it.listImages,
-                it.stock,
-                it.itemPrice,
-                it.promotionalPrice) }
+            val products = aux.productoClassListToProductoViewList(supplier.productos)
             ctx.status(200)
             ctx.json(products)
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
         }
-    }
-
-    fun searchContentById(supplierId: String?): Proveedor {
-        println(supplierId)
-        val supplier = backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
-        println(supplier)
-        return supplier
-    }
-
-    fun searchProductById(productId: String?): Producto {
-        return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
     }
 }

@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
     val bannerController = BannerController(backendProveedorService)
     val productController = ProductController(backendProveedorService, backendProductoService)
-    val companyController = CompanyController(backendProveedorService)
+    val companyController = CompanyController(backendProveedorService, backendProductoService)
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
