@@ -135,7 +135,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
 
     fun searchContentById(supplierId: String?): Proveedor {
         println(supplierId)
-        val supplier = backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId!!)
+        val supplier = backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
         println(supplier)
         return supplier
     }

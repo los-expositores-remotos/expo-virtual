@@ -179,7 +179,7 @@ class CompanyController(val backendProveedorService: ProveedorService) {
     }
 
     fun searchContentById(supplierId: String?): Proveedor {
-        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId!!)
+        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
     }
 
     fun toSimpleData(lista: MutableCollection<Producto>): List<ProductsViewMapper> {
