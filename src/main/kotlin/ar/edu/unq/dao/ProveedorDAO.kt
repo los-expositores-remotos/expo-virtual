@@ -11,15 +11,7 @@ interface ProveedorDAO {
     fun get(id: String?): Proveedor?
     fun getAll() : List<Proveedor>
     fun deleteAll()
-    fun saveInTrx(proveedor: Proveedor, dataBaseType: DataBaseType)
-    fun saveInTrx(proveedores: List<Proveedor>, dataBaseType: DataBaseType)
-    fun getAllInTrx(dataBaseType: DataBaseType): List<Proveedor>
-    fun updateInTrx(proveedor: Proveedor, id: String?, dataBaseType: DataBaseType)
-    fun getByInTrx(property:String, value: String?, dataBaseType: DataBaseType): Proveedor?
-    fun <E> findEqInTrx(field:String, value:E, dataBaseType: DataBaseType): List<Proveedor>
-    fun findInTrx(filter: Bson, dataBaseType: DataBaseType): List<Proveedor>
-    fun getInTrx(id: String?, dataBaseType: DataBaseType): Proveedor?
-    fun deleteInTrx(id: String, dataBaseType: DataBaseType)
+    fun delete(id: String)
 
     /* Operaciones sobre Productos*/
     // fun agregarProducto(proveedor: Proveedor, producto: Producto)
