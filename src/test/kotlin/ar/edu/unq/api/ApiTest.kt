@@ -82,6 +82,13 @@ class ApiTest {
         Assert.assertTrue(prodList!!.random() is Producto)
     }
 
+  /*  @Test(expected = ConstraintViolationException::class)
+    fun searchProductoWithResultNull(){
+        val producto = auxFuc.searchProductoById("zaraza")
+    }
+*/
+
+
     @After
     fun dropAll() {}
 

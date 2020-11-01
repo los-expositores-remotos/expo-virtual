@@ -34,21 +34,22 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     fun proveedorClassListToProveedorViewList(lista: MutableCollection<Proveedor>) : List<CompanyViewMapper> {
         return lista.map{ proveedorClassToProveedorView(it) }
     }
-/*
-    inline fun <reified C> classToView(objeto: C) {
-        when (C::class) {
+    /*
+    fun classToView(objeto: Object) {
+        objeto.    /*{
             Producto::class -> this.productoClassToProductoView(objeto as Producto)
             else -> this.proveedorClassToProveedorView(objeto as Proveedor)
-        }       INTENTO DE PARAMETRIZAR CLASES CON SUS MAPPERS
+        }      // INTENTO DE PARAMETRIZAR CLASES CON SUS MAPPERS*/
     }
 
    inline fun <reified C> classListToViewList(lista: MutableCollection<C>) {
         when (C::class) {
             Producto::class -> this.productoClassListToProductoViewList(lista as MutableCollection<Producto>)
             Proveedor::class -> this.proveedorClassListToProveedorViewList(lista as MutableCollection<Proveedor>)
-        }       INTENTO DE PARAMETRIZAR CLASES CON SUS MAPPERS
-    }*/
+        }      // INTENTO DE PARAMETRIZAR CLASES CON SUS MAPPERS
+    }
 
+*/
     fun searchProveedorById(supplierId: String?): Proveedor {
         return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
     }
@@ -57,3 +58,4 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
         return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
     }
 }
+
