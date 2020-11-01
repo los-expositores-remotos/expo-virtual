@@ -1,7 +1,11 @@
 package ar.edu.unq
 
-import ar.edu.unq.API.CompanyController
+import ar.edu.unq.API.controllers.CompanyController
+import ar.edu.unq.API.controllers.BannerController
+import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
+import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
 import io.javalin.Javalin
@@ -10,8 +14,13 @@ import io.javalin.apibuilder.ApiBuilder.*
 
 fun main(args: Array<String>) {
 
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(),DataBaseType.PRODUCCION)
-    val companyController = CompanyController(backendProveedorService)
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
+    val backendProductoService =
+        ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
+    val bannerController = BannerController(backendProveedorService)
+    val productController = ProductController(backendProveedorService, backendProductoService)
+    val companyController = CompanyController(backendProveedorService, backendProductoService)
+
     val app = Javalin.create {
         it.defaultContentType = "application/json"
         it.enableCorsForAllOrigins()
@@ -22,16 +31,31 @@ fun main(args: Array<String>) {
 
         path("companies") {
             get(companyController::allCompanies)
+            post(companyController::createSupplier)
             path("images") {
                 get(companyController::imagesCompanies)
             }
             path("names") {
                 get(companyController::namesCompanies)
             }
+            path(":supplierId") {
+                get(companyController::getSupplierById)
+                delete(companyController::deleteSupplier)
+                put(companyController::modifySupplier)
+            }
         }
-
         path("products") {
-            get(companyController::allProducts)
+            get(productController::allProducts)
+            post(productController::addProduct)
+            path(":productId") {
+                get(productController::getProductById)
+                delete(productController::deleteProduct)
+                put(productController::modifyProduct)  //verlo a fondo no funciona bien
+            }
+            path("supplier") {
+                path(":supplierId") {
+                get(productController::getProductsBySuppId)
+            }/*
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
@@ -40,8 +64,16 @@ fun main(args: Array<String>) {
             }
             path("promoPrice") {
                 get(companyController::productsWPromoPrice)
+            }*/
+        }
+        path("banners") {
+            get(bannerController::allBanners)
+            post(bannerController::agregarBanner)
+            path(":bannerId") {
+                delete(bannerController::deleteBanner)
             }
         }
+
 /*        path("order") {
             path(":byLowerPrice") {
                 get(companyController::orderByLowerPrice)
@@ -67,6 +99,8 @@ fun main(args: Array<String>) {
         }*/
         //  path("/user") {
         //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
+
+        }
     }
 }
 
