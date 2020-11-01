@@ -1,14 +1,16 @@
-.row .col.s8 {
-  width: 66.6666666667%;
-  margin-left: auto;
-  left: auto;
-  right: auto;
-  margin-top: 82px;
+.row .col .s4 {
+  width: 33.3333333333%;
+  margin-left: -32px;
 }
-#butonSubmit {
-  margin-top: 5rem !important;
-  margin-left: 33%;
+
+.collapsible-body {
+  display: grid !important;
+  border-bottom: 1px solid #ddd;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0rem;
 }
+
 .btn,
 .btn-large,
 .btn-small {
@@ -21,7 +23,4 @@
   transition: background-color 0.2s ease-out;
   cursor: pointer;
   margin: 4px;
-}
-#buttonUploadImages {
-  background-color: #ee6e73;
 }

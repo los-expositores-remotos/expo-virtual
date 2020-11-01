@@ -7,6 +7,7 @@ import Faqs from './components/routes/Faqs.js'
 import Howtobuy from './components/routes/Howtobuy.js'
 import Aboutus from './components/routes/Aboutus.js'
 import Contact from './components/routes/Contact.js'
+import Admin from './components/routes/Admin.js';
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 //modificacion
@@ -34,6 +35,9 @@ const Routing = () => {
             </Route>
             <Route path="/contact" component={Contact}>
               <Contact />
+            </Route>
+            <Route path="/admin" component={Admin}>
+              <Admin />
             </Route>
         </Switch>
       </div>
