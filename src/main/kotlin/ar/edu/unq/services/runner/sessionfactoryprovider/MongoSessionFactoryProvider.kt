@@ -22,7 +22,7 @@ abstract class MongoSessionFactoryProvider {
         )
         val uri = System.getenv().getOrDefault("MONGO_URI", "mongodb+srv://Gustavo:99z2CEj2xWnR4Ntw@cluster0.agdwn.mongodb.net/" + this.dataBaseName() + "?retryWrites=true&w=majority")
         val connectionString = ConnectionString(uri)
-        var settings = MongoClientSettings.builder()
+        val settings = MongoClientSettings.builder()
                 .codecRegistry(codecRegistry)
                 .applyConnectionString(connectionString)
                 .build()

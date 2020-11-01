@@ -8,10 +8,7 @@ import ar.edu.unq.services.runner.TransactionRunner
 import org.bson.Document
 import org.bson.types.ObjectId
 
-
 abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
-
-
     open fun deleteAll() {
         this.session_check()
         this.getCollection(entityType.simpleName, entityType)!!.deleteMany(Document())
@@ -19,12 +16,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
     fun getAll(): List<T> {
         this.session_check()
-        val items: java.util.ArrayList<T> = java.util.ArrayList<T>()
-        val cursor: com.mongodb.client.MongoCursor<T> = this.getCollection(entityType.simpleName, entityType)!!.find(Document()).cursor()
-        for(item: T in cursor){
-            items.add(item)
-        }
-        return items
+        return this.getCollection(entityType.simpleName, entityType)!!.find().toMutableList()
     }
 
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>?{
@@ -72,12 +64,9 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     fun find(filter:Bson): List<T> {
-        //val session:ClientSession =
         this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(filter).toMutableList() //into(mutableListOf())
-        // session,
+        return this.getCollection(entityType.simpleName, entityType)!!.find(filter).toMutableList()
     }
-
 
 //    fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {
 //        val session:ClientSession = this.session_check()

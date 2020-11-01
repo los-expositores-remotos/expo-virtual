@@ -4,6 +4,7 @@ import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl;
 import ar.edu.unq.modelo.Proveedor;
 import ar.edu.unq.services.ProductoService;
 import ar.edu.unq.services.impl.ProductoServiceImpl;
+import cucumber.api.CucumberOptions;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
@@ -15,11 +16,12 @@ import ar.edu.unq.modelo.Producto;
 import ar.edu.unq.services.ProveedorService;
 import ar.edu.unq.services.impl.ProveedorServiceImpl;
 import ar.edu.unq.services.runner.DataBaseType;
+import cucumber.api.junit.Cucumber;
 import org.bson.types.ObjectId;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 public class VisualizacionDeProveedoresStepdefs {

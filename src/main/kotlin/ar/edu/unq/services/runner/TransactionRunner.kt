@@ -79,9 +79,8 @@ object TransactionRunner {
     private var transactions:List<MongoDBTransaction> = listOf()
 
     fun getTransaction(): MongoDBTransaction? {
-        return transactions.get(0)
+        return transactions[0]
     }
-
 
     fun <T> runTrx(bloque: ()->T, types: List<TransactionType> = listOf(), dataBaseType: DataBaseType): T {
         transactions = types.map { it.getTransaction() }
