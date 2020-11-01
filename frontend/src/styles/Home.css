@@ -17,6 +17,14 @@
   overflow: hidden;
   background-color: white !important;
 }
+.slider .indicators {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 0 -30px;
+}
 
 .slider .slides li .caption {
   color: lightslategray !important;
@@ -34,4 +42,14 @@
   text-align: center;
   color: blueviolet;
   text-decoration: underline;
+}
+
+.carousel .indicators {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  background-color: #ee6e73;
 }
