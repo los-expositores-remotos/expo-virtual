@@ -13,11 +13,11 @@ const AddProveedor = (props)  => {
   const history = useHistory();
   const company = props.company
   const [url, setUrl] = useState("");
-  const [companyName, setcompanyName] = useState(company.companyName)
-  const [companyImage, setcompanyImage] = useState(company.companyImage)
-  const [facebook, setfacebook] = useState(company.facebook)
-  const [instagram, setinstagram] = useState(company.instagram)
-  const [web, setweb] = useState(company.web)
+  const [companyName, setcompanyName] = useState(company === undefined ? "" : company.companyName )
+  const [companyImage, setcompanyImage] = useState(company === undefined ? "" : company.companyImage)
+  const [facebook, setfacebook] = useState(company === undefined ? "" : company.facebook)
+  const [instagram, setinstagram] = useState(company === undefined ? "" : company.instagram)
+  const [web, setweb] = useState(company === undefined ? "" : company.web)
 
 
   useEffect(() => {
