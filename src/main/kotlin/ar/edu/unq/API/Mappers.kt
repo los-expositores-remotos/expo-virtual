@@ -5,7 +5,7 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
-inline fun <reified E:Any, T:Any> viewMapperTo(objeto: T): E{
+inline fun <reified E:Any, T:Any> mapTo(objeto: T): E{
     val objetoNuevo = E::class.java.newInstance()
     val propiedades = objeto::class.java.kotlin.memberProperties.filterIsInstance<KMutableProperty<*>>()
     val propiedadesNuevas = objetoNuevo::class.java.kotlin.memberProperties.filterIsInstance<KMutableProperty<*>>()
