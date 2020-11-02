@@ -29,6 +29,14 @@ fun main(args: Array<String>) {
     app.start(7000)
     app.routes {
 
+        path("banners") {
+            get(bannerController::allBanners)
+            post(bannerController::agregarBanner)
+            path(":bannerId") {
+                delete(bannerController::deleteBanner)
+            }
+        }
+
         path("companies") {
             get(companyController::allCompanies)
             post(companyController::createSupplier)
@@ -44,6 +52,7 @@ fun main(args: Array<String>) {
                 put(companyController::modifySupplier)
             }
         }
+
         path("products") {
             get(productController::allProducts)
             post(productController::addProduct)
@@ -66,13 +75,7 @@ fun main(args: Array<String>) {
                 get(companyController::productsWPromoPrice)
             }*/
         }
-        path("banners") {
-            get(bannerController::allBanners)
-            post(bannerController::agregarBanner)
-            path(":bannerId") {
-                delete(bannerController::deleteBanner)
-            }
-        }
+
 
 /*        path("order") {
             path(":byLowerPrice") {
