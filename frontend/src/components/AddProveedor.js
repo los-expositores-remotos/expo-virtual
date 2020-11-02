@@ -177,7 +177,6 @@ const AddProveedor = (props)  => {
                 }} 
                 class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>
               }
-            }
           </div>
         </div>
       </form>
