@@ -51,12 +51,12 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     operator fun get(id: String?): T? {
-        return getBy("id", id)
+        return getBy("id", ObjectId(id))
     }
 
-    fun getBy(property:String, value: String?): T? {
+    fun <E> getBy(property:String, value: E?): T? {
         this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(Document(property,ObjectId(value))).first()
+        return this.getCollection(entityType.simpleName, entityType)!!.find(Document(property,value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {
