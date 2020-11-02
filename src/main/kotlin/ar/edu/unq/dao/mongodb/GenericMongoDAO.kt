@@ -33,8 +33,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun update(anObject: T, id: String?) {
-        val session:ClientSession = this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(session, eq("id", ObjectId(id)), anObject)
+        this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(eq("id", ObjectId(id)), anObject)
     }
 
     open fun save(objects: List<T>) {
