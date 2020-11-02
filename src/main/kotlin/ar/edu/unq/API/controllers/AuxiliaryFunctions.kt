@@ -50,12 +50,5 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
 */
-    fun searchProveedorById(supplierId: String?): Proveedor {
-        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
-    }
-
-    fun searchProductoById(productId: String?): Producto {
-        return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
-    }
 }
 

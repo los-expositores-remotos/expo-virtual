@@ -90,7 +90,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier = aux.searchProveedorById(id)
+            val supplier = backendProveedorService.recuperarProveedor(id)!!//aux.searchProveedorById(id)
             println(supplier.companyName)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
