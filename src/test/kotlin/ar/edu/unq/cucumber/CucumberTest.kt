@@ -5,6 +5,5 @@ import cucumber.api.junit.Cucumber
 import org.junit.runner.RunWith
 
 @RunWith(Cucumber::class)
-@CucumberOptions(features = ["src/test/resources/ar/edu/unq/cucumber/visualizaciondeproveedores.feature"])
-class CucumberTest {
-}
+@CucumberOptions(features = ["src/test/resources/ar/edu/unq/cucumber/"])
+class CucumberTest
