@@ -43,7 +43,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun delete(id: String){// TODO: testear
-        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq("id", id))
+        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq("id", ObjectId(id)))
     }
 
     open fun deleteBy(property:String, value: String?){// TODO: testear
