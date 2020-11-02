@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/DeleteProveedor.css'
-import {Link} from 'react-router-dom'
+import {Link, useParams} from 'react-router-dom'
 
-const UpdateProveedor = () =>{
+const DeleteProveedor = () =>{
   const [companies, setCompanies] = useState([])
-
+  let {id} = useParams()
   useEffect(() => {
-    fetch("http://localhost:7000/companies", {
+    fetch("http://localhost:7000/companies/" + id, {
+      method: 'DELETE',
       headers: {
         "Content-Type":"application/json"
       }
@@ -72,7 +73,7 @@ const UpdateProveedor = () =>{
           </div>
           <div class='col s2'>
               <Link>
-                  <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
+                  <i className="small material-icons left" id="iconSearchFormAdmin">delete</i>
               </Link>     
           </div>
         <div>
@@ -87,4 +88,4 @@ const UpdateProveedor = () =>{
     )
 }
 
-export default UpdateProveedor;
+export default DeleteProveedor;
