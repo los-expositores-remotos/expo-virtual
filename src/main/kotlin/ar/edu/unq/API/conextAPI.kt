@@ -51,6 +51,9 @@ fun main(args: Array<String>) {
                 delete(companyController::deleteSupplier)
                 put(companyController::modifySupplier)
             }
+            path("massive") {
+                post(companyController::createMassive)
+            }
         }
 
         path("products") {

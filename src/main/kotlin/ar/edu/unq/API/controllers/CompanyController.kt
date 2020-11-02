@@ -32,6 +32,27 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         }
     }
 
+    fun createMassive(ctx: Context) {
+        try {
+            val newSuppliers = ctx.bodyValidator<MutableList<SupplierRegisterMapper>>()
+                    .check(
+                            { it.all  { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null }   },
+                            "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+                    )
+                    .get()
+            newSuppliers.forEach {
+            val supplier = Proveedor(
+                    it.companyName!!, it.companyImage!!, it.facebook!!, it.instagram!!, it.web!!)
+            backendProveedorService.crearProveedor(supplier)
+            }
+            ctx.status(201)
+            ctx.json(OkResultMapper("ok"))
+        } catch (e: ExistsException) {
+            throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
