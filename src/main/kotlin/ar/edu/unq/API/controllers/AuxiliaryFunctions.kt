@@ -15,7 +15,7 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
         val list: MutableList<E> = ArrayList()
         for (item in iter) {
             item.forEach { list.add(it) }
-        }
+        }//TODO: toda la funcion es reemplazable por iter.flatMap { it } jaja
         return list
     }
 
