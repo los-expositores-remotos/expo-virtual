@@ -1,4 +1,4 @@
-package ar.edu.unq.cucumber.visualizacion_de_proveedores
+package ar.edu.unq.cucumber
 
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
