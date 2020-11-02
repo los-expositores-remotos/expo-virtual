@@ -65,14 +65,14 @@ class ApiTest {
     fun convertAProductoListToViewMapperList() {
         val prodMappList: List<Any>? = auxFuc.productoClassListToProductoViewList(listaProd)
         Assert.assertTrue(prodMappList is MutableList<*>)
-        Assert.assertTrue(prodMappList.random() is ProductViewMapper)
+        Assert.assertTrue(prodMappList!!.random() is ProductViewMapper)
     }
 
     @Test
     fun convertAProveedorListToViewMapperList() {
         val provMappList: List<Any>? = auxFuc.proveedorClassListToProveedorViewList(listaProv)
         Assert.assertTrue(provMappList is MutableList<*>)
-        Assert.assertTrue(provMappList.random() is CompanyViewMapper)
+        Assert.assertTrue(provMappList!!.random() is CompanyViewMapper)
     }
 
     @Test
