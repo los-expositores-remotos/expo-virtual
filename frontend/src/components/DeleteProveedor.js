@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import '../styles/UpdatProveedor.css'
+import '../styles/DeleteProveedor.css'
 import {Link} from 'react-router-dom'
-import AddProveedor from './AddProveedor'
 
 const UpdateProveedor = () =>{
   const [companies, setCompanies] = useState([])
-  const [ cliked , setClicked] = useState(null)
 
   useEffect(() => {
     fetch("http://localhost:7000/companies", {
@@ -29,7 +27,7 @@ const UpdateProveedor = () =>{
     .catch((err => {
       console.log(err)
     }))
-  }, [companies, cliked])
+  }, [companies])
     
     
     const listOfCompanies = () => {
@@ -43,7 +41,7 @@ const UpdateProveedor = () =>{
                 <div class="card-image">
                   <img src={company.companyImage}/>
                   <span class="card-title">{company.companyName}</span>
-                  <a onClick={ ()=> setClicked(<AddProveedor company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+                  <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
                 </div>
                 <div class="card-content">
                   <a href={company.facebook}><p>Facebook</p></a>
@@ -66,29 +64,26 @@ const UpdateProveedor = () =>{
 
     }
     return (
-      cliked ? 
-        cliked
-        :
         <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
                 <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
-                </form>
-                </div>
-                <div class='col s2'>
-                <Link>
-                <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
-                </Link>     
-                </div>
-                <div>
-                {
-                  !companies ?
-                  <p>Loading...</p>
-                  :
-                  listOfCompanies()
-                }
-                </div>
-                </div>
+              </form>
+          </div>
+          <div class='col s2'>
+              <Link>
+                  <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
+              </Link>     
+          </div>
+        <div>
+          {
+            !companies ?
+              <p>Loading...</p>
+            :
+              listOfCompanies()
+          }
+        </div>
+      </div>
     )
 }
 
