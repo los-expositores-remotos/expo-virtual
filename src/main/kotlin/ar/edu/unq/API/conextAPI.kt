@@ -31,10 +31,10 @@ fun main(args: Array<String>) {
 
         path("banners") {
             get(bannerController::allBanners)
-            post(bannerController::agregarBanner)
+      /*      post(bannerController::agregarBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
-            }
+            }*/
         }
 
         path("companies") {

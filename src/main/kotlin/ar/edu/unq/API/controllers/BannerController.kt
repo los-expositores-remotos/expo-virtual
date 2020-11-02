@@ -38,9 +38,9 @@ class BannerController(val backendProveedorService: ProveedorService) {
         ctx.json(imagesList)
         */
     }
-
-    fun agregarBanner(ctx: Context) {
 /*
+    fun agregarBanner(ctx: Context) {
+
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
                 .check(
@@ -57,11 +57,11 @@ class BannerController(val backendProveedorService: ProveedorService) {
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
-      */
+
     }
 
     fun deleteBanner(ctx: Context) {
-/*
+
         try {
             val id = ctx.pathParam("bannerId")
             backend.removeBanner(id)
@@ -69,6 +69,6 @@ class BannerController(val backendProveedorService: ProveedorService) {
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
- */
-    }
+
+    } */
 }

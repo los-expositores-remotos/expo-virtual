@@ -56,12 +56,12 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = aux.searchProveedorById(supplierId) as Proveedor
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)!!// aux.searchProveedorById(supplierId)
 
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
-        } catch (e: NotFoundException) {
-            throw NotFoundResponse(e.message.toString())
+        } catch (e: KotlinNullPointerException) {
+            throw BadRequestResponse(e.message.toString())
         }
     }
 
@@ -77,7 +77,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             backendProveedorService.borrarProveedor(id)
             ctx.status(204)
         } catch (e: ExistsException) {
-            throw BadRequestResponse(e.message.toString())
+            throw NotFoundResponse(e.message.toString())
         }
     }
 

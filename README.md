@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/los-expositores-remotos/expo-virtual.svg?branch=ramaMistica)](https://travis-ci.org/los-expositores-remotos/expo-virtual)
 
-[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/ramaMistica/graph/badge.svg?token=5FWJMSJHQC)](undefined)
+[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/ramaMistica/graph/badge.svg?token=5FWJMSJHQC)](https://codecov.io/gh/los-expositores-remotos/expo-virtual)
 
 
 # Expo Virtual
