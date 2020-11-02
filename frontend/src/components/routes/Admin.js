@@ -7,9 +7,10 @@ import UpdateProveedor from '../UpdateProveedor'
 import DeleteProveedor from '../DeleteProveedor'
 
 document.addEventListener('DOMContentLoaded', function() {
-    var elem = document.querySelector('.collapsible.expandable');
-    var instances = M.Collapsible.init(elem, {});
-  });
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, {})
+    
+ });
 
 const Admin = () => {
      const [form , setForm] = useState(null)

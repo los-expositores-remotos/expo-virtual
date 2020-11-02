@@ -4,9 +4,10 @@ import UpdateProveedor from '../UpdateProveedor';
 const Aboutus = () => {
   return (
 
-   <UpdateProveedor/>
+   <p> estoy en el Aboutus </p>
 
   );
 };
+;
 
 export default Aboutus;
