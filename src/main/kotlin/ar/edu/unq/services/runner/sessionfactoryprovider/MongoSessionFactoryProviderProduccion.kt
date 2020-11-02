@@ -2,7 +2,7 @@ package ar.edu.unq.services.runner.sessionfactoryprovider
 
 class MongoSessionFactoryProviderProduccion : MongoSessionFactoryProvider() {
     override fun dataBaseName(): String {
-        return "produccionbackadrian"
+        return "produccionback"
     }
 
     companion object {
