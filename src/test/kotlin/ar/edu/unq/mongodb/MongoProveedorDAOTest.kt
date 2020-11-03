@@ -40,4 +40,5 @@ class MongoProveedorDAOTest: GenericMongoDAOTest<Proveedor>() {
         assertEquals(this.items.filter { it.companyName == "LaCompany" }.toSet(), proveedoresRecuperados.toSet())
     }
 
+    
 }
