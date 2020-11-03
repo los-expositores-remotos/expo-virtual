@@ -10,6 +10,7 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertNotEquals
 
 abstract class GenericMongoDAOTest<T> {
 
@@ -30,19 +31,6 @@ abstract class GenericMongoDAOTest<T> {
         return this.dao.getAll()
     }
 
-/*    @Test
-    fun returnAClearCollection() {
-        val result: List<T> = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        Assert.assertEquals(0, result.count())
-    }
-
-    @Test
-    fun returnANoClearCollection() {
-        runTrx({ this.guardarUnItem() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        val result = runTrx({ this.obtenerTodos() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        Assert.assertEquals(1, result.count())
-    }
-*/
     @Test
     fun testGettingItems() {
         var result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
@@ -50,6 +38,16 @@ abstract class GenericMongoDAOTest<T> {
         runTrx({ this.borrarNItems(1) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         Assert.assertEquals(this.items.toHashSet(), result.toHashSet())
+    }
+
+    @Test
+    fun testSiNoEstaCreadaLaColeccionSeCrea(){
+        runTrx({
+            val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+            database?.getCollection(this.dao.entityType::class.java.simpleName)?.drop()
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        var result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        Assert.assertEquals(this.items.count(), result.count())
     }
 
     abstract fun borrarNItems(n: Int)

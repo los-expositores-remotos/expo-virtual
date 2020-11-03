@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import org.bson.conversions.Bson
 import ar.edu.unq.services.runner.TransactionRunner
+import com.mongodb.client.MongoDatabase
 import org.bson.Document
 import org.bson.types.ObjectId
 
@@ -22,10 +23,14 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>?{
         // Precondición: Debe haber una sesión en el contexto
         val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        if(database?.listCollectionNames()!!.contains(objectType).not()) {
+        this.createColection(objectType,database!!)
+        return database.getCollection(objectType, classType)
+    }
+
+    protected fun createColection(objectType: String, database: MongoDatabase){
+        if(database.listCollectionNames().contains(objectType).not()) {
             database.createCollection(objectType)
         }
-        return database.getCollection(objectType, classType)
     }
 
     open fun save(anObject: T) {
