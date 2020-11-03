@@ -11,16 +11,16 @@ import org.bson.types.ObjectId
 
 abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     open fun deleteAll() {
-        this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.deleteMany(Document())
+        this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).deleteMany(Document())
     }
 
     fun getAll(): List<T> {
-        this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find().toMutableList()
+        this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find().toMutableList()
     }
 
-     protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>?{
+     protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
         // Precondición: Debe haber una sesión en el contexto
         val database = TransactionRunner.getTransaction()!!.sessionFactoryProvider()!!.getDatabase()
         this.createColection(objectType,database)
@@ -38,21 +38,21 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun update(anObject: T, id: String?) {
-        this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(eq("id", ObjectId(id)), anObject)
+        this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).replaceOne(eq("id", ObjectId(id)), anObject)
     }
 
     open fun save(objects: List<T>) {
-        this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.insertMany(objects)
+        this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).insertMany(objects)
     }
 
     open fun delete(id: String){// TODO: testear
-        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq("id", ObjectId(id)))
+        this.getCollection(entityType.simpleName, entityType).deleteOne(eq("id", ObjectId(id)))
     }
 
     open fun deleteBy(property:String, value: String?){// TODO: testear
-        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq(property, value))
+        this.getCollection(entityType.simpleName, entityType).deleteOne(eq(property, value))
     }
 
     operator fun get(id: String?): T? {
@@ -60,8 +60,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     fun <E> getBy(property:String, value: E?): T? {
-        this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(Document(property,value)).first()
+        this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find(Document(property,value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {
@@ -69,8 +69,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     fun find(filter:Bson): List<T> {
-        this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(filter).toMutableList()
+        this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find(filter).toMutableList()
     }
 
 //    fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {
@@ -81,7 +81,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 //        //return this.getCollection(entityType.simpleName, entityType)!!.aggregate(pipeline, resultClass).into(ArrayList())
 //    }
 
-    fun session_check(): ClientSession{
+    private fun sessionCheck(): ClientSession{
         val session: ClientSession? = TransactionRunner.getTransaction()!!.currentSession()
         return session ?: throw Exception("No hay una sesión en el contexto")
     }
