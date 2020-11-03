@@ -12,6 +12,7 @@ class Producto{
     lateinit var idProveedor: ObjectId
     var itemName: String = ""
     var description: String = ""
+    var listTags: MutableList<String> = emptyList<String>().toMutableList()
     var listImages: MutableList<String> = emptyList<String>().toMutableList()
     var stock: Int = 0
     var itemPrice: Int = 0
@@ -42,6 +43,16 @@ class Producto{
     fun addImage(imagesUrl: List<String>) {
         for (img in imagesUrl) {
             listImages.add(img)
+        }
+    }
+
+    fun addTag(tag: String) {
+        listTags.add(tag)
+    }
+
+    fun addTag(tags: List<String>) {
+        for (tag in tags) {
+            listTags.add(tag)
         }
     }
 
