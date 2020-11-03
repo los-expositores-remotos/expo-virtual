@@ -47,8 +47,8 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
     }
 
     override fun getCollection(objectType: String, classType: Class<Producto>): MongoCollection<Producto> {
-        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        if(database?.listCollectionNames()!!.contains("Producto").not()) {
+        val database = this.getDatabase()
+        if(database.listCollectionNames().contains("Producto").not()) {
             this.createColection("Proveedor", database)
             val proyectarProductos = project(Document("listProducts", "\$productos"))
             val separarProductos = unwind("\$listProducts")

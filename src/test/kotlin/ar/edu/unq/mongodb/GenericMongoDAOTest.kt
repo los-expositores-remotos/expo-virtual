@@ -45,14 +45,14 @@ abstract class GenericMongoDAOTest<T> {
         runTrx({
              this.deleteColection()
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        var result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        val result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         println(result)
         Assert.assertEquals(0, result.count())
     }
 
     open fun deleteColection(){
-        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        database?.getCollection(this.dao.entityType::class.java.simpleName)?.drop()
+        val database = TransactionRunner.getTransaction().sessionFactoryProvider().getDatabase()
+        database.getCollection(this.dao.entityType::class.java.simpleName).drop()
     }
 
     abstract fun borrarNItems(n: Int)

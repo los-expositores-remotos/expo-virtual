@@ -22,7 +22,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
         // Precondición: Debe haber una sesión en el contexto
-        val database = TransactionRunner.getTransaction()!!.sessionFactoryProvider()!!.getDatabase()
+        val database = this.getDatabase()
         this.createColection(objectType,database)
         return database.getCollection(objectType, classType)
     }
@@ -81,8 +81,13 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 //        //return this.getCollection(entityType.simpleName, entityType)!!.aggregate(pipeline, resultClass).into(ArrayList())
 //    }
 
+    protected fun getDatabase(): MongoDatabase{
+        val database = TransactionRunner.getTransaction().sessionFactoryProvider().getDatabase()
+        return database
+    }
+
     private fun sessionCheck(): ClientSession{
-        val session: ClientSession? = TransactionRunner.getTransaction()!!.currentSession()
-        return session ?: throw Exception("No hay una sesión en el contexto")
+        val session: ClientSession = TransactionRunner.getTransaction().currentSession()
+        return session
     }
 }
