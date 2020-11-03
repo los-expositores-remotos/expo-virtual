@@ -67,11 +67,11 @@ class ServiceTest {
         proveedorA.addProduct(productoA)
         var result = proveedorService.recuperarProveedor(proveedorA.id.toString())
         Assert.assertEquals(emptySet<Producto>(),result!!.productos.toSet())
-        Assert.assertEquals("AA",result!!.companyName)
+        Assert.assertEquals("AA",result.companyName)
         proveedorService.actualizarProveedor(proveedorA)
         result = proveedorService.recuperarProveedor(proveedorA.id.toString())
         Assert.assertEquals(setOf(productoA),result!!.productos.toSet())
-        Assert.assertEquals("hola",result!!.companyName)
+        Assert.assertEquals("hola",result.companyName)
     }
 
     @Test
