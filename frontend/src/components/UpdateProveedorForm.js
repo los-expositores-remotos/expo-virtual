@@ -2,31 +2,31 @@ import React from "react";
 import {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 import M from 'materialize-css'
-import '../styles/AddProveedor.css'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
   var instances = M.Autocomplete.init(elems, {});
 });
 
-const AddProveedor = (props)  => {
+const UpdateProveedorForm = (props)  => {
   const history = useHistory();
   const company = props.company
   const [url, setUrl] = useState(null);
-  const [companyName, setcompanyName] = useState(company === undefined ? "" : company.companyName )
-  const [companyImage, setcompanyImage] = useState(company === undefined ? "" : company.companyImage)
-  const [facebook, setfacebook] = useState(company === undefined ? "" : company.facebook)
-  const [instagram, setinstagram] = useState(company === undefined ? "" : company.instagram)
-  const [web, setweb] = useState(company === undefined ? "" : company.web)
-
+  const [companyName, setcompanyName] = useState(company.companyName )
+  const [companyImage, setcompanyImage] = useState(company.companyImage)
+  const [facebook, setfacebook] = useState(company.facebook)
+  const [instagram, setinstagram] = useState(company.instagram)
+  const [web, setweb] = useState(company.web)
 
   useEffect(() => {
     if (url) {
-      postearAdd();
+      postearUpdate();
     }
-  }, [url]);
+  },[url]);
 
   const agregarProveedor = () => {
+    console.log(companyImage)
+    if(!companyImage){
     const data = new FormData();
     data.append("file", companyImage);
     data.append("upload_preset", "insta-clon-GB");
@@ -42,13 +42,17 @@ const AddProveedor = (props)  => {
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}else{
+        setUrl(company.companyImage)
+      }
   };
+  
+  const postearUpdate = () => {
+    
 
-  const postearAdd = () => {
-    fetch("http://localhost:7000/companies", {
-      method: "POST",
-      headers: {
+      fetch(`http://localhost:7000/companies/${company.id}`, {
+        method: "PUT",
+        headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
@@ -65,24 +69,28 @@ const AddProveedor = (props)  => {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
           M.toast({
-            html: "Proveedor agregado exitosamente",
+            html: "Proveedor modificado exitosamente",
             classes: "#388e3c green darken-2",
           });
-          history.push("/admin");
         }
       })
       .catch((err) => {
         console.log(err);
       });
+    
   };
- 
+
+  console.log(company)
   return (
         <div class="row">
           <form class="col s12">
         <div class="row">
           <div class="input-field col s6">
               <input 
-              id="Nombre_de_la_Empresa" onChange={(e) => setcompanyName(e.target.value)} type="text" class="validate" value={companyName}/>
+              id="Nombre_de_la_Empresa" onChange={(e) => { 
+                setcompanyName(e.target.value)
+                console.log(companyName)
+                }} type="text" class="validate" value={companyName}/>
                <label class="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
           </div>
               <div class="input-field col s6">
@@ -112,7 +120,10 @@ const AddProveedor = (props)  => {
           <div class="file-field input-field">
             <div class="btn" id='buttonUploadImages'>
               <span>Cargar Imagen</span>
-              <input type="file" onChange={(e) => setcompanyImage(e.target.files[0])}/>
+              <input type="file" onChange={(e) => {
+                setcompanyImage(e.target.files[0])
+                console.log(companyImage)
+                }}/>
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" value={companyImage}/>
@@ -121,21 +132,28 @@ const AddProveedor = (props)  => {
         </form>
         <div class="row">
           <div class="col s12">
-                <a onClick={() => {
-                  agregarProveedor();
-                  if (!companyName ||
-                    !companyImage ||
-                    !facebook ||
-                    !instagram ||
-                    !web) {
-                    postearAdd();
+                 
+                <a  onClick={() => {
+                  console.log(companyImage)
+                  console.log(url)
+                  console.log(companyImage === url)
+              
+                    agregarProveedor();
+                    if (!companyName ||
+                      !companyImage ||
+                      !facebook ||
+                      !instagram ||
+                      !web) {
+                      postearUpdate()
                   }
-                }} class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Proveedor</a>
+                  }
+                } 
+                class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>
+              
           </div>
         </div>
       </form>
       </div>
   );
 };
-
-export default AddProveedor;
+export default UpdateProveedorForm;
