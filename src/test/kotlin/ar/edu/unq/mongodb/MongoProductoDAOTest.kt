@@ -7,6 +7,7 @@ import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.mongodb.GenericMongoDAOTest
 import ar.edu.unq.services.runner.DataBaseType
+import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
 import ar.edu.unq.services.runner.TransactionType
 
@@ -14,6 +15,12 @@ class MongoProductoDAOTest() : GenericMongoDAOTest<Producto>() {
 
     private val proveedorDAO: ProveedorDAO = MongoProveedorDAOImpl()
     private lateinit var proveedor: Proveedor
+
+    override fun deleteColection() {
+        super.deleteColection()
+        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+        database?.getCollection("Proveedor")?.drop()
+    }
 
     override fun generarDAO() {
         this.dao = MongoProductoDAOImpl()

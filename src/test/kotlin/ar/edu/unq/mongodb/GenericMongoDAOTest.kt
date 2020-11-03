@@ -43,11 +43,16 @@ abstract class GenericMongoDAOTest<T> {
     @Test
     fun testSiNoEstaCreadaLaColeccionSeCrea(){
         runTrx({
-            val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-            database?.getCollection(this.dao.entityType::class.java.simpleName)?.drop()
+             this.deleteColection()
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         var result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        Assert.assertEquals(this.items.count(), result.count())
+        println(result)
+        Assert.assertEquals(0, result.count())
+    }
+
+    open fun deleteColection(){
+        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
+        database?.getCollection(this.dao.entityType::class.java.simpleName)?.drop()
     }
 
     abstract fun borrarNItems(n: Int)
