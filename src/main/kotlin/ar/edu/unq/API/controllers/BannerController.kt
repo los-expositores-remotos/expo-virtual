@@ -15,18 +15,19 @@ class BannerController(val backendProveedorService: ProveedorService) {
     private fun readFile(name: String): String {
         return object {}::class.java.classLoader.getResource(name).readText()
     }
+
     fun allBanners(ctx: Context) {
         println("entree")
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         val bannersString = readFile("banners.json")
         val bannerDataType = object : TypeToken<MutableList<Banner>>() {}.type
-        val banners : MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
+        val banners: MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
         println(banners)
         banners.forEach {
             bannerlist.add(
-                BannerViewMapper(
-                    it.image
-                )
+                    BannerViewMapper(
+                            it.image
+                    )
             )
         }
         println(bannerlist)
@@ -38,9 +39,9 @@ class BannerController(val backendProveedorService: ProveedorService) {
         ctx.json(imagesList)
         */
     }
-/*
-    fun agregarBanner(ctx: Context) {
 
+    fun agregarBanner(ctx: Context) {
+/*
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
                 .check(
@@ -57,11 +58,11 @@ class BannerController(val backendProveedorService: ProveedorService) {
         } catch (e: ExistsException) {
             throw BadRequestResponse(e.message.toString())
         }
-
+*/
     }
 
     fun deleteBanner(ctx: Context) {
-
+/*
         try {
             val id = ctx.pathParam("bannerId")
             backend.removeBanner(id)
@@ -71,4 +72,33 @@ class BannerController(val backendProveedorService: ProveedorService) {
         }
 
     } */
+    }
+
+    fun getSchedule(ctx: Context){
+
+    }
+
+    fun addScheduleBanner(ctx: Context){
+
+    }
+
+    fun deleteScheduleBanner(ctx: Context){
+
+    }
+
+    fun getOnlineClassesBanner(ctx: Context){
+
+    }
+
+    fun addOnlineClassBanner(ctx: Context){
+
+    }
+
+    fun getOnlineClassBanner(ctx: Context){
+
+    }
+
+    fun deleteOnlineClassBanner(ctx: Context){
+
+    }
 }

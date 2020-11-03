@@ -31,10 +31,25 @@ fun main(args: Array<String>) {
 
         path("banners") {
             get(bannerController::allBanners)
-      /*      post(bannerController::agregarBanner)
+            post(bannerController::agregarBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
-            }*/
+            }
+            path("cronograma") {
+                get(bannerController::getSchedule)
+                post(bannerController::addScheduleBanner)
+                path(":bannerId") {
+                    delete(bannerController::deleteScheduleBanner)
+                }
+            }
+            path("classes") {
+                get(bannerController::getOnlineClassesBanner)
+                post(bannerController::addOnlineClassBanner)
+                path("bannerId") {
+                    get(bannerController::getOnlineClassBanner)
+                    delete(bannerController::deleteOnlineClassBanner)
+                }
+            }
         }
 
         path("companies") {
