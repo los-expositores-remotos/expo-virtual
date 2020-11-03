@@ -3,5 +3,4 @@ jdk:
   - openjdk8
 script:
   - mvn -B test
-  - bash <(curl --data-binary @codecov.yml https://codecov.io/validate)
   - bash <(curl -s https://codecov.io/bash)
