@@ -46,7 +46,6 @@ abstract class GenericMongoDAOTest<T> {
              this.deleteColection()
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         val result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-        println(result)
         Assert.assertEquals(0, result.count())
     }
 
