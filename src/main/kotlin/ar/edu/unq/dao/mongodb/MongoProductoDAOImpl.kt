@@ -17,15 +17,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         throw Exception("Este metodo no esta permitido")
     }
 
-    override fun save(anObject: Producto) {//TODO: tirar error
-        throw Exception("Este metodo no esta permitido")
-    }
-
     override fun update(anObject: Producto, id: String?) {//TODO: tirar error
-        throw Exception("Este metodo no esta permitido")
-    }
-
-    override fun delete(id: String) {//TODO: tirar error
         throw Exception("Este metodo no esta permitido")
     }
 
@@ -33,7 +25,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         throw Exception("Este metodo no esta permitido")
     }
 
-    override fun deleteBy(property: String, value: String?) {//TODO: tirar error
+    override fun <E> deleteBy(property: String, value: E?) {//TODO: tirar error
         throw Exception("Este metodo no esta permitido")
     }
 
@@ -46,9 +38,10 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         ).first()
     }
 
-    override fun getCollection(objectType: String, classType: Class<Producto>): MongoCollection<Producto>? {
-        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        if(database?.listCollectionNames()!!.contains("Producto").not()) {
+    override fun getCollection(objectType: String, classType: Class<Producto>): MongoCollection<Producto> {
+        val database = this.getDatabase()
+        if(database.listCollectionNames().contains("Producto").not()) {
+            this.createColection("Proveedor", database)
             val proyectarProductos = project(Document("listProducts", "\$productos"))
             val separarProductos = unwind("\$listProducts")
             val proyectarProductosIndividuales = project(this.estructuraDeProducto())
