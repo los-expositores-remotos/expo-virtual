@@ -33,8 +33,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun update(anObject: T, id: String?) {
-        val session:ClientSession = this.session_check()
-        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(session, eq("id", ObjectId(id)), anObject)
+        this.session_check()
+        this.getCollection(entityType.simpleName, entityType)!!.replaceOne(eq("id", ObjectId(id)), anObject)
     }
 
     open fun save(objects: List<T>) {
@@ -43,7 +43,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun delete(id: String){// TODO: testear
-        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq("id", id))
+        this.getCollection(entityType.simpleName, entityType)!!.deleteOne(eq("id", ObjectId(id)))
     }
 
     open fun deleteBy(property:String, value: String?){// TODO: testear
@@ -51,12 +51,12 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     operator fun get(id: String?): T? {
-        return getBy("id", id)
+        return getBy("id", ObjectId(id))
     }
 
-    fun getBy(property:String, value: String?): T? {
+    fun <E> getBy(property:String, value: E?): T? {
         this.session_check()
-        return this.getCollection(entityType.simpleName, entityType)!!.find(Document(property,ObjectId(value))).first()
+        return this.getCollection(entityType.simpleName, entityType)!!.find(Document(property,value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {

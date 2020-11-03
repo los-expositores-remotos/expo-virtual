@@ -1,12 +1,7 @@
 package ar.edu.unq.modelo
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-
-import org.bson.codecs.pojo.annotations.BsonIgnore
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
-
 
 class Proveedor {
 
@@ -32,6 +27,7 @@ class Proveedor {
     }
 
     fun addProduct(productoNuevo: Producto) {
+        productoNuevo.idProveedor = this.id
         productos.add(productoNuevo)
     }
 

@@ -12,7 +12,7 @@ const FormProveedor = () => {
   
   return (
         <div class="row">
-          <form class="col s8">
+          <form class="col s12">
         <div class="row">
           <div class="input-field col s6">
               <input id="Nombre_de_la_Empresa" type="text" class="validate"/>

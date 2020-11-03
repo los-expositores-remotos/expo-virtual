@@ -6,10 +6,32 @@ import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import ar.edu.unq.modelo.Banner
 import ar.edu.unq.services.ProveedorService
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import io.javalin.core.util.FileUtil.readFile
 
 class BannerController(val backendProveedorService: ProveedorService) {
 
-        fun allBanners(ctx: Context) {
+    private fun readFile(name: String): String {
+        return object {}::class.java.classLoader.getResource(name).readText()
+    }
+    fun allBanners(ctx: Context) {
+        println("entree")
+        val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
+        val bannersString = readFile("banners.json")
+        val bannerDataType = object : TypeToken<MutableList<Banner>>() {}.type
+        val banners : MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
+        println(banners)
+        banners.forEach {
+            bannerlist.add(
+                BannerViewMapper(
+                    it.image
+                )
+            )
+        }
+        println(bannerlist)
+        ctx.status(200)
+        ctx.json(bannerlist)
 /*
         var imagesList = backend.banners.map { BannerImageViewMapper(it.id.toString(), it.image) }
         ctx.status(200)
@@ -48,5 +70,5 @@ class BannerController(val backendProveedorService: ProveedorService) {
             throw BadRequestResponse(e.message.toString())
         }
  */
-        }
     }
+}

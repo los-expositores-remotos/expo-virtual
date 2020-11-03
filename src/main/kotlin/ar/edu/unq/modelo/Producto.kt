@@ -10,8 +10,8 @@ class Producto{
     @BsonProperty("id")
     var id: ObjectId = ObjectId()
     lateinit var idProveedor: ObjectId
-    lateinit var itemName: String
-    lateinit var description: String
+    var itemName: String = ""
+    var description: String = ""
     var listImages: MutableList<String> = emptyList<String>().toMutableList()
     var stock: Int = 0
     var itemPrice: Int = 0
