@@ -22,8 +22,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>?{
         // Precondición: Debe haber una sesión en el contexto
-        val database = TransactionRunner.getTransaction()?.sessionFactoryProvider()?.getDatabase()
-        this.createColection(objectType,database!!)
+        val database = TransactionRunner.getTransaction()!!.sessionFactoryProvider()!!.getDatabase()
+        this.createColection(objectType,database)
         return database.getCollection(objectType, classType)
     }
 
