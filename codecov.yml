@@ -7,7 +7,7 @@ coverage:
   round: down
   range: "70...100"
   ignore:
-    - "src/main/kotlin/ar.edu.unq/API/**"
+    - "**/API/**/*"
   status:
     project: yes
     patch: yes
