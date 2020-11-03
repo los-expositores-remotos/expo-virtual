@@ -50,9 +50,12 @@ abstract class GenericMongoDAOTest<T> {
         Assert.assertEquals(0, result.count())
     }
 
+    @Test
+    abstract fun encontrarItemsQueCumplenPropiedad()
+
     open fun deleteColection(){
         val database = TransactionRunner.getTransaction().sessionFactoryProvider().getDatabase()
-        database.getCollection(this.dao.entityType::class.java.simpleName).drop()
+        database.getCollection(this.dao.entityType.simpleName).drop()
     }
 
     abstract fun borrarNItems(n: Int)

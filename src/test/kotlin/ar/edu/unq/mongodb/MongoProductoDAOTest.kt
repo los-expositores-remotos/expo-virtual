@@ -10,6 +10,8 @@ import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
 import ar.edu.unq.services.runner.TransactionType
+import org.junit.Test
+import kotlin.test.assertEquals
 
 class MongoProductoDAOTest() : GenericMongoDAOTest<Producto>() {
 
@@ -44,5 +46,37 @@ class MongoProductoDAOTest() : GenericMongoDAOTest<Producto>() {
             this.items.removeAt(0)
         }
         runTrx({ this.proveedorDAO.update(proveedor, proveedor.id.toString()) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+    }
+
+    @Test(expected = Exception::class)
+    fun alIntentarGuardarProductosFalla() {
+        runTrx({ this.dao.save(Producto()) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+    }
+
+    @Test(expected = Exception::class)
+    fun alIntentarActualizarUnPoductoFalla() {
+        this.items[0].itemName = "Hola"
+        runTrx({
+            this.dao.update(this.items[0], this.items[0].id.toString())
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+    }
+
+    @Test(expected = Exception::class)
+    fun alIntentarBorrarUnPoductoFalla() {
+        runTrx({
+            this.dao.delete(this.items[0].id.toString())
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+    }
+
+    @Test(expected = Exception::class)
+    fun alIntentarBorrarTodosLosProductosFalla() {
+        runTrx({ this.dao.deleteAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+    }
+
+    override fun encontrarItemsQueCumplenPropiedad() {
+        val productosRecuperados = runTrx({
+            this.dao.findEq("itemName", "LesPaul")
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        assertEquals(this.items.filter { it.itemName == "LesPaul" }.toSet(), productosRecuperados.toSet())
     }
 }
