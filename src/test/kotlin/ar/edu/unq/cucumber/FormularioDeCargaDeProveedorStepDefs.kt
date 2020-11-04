@@ -6,7 +6,6 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.PendingException
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
@@ -50,13 +49,13 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @Then("^El proveedor \"([^\"]*)\" se encuentra en la base de datos$")
     fun elProveedorSeEncuentraEnLaBaseDeDatos(nombreProveedor: String?) {
-        val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())!!
+        val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())
         assertEquals(nombreProveedor, proveedorRecuperado.companyName)
     }
 
     @And("^Sus datos son \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     fun susDatosSon(linkImage: String?, linkFacebook: String?, linkInstagram: String?, linkWeb: String?) {
-        val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())!!
+        val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())
         assertEquals(linkImage, proveedorRecuperado.companyImage)
         assertEquals(linkFacebook, proveedorRecuperado.facebook)
         assertEquals(linkInstagram, proveedorRecuperado.instagram)
@@ -80,7 +79,7 @@ class FormularioDeCargaDeProveedorStepDefs {
     @Then("^Los productos del proveedor recuperado son \"([^\"]*)\" y \"([^\"]*)\"$")
     fun losProductosDelProveedorRecuperadoSonY(producto1: String?, producto2: String?) {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor2.id.toString())
-        val productosRecuperados = proveedorRecuperado!!.productos.map{ it.itemName }.toSet()
+        val productosRecuperados = proveedorRecuperado.productos.map{ it.itemName }.toSet()
         val productos = setOf(producto1!!, producto2!!)
         assertEquals(productos, productosRecuperados)
     }
