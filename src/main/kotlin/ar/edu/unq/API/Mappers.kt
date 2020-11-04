@@ -51,7 +51,7 @@ data class SupplierRegisterMapper(val companyName: String?,
                                   val instagram: String?,
                                   val web: String?)
 
-data class BannerRegisterMapper(val image: String?)
+data class BannerRegisterMapper(val image: String?, val category: String?)
 
 data class BannerViewMapper(val image: String)
 

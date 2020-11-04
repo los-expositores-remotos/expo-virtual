@@ -1,3 +1,13 @@
 package ar.edu.unq.modelo
 
-data class Banner(val image: String)
+public class Banner() {
+    var id: Int = 0
+    var image: String = ""
+    var category: String = ""
+
+    constructor(image: String, category: String) {
+        this.id++
+        this.image = image
+        this.category = category
+    }
+}
