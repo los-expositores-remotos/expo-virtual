@@ -1,120 +1,35 @@
 import React from "react";
-import {useEffect, useState} from "react";
-import M from 'materialize-css'
-import {Carousel,Pagination} from 'react-materialize'
-
-document.addEventListener('DOMContentLoaded', function() {
-  var elems = document.querySelectorAll('.slider');
-  var instances = M.Slider.init(elems, {});
-});
+import '../../styles/Aboutus.css'
 
 
-const Aboutus = (props) => {
-    const company = props.company
+const Aboutus = () => {
     
-    const [page, setPage] = useState(0)
-  
-  const imagesOfProducts = (product) =>{
-    //console.log(product)
-  const images = product.images
-  
-  return (
-     
-    <Carousel
-    carouselId="Carousel-2"
-    images={images}
-    options={{
-      dist: -100,
-      duration: 200,
-      fullWidth: false,
-      indicators: false,
-      noWrap: false,
-      numVisible: 5,
-      onCycleTo: null,
-      padding: 0,
-      shift: 0
-    }}
-  />
-     
-  )
-  }
-  
-  
-  const listOfProducts = () => {
-    const products = company.products
-    console.log(products)
-    if(products.length > 0)  {
-    const res = []
-        for (let index = (page * 4); index < ((page + 1) * 4); index++) {
-  
-          //console.log(products)
-          //console.log(index)
-  
-            console.log(products[index])
-            const element = products[index];
-            console.log(element)
-            if(products[index] === undefined){
-              
-              console.log("el elemnto es undefined")
-              
-            }else{
-              res.push(element)
-              console.log(res)
-            }
-        }
-    
-    const result = res.map((product) => {
-        return (
-              <div class="col s3" id='cardOfProducts'>
-                <div class="card">
-                  <div class="card-image">
-                    {imagesOfProducts(product)}
-                    <span class="card-title">{product.itemName}</span>
-                  </div>
-                  <div class="card-content">
-                    <p>{product.description}</p>
-                    <p>Stock: {product.stock}</p>
-                    <p>Precio: {product.itemPrice}</p>
-                    <p>Precio promocional: {product.promotionalPrice}</p>
-                  </div>
-                  <div class="card-action">
-                    <a href="#">ver</a>
-                  </div>
-                </div>
-              </div>
-        )
-      }
-      )
-      
-      return (
-        <div>
-          <div class="row">
-            {result}
-          </div>
-            <Pagination
-            activePage={page + 1}
-            items={products.length % 4 > 0 ? (products.length / 4)+1 : (products.length / 4)}
-            leftBtn={<a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i class="material-icons">chevron_left</i></a>}
-            maxButtons={products.length % 4 > 0 ?  (products.length / 4) + 1 : (products.length / 4) }
-            rightBtn={<a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i class="material-icons">chevron_right</i></a>}
-            />
-        </div>
-        )
-      }
-    }
-  
     return (
-      <div>
-            {
-              !company ?
-                <p>Loading...</p>
-              :
-              <div>
-                <h2>{company.companyName}</h2>
-                {listOfProducts(company)}
-              </div>
-            }
-          </div>
+      <div class="mt-4">
+        
+        <h1 id='textH1'> Quienes Somos</h1>
+        <h3 id="textH3">2001 - 2020</h3>
+        <h2 id="textH2">19 AÑOS JUNTO A ARTISTAS Y ARTESANOS
+        UNA EXPERIENCIA QUE NOS GUSTA COMPARTIR </h2>
+
+        <p id='textP'>Todo comienza en agosto de 2001, ante el crecimiento y la difusión de la Pintura Decorativa, nos dimos cuenta que faltaba un canal gráfico de información que difundiera la actividad que comenzaba a expandirse. Un espacio donde profesoras, talleres, librerías artísticas y empresas relacionadas al arte decorativo pudieran mostrar y transmitir todo su conocimiento y su amor por el arte. Así nació Guía del Arte, el espacio donde el arte, las manualidades y color viven.</p>
+
+        <p id='textP'>Con el correr del tiempo y mucho trabajo, fue llegando el reconocimiento de nuestros lectores y del medio de las artes, pintura decorativa, artesanías y las manualidades.</p>
+
+        <p id='textP'>Nos animamos a buscar nuevos espacios para destacar el trabajo de los profesores y tener cercanía con nuestros lectores, así creamos la “1er Expo Arte Navideña” en 2006. En Noviembre de 2020 sera la edición N° 15.</p>
+
+        <p id='textP'>Crecimos y realizamos mas eventos como “Expo Country”, “Expo Romántica” y “Expo Candy Bar”, todos con la característica de ser temáticos cada uno en su rubro.</p>
+
+        <p id='textP'>En simultáneo a los eventos, fuimos creciendo en el area editorial y creamos “Mundo de Ideas”, una revista paso a paso orientada a la pintura en porcelana y sumamos también “Arte y Manualidades” para lectores que disfrutan de realizar todo tipo de manualidades y artesanías.</p>
+
+        <p id='textP'>Con el paso del tiempo y el avance de la tecnología ademas de continuar con las ediciones gráficas sumamos la difusión del mundo del arte en medios digitales.
+        Esta es nuestra historia junto a el Arte, y la seguimos escribiendo día a día junto a ustedes.</p>
+
+        <p id='textP'>Somos un equipo de manos que hacen lo que el corazón siente.</p>
+
+        <p id='textP'>Flia. Saucedo Piñero</p>
+
+      </div>
   
     );
   };

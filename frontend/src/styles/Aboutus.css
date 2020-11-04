@@ -1,0 +1,28 @@
+#textP {
+  width: 50%;
+  text-align: justify;
+  margin: 1% 25%;
+  font-size: larger;
+  font-family: revert;
+}
+#textH2 {
+  width: 50%;
+  text-align: center;
+  margin: 1% 25% 3%;
+  font-size: larger;
+  font-family: revert;
+}
+#textH3 {
+  width: 50%;
+  text-align: center;
+  margin: 1% 25%;
+  font-size: larger;
+  font-family: revert;
+}
+#textH1 {
+  width: 50%;
+  text-align: center;
+  margin: 1% 25%;
+  font-size: larger;
+  font-family: revert;
+}
