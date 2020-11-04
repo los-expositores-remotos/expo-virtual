@@ -50,6 +50,12 @@ fun main(args: Array<String>) {
                     delete(bannerController::deleteBanner)
                 }
             }
+            path("paymentMethods"){
+                get(bannerController::getPaymentMethodsBanner)
+            }
+            path("courrier"){
+                get(bannerController::getCourrierBanner)
+            }
         }
 
         path("companies") {

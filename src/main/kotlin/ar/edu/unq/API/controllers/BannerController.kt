@@ -241,6 +241,58 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         }
     }
 
+    fun getCourrierBanner(ctx: Context){
+        try {
+            val bannerView: BannerViewMapper
+            var banner: Banner = instanciarBannersDesdeJson().find { it.category.equals("courrier") }!!
+            println(banner)
+            bannerView = BannerViewMapper(
+                    banner.id.toString(),
+                    banner.image,
+                    banner.category
+            )
+            println(bannerView)
+            ctx.status(200)
+            ctx.json(bannerView)
+
+            /*
+        ////        IMPLE PARA PROD
+        val scheduleBanner = backendBannerService.getBannerByCategory("courrier")
+        val scheduleResult = aux.bannerClassListToBannerViewList(scheduleBanner as MutableCollection<Banner>)
+        ctx.status(200)
+        ctx.json(scheduleResult)*/
+            /////
+        } catch (e: ExistsException) {
+            throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+    fun getPaymentMethodsBanner(ctx: Context){
+        val bannerViewlist: MutableList<BannerViewMapper> = mutableListOf()
+        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category.equals("paymentMethods") }
+        println(banners)
+        banners.forEach {
+            bannerViewlist.add(
+                    BannerViewMapper(
+                            it.id.toString(),
+                            it.image,
+                            it.category
+                    )
+            )
+        }
+        println(bannerViewlist)
+        ctx.status(200)
+        ctx.json(bannerViewlist)/*
+     ////        IMPLE PARA PROD
+    val onlineClasesBanner = backendBannerService.getBannerByCategory("paymentMethods")
+    var allOnlineClassesBanner = aux.bannerClassListToBannerViewList(onlineClasesBanner as MutableCollection<Banner>)
+    ctx.status(200)
+    ctx.json(
+             mapOf(
+                     "Payment methods" to allOnlineClassesBanner))
+    ///// */
+    }
+
     //////////////////////
     //FUNCIONES AUXILIARES
     //////////////////////
