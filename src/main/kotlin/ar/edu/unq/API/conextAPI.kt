@@ -82,7 +82,11 @@ fun main(args: Array<String>) {
             path("supplier") {
                 path(":supplierId") {
                 get(productController::getProductsBySuppId)
-            }/*
+            }
+            path("search"){
+                get(productController::searchProduct)
+            }
+                /*
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
