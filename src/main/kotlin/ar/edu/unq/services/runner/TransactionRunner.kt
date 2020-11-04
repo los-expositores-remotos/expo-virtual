@@ -1,9 +1,6 @@
 package ar.edu.unq.services.runner
 
 import com.mongodb.client.ClientSession
-import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProvider
-import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProviderProduccion
-import ar.edu.unq.services.runner.sessionfactoryprovider.MongoSessionFactoryProviderTest
 
 interface Transaction {
     fun start(dataBaseType: DataBaseType)
@@ -42,7 +39,7 @@ class MongoDBTransaction: Transaction {
         session = null
     }
 
-    fun sessionFactoryProvider(): MongoSessionFactoryProvider{
+    fun sessionFactoryProvider(): MongoSessionFactoryProvider {
         return sessionFactoryProvider ?: throw Exception("No hay una sesión en el contexto")
     }
 
@@ -55,12 +52,14 @@ class MongoDBTransaction: Transaction {
 enum class DataBaseType {
     TEST {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            return MongoSessionFactoryProviderTest.instance
+            MongoSessionFactoryProvider.dataBaseName = "pruebasback"
+            return MongoSessionFactoryProvider.instance
         }
     },
     PRODUCCION {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            return MongoSessionFactoryProviderProduccion.instance
+            MongoSessionFactoryProvider.dataBaseName = "produccionback"
+            return MongoSessionFactoryProvider.instance
         }
     };
     abstract fun getSessionFactoryProvider(): MongoSessionFactoryProvider
