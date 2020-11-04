@@ -35,11 +35,11 @@ fun main(args: Array<String>) {
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
             }
-            path("cronograma") {
+            path("schedule") {
                 get(bannerController::getSchedule)
                 post(bannerController::addScheduleBanner)
                 path(":bannerId") {
-                    delete(bannerController::deleteScheduleBanner)
+                    delete(bannerController::deleteBanner)
                 }
             }
             path("classes") {
@@ -47,7 +47,7 @@ fun main(args: Array<String>) {
                 post(bannerController::addOnlineClassBanner)
                 path("classeId") {
                     get(bannerController::getOnlineClassBanner)
-                    delete(bannerController::deleteOnlineClassBanner)
+                    delete(bannerController::deleteBanner)
                 }
             }
         }

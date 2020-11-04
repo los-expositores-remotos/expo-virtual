@@ -93,7 +93,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun getProductsBySuppId(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)!!//aux.searchProveedorById(supplierId)
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)//aux.searchProveedorById(supplierId)
             println(supplier)
             val products = aux.productoClassListToProductoViewList(supplier.productos)
             ctx.status(200)

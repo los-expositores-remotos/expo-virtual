@@ -56,7 +56,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)!!// aux.searchProveedorById(supplierId)
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)// aux.searchProveedorById(supplierId)
 
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
@@ -90,7 +90,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier = backendProveedorService.recuperarProveedor(id)!!//aux.searchProveedorById(id)
+            val supplier = backendProveedorService.recuperarProveedor(id)//aux.searchProveedorById(id)
             println(supplier.companyName)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
@@ -101,7 +101,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             backendProveedorService.actualizarProveedor(supplier)
             println(supplier.companyName)
             val updated = this.backendProveedorService.recuperarProveedor(id)
-            println(updated!!.companyName)
+            println(updated.companyName)
             ctx.json(aux.proveedorClassToProveedorView(updated))
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())
