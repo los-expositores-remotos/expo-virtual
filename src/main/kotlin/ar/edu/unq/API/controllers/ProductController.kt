@@ -103,7 +103,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         }
     }
 
-    fun searchNote(ctx: Context){
+    fun searchProduct(ctx: Context){/*
         val productToSearch = ctx.queryParam("text")
         if(productToSearch!!.isBlank()){
             throw BadRequestResponse("Invalid query - param text is empty")
@@ -115,6 +115,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                 mapOf(
                         "Notes" to allP
                 )
-        )
+        )*/
     }
 }
