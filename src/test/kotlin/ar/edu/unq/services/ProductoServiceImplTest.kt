@@ -65,20 +65,6 @@ class ProductoServiceImplTest {
         this.productoService.nuevoProducto(producto)
     }
 
-/*    @Test
-    fun updateProveedor() {
-        proveedorService.crearProveedor(proveedorA)
-        proveedorA.companyName = "hola"
-        proveedorA.addProduct(productoA)
-        var result = proveedorService.recuperarProveedor(proveedorA.id.toString())
-        Assert.assertEquals(emptySet<Producto>(), result!!.productos.toSet())
-        Assert.assertEquals("AA", result.companyName)
-        proveedorService.actualizarProveedor(proveedorA)
-        result = proveedorService.recuperarProveedor(proveedorA.id.toString())
-        Assert.assertEquals(setOf(productoA), result!!.productos.toSet())
-        Assert.assertEquals("hola", result.companyName)
-    }*/
-
     @Test(expected = ProductoInexistenteException::class)
     fun testRecuperarProductoInexistente(){
         this.productoService.recuperarProducto(ObjectId().toString())
