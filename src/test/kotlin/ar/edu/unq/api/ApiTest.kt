@@ -11,6 +11,7 @@ import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
 import org.junit.After
+import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

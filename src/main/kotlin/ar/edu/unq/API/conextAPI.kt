@@ -1,4 +1,4 @@
-package ar.edu.unq
+package ar.edu.unq.API
 
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.BannerController
@@ -13,10 +13,13 @@ import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
 
 fun main(args: Array<String>) {
+    levantarAPI(7000, DataBaseType.PRODUCCION)
+}
 
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
+fun levantarAPI(port: Int, dataBaseType: DataBaseType): Javalin {
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), dataBaseType)
     val backendProductoService =
-        ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
+            ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), dataBaseType)
     val bannerController = BannerController(backendProveedorService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
@@ -26,7 +29,7 @@ fun main(args: Array<String>) {
         it.enableCorsForAllOrigins()
     }
 
-    app.start(7000)
+    app.start(port)
     app.routes {
 
         path("banners") {
@@ -63,8 +66,8 @@ fun main(args: Array<String>) {
             }
             path("supplier") {
                 path(":supplierId") {
-                get(productController::getProductsBySuppId)
-            }/*
+                    get(productController::getProductsBySuppId)
+                }/*
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }
@@ -74,7 +77,7 @@ fun main(args: Array<String>) {
             path("promoPrice") {
                 get(companyController::productsWPromoPrice)
             }*/
-        }
+            }
 
 
 /*        path("order") {
@@ -100,10 +103,11 @@ fun main(args: Array<String>) {
                 get(companyController::orderByAlphabeticAsc)
             }
         }*/
-        //  path("/user") {
-        //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
+            //  path("/user") {
+            //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
 
         }
     }
+    return app!!
 }
 
