@@ -1,8 +1,6 @@
 package ar.edu.unq.dao
 
 import ar.edu.unq.modelo.Proveedor
-import ar.edu.unq.services.runner.DataBaseType
-import org.bson.conversions.Bson
 
 interface ProveedorDAO {
     fun save(anObject: Proveedor)

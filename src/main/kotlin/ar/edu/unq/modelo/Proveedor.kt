@@ -13,7 +13,7 @@ class Proveedor {
     var instagram: String = ""
     var web: String = ""
     var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
-    constructor(){}
+    constructor()
     constructor(companyName: String) {
         this.companyName = companyName
     }

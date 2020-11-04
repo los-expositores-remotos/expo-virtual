@@ -1,8 +1,6 @@
 package ar.edu.unq.dao
 
 import ar.edu.unq.modelo.Producto
-import ar.edu.unq.modelo.Proveedor
-import ar.edu.unq.services.runner.DataBaseType
 
 interface ProductoDAO {
     fun save(anObject: Producto)
