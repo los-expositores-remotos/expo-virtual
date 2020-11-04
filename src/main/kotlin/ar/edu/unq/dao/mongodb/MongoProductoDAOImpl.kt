@@ -35,7 +35,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
                         eq("idProveedor", ObjectId(idProveedor)),
                         eq("itemName",nombreProducto)
                 )
-        ).first()
+        ).firstOrNull()
     }
 
     override fun getCollection(objectType: String, classType: Class<Producto>): MongoCollection<Producto> {
