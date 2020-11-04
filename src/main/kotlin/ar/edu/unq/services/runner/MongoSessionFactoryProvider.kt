@@ -1,4 +1,4 @@
-package ar.edu.unq.services.runner.sessionfactoryprovider
+package ar.edu.unq.services.runner
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
@@ -10,9 +10,9 @@ import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.PojoCodecProvider
 
-abstract class MongoSessionFactoryProvider {
+class MongoSessionFactoryProvider(databasename: String) {
     var client : MongoClient
-    protected var dataBase : MongoDatabase
+    private var dataBase : MongoDatabase
     val session : ClientSession? = null
 
     init {
@@ -27,10 +27,32 @@ abstract class MongoSessionFactoryProvider {
                 .applyConnectionString(connectionString)
                 .build()
         client = MongoClients.create(settings)
-        dataBase = client.getDatabase(this.dataBaseName())
+        dataBase = client.getDatabase(databasename)
     }
 
-    abstract fun dataBaseName(): String
+    companion object {
+
+        private var INSTANCE: MongoSessionFactoryProvider? = null
+        var dataBaseName: String? = null
+        val instance: MongoSessionFactoryProvider
+            get() {
+                if (INSTANCE == null) {
+                    INSTANCE =
+                        MongoSessionFactoryProvider(
+                            dataBaseName
+                                ?: throw Exception("La base de datos no esta definida")
+                        )
+                }
+                return INSTANCE!!
+            }
+
+        fun destroy() {
+            if (INSTANCE != null && INSTANCE!!.session != null) {
+                INSTANCE!!.client.close()
+            }
+            INSTANCE = null
+        }
+    }
 
     fun getDatabase(): MongoDatabase{
         return dataBase

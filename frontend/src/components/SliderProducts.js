@@ -1,34 +1,34 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/SliderProducts.css'
-import {Carousel, Card, Icon, Button,
-  CardTitle, Slider, Slide, Caption} from "react-materialize"
+import { Button, Slider, Slide, Caption} from "react-materialize"
 
 const SliderProducts = () => {
-  const [products, setproducts] = useState([])
-  
-  useEffect(() => {
-      fetch("http://localhost:7000/products", {
-        headers: {
-          "Content-Type":"application/json"
-        }
-      })
-        .then((res)=> {
-          console.log(res)
-          if(res.ok){
-              return res.json()
-          }
-          })
-        .then((result)=>{
-         
-            setproducts(result)        
-          
-        })
-        .catch((err => {
-          console.log(err)
-        }))
+  const [products, setproducts] = useState(null)
     
+    useEffect(() => {
+      if(!products){
+          fetch("http://localhost:7000/products", {
+            headers: {
+              "Content-Type":"application/json"
+            }
+          })
+            .then((res)=> {
+              console.log(res)
+              if(res.ok){
+                  return res.json()
+              }
+              })
+            .then((result)=>{
+                setproducts(result)        
+              
+            })
+            .catch((err => {
+              console.log(err)
+            }))
+          }
   }, [products])
+  
   const dinamicIndex = (index) => {
     if(index <= 3){
       return index++
@@ -58,11 +58,10 @@ const SliderProducts = () => {
         let index = 0 
         const placenment = ["center", "right", "left"]
         console.log(products)
-        if(products){
         const productlist = products.map((product)=>   
             <Slide image={<img className="prodImg" alt="" src={product.images[0]}/>}>
-                <Caption id="prodcaption" placement={placenment[index <= 3 ?  index++ : index - 3 ]}>
-                {console.log(index)}
+                <Caption id="prodcaption" placement={placenment[dinamicIndex(index)]}>
+     
                     <h3>
                         {product.itemName}
                     </h3>         
@@ -71,23 +70,21 @@ const SliderProducts = () => {
                     </Button>
                 </Caption>
                 </Slide>
-      )
-      return (
-        <Slider
-        fullscreen={false}
-        options={{
-          duration: 500,
-          indicators: true,
-          interval: 4000
-        }}
-        >
-        {
-          productlist
-        }
-    </Slider>
-
-      )
-      }
+        )
+          return (
+            <Slider
+            fullscreen={false}
+            options={{
+              duration: 500,
+              indicators: true,
+              interval: 6000
+            }}
+            >
+              {
+                productlist
+              }
+            </Slider>
+          )
     }
   }
   return (getListOfProducts());

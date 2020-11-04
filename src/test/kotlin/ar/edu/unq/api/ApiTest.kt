@@ -75,13 +75,6 @@ class ApiTest {
         Assert.assertTrue(provMappList!!.random() is CompanyViewMapper)
     }
 
-    @Test
-    fun convertListOfLIstToAList(){
-        val prodList: List<Any>? = auxFuc.makeListFromListofList(listaDeListaProd)
-        Assert.assertTrue(prodList is MutableList<*>)
-        Assert.assertTrue(prodList!!.random() is Producto)
-    }
-
   /*  @Test(expected = ConstraintViolationException::class)
     fun searchProductoWithResultNull(){
         val producto = auxFuc.searchProductoById("zaraza")

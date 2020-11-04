@@ -1,42 +1,17 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import M from 'materialize-css'
-import {Carousel,Pagination} from 'react-materialize'
-import ProveedorConProductos from '../ProveedorConProductos'
+import {Carousel,Pagination, Icon} from 'react-materialize'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
   var instances = M.Slider.init(elems, {});
 });
 
-const Suppliers = () => {
-  const [companies, setCompanies] = useState(null)
-  const [page, setPage] = useState(0) 
-  useEffect(() => {
-    if(!companies){
-    fetch(`http://localhost:7000/companies`, {
-      headers: {
-        "Content-Type":"application/json"
-      }
-    }) 
-      .then((res)=> {
-      //console.log(res)
-      if(res.ok){
-        return res.json()
-      }
-    })
-    .then((result)=>{
-      //console.log(result)
-
-        setCompanies(result)        
- 
-      //console.log(companies)
-    })
-    .catch((err => {
-      //console.log(err)
-    }))
-  }
-  }, [companies])
+const ProveedorConProductos = (props) => {
+  const company = props.company
+    
+  const [page, setPage] = useState(0)
 
 const imagesOfProducts = (product) =>{
   //console.log(product)
@@ -64,13 +39,7 @@ return (
 }
 
 
-const funcPagination = (products) => {
-
-
-}
-
-const listOfProducts = (company) => {
-  
+const listOfProducts = () => {
   const products = company.products
   console.log(products)
   if(products.length > 0)  {
@@ -115,6 +84,7 @@ const listOfProducts = (company) => {
       )
     }
     )
+    
     return (
       <div>
         <div class="row">
@@ -122,45 +92,29 @@ const listOfProducts = (company) => {
         </div>
           <Pagination
           activePage={page + 1}
-          items={(products.length / 4)+1}
+          items={products.length % 4 > 0 ? (products.length / 4)+1 : (products.length / 4)}
           leftBtn={<a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i class="material-icons">chevron_left</i></a>}
-          maxButtons={(products.length / 4)}
-          rightBtn={<a onClick={()=>{if((page * 4) < products.length ){ setPage(page + 1)}}}><i class="material-icons">chevron_right</i></a>}
+          maxButtons={products.length % 4 > 0 ?  (products.length / 4) + 1 : (products.length / 4) }
+          rightBtn={<a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i class="material-icons">chevron_right</i></a>}
           />
       </div>
       )
     }
   }
 
-  const getSProveedores = () =>{
-    if(companies){
-      const listOfCompanies = companies.map((company)=> {
-         
-        return  (
-                  <li>
-                      <ProveedorConProductos company={company}/>
-                  </li>
-                )
-  
-      })
-      return (
-        <ul>
-          {listOfCompanies}
-        </ul>
-      )
-    }
-  }
   return (
     <div>
           {
-            !companies ?
+            !company ?
               <p>Loading...</p>
             :
-            getSProveedores()
+            <div>
+              <h2>{company.companyName}</h2>
+              {listOfProducts(company)}
+            </div>
           }
         </div>
 
   );
 };
-
-export default Suppliers;
+export default ProveedorConProductos;

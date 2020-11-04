@@ -87,7 +87,7 @@ class VisualizacionDeProveedoresStepdefs {
     }
 
     @Then("^La descripción del producto es \"([^\"]*)\"$")
-    fun laDescripciónDelProductoEs(descripcion: String?) {
+    fun laDescripcionDelProductoEs(descripcion: String?) {
         val producto = productoService.obtenerProducto(proveedorId!!, productoNombre!!)
         Assert.assertEquals(descripcion, producto.description)
     }

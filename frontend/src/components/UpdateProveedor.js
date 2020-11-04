@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/UpdatProveedor.css'
 import {Link} from 'react-router-dom'
-import AddProveedor from './AddProveedor'
+import UpdateProveedorForm from './UpdateProveedorForm'
 
 const UpdateProveedor = () =>{
   const [companies, setCompanies] = useState([])
@@ -14,17 +14,17 @@ const UpdateProveedor = () =>{
       }
     })
     .then((res)=> {
-      console.log(res)
+      //console.log(res)
       if(res.ok){
         return res.json()
       }
     })
     .then((result)=>{
-      console.log(result)
+      //console.log(result)
 
         setCompanies(result)        
  
-      console.log(companies)
+      //console.log(companies)
     })
     .catch((err => {
       console.log(err)
@@ -43,7 +43,7 @@ const UpdateProveedor = () =>{
                 <div class="card-image">
                   <img src={company.companyImage}/>
                   <span class="card-title">{company.companyName}</span>
-                  <a onClick={ ()=> setClicked(<AddProveedor company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+                  <a onClick={ ()=> setClicked(<UpdateProveedorForm company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
                 </div>
                 <div class="card-content">
                   <a href={company.facebook}><p>Facebook</p></a>
