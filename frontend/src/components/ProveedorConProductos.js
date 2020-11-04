@@ -1,7 +1,8 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import M from 'materialize-css'
-import {Carousel,Pagination, Icon} from 'react-materialize'
+import {Carousel} from 'react-materialize'
+import { event } from "jquery";
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
@@ -12,6 +13,8 @@ const ProveedorConProductos = (props) => {
   const company = props.company
     
   const [page, setPage] = useState(0)
+  const [currentPage, setcurrentPage] = useState(1)
+
 
 const imagesOfProducts = (product) =>{
   //console.log(product)
@@ -84,19 +87,43 @@ const listOfProducts = () => {
       )
     }
     )
+
+    const numerosDePaginacion = () => {
+      const paginas = (products.length / 4)
+      for (let index = 1; index < paginas; index++) {
+        
+        return (
+          <li class={page === index ? "active" : "waves-effect"}>
+            <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
+          </li>
+        )
+        
+      }
+    }
+
+    const Paginacion = () => {
+
+      return(
+      <ul class="pagination">
+        <li class="waves-effect">
+          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><a><i class="material-icons">chevron_left</i></a></a>
+          </li>
+          <li class={page === 0 ? "active" : "waves-effect"} onClick={()=>{
+            setPage(0)
+            }}><a>1</a></li>
+            {numerosDePaginacion()}
+          <li class="waves-effect">
+            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><a><i class="material-icons">chevron_right</i></a></a>
+          </li>
+      </ul>)
+    };
     
     return (
       <div>
         <div class="row">
           {result}
         </div>
-          <Pagination
-          activePage={page + 1}
-          items={products.length % 4 > 0 ? (products.length / 4)+1 : (products.length / 4)}
-          leftBtn={<a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i class="material-icons">chevron_left</i></a>}
-          maxButtons={products.length % 4 > 0 ?  (products.length / 4) + 1 : (products.length / 4) }
-          rightBtn={<a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i class="material-icons">chevron_right</i></a>}
-          />
+          {Paginacion()}
       </div>
       )
     }
