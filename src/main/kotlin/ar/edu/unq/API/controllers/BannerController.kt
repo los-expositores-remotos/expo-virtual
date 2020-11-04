@@ -12,19 +12,31 @@ import com.google.gson.reflect.TypeToken
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import java.io.BufferedWriter
+import java.io.File
 import java.io.FileWriter
 
 
 class BannerController(val backendProveedorService: ProveedorService) {
 
+    //var idBanners: Int = 0;
+
     private fun readFile(name: String): String {
         return object {}::class.java.classLoader.getResource(name).readText()
+    }
+
+    public fun getIdBanner(): Int{
+        val banners: MutableList<Banner> = this.instanciarBannersDesdeJson()
+        val lastIndex: Int = banners.lastIndex
+        val lastId: Int = banners[lastIndex].id!!
+        println(lastId)
+        return lastId+1
     }
 
     fun instanciarBannersDesdeJson() : MutableList<Banner>{
         val bannersString = readFile("banners.json")
         val bannerDataType = object : TypeToken<MutableList<Banner>>() {}.type
         val banners: MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
+        println(banners)
         return banners
     }
 
@@ -32,7 +44,14 @@ class BannerController(val backendProveedorService: ProveedorService) {
         val banners: MutableList<Banner> = instanciarBannersDesdeJson()
         banners.add(banner)
         val jsonString = Gson().toJson(banners)  // json string
-        val bufferToWrite = BufferedWriter(FileWriter("banners.json"))
+        println(jsonString)
+        val file: File  = File("./src/main/resources/banners.json")
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        val bufferToWrite = BufferedWriter(FileWriter("./src/main/resources/banners.json"))
         bufferToWrite.write(jsonString)
         bufferToWrite.close()
     }
@@ -40,10 +59,13 @@ class BannerController(val backendProveedorService: ProveedorService) {
     fun allBanners(ctx: Context) {
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         var banners: MutableList<Banner> = instanciarBannersDesdeJson()
+        println(banners)
         banners.forEach {
             bannerlist.add(
                     BannerViewMapper(
-                            it.image
+                            it.id.toString(),
+                            it.image,
+                            it.category
                     )
             )
         }
@@ -62,12 +84,12 @@ class BannerController(val backendProveedorService: ProveedorService) {
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
                 .check(
-                    { it.image != null && it.category != null },
-                    "Invalid body : image and categroy are required"
+                    { it.image != null },
+                    "Invalid body : image is required"
                 )
                 .get()
-            val banner = Banner(
-                newBanner.image!!, newBanner.category!!)
+            val banner = Banner( this.getIdBanner(),
+                newBanner.image!!, "home")
             println(banner)
             writeFile(banner)
             ctx.status(201)

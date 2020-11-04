@@ -53,7 +53,7 @@ data class SupplierRegisterMapper(val companyName: String?,
 
 data class BannerRegisterMapper(val image: String?, val category: String?)
 
-data class BannerViewMapper(val image: String)
+data class BannerViewMapper(val id: String, val image: String, val category: String)
 
 data class ProductRegisterMapper(val idProveedor: String?,
                                  val itemName: String?,
