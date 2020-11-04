@@ -25,7 +25,7 @@ const Admin = () => {
      return (
         <div class="row">
             <div class="col s4">
-                <ul class="collapsible popout">
+                <ul class="collapsible">
                     <li>
                         <div class="collapsible-header"><i class="material-icons">Proveedores</i>Proveedores</div>
                             <div class="collapsible-body">

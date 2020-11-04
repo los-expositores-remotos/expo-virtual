@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/DeleteProveedor.css'
-import {Link, useParams} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import M from 'materialize-css'
 
 const DeleteProveedor = () =>{
   const [companies, setCompanies] = useState([])
-  const [companySelected, setcompanySelected] = useState(null)
   useEffect(() => {
     fetch(`http://localhost:7000/companies`, {
       headers: {
         "Content-Type":"application/json"
       }
     }) 
-    .then((res)=> {
+      .then((res)=> {
       //console.log(res)
       if(res.ok){
         return res.json()
@@ -36,7 +36,14 @@ const DeleteProveedor = () =>{
       headers: {
         "Content-Type":"application/json"
       }
-    }).then((res)=> console.log(res)) 
+    }).then((res)=> 
+      {
+        M.toast({
+          html: "Proveedor eliminado exitosamente",
+          classes: "#388e3c green darken-2",
+        });
+      }
+    ) 
   }
     
     const listOfCompanies = () => {

@@ -20,7 +20,6 @@ const SliderProducts = () => {
               }
               })
             .then((result)=>{
-            
                 setproducts(result)        
               
             })
