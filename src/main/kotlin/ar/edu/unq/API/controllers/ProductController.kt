@@ -43,7 +43,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
 
-    fun getProductById(ctx: Context) {   //falta validacion de que el id exista PRODUCTO X ID DE PRODUCTO
+    fun getProductById(ctx: Context) {   //falta validation de que el id exista PRODUCTO X ID DE PRODUCTO
         try {
             val productId: String = ctx.pathParam("productId")
             val product: Producto = backendProductoService.recuperarProducto(productId)
@@ -85,7 +85,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
 
     fun allProducts(ctx: Context) {
         val productsLists = backendProductoService.recuperarATodosLosProductos()
-        var allP = aux.productoClassListToProductoViewList(productsLists as MutableCollection<Producto>)
+        val allP = aux.productoClassListToProductoViewList(productsLists as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(allP)
     }

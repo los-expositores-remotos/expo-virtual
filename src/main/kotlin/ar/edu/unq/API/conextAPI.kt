@@ -45,7 +45,7 @@ fun main(args: Array<String>) {
             path("classes") {
                 get(bannerController::getOnlineClassesBanner)
                 post(bannerController::addOnlineClassBanner)
-                path("classeId") {
+                path("classId") {
                     get(bannerController::getOnlineClassBanner)
                     delete(bannerController::deleteBanner)
                 }
@@ -94,7 +94,7 @@ fun main(args: Array<String>) {
             }
                 /*
             path("bestSellers") {
-                get(companyController::producstBestSellers)
+                get(companyController::productBestSellers)
             }
             path("newest") {
                 get(companyController::productsNewest)
