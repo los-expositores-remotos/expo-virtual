@@ -5,8 +5,8 @@ import ar.edu.unq.API.BannerRegisterMapper
 import ar.edu.unq.API.BannerViewMapper
 import ar.edu.unq.API.ExistsException
 import ar.edu.unq.API.OkResultMapper
-import ar.edu.unq.modelo.Banner
-import ar.edu.unq.modelo.Producto
+import ar.edu.unq.modelo.banner.Banner
+import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
 import com.google.gson.Gson
@@ -26,14 +26,14 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
 
     fun allBanners(ctx: Context) {
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category.equals("home") }
+        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.HOME }
         println(banners)
         banners.forEach {
             bannerlist.add(
                     BannerViewMapper(
                             it.id.toString(),
                             it.image,
-                            it.category
+                            it.category.toString()
                     )
             )
         }
@@ -55,8 +55,7 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
                             "Invalid body : image is required"
                     )
                     .get()
-            val banner = Banner(this.getIdBanner(),
-                    newBanner.image!!, "home")
+            val banner = Banner(newBanner.image!!, BannerCategory.HOME)
             println(banner)
             val bannersWUp = agregoBannerABanners(banner, instanciarBannersDesdeJson())
             writeFileWUpdateBanners(bannersWUp)
@@ -93,12 +92,12 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
     fun getSchedule(ctx: Context) {
         try {
             val bannerView: BannerViewMapper
-            var banner: Banner = instanciarBannersDesdeJson().find { it.category.equals("schedule") }!!
+            var banner: Banner = instanciarBannersDesdeJson().find { it.category == BannerCategory.SCHEDULE }!!
             println(banner)
             bannerView = BannerViewMapper(
                     banner.id.toString(),
                     banner.image,
-                    banner.category
+                    banner.category.toString()
             )
             println(bannerView)
             ctx.status(200)
@@ -123,7 +122,7 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
                             "Invalid body : image is required"
                     )
                     .get()
-            val bannerSchedule = Banner(this.getIdBanner(), newBanner.image!!, "schedule")
+            val bannerSchedule = Banner(newBanner.image!!, BannerCategory.SCHEDULE)
             println(bannerSchedule)
             val bannersWUp = agregoBannerABanners(bannerSchedule, instanciarBannersDesdeJson())
             writeFileWUpdateBanners(bannersWUp)
@@ -152,14 +151,14 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
 
     fun getOnlineClassesBanner(ctx: Context) {
         val bannerViewlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category.equals("class") }
+        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.CLASS }
         println(banners)
         banners.forEach {
             bannerViewlist.add(
                     BannerViewMapper(
                             it.id.toString(),
                             it.image,
-                            it.category
+                            it.category.toString()
                     )
             )
         }
@@ -184,7 +183,7 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
                             "Invalid body : image is required"
                     )
                     .get()
-            val bannerClass = Banner(this.getIdBanner(), newBanner.image!!, "class")
+            val bannerClass = Banner(newBanner.image!!, BannerCategory.CLASS)
             println(bannerClass)
             val bannersWUp = agregoBannerABanners(bannerClass, instanciarBannersDesdeJson())
             writeFileWUpdateBanners(bannersWUp)
@@ -218,12 +217,12 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         val bannerView: BannerViewMapper
         try {
             val id = ctx.pathParam("classeId")
-            var banner: Banner = instanciarBannersDesdeJson().find { it.id!!.equals(id) }!!
+            var banner: Banner = instanciarBannersDesdeJson().find { it.id.equals(id) }!!
             println(banner)
             bannerView = BannerViewMapper(
                     banner.id.toString(),
                     banner.image,
-                    banner.category
+                    banner.category.toString()
             )
             println(bannerView)
             ctx.status(200)
@@ -244,12 +243,12 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
     fun getCourrierBanner(ctx: Context){
         try {
             val bannerView: BannerViewMapper
-            var banner: Banner = instanciarBannersDesdeJson().find { it.category.equals("courrier") }!!
+            var banner: Banner = instanciarBannersDesdeJson().find { it.category == BannerCategory.COURRIER }!!
             println(banner)
             bannerView = BannerViewMapper(
                     banner.id.toString(),
                     banner.image,
-                    banner.category
+                    banner.category.toString()
             )
             println(bannerView)
             ctx.status(200)
@@ -269,14 +268,14 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
 
     fun getPaymentMethodsBanner(ctx: Context){
         val bannerViewlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category.equals("paymentMethods") }
+        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.PAYMENTMETHODS }
         println(banners)
         banners.forEach {
             bannerViewlist.add(
                     BannerViewMapper(
                             it.id.toString(),
                             it.image,
-                            it.category
+                            it.category.toString()
                     )
             )
         }
