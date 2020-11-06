@@ -1,9 +1,10 @@
 package ar.edu.unq.services
 
+import ar.edu.unq.modelo.Orden
 import ar.edu.unq.modelo.Producto
-import java.util.ArrayList
 
 interface ProductoService {
+    fun buscarProductos(texto: String, filtros: List<Orden>): MutableList<Producto>
     fun nuevoProducto(producto: Producto)
     fun obtenerProducto(proveedorId: String, nombreItem: String): Producto
     fun actualizarProducto(producto: Producto)

@@ -83,4 +83,9 @@ class FormularioDeCargaDeProveedorStepDefs {
         val productos = setOf(producto1!!, producto2!!)
         assertEquals(productos, productosRecuperados)
     }
+
+    @cucumber.api.java.After
+    fun clear() {
+        proveedorService.deleteAll()
+    }
 }

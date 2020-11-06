@@ -1,6 +1,7 @@
 package ar.edu.unq.services.impl
 
 import ar.edu.unq.dao.ProveedorDAO
+import ar.edu.unq.modelo.BuscadorProveedores
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.exceptions.ProveedorExistenteException
@@ -13,6 +14,10 @@ class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType
 ) : ProveedorService {
+    override fun buscarProveedores(texto: String): MutableList<Proveedor> {
+        val proveedores = recuperarATodosLosProveedores()
+        return BuscadorProveedores.filtrar(texto, proveedores)
+    }
 
     override fun crearProveedor(proveedor: Proveedor) {
         TransactionRunner.runTrx({
