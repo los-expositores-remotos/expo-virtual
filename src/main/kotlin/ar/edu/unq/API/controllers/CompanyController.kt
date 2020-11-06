@@ -6,6 +6,8 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import io.javalin.http.Context
 import ar.edu.unq.services.ProveedorService
+import ar.edu.unq.services.impl.exceptions.ProveedorExistenteException
+import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.NotFoundResponse
 
@@ -16,42 +18,36 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
 
     fun createSupplier(ctx: Context) {
         try {
-            val newSupplier = ctx.bodyValidator<SupplierRegisterMapper>()
-                .check(
-                    { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null },
-                    "Invalid body : companyName, companyImage, facebook, instagram and web are required"
-                )
-                .get()
+            val newSupplier = aux.companyBodyValidation(ctx)
             val supplier = Proveedor(
                 newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
             backendProveedorService.crearProveedor(supplier)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
-        } catch (e: ExistsException) {
+        } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
             throw BadRequestResponse(e.message.toString())
         }
     }
 
     fun createMassive(ctx: Context) {
         try {
-            val newSuppliers = ctx.bodyValidator<MutableList<SupplierRegisterMapper>>()
-                    .check(
-                            { it.all  { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null }   },
-                            "Invalid body : companyName, companyImage, facebook, instagram and web are required"
-                    )
-                    .get()
+            val newSuppliers = ctx.bodyValidator<MutableList<CompanyRegisterMapper>>()
+                .check(
+                    { it -> it.all  { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null }   },
+                    "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+                )
+                .get()
             newSuppliers.forEach {
-            val supplier = Proveedor(
+                val supplier = Proveedor(
                     it.companyName!!, it.companyImage!!, it.facebook!!, it.instagram!!, it.web!!)
-            backendProveedorService.crearProveedor(supplier)
+                backendProveedorService.crearProveedor(supplier)
             }
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
-        } catch (e: ExistsException) {
+        } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
             throw BadRequestResponse(e.message.toString())
         }
     }
-
 
     fun getSupplierById(ctx: Context) {
         try {
@@ -60,7 +56,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
 
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
-        } catch (e: KotlinNullPointerException) {
+        } catch (e: ProveedorInexistenteException) {
             throw BadRequestResponse(e.message.toString())
         }
     }
@@ -76,7 +72,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             val id = ctx.pathParam("supplierId")
             backendProveedorService.borrarProveedor(id)
             ctx.status(204)
-        } catch (e: ExistsException) {
+        } catch (e: ProveedorInexistenteException) {
             throw NotFoundResponse(e.message.toString())
         }
     }
@@ -84,26 +80,17 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     fun modifySupplier(ctx: Context) {
         try {
             val id = ctx.pathParam("supplierId")
-            val newSupplier = ctx.bodyValidator<SupplierRegisterMapper>()
-                .check(
-                    { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null },
-                    "Invalid body : companyName, companyImage, facebook, instagram and web are required"
-                )
-                .get()
+            val newSupplier = aux.companyBodyValidation(ctx)
             val supplier = backendProveedorService.recuperarProveedor(id)//aux.searchProveedorById(id)
-            println(supplier.companyName)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
             supplier.facebook = newSupplier.facebook!!
             supplier.instagram = newSupplier.instagram!!
             supplier.web = newSupplier.web!!
-            println(supplier.companyImage)
             backendProveedorService.actualizarProveedor(supplier)
-            println(supplier.companyName)
             val updated = this.backendProveedorService.recuperarProveedor(id)
-            println(updated.companyName)
             ctx.json(aux.proveedorClassToProveedorView(updated))
-        } catch (e: NotFoundException) {
+        } catch (e: ProveedorInexistenteException) {
             throw NotFoundResponse(e.message.toString())
         }
     }
@@ -115,13 +102,12 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     }
 
     fun namesCompanies(ctx: Context) {
-
         val namesC = backendProveedorService.recuperarATodosLosProveedores().map { CompanyNameViewMapper(it.companyName) }
         ctx.status(200)
         ctx.json(namesC)
     }
 
-    fun producstBestSellers(ctx: Context) {
+    fun productsBestSellers(ctx: Context) {
         /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
     * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
         val bestSellersP = backendProveedorService.recuperarATodosLosProveedores().map{ aux.productoClassToProductoView(it.productos.first())}

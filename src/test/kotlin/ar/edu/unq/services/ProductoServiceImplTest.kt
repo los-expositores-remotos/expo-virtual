@@ -138,6 +138,11 @@ class ProductoServiceImplTest {
         assertEquals(0, productosRecuperados.count())
     }
 
+    @Test
+    fun buscarProductos(){
+        assertEquals(this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les", listOf()).map { it.itemName }.toSet())
+    }
+
     @After
     fun deleteAll(){
         this.proveedorService.deleteAll()

@@ -1,8 +1,8 @@
 import React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import M from 'materialize-css'
 import {Carousel} from 'react-materialize'
-import { event } from "jquery";
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
@@ -13,7 +13,6 @@ const ProveedorConProductos = (props) => {
   const company = props.company
     
   const [page, setPage] = useState(0)
-  const [currentPage, setcurrentPage] = useState(1)
 
 
 const imagesOfProducts = (product) =>{

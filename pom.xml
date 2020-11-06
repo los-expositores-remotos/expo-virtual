@@ -125,6 +125,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.2</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/API/*</exclude>
+                        <exclude>**/controllers/*</exclude>
+                    </excludes>
+                </configuration>
+
                 <executions>
                     <execution>
                         <goals>

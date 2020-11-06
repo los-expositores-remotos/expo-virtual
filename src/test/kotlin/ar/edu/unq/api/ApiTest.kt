@@ -27,8 +27,8 @@ class ApiTest {
     var listaProd: MutableCollection<Producto> = mutableListOf()
     var listaDeListaProd: MutableList<MutableList<Producto>> = mutableListOf()
 
-    val backendProductoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
+    val backendProductoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
     var auxFuc: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
 
 

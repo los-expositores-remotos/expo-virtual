@@ -102,6 +102,11 @@ class ProveedorServiceImplTest {
         assertEquals(0, proveedoresRecuperados.count())
     }
 
+    @Test
+    fun buscarProveedores(){
+        assertEquals(this.proveedor.companyName, proveedorService.buscarProveedores("LaCom").first().companyName)
+    }
+
     @After
     fun deleteAll(){
         this.proveedorService.deleteAll()
