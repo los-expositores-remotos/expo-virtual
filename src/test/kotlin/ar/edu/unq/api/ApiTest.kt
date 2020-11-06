@@ -51,35 +51,28 @@ class ApiTest {
 
     @Test
     fun convertAProductoToViewMapper() {
-        val prodMapp = auxFuc.productoClassToProductoView(productoA)
+        val prodMapp: Any = auxFuc.productoClassToProductoView(productoA)
         Assert.assertTrue(prodMapp is ProductViewMapper)
     }
 
     @Test
     fun convertAProveedorToViewMapper() {
-        val provMapp = auxFuc.proveedorClassToProveedorView(proveedorA)
+        val provMapp: Any = auxFuc.proveedorClassToProveedorView(proveedorA)
         Assert.assertTrue(provMapp is CompanyViewMapper)
     }
 
     @Test
     fun convertAProductoListToViewMapperList() {
-        val prodMappList = auxFuc.productoClassListToProductoViewList(listaProd)
+        val prodMappList: List<Any>? = auxFuc.productoClassListToProductoViewList(listaProd)
         Assert.assertTrue(prodMappList is MutableList<*>)
-        Assert.assertTrue(prodMappList.random() is ProductViewMapper)
+        Assert.assertTrue(prodMappList!!.random() is ProductViewMapper)
     }
 
     @Test
     fun convertAProveedorListToViewMapperList() {
-        val provMappList = auxFuc.proveedorClassListToProveedorViewList(listaProv)
+        val provMappList: List<Any>? = auxFuc.proveedorClassListToProveedorViewList(listaProv)
         Assert.assertTrue(provMappList is MutableList<*>)
-        Assert.assertTrue(provMappList.random() is CompanyViewMapper)
-    }
-
-    @Test
-    fun convertListOfLIstToAList(){
-        val prodList = auxFuc.makeListFromListofList(listaDeListaProd)
-        Assert.assertTrue(prodList is MutableList<*>)
-        Assert.assertTrue(prodList!!.random() is Producto)
+        Assert.assertTrue(provMappList!!.random() is CompanyViewMapper)
     }
 
   /*  @Test(expected = ConstraintViolationException::class)

@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
-    val bannerController = BannerController(backendProveedorService)
+    val bannerController = BannerController(backendProveedorService,backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
 
@@ -31,9 +31,30 @@ fun main(args: Array<String>) {
 
         path("banners") {
             get(bannerController::allBanners)
-            post(bannerController::agregarBanner)
+            post(bannerController::addBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
+            }
+            path("schedule") {
+                get(bannerController::getSchedule)
+                post(bannerController::addScheduleBanner)
+                path(":bannerId") {
+                    delete(bannerController::deleteBanner)
+                }
+            }
+            path("classes") {
+                get(bannerController::getOnlineClassesBanner)
+                post(bannerController::addOnlineClassBanner)
+                path("classeId") {
+                    get(bannerController::getOnlineClassBanner)
+                    delete(bannerController::deleteBanner)
+                }
+            }
+            path("paymentMethods"){
+                get(bannerController::getPaymentMethodsBanner)
+            }
+            path("courrier"){
+                get(bannerController::getCourrierBanner)
             }
         }
 
@@ -51,6 +72,9 @@ fun main(args: Array<String>) {
                 delete(companyController::deleteSupplier)
                 put(companyController::modifySupplier)
             }
+            path("massive") {
+                post(companyController::createMassive)
+            }
         }
 
         path("products") {
@@ -64,7 +88,11 @@ fun main(args: Array<String>) {
             path("supplier") {
                 path(":supplierId") {
                 get(productController::getProductsBySuppId)
-            }/*
+            }
+            path("search"){
+                get(productController::searchProduct)
+            }
+                /*
             path("bestSellers") {
                 get(companyController::producstBestSellers)
             }

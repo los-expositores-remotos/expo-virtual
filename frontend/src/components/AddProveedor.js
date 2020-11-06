@@ -27,15 +27,17 @@ const AddProveedor = (props)  => {
   }, [url]);
 
   const agregarProveedor = () => {
-    const data = new FormData();
-    data.append("file", companyImage);
-    data.append("upload_preset", "insta-clon-GB");
-    data.append("cloud_name", "instaclongbarreiro");
-    fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/image/upload", {
-      method: "POST",
+    if(companyImage){
+
+      const data = new FormData();
+      data.append("file", companyImage);
+      data.append("upload_preset", "insta-clon-GB");
+      data.append("cloud_name", "instaclongbarreiro");
+      fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/image/upload", {
+        method: "POST",
       body: data,
     })
-      .then((res) => res.json())
+    .then((res) => res.json())
       .then((data) => {
         console.log(data);
         setUrl(data.url);
@@ -43,9 +45,14 @@ const AddProveedor = (props)  => {
       .catch((err) => {
         console.log(err);
       });
-  };
+    }else{
+      M.toast({ html: "cargar imagen", classes: "#c62828 red darken-3" });
+    }
+    };
 
   const postearAdd = () => {
+
+    if(companyName && companyImage && facebook && instagram && web){
     fetch("http://localhost:7000/companies", {
       method: "POST",
       headers: {
@@ -74,6 +81,9 @@ const AddProveedor = (props)  => {
       .catch((err) => {
         console.log(err);
       });
+    }else{
+      M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });
+    }
   };
  
   return (

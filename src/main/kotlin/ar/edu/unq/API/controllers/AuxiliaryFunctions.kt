@@ -11,13 +11,7 @@ import java.util.ArrayList
 
 class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
-        val list: MutableList<E> = ArrayList()
-        for (item in iter) {
-            item.forEach { list.add(it) }
-        }//TODO: toda la funcion es reemplazable por iter.flatMap { it } jaja
-        return list
-    }
+    //TODO: toda la funcion es reemplazable por iter.flatMap { it } jaja
 
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
         return  ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice)
@@ -50,12 +44,5 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
 */
-    fun searchProveedorById(supplierId: String?): Proveedor {
-        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
-    }
-
-    fun searchProductoById(productId: String?): Producto {
-        return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
-    }
 }
 

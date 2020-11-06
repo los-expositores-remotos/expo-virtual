@@ -32,15 +32,36 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         }
     }
 
+    fun createMassive(ctx: Context) {
+        try {
+            val newSuppliers = ctx.bodyValidator<MutableList<SupplierRegisterMapper>>()
+                    .check(
+                            { it.all  { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null }   },
+                            "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+                    )
+                    .get()
+            newSuppliers.forEach {
+            val supplier = Proveedor(
+                    it.companyName!!, it.companyImage!!, it.facebook!!, it.instagram!!, it.web!!)
+            backendProveedorService.crearProveedor(supplier)
+            }
+            ctx.status(201)
+            ctx.json(OkResultMapper("ok"))
+        } catch (e: ExistsException) {
+            throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = aux.searchProveedorById(supplierId) as Proveedor
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)// aux.searchProveedorById(supplierId)
 
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
-        } catch (e: NotFoundException) {
-            throw NotFoundResponse(e.message.toString())
+        } catch (e: KotlinNullPointerException) {
+            throw BadRequestResponse(e.message.toString())
         }
     }
 
@@ -56,7 +77,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             backendProveedorService.borrarProveedor(id)
             ctx.status(204)
         } catch (e: ExistsException) {
-            throw BadRequestResponse(e.message.toString())
+            throw NotFoundResponse(e.message.toString())
         }
     }
 
@@ -69,7 +90,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-            val supplier = aux.searchProveedorById(id)
+            val supplier = backendProveedorService.recuperarProveedor(id)//aux.searchProveedorById(id)
             println(supplier.companyName)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
@@ -80,7 +101,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             backendProveedorService.actualizarProveedor(supplier)
             println(supplier.companyName)
             val updated = this.backendProveedorService.recuperarProveedor(id)
-            println(updated!!.companyName)
+            println(updated.companyName)
             ctx.json(aux.proveedorClassToProveedorView(updated))
         } catch (e: NotFoundException) {
             throw NotFoundResponse(e.message.toString())

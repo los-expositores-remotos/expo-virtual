@@ -2,10 +2,8 @@ package ar.edu.unq.dao.mongodb
 
 import ar.edu.unq.dao.ProductoDAO
 import ar.edu.unq.modelo.Producto
-import ar.edu.unq.services.runner.TransactionRunner
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Aggregates.*
-import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Filters.and
 import com.mongodb.client.model.Filters.eq
 import org.bson.Document
@@ -13,19 +11,19 @@ import org.bson.types.ObjectId
 
 class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::class.java) {
 
-    override fun save(objects: List<Producto>) {//TODO: tirar error
+    override fun save(objects: List<Producto>) {
         throw Exception("Este metodo no esta permitido")
     }
 
-    override fun update(anObject: Producto, id: String?) {//TODO: tirar error
+    override fun update(anObject: Producto, id: String?) {
         throw Exception("Este metodo no esta permitido")
     }
 
-    override fun deleteAll() {//TODO: tirar error
+    override fun deleteAll() {
         throw Exception("Este metodo no esta permitido")
     }
 
-    override fun <E> deleteBy(property: String, value: E?) {//TODO: tirar error
+    override fun <E> deleteBy(property: String, value: E?) {
         throw Exception("Este metodo no esta permitido")
     }
 
@@ -35,7 +33,7 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
                         eq("idProveedor", ObjectId(idProveedor)),
                         eq("itemName",nombreProducto)
                 )
-        ).first()
+        ).firstOrNull()
     }
 
     override fun getCollection(objectType: String, classType: Class<Producto>): MongoCollection<Producto> {

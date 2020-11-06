@@ -1,0 +1,17 @@
+#imgClasses {
+  border-style: solid;
+  width: 100%;
+}
+
+#imgSchedule {
+  width: 100%;
+  border-style: solid;
+}
+
+#live {
+  background-color: #f294a4;
+}
+
+#rowId {
+  margin-top: -8px;
+}

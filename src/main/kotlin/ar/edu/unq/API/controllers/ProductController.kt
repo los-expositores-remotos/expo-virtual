@@ -64,7 +64,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                     "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-            val producto = aux.searchProductoById(id)
+            val producto = backendProductoService.recuperarProducto(id)//aux.searchProductoById(id)
 
             producto.itemName = newProduct.itemName!!
             producto.description = newProduct.description!!
@@ -93,13 +93,28 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun getProductsBySuppId(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = aux.searchProveedorById(supplierId) as Proveedor
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)//aux.searchProveedorById(supplierId)
             println(supplier)
             val products = aux.productoClassListToProductoViewList(supplier.productos)
             ctx.status(200)
             ctx.json(products)
-        } catch (e: NotFoundException) {
+        } catch (e: KotlinNullPointerException) {
             throw NotFoundResponse(e.message.toString())
         }
+    }
+
+    fun searchProduct(ctx: Context){/*
+        val productToSearch = ctx.queryParam("text")
+        if(productToSearch!!.isBlank()){
+            throw BadRequestResponse("Invalid query - param text is empty")
+        }
+        val productsResult= backendProductoService.buscarProducto(productToSearch)
+        val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
+        ctx.status(200)
+        ctx.json(
+                mapOf(
+                        "Notes" to allP
+                )
+        )*/
     }
 }

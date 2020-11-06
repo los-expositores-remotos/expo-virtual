@@ -25,8 +25,7 @@ const UpdateProveedorForm = (props)  => {
   },[url]);
 
   const agregarProveedor = () => {
-    console.log(companyImage)
-    if(!companyImage){
+    if(SubirAlaNube()){
     const data = new FormData();
     data.append("file", companyImage);
     data.append("upload_preset", "insta-clon-GB");
@@ -42,10 +41,22 @@ const UpdateProveedorForm = (props)  => {
       })
       .catch((err) => {
         console.log(err);
-      });}else{
-        setUrl(company.companyImage)
-      }
+      });
+    }else{
+      setUrl(companyImage)
+    }
   };
+
+  const SubirAlaNube = () => {
+    return (! typeof companyImage === 'string')
+  }
+  const postComapanyImage = () =>{
+    if(SubirAlaNube()){
+      return url
+    }else{
+      return companyImage
+    }
+  }
   
   const postearUpdate = () => {
     
@@ -57,7 +68,7 @@ const UpdateProveedorForm = (props)  => {
       },
       body: JSON.stringify({
         "companyName": companyName ,
-        "companyImage": url ,
+        "companyImage": postComapanyImage(),
         "facebook": facebook ,
         "instagram": instagram ,
         "web": web
@@ -126,7 +137,7 @@ const UpdateProveedorForm = (props)  => {
                 }}/>
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={companyImage}/>
+              <input class="file-path validate" type="text" value={typeof companyImage === 'string' ? companyImage : url }/>
             </div>
           </div>
         </form>

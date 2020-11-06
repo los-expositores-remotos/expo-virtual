@@ -1,42 +1,19 @@
 import React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import M from 'materialize-css'
-import {Carousel,Pagination} from 'react-materialize'
-import ProveedorConProductos from '../ProveedorConProductos'
+import {Carousel} from 'react-materialize'
+
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
   var instances = M.Slider.init(elems, {});
 });
 
-const Suppliers = () => {
-  const [companies, setCompanies] = useState(null)
-  const [page, setPage] = useState(0) 
-  useEffect(() => {
-    if(!companies){
-    fetch(`http://localhost:7000/companies`, {
-      headers: {
-        "Content-Type":"application/json"
-      }
-    }) 
-      .then((res)=> {
-      //console.log(res)
-      if(res.ok){
-        return res.json()
-      }
-    })
-    .then((result)=>{
-      //console.log(result)
+const ProveedorConProductos = (props) => {
+  const company = props.company
+    
+  const [page, setPage] = useState(0)
 
-        setCompanies(result)        
- 
-      //console.log(companies)
-    })
-    .catch((err => {
-      //console.log(err)
-    }))
-  }
-  }, [companies])
 
 const imagesOfProducts = (product) =>{
   //console.log(product)
@@ -64,13 +41,7 @@ return (
 }
 
 
-const funcPagination = (products) => {
-
-
-}
-
-const listOfProducts = (company) => {
-  
+const listOfProducts = () => {
   const products = company.products
   console.log(products)
   if(products.length > 0)  {
@@ -115,52 +86,61 @@ const listOfProducts = (company) => {
       )
     }
     )
+
+    const numerosDePaginacion = () => {
+      const paginas = (products.length / 4)
+      for (let index = 1; index < paginas; index++) {
+        
+        return (
+          <li class={page === index ? "active" : "waves-effect"}>
+            <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
+          </li>
+        )
+        
+      }
+    }
+
+    const Paginacion = () => {
+
+      return(
+      <ul class="pagination">
+        <li class="waves-effect">
+          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><a><i class="material-icons">chevron_left</i></a></a>
+          </li>
+          <li class={page === 0 ? "active" : "waves-effect"} onClick={()=>{
+            setPage(0)
+            }}><a>1</a></li>
+            {numerosDePaginacion()}
+          <li class="waves-effect">
+            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><a><i class="material-icons">chevron_right</i></a></a>
+          </li>
+      </ul>)
+    };
+    
     return (
       <div>
         <div class="row">
           {result}
         </div>
-          <Pagination
-          activePage={page + 1}
-          items={(products.length / 4)+1}
-          leftBtn={<a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i class="material-icons">chevron_left</i></a>}
-          maxButtons={(products.length / 4)}
-          rightBtn={<a onClick={()=>{if((page * 4) < products.length ){ setPage(page + 1)}}}><i class="material-icons">chevron_right</i></a>}
-          />
+          {Paginacion()}
       </div>
       )
     }
   }
 
-  const getSProveedores = () =>{
-    if(companies){
-      const listOfCompanies = companies.map((company)=> {
-         
-        return  (
-                  <li>
-                      <ProveedorConProductos company={company}/>
-                  </li>
-                )
-  
-      })
-      return (
-        <ul>
-          {listOfCompanies}
-        </ul>
-      )
-    }
-  }
   return (
     <div>
           {
-            !companies ?
+            !company ?
               <p>Loading...</p>
             :
-            getSProveedores()
+            <div>
+              <h2>{company.companyName}</h2>
+              {listOfProducts(company)}
+            </div>
           }
         </div>
 
   );
 };
-
-export default Suppliers;
+export default ProveedorConProductos;

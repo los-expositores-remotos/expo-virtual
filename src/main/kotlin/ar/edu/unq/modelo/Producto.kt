@@ -1,7 +1,6 @@
 package ar.edu.unq.modelo
 
-import com.fasterxml.jackson.databind.jsonschema.JsonSerializableSchema
-import org.bson.codecs.pojo.annotations.BsonId
+
 import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
@@ -19,7 +18,7 @@ class Producto{
     var promotionalPrice: Int = 0
     var vendidos = 0
 
-    constructor(){}
+    constructor()
 
     constructor(
         idProveedor: ObjectId,

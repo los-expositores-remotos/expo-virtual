@@ -47,11 +47,11 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
         this.getCollection(entityType.simpleName, entityType).insertMany(objects)
     }
 
-    open fun delete(id: String){// TODO: testear
+    open fun delete(id: String){
         this.deleteBy("id", ObjectId(id))
     }
 
-    open fun <E> deleteBy(property:String, value: E?){// TODO: testear
+    open fun <E> deleteBy(property:String, value: E?){
         this.getCollection(entityType.simpleName, entityType).deleteOne(eq(property, value))
     }
 
