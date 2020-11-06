@@ -44,7 +44,7 @@ class BusquedaDeArticulosDesdeElBuscadorStepdefs {
         this.productosEncontrados = productoService.buscarProductos(this.textoBusqueda, listOf())
     }
 
-    @Then("^Devuelvo los productos \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" y \"([^\"]*)\" que coinciden con la busqueda$")
+    @Then("^Devuelvo de los productos \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" y \"([^\"]*)\", los que coinciden con la busqueda$")
     fun devuelvoLosProductosYQueCoincidanConLaBusqueda(nombreProductoA: String?, nombreProductoB: String?, nombreProductoC: String?, nombreProductoD: String?) {
         Assert.assertEquals(this.productosEncontrados.map { it.itemName }.toSet(), setOf(nombreProductoA, nombreProductoB, nombreProductoC, nombreProductoD))
     }
