@@ -17,6 +17,7 @@ class Producto{
     var stock: Int = 0
     var itemPrice: Int = 0
     var promotionalPrice: Int = 0
+    var vendidos = 0
 
     constructor(){}
 
@@ -54,6 +55,10 @@ class Producto{
         for (tag in tags) {
             listTags.add(tag)
         }
+    }
+
+    fun cargarVenta(cantidadACargar: Int) {
+        vendidos += cantidadACargar
     }
 
     fun removeStock(quantity: Int) {

@@ -1,6 +1,7 @@
 package ar.edu.unq.services.impl
 
 import ar.edu.unq.dao.ProveedorDAO
+import ar.edu.unq.modelo.BuscadorProveedores
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.services.ProveedorService
@@ -14,6 +15,10 @@ class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType
 ) : ProveedorService {
+    override fun buscarProveedor(texto: String): MutableList<Proveedor> {
+        val proveedores = recuperarATodosLosProveedores()
+        return BuscadorProveedores.filtrar(texto, proveedores)
+    }
 
     override fun crearProveedor(proveedor: Proveedor) {
         TransactionRunner.runTrx({ this.proveedorDAO.save(proveedor) }, listOf(TransactionType.MONGO), this.dataBaseType)

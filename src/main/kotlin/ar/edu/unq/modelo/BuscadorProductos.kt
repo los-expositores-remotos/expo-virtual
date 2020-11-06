@@ -1,12 +1,12 @@
 package ar.edu.unq.modelo
 
 enum class Orden {
-    PRECIO, ALFABETICAMENTE, VENDIDOS, PROMOCION
+    PRECIO, ALFABETICAMENTE, ANTIGUEDAD, VENDIDOS, PROMOCION
 }
 
 object Buscador {
 
-    fun ordenar(texto: String, productos: List<Producto>, filtros: List<Orden>): MutableList<Producto> {
+    fun ordenar(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto> {
         var resultado = emptyList<Pair<Producto, Int>>().toMutableList()
         for (producto in productos) {
             if (contienePalabrasDelNombre(texto, producto.itemName.split(" ")) or contieneTags(texto, producto.listTags) or contienePalabrasDeLaDescripcion(texto, producto.description.split(" "))) {
@@ -20,12 +20,11 @@ object Buscador {
                 Orden.ALFABETICAMENTE -> resultado = resultado.sortedWith(
                         compareBy(String.CASE_INSENSITIVE_ORDER) { it.first.itemName }
                 ).toMutableList()
-                //Orden.ANTIGUEDAD -> resultado.sortedWith(compareBy { it.first.itemPrice }) HAY QUE VER SI LO IMPLEMENTAMOS
-                //Orden.VENDIDOS -> resultado.sortedWith(compareBy { it.first.itemPrice }) LO MISMO QUE ARRIBA
+                Orden.ANTIGUEDAD -> resultado.sortedWith(compareBy { it.first.itemPrice })
+                Orden.VENDIDOS -> resultado.sortedWith(compareBy { it.first.itemPrice })
                 Orden.PROMOCION -> resultado = resultado.sortedWith(
                         compareBy() { it.first.promotionalPrice }
                 ).toMutableList()
-                else -> continue@loop
             }
         }
         return resultado.map { it.first }.toMutableList()

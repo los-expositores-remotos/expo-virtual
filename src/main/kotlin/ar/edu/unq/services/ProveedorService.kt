@@ -5,6 +5,7 @@ import ar.edu.unq.modelo.Producto
 import org.bson.types.ObjectId
 
 interface ProveedorService {
+    fun buscarProveedor(texto: String)
     fun crearProveedor(proveedor: Proveedor)
     fun recuperarProveedor(id: String): Proveedor?
     fun recuperarATodosLosProveedores(): Collection<Proveedor>

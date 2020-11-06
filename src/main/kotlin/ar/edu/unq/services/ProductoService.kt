@@ -1,8 +1,10 @@
 package ar.edu.unq.services
 
+import ar.edu.unq.modelo.Orden
 import ar.edu.unq.modelo.Producto
 
 interface ProductoService {
+    fun buscarProductos(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto>
     fun nuevoProducto(producto: Producto)
     fun obtenerProducto(proveedorId: String, nombreItem: String): Producto
     fun actualizarProducto(producto: Producto)
