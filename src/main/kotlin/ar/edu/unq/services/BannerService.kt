@@ -8,5 +8,6 @@ interface BannerService {
     fun recuperarBanner(id: String): Banner
     fun recuperarTodosLosBanners(): List<Banner>
     fun recuperarBannersPorCategoria(bannerCategory: BannerCategory): List<Banner>
-    //TODO(Test unitarios)
+    fun recuperarTodosLosBanners(category: BannerCategory): List<Banner>
+    fun deleteAll()
 }
