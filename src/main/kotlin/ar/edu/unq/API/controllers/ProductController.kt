@@ -91,18 +91,18 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         }
     }
 
-    fun searchProduct(ctx: Context){/*
+    fun searchProducts(ctx: Context){
         val productToSearch = ctx.queryParam("text")
         if(productToSearch!!.isBlank()){
             throw BadRequestResponse("Invalid query - param text is empty")
         }
-        val productsResult= backendProductoService.buscarProducto(productToSearch)
+        val productsResult= backendProductoService.buscarProductos(productToSearch, listOf())
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
-                mapOf(
-                        "Notes" to allP
-                )
-        )*/
+            mapOf(
+                "Products" to allP
+            )
+        )
     }
 }
