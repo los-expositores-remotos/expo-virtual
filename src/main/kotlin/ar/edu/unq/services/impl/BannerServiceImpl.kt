@@ -2,6 +2,7 @@ package ar.edu.unq.services.impl
 
 import ar.edu.unq.dao.BannerDAO
 import ar.edu.unq.modelo.banner.Banner
+import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.BannerService
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
@@ -24,6 +25,12 @@ class BannerServiceImpl(private val bannerDAO: BannerDAO, private val dataBaseTy
         return runTrx({
             this.bannerDAO.getAll()
         }, listOf(TransactionType.MONGO), this.dataBaseType)!!
+    }
+
+    override fun recuperarBannersPorCategoria(bannerCategory: BannerCategory): List<Banner> {
+        return runTrx({
+            this.bannerDAO.findEq("category", bannerCategory)
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
 }

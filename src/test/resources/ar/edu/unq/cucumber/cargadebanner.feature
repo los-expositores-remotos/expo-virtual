@@ -13,6 +13,7 @@ Feature: Carga de Banner
 
   Scenario: Si se completa el formulario incorrectamente al presionar el boton de confirmacion de carga, se muestra una notificacion de carga fallida
     Given Un link a una imagen ""
+    Given Una categoria "HOME"
     When Trato de crear el banner
     Then Lanza una excepcion
     And No existe el banner

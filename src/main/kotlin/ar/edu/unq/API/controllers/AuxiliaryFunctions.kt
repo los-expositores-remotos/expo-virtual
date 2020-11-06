@@ -11,7 +11,7 @@ import java.util.ArrayList
 
 class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    //TODO: toda la funcion es reemplazable por iter.flatMap { it } jaja
+    //TODO: toda la funcion es reemplazable por iter.flatten() jaja
 
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
         return  ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice)
