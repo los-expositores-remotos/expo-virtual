@@ -129,6 +129,7 @@
                     <excludes>
                         <exclude>**/controllers/*</exclude>
                         <exclude>**/API/*</exclude>
+                        <exclude>**/controllers/*</exclude>
                     </excludes>
                 </configuration>
 

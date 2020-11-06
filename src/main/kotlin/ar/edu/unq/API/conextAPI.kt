@@ -3,6 +3,7 @@ package ar.edu.unq
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
@@ -20,6 +21,7 @@ fun main(args: Array<String>) {
     val bannerController = BannerController(backendProveedorService,backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
+    val searchController = SearchController(backendProveedorService, backendProductoService)
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
@@ -28,6 +30,10 @@ fun main(args: Array<String>) {
 
     app.start(7000)
     app.routes {
+
+        path("search") {
+            get(searchController::searchByText)
+        }
 
         path("banners") {
             get(bannerController::allBanners)
@@ -67,19 +73,25 @@ fun main(args: Array<String>) {
             path("names") {
                 get(companyController::namesCompanies)
             }
+            path("massive") {
+                post(companyController::createMassive)
+            }
+            path("search"){
+                get(companyController::searchCompanies)
+            }
             path(":supplierId") {
                 get(companyController::getSupplierById)
                 delete(companyController::deleteSupplier)
                 put(companyController::modifySupplier)
-            }
-            path("massive") {
-                post(companyController::createMassive)
             }
         }
 
         path("products") {
             get(productController::allProducts)
             post(productController::addProduct)
+            path("search") {
+                get(productController::searchProducts)
+            }
             path(":productId") {
                 get(productController::getProductById)
                 delete(productController::deleteProduct)
@@ -87,12 +99,10 @@ fun main(args: Array<String>) {
             }
             path("supplier") {
                 path(":supplierId") {
-                get(productController::getProductsBySuppId)
+                    get(productController::getProductsBySuppId)
+                }
             }
-            path("search"){
-                get(productController::searchProduct)
-            }
-                /*
+            /*
             path("bestSellers") {
                 get(companyController::productsBestSellers)
             }
@@ -101,11 +111,8 @@ fun main(args: Array<String>) {
             }
             path("promoPrice") {
                 get(companyController::productsWPromoPrice)
-            }*/
-        }
-
-
-/*        path("order") {
+            }
+            path("order") {
             path(":byLowerPrice") {
                 get(companyController::orderByLowerPrice)
             }
@@ -128,9 +135,8 @@ fun main(args: Array<String>) {
                 get(companyController::orderByAlphabeticAsc)
             }
         }*/
-        //  path("/user") {
-        //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
-
+            //  path("/user") {
+            //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
         }
     }
 }
