@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/los-expositores-remotos/expo-virtual.svg?branch=master)](https://travis-ci.org/los-expositores-remotos/expo-virtual)
-[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/development/graph/badge.svg?token=5FWJMSJHQC)](https://codecov.io/gh/los-expositores-remotos/expo-virtual)
+[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/ramaMisticaConFuncionesFalopas/graph/badge.svg?token=5FWJMSJHQC)](https://codecov.io/gh/los-expositores-remotos/expo-virtual)
 
 La realidad que le toca vivir hoy a el cliente, no interfierió en la realización de las exposiciones temáticas que acostumbra a realizar en forma presencial. La situación actual hizo que se reinventara adaptándose a la misma, pudiendo realizarlas en forma virtual con la aplicación web, tan óptimas como las presenciales con exposición de de empresarios, adquisición de productos y clases en vivo. Asistentes del interior del país le agradeció esta nueva modalidad al poder tener acceso a materiales y clases que en forma presencial no lo hubieran podido hecho.
 
