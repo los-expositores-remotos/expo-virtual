@@ -94,7 +94,7 @@ fun main(args: Array<String>) {
             }
                 /*
             path("bestSellers") {
-                get(companyController::productBestSellers)
+                get(companyController::productsBestSellers)
             }
             path("newest") {
                 get(companyController::productsNewest)
