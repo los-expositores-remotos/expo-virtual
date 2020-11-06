@@ -4,12 +4,12 @@ enum class Orden {
     PRECIO, ALFABETICAMENTE, ANTIGUEDAD, VENDIDOS, PROMOCION
 }
 
-object Buscador {
+object BuscadorProductos {
 
     fun ordenar(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto> {
         var resultado = emptyList<Pair<Producto, Int>>().toMutableList()
         for (producto in productos) {
-            if (contienePalabrasDelNombre(texto, producto.itemName.split(" ")) or contieneTags(texto, producto.listTags) or contienePalabrasDeLaDescripcion(texto, producto.description.split(" "))) {
+            if (contienePalabrasDelNombre(texto.split(" "), producto.itemName) or contieneTags(texto, producto.listTags) or contienePalabrasDeLaDescripcion(texto, producto.description.split(" "))) {
                 val tupla = Pair(producto, cantidadPalabrasQueCoinciden(texto, producto.description.split(" ")))
                 resultado.add(tupla)
             }
@@ -30,9 +30,9 @@ object Buscador {
         return resultado.map { it.first }.toMutableList()
     }
 
-    fun contienePalabrasDelNombre(texto: String, palabrasDelNombre: List<String>): Boolean {
-        for (palabra in palabrasDelNombre) {
-            if (texto.contains(palabra)) {
+    fun contienePalabrasDelNombre(palabrasBuscadas: List<String>, nombre: String): Boolean {
+        for (palabraBuscada in palabrasBuscadas) {
+            if (nombre.contains(palabraBuscada)) {
                 return true
             }
         }

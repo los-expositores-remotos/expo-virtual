@@ -1,9 +1,6 @@
 package ar.edu.unq
 
-import ar.edu.unq.modelo.Buscador
-import ar.edu.unq.modelo.Orden
-import ar.edu.unq.modelo.Producto
-import ar.edu.unq.modelo.Proveedor
+import ar.edu.unq.modelo.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -60,12 +57,12 @@ class ModelTest {
 
     @Test
     fun getProductDescription() {
-        Assert.assertEquals("SARASA", productoA.description)
+        Assert.assertEquals("A electric guitar", productoA.description)
     }
 
     @Test
     fun getProductItemPrice() {
-        Assert.assertEquals(1000000, productoA.itemPrice)
+        Assert.assertEquals(100, productoA.itemPrice)
     }
 
     @Test
@@ -79,10 +76,20 @@ class ModelTest {
     }
 
     @Test
-    fun getResultFromSearch() {
-        var resultList = Buscador.ordenar("Explorer", listOf(productoA, productoB, productoC), listOf(Orden.PRECIO))
+    fun getResultFromProductoSearch() {
+        var resultList = BuscadorProductos.ordenar("Explorer", listOf(productoA, productoB, productoC), listOf(Orden.PRECIO))
         Assert.assertEquals(resultList.first().id.toString(), productoC.id.toString())
-        resultList = Buscador.ordenar("A guitar", listOf(productoA, productoB, productoC), listOf(Orden.PRECIO))
+        resultList = BuscadorProductos.ordenar("A guitar", listOf(productoA, productoB, productoC), listOf(Orden.PRECIO))
         Assert.assertEquals(resultList.first().itemName, "Les Paul")
+    }
+
+    @Test
+    fun getResultFromProveedorSearch() {
+        var resultList = BuscadorProveedores.filtrar("A", listOf(proveedorA, proveedorB, proveedorC))
+        Assert.assertEquals(resultList.first().id.toString(), proveedorA.id.toString())
+        resultList = BuscadorProveedores.filtrar("B", listOf(proveedorA, proveedorB, proveedorC))
+        Assert.assertEquals(resultList.first().id.toString(), proveedorB.id.toString())
+        resultList = BuscadorProveedores.filtrar("BCD", listOf(proveedorA, proveedorB, proveedorC))
+        Assert.assertEquals(resultList.count(), 0)
     }
 }

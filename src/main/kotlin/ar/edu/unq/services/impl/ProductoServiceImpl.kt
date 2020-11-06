@@ -2,7 +2,7 @@ package ar.edu.unq.services.impl
 
 import ar.edu.unq.dao.ProductoDAO
 import ar.edu.unq.dao.ProveedorDAO
-import ar.edu.unq.modelo.Buscador
+import ar.edu.unq.modelo.BuscadorProductos
 import ar.edu.unq.modelo.Orden
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
@@ -19,9 +19,9 @@ class ProductoServiceImpl(
         private val productoDAO: ProductoDAO,
         private val dataBaseType: DataBaseType
 ) : ProductoService {
-    override fun buscarProductos(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto> {
+    override fun buscarProductos(texto: String, filtros: List<Orden>): MutableList<Producto> {
         val productos = recuperarATodosLosProductos()
-        return Buscador.ordenar(texto, productos, filtros)
+        return BuscadorProductos.ordenar(texto, productos, filtros)
     }
 
     override fun nuevoProducto(producto: Producto) {

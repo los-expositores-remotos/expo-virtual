@@ -14,7 +14,7 @@ class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType
 ) : ProveedorService {
-    override fun buscarProveedor(texto: String): MutableList<Proveedor> {
+    override fun buscarProveedores(texto: String): MutableList<Proveedor> {
         val proveedores = recuperarATodosLosProveedores()
         return BuscadorProveedores.filtrar(texto, proveedores)
     }
