@@ -3,9 +3,11 @@ package ar.edu.unq
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
 import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
+import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
@@ -18,7 +20,8 @@ fun main(args: Array<String>) {
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
-    val bannerController = BannerController(backendProveedorService,backendProductoService)
+    val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.PRODUCCION)
+    val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
     val searchController = SearchController(backendProveedorService, backendProductoService)
@@ -36,31 +39,31 @@ fun main(args: Array<String>) {
         }
 
         path("banners") {
-            get(bannerController::allBanners)
-            post(bannerController::addBanner)
+            get(bannerController::homeBanners)
+            post(bannerController::addHomeBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
             }
             path("schedule") {
-                get(bannerController::getSchedule)
+                get(bannerController::scheduleBanners)
                 post(bannerController::addScheduleBanner)
                 path(":bannerId") {
                     delete(bannerController::deleteBanner)
                 }
             }
             path("classes") {
-                get(bannerController::getOnlineClassesBanner)
-                post(bannerController::addOnlineClassBanner)
+                get(bannerController::classBanners)
+                post(bannerController::addClassBanner)
                 path("classId") {
-                    get(bannerController::getOnlineClassBanner)
+                    get(bannerController::getClassBanner)
                     delete(bannerController::deleteBanner)
                 }
             }
             path("paymentMethods"){
-                get(bannerController::getPaymentMethodsBanner)
+                get(bannerController::paymentMethodsBanners)
             }
             path("courrier"){
-                get(bannerController::getCourrierBanner)
+                get(bannerController::courrierBanners)
             }
         }
 

@@ -1,5 +1,6 @@
 import React from "react";
 import {useState} from "react";
+import '../styles/ProveedorConProductos.css'
 import M from 'materialize-css'
 import {Carousel} from 'react-materialize'
 
@@ -67,7 +68,7 @@ const listOfProducts = () => {
   const result = res.map((product) => {
       return (
             <div class="col s3" id='cardOfProducts'>
-              <div class="card">
+              <div class="card" id="cardId">
                 <div class="card-image">
                   {imagesOfProducts(product)}
                   <span class="card-title">{product.itemName}</span>

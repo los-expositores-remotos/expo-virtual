@@ -5,6 +5,7 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
+import cucumber.api.java.After
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
@@ -32,5 +33,10 @@ class MostrarTodosLosProveedoresDesdeElMenuStepDefs {
     fun losProveedoresYEstanCargadosEnLaBaseDeDatos(proveedor1: String?, proveedor2: String?) {
         val proveedoresRecuperados = proveedorService.recuperarATodosLosProveedores().map { it.companyName }.toSet()
         assertEquals(setOf(proveedor1,proveedor2),proveedoresRecuperados)
+    }
+
+    @After
+    fun deleteAll(){
+        proveedorService.deleteAll()
     }
 }

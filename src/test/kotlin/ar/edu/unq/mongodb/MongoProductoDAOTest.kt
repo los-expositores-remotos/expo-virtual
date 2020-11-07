@@ -13,7 +13,7 @@ import ar.edu.unq.services.runner.TransactionType
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class MongoProductoDAOTest() : GenericMongoDAOTest<Producto>() {
+class MongoProductoDAOTest : GenericMongoDAOTest<Producto>() {
 
     private val proveedorDAO: ProveedorDAO = MongoProveedorDAOImpl()
     private lateinit var proveedor: Proveedor
