@@ -5,6 +5,7 @@ import '../../styles/Admin.css'
 import AddProveedor from "../AddProveedor";
 import UpdateProveedor from '../UpdateProveedor'
 import DeleteProveedor from '../DeleteProveedor'
+import ScreenSelecEmpresaParaAgregarProduct from '../ScreenSelecEmpresaParaAgregarProduct'
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
@@ -37,7 +38,7 @@ const Admin = () => {
                     <li>
                         <div class="collapsible-header"><i class="material-icons">place</i>Productos</div>
                         <div class="collapsible-body">
-                                <a class="waves-effect waves-light red lighten-2 btn-large">Agregar Productos</a>
+                                <a onClick={()=> setForm(<ScreenSelecEmpresaParaAgregarProduct/>)} class="waves-effect waves-light red lighten-2 btn-large">Agregar Productos</a>
                                 <a class="waves-effect waves-light red lighten-2 btn-large">Modificar Productos</a>
                                 <a class="waves-effect waves-light red lighten-2 btn-large">Eliminar Productos</a>
                             </div>

@@ -64,11 +64,6 @@ return (
 }
 
 
-const funcPagination = (products) => {
-
-
-}
-
 const listOfProducts = (company) => {
   
   const products = company.products
