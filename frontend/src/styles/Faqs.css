@@ -1,19 +1,39 @@
-#h1Text{
-    width: 60%;
-    margin: 0% 30%;
+#h1Text {
+  width: 60%;
+  margin: 0% 30%;
 }
 
-#h5Text{
-    width: 60%;
-    margin: 4% 15% 1% 15%;
+#h5Text {
+  width: 60%;
+  margin: 4% 15% 1% 15%;
 }
 
-#pText{
-    width: 60%;
-    margin: 0% 20%
+#pText {
+  width: 60%;
+  margin: 0% 20%;
 }
 
-#pText2{
-    width: 60%;
-    margin: 0% 20% 10% 20%
+#pText2 {
+  width: 60%;
+  margin: 0% 20% 10% 20%;
+}
+
+#imgIdFaqs {
+  border-style: none;
+  max-height: 63px;
+  border-radius: 24%;
+  width: 82px;
+}
+
+#Pm {
+  width: 64%;
+  margin-bottom: 5%;
+  margin-left: 14%;
+  margin-top: 2%;
+}
+
+#correo {
+  width: 50%;
+  margin-left: 19%;
+  margin-top: 1%;
 }
