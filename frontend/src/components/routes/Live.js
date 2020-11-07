@@ -1,9 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import '../../styles/Live.css';
 
 const Live = () => {
+  const [classes, setClasses] = useState(null)
+  const [schedule, setschedule] = useState(null)
+
+  useEffect(() => {
+    if(!schedule){
+    fetch("http://localhost:7000/banners/schedule", {
+        headers: {
+          "Content-Type":"application/json"
+        }
+      })
+        .then((res)=> {
+          if(res.ok){
+            return res.json()
+        }})
+        .then((result)=>{
+          console.log(result)
+
+          setschedule(result)        
+        })
+        .catch((err => {
+          console.log(err)
+        }))
+
+      if(!classes){
+        fetch("http://localhost:7000/banners/classes", {
+        headers: {
+          "Content-Type":"application/json"
+        }
+      })
+        .then((res)=> {
+          if(res.ok){
+            return res.json()
+        }})
+        .then((result)=>{
+          console.log(result)
+          setClasses(result)        
+        })
+        .catch((err => {
+          console.log(err)
+        }))}
+      }  
+    
+  }, [classes, schedule])
+
+
+  const bannerClasses = () => {
+    if(classes){
+    const list = classes.map((clase)=>{
+        return(
+                <div class='col s6'>
+                    <img id="imgClasses" src={clase.image} alt="logo de clases"/>
+                </div>
+        )
+    })
+    return (
+      <div class='row' id="rowId">
+        {list}
+      </div>
+    )}
+  }
+
+
   return (
 
-   <p> estoy en el Live </p>
+   <div id='live'>
+      <div>
+          {
+            schedule ? 
+              <img id="imgSchedule" src={schedule.image}></img>
+            :
+              <p>Loading...</p>
+          }
+      </div>
+      {bannerClasses()}
+   </div>
+
 
   );
 };

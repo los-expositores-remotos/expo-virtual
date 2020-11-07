@@ -1,26 +1,18 @@
 package ar.edu.unq.API.controllers
 
-import ar.edu.unq.API.CompanyViewMapper
-import ar.edu.unq.API.NotFoundException
-import ar.edu.unq.API.ProductViewMapper
+import ar.edu.unq.API.*
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
-import java.util.ArrayList
+import io.javalin.http.Context
 
 class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    fun <E> makeListFromListofList(iter: List<List <E>>): List<E>? {
-        val list: MutableList<E> = ArrayList()
-        for (item in iter) {
-            item.forEach { list.add(it) }
-        }//TODO: toda la funcion es reemplazable por iter.flatMap { it } jaja
-        return list
-    }
+    //TODO: toda la funcion es reemplazable por iter.flatten() jaja
 
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
-        return  ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice)
+        return ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice)
     }
 
     fun proveedorClassToProveedorView(p: Proveedor): CompanyViewMapper {
@@ -28,12 +20,49 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
     fun productoClassListToProductoViewList(lista: MutableCollection<Producto>): List<ProductViewMapper> {
-        return lista.map { this.productoClassToProductoView(it) }
+        return lista.map { productoClassToProductoView(it) }
     }
 
     fun proveedorClassListToProveedorViewList(lista: MutableCollection<Proveedor>) : List<CompanyViewMapper> {
         return lista.map{ proveedorClassToProveedorView(it) }
     }
+
+    fun productBodyvalidation(ctx: Context): ProductRegisterMapper {
+        val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
+            .check(
+                { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null },
+                "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
+            )
+            .get()
+        return newProduct
+    }
+
+    fun companyBodyValidation(ctx: Context): CompanyRegisterMapper {
+        val newCompany = ctx.bodyValidator<CompanyRegisterMapper>()
+            .check(
+                { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null },
+                "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+            )
+            .get()
+        return newCompany
+    }
+
+
+//  SIGO TENIENDO UN TEMITA CON ESTA FUNC PORQUE UN PROVEEDOR QUE TIENE PRODUCTOS TIENE MAPEAR ESOS PRODUCTOS TB
+/*    inline fun <reified E:Any, T:Any> mapTo(objeto: T): E{
+        val objetoNuevo = E::class.java.getDeclaredConstructor().newInstance()
+        val propiedades = objeto::class.java.kotlin.memberProperties.filterIsInstance<KMutableProperty<*>>()
+        val propiedadesNuevas = objetoNuevo::class.java.kotlin.memberProperties.filterIsInstance<KMutableProperty<*>>()
+        for(propiedadNueva in propiedadesNuevas){
+            val propiedadesFiltrada = propiedades.filter { prop -> prop.name == propiedadNueva.name }
+            if(propiedadesFiltrada.isNotEmpty()){
+                val propiedad = propiedadesFiltrada.first()
+                propiedadNueva.setter.call(objetoNuevo, propiedad.getter.call(objeto))
+            }
+        }
+        return objetoNuevo
+    }*/
+
     /*
     fun classToView(objeto: Object) {
         objeto.    /*{
@@ -50,12 +79,5 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
 */
-    fun searchProveedorById(supplierId: String?): Proveedor {
-        return backendProveedorService.recuperarProveedor(supplierId!!) ?: throw NotFoundException("Supplier", "id", supplierId)
-    }
-
-    fun searchProductoById(productId: String?): Producto {
-        return backendProductoService.recuperarATodosLosProductos().find { it.id.toString() == productId } ?: throw NotFoundException("Supplier", "id", productId!!)
-    }
 }
 

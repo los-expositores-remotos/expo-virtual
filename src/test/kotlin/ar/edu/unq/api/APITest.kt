@@ -4,12 +4,16 @@ import ar.edu.unq.API.CompanyViewMapper
 import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.API.levantarAPI
+import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.modelo.Proveedor
+import ar.edu.unq.services.BannerService
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
+import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
@@ -34,9 +38,11 @@ class APITest {
     val proveedorService: ProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
     private val productoService: ProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
-    val bannerController = BannerController(this.proveedorService)
+    val bannerService: BannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.TEST)
+    val bannerController = BannerController(this.bannerService, this.proveedorService, this.productoService)
     val productController = ProductController(this.proveedorService, this.productoService)
     val companyController = CompanyController(this.proveedorService, this.productoService)
+    val searchController = SearchController(this.proveedorService, this.productoService)
 //    lateinit var retrofit: Retrofit
 
     //private val apiService: APIService = this.crearCliente().create(APIService::class.java)
@@ -66,7 +72,7 @@ class APITest {
 
     @Before
     fun setUp() {
-        this.app = levantarAPI(7000, this.bannerController, this.productController, this.companyController)
+        this.app = levantarAPI(7000, this.bannerController, this.productController, this.companyController, this.searchController)
 //        Thread.sleep(5000)
 //        this.consulta(this.apiService.createCompany(SupplierRegisterMapper("LaCompany", "www.images.com/lacompany.png", "www.facebook.com/LaCompany", "www.instagram.com/LaCompany", "www.lacompany.com"))){}
 //        while(true){

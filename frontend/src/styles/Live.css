@@ -1,0 +1,19 @@
+#imgClasses {
+  border-style: none;
+  width: 100%;
+  border-radius: 3%;
+}
+
+#imgSchedule {
+  width: 100%;
+  border-style: none;
+}
+
+#live {
+  background-color: #f294a4;
+}
+
+#rowId {
+  margin-top: -8px;
+  margin-bottom: 0px;
+}

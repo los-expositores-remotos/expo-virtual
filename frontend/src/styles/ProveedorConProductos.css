@@ -1,0 +1,9 @@
+#cardId {
+  min-height: 46rem !important;
+}
+
+#imgcorreo {
+  height: 81px;
+  border-radius: 19%;
+  max-height: 81;
+}

@@ -37,4 +37,9 @@ class ModuloDeCargaDelAdministradorStepDef {
         val proveedores = this.proveedorService.recuperarATodosLosProveedores()
         assertEquals(cantidadDeProveedores, proveedores.count())
     }
+
+    @cucumber.api.java.After
+    fun clear() {
+        proveedorService.deleteAll()
+    }
 }

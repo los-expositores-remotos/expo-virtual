@@ -14,6 +14,7 @@ import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import org.bson.types.ObjectId
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -135,6 +136,11 @@ class ProductoServiceImplTest {
         this.productoService.deleteAll()
         productosRecuperados = this.productoService.recuperarATodosLosProductos()
         assertEquals(0, productosRecuperados.count())
+    }
+
+    @Test
+    fun buscarProductos(){
+        assertEquals(this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les", listOf()).map { it.itemName }.toSet())
     }
 
     @After

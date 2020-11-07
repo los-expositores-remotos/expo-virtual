@@ -46,9 +46,9 @@ const UpdateProveedor = () =>{
                   <a onClick={ ()=> setClicked(<UpdateProveedorForm company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
                 </div>
                 <div class="card-content">
-                  <a href={company.facebook}><p>Facebook</p></a>
-                  <a href={company.instagram}><p>Instagram</p></a>
-                  <a href={company.web}><p>Web</p></a>
+                  <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
+                  <a href={"http://"+company.instagram} target="_blank"><p>Instagram</p></a>
+                  <a href={"http://"+company.web} target="_blank"><p>Web</p></a>
                 </div>
               </div>
               </div>

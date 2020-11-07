@@ -1,8 +1,10 @@
 package ar.edu.unq.services
 
+import ar.edu.unq.modelo.Orden
 import ar.edu.unq.modelo.Producto
 
 interface ProductoService {
+    fun buscarProductos(texto: String, filtros: List<Orden>): MutableList<Producto>
     fun nuevoProducto(producto: Producto)
     fun obtenerProducto(proveedorId: String, nombreItem: String): Producto
     fun actualizarProducto(producto: Producto)
@@ -10,4 +12,5 @@ interface ProductoService {
     fun borrarProducto(id: String)
     fun recuperarProducto(id: String): Producto
     fun deleteAll()
+   // fun buscarProducto(palabra : String): ArrayList<Producto> //metodo mistico de busqueda
 }

@@ -1,17 +1,8 @@
-html,
-body,
-.block {
-  height: 100%;
-}
-
-.pin-top {
-  position: relative;
-}
-
-.pin-bottom {
-  position: relative;
-}
-
-.pinned {
-  position: fixed !important;
+#cardOfProducts {
+  width: 25%;
+  margin-left: auto;
+  left: auto;
+  right: auto;
+  height: 44rem;
+  min-height: 44rem;
 }

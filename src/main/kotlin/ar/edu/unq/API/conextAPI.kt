@@ -3,8 +3,11 @@ package ar.edu.unq.API
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
+import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
+import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
@@ -16,13 +19,16 @@ fun main(args: Array<String>) {
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
-    val bannerController = BannerController(backendProveedorService)
+    val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.PRODUCCION)
+    val searchController = SearchController(backendProveedorService, backendProductoService)
+    val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
-    levantarAPI(7000, bannerController, productController, companyController)
+
+    levantarAPI(7000, bannerController, productController, companyController, searchController)
 }
 
-fun levantarAPI(port: Int, bannerController: BannerController, productController: ProductController, companyController: CompanyController): Javalin {
+fun levantarAPI(port: Int, bannerController: BannerController, productController: ProductController, companyController: CompanyController, searchController: SearchController): Javalin {
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
@@ -32,11 +38,36 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
     app.start(port)
     app.routes {
 
+        path("search") {
+            get(searchController::searchByText)
+        }
+
         path("banners") {
-            get(bannerController::allBanners)
-            post(bannerController::agregarBanner)
+            get(bannerController::homeBanners)
+            post(bannerController::addHomeBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
+            }
+            path("schedule") {
+                get(bannerController::scheduleBanners)
+                post(bannerController::addScheduleBanner)
+                path(":bannerId") {
+                    delete(bannerController::deleteBanner)
+                }
+            }
+            path("classes") {
+                get(bannerController::classBanners)
+                post(bannerController::addClassBanner)
+                path("classId") {
+                    get(bannerController::getClassBanner)
+                    delete(bannerController::deleteBanner)
+                }
+            }
+            path("paymentMethods"){
+                get(bannerController::paymentMethodsBanners)
+            }
+            path("courrier"){
+                get(bannerController::courrierBanners)
             }
         }
 
@@ -49,6 +80,12 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
             path("names") {
                 get(companyController::namesCompanies)
             }
+            path("massive") {
+                post(companyController::createMassive)
+            }
+            path("search"){
+                get(companyController::searchCompanies)
+            }
             path(":supplierId") {
                 get(companyController::getSupplierById)
                 delete(companyController::deleteSupplier)
@@ -59,6 +96,9 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
         path("products") {
             get(productController::allProducts)
             post(productController::addProduct)
+            path("search") {
+                get(productController::searchProducts)
+            }
             path(":productId") {
                 get(productController::getProductById)
                 delete(productController::deleteProduct)
@@ -67,9 +107,11 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
             path("supplier") {
                 path(":supplierId") {
                     get(productController::getProductsBySuppId)
-                }/*
+                }
+            }
+            /*
             path("bestSellers") {
-                get(companyController::producstBestSellers)
+                get(companyController::productsBestSellers)
             }
             path("newest") {
                 get(companyController::productsNewest)
@@ -81,6 +123,9 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
 
 
 /*        path("order") {
+
+            }
+            path("order") {
             path(":byLowerPrice") {
                 get(companyController::orderByLowerPrice)
             }
@@ -105,9 +150,7 @@ fun levantarAPI(port: Int, bannerController: BannerController, productController
         }*/
             //  path("/user") {
             //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
-
         }
-    }
     return app!!
 }
 
