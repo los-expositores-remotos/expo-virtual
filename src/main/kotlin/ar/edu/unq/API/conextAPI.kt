@@ -13,16 +13,16 @@ import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
 
 fun main(args: Array<String>) {
-    levantarAPI(7000, DataBaseType.PRODUCCION)
-}
-
-fun levantarAPI(port: Int, dataBaseType: DataBaseType): Javalin {
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), dataBaseType)
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
-            ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), dataBaseType)
+        ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
     val bannerController = BannerController(backendProveedorService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
+    levantarAPI(7000, bannerController, productController, companyController)
+}
+
+fun levantarAPI(port: Int, bannerController: BannerController, productController: ProductController, companyController: CompanyController): Javalin {
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
