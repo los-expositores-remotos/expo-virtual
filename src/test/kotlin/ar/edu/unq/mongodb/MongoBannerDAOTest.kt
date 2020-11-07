@@ -10,8 +10,8 @@ import kotlin.test.assertEquals
 
 class MongoBannerDAOTest : GenericMongoDAOTest<Banner>() {
     override fun generarItems() {
+        val i = 2
         BannerCategory.values().forEach {category ->
-            val i = 2
             (1..i).forEach {
                 this.items.add(Banner("www.images.com/banner$category$it.png", category))
             }

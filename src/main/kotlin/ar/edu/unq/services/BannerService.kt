@@ -10,4 +10,5 @@ interface BannerService {
     fun recuperarBannersPorCategoria(bannerCategory: BannerCategory): List<Banner>
     fun recuperarTodosLosBanners(category: BannerCategory): List<Banner>
     fun deleteAll()
+    fun borrarBanner(id: String)
 }

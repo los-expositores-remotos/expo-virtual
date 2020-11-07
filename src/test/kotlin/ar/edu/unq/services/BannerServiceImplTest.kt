@@ -12,6 +12,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class BannerServiceImplTest {
 
@@ -113,6 +114,18 @@ class BannerServiceImplTest {
     fun testRecuperarBannersPaymentMethods(){
         val bannersRecuperados = this.bannerService.recuperarTodosLosBanners(BannerCategory.PAYMENTMETHODS)
         assertEquals(this.bannersPaymentMethods, bannersRecuperados.toSet())
+    }
+
+    @Test
+    fun testBorrarBanner(){
+        this.bannerService.borrarBanner(this.banner.id.toString())
+        val bannersRecuperados = this.bannerService.recuperarTodosLosBanners(BannerCategory.PAYMENTMETHODS)
+        assertFalse(bannersRecuperados.contains(this.banner))
+    }
+
+    @Test(expected = BannerInexistenteException::class)
+    fun testBorrarBannerInexistente(){
+        this.bannerService.borrarBanner(ObjectId().toString())
     }
 
     @After

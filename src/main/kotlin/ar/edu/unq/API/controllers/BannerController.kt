@@ -6,57 +6,51 @@ import ar.edu.unq.API.BannerViewMapper
 import ar.edu.unq.API.OkResultMapper
 import ar.edu.unq.modelo.banner.Banner
 import ar.edu.unq.modelo.banner.BannerCategory
+import ar.edu.unq.services.BannerService
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
 
 
-class BannerController(val backendProveedorService: ProveedorService, backendProductoService : ProductoService) {
+class BannerController(
+    val backendBannerService: BannerService,
+    val backendProveedorService: ProveedorService,
+    backendProductoService: ProductoService
+) {
 
     val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
 
     var idBanners: Int = 500
 
-    fun allBanners(ctx: Context) {
+    private fun banners(ctx: Context, bannerCategory: BannerCategory){
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.HOME }
+        var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners(bannerCategory)
         println(banners)
         banners.forEach {
             bannerlist.add(
-                    BannerViewMapper(
-                            it.id.toString(),
-                            it.image,
-                            it.category.toString()
-                    )
+                BannerViewMapper(
+                    it.id.toString(),
+                    it.image,
+                    it.category.toString()
+                )
             )
         }
         ctx.status(200)
         ctx.json(bannerlist)
     }
-/*
-        var imagesList = backend.banners.map { BannerImageViewMapper(it.id.toString(), it.image) }
-        ctx.status(200)
-        ctx.json(imagesList)
-        */
 
-    fun addBanner(ctx: Context) {
+    private fun addBanner(ctx: Context, bannerCategory: BannerCategory) {
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
-                    .check(
-                            { it.image != null },
-                            "Invalid body : image is required"
-                    )
-                    .get()
-            val banner = Banner(newBanner.image!!, BannerCategory.HOME)
+                .check(
+                    { it.image != null },
+                    "Invalid body : image is required"
+                )
+                .get()
+            val banner = Banner(newBanner.image!!, bannerCategory)
             println(banner)
-            val bannersWUp = agregoBannerABanners(banner, instanciarBannersDesdeJson())
-            writeFileWUpdateBanners(bannersWUp)
+            this.backendBannerService.crearBanner(banner)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
         } catch (e: KotlinNullPointerException) {
@@ -64,12 +58,24 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         }
     }
 
-    fun deleteBanner(ctx: Context) {
+    fun homeBanners(ctx: Context) {
+        this.banners(ctx, BannerCategory.HOME)
+    }
 
+/*
+        var imagesList = backend.banners.map { BannerImageViewMapper(it.id.toString(), it.image) }
+        ctx.status(200)
+        ctx.json(imagesList)
+        */
+
+    fun addHomeBanner(ctx: Context) {
+        this.addBanner(ctx, BannerCategory.HOME)
+    }
+
+    fun deleteBanner(ctx: Context) {
         try {
             val id = ctx.pathParam("bannerId")
-            val bannersWDel = eleminoBannerDeBanners(id, instanciarBannersDesdeJson())
-            writeFileWUpdateBanners(bannersWDel)
+            this.backendBannerService.borrarBanner(id)
             ctx.status(204)
             ctx.json(OkResultMapper("ok"))
         } catch (e: KotlinNullPointerException) {
@@ -87,19 +93,9 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
       */
     }
 
-    fun getSchedule(ctx: Context) {
-        try {
-            val bannerView: BannerViewMapper
-            var banner: Banner = instanciarBannersDesdeJson().find { it.category == BannerCategory.SCHEDULE }!!
-            println(banner)
-            bannerView = BannerViewMapper(
-                    banner.id.toString(),
-                    banner.image,
-                    banner.category.toString()
-            )
-            ctx.status(200)
-            ctx.json(bannerView)
-
+    fun scheduleBanners(ctx: Context) {
+        this.banners(ctx, BannerCategory.SCHEDULE)
+    }
             /*
         ////        IMPLE PARA PROD
         val scheduleBanner = backendBannerService.getBannerByCategory("schedule")
@@ -107,27 +103,11 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         ctx.status(200)
         ctx.json(scheduleResult)*/
             /////
-        } catch (e: KotlinNullPointerException) {
-            throw BadRequestResponse(e.message.toString())
-        }
-    }
+
     fun addScheduleBanner(ctx: Context) {
-        try {
-            val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
-                    .check(
-                            { it.image != null },
-                            "Invalid body : image is required"
-                    )
-                    .get()
-            val bannerSchedule = Banner(newBanner.image!!, BannerCategory.SCHEDULE)
-            println(bannerSchedule)
-            val bannersWUp = agregoBannerABanners(bannerSchedule, instanciarBannersDesdeJson())
-            writeFileWUpdateBanners(bannersWUp)
-            ctx.status(201)
-            ctx.json(OkResultMapper("ok"))
-        } catch (e: KotlinNullPointerException) {
-            throw BadRequestResponse(e.message.toString())
-        }    /*
+        this.addBanner(ctx, BannerCategory.SCHEDULE)
+    }
+    /*
         ////        IMPLE PARA PROD
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
@@ -144,23 +124,11 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
             throw BadRequestResponse(e.message.toString())
         }*/
         /////
-    }
 
-    fun getOnlineClassesBanner(ctx: Context) {
-        val bannerViewlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.CLASS }
-        println(banners)
-        banners.forEach {
-            bannerViewlist.add(
-                    BannerViewMapper(
-                            it.id.toString(),
-                            it.image,
-                            it.category.toString()
-                    )
-            )
-        }
-        ctx.status(200)
-        ctx.json(bannerViewlist)/*
+    fun classBanners(ctx: Context) {
+        this.banners(ctx, BannerCategory.CLASS)
+    }
+        /*
      ////        IMPLE PARA PROD
     val onlineClasesBanner = backendBannerService.getBannerByCategory("classes")
     var allOnlineClassesBanner = aux.bannerClassListToBannerViewList(onlineClasesBanner as MutableCollection<Banner>)
@@ -169,25 +137,10 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
              mapOf(
                      "Online Classes" to allOnlineClassesBanner))
     ///// */
-    }
 
-    fun addOnlineClassBanner(ctx: Context) {
-        try {
-            val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
-                    .check(
-                            { it.image != null },
-                            "Invalid body : image is required"
-                    )
-                    .get()
-            val bannerClass = Banner(newBanner.image!!, BannerCategory.CLASS)
-            println(bannerClass)
-            val bannersWUp = agregoBannerABanners(bannerClass, instanciarBannersDesdeJson())
-            writeFileWUpdateBanners(bannersWUp)
-            ctx.status(201)
-            ctx.json(OkResultMapper("ok"))
-        } catch (e: KotlinNullPointerException) {
-            throw BadRequestResponse(e.message.toString())
-        }
+    fun addClassBanner(ctx: Context) {
+        this.addBanner(ctx, BannerCategory.CLASS)
+    }
         /*
              ////        IMPLE PARA PROD
  try {
@@ -207,13 +160,12 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
  }
      /////
  */
-    }
 
-    fun getOnlineClassBanner(ctx: Context) {
+    fun getClassBanner(ctx: Context) {
         val bannerView: BannerViewMapper
         try {
             val id = ctx.pathParam("classeId")
-            var banner: Banner = instanciarBannersDesdeJson().find { it.id.equals(id) }!!
+            var banner: Banner = this.backendBannerService.recuperarBanner(id)
             println(banner)
             bannerView = BannerViewMapper(
                     banner.id.toString(),
@@ -235,19 +187,9 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         }
     }
 
-    fun getCourrierBanner(ctx: Context){
-        try {
-            val bannerView: BannerViewMapper
-            var banner: Banner = instanciarBannersDesdeJson().find { it.category == BannerCategory.COURRIER }!!
-            println(banner)
-            bannerView = BannerViewMapper(
-                    banner.id.toString(),
-                    banner.image,
-                    banner.category.toString()
-            )
-            ctx.status(200)
-            ctx.json(bannerView)
-
+    fun courrierBanners(ctx: Context) {
+        this.banners(ctx, BannerCategory.COURRIER)
+    }
             /*
         ////        IMPLE PARA PROD
         val scheduleBanner = backendBannerService.getBannerByCategory("courrier")
@@ -255,26 +197,12 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
         ctx.status(200)
         ctx.json(scheduleResult)*/
             /////
-        } catch (e: KotlinNullPointerException) {
-            throw BadRequestResponse(e.message.toString())
-        }
-    }
 
-    fun getPaymentMethodsBanner(ctx: Context){
-        val bannerViewlist: MutableList<BannerViewMapper> = mutableListOf()
-        var banners: List<Banner> = instanciarBannersDesdeJson().filter { it.category == BannerCategory.PAYMENTMETHODS }
-        println(banners)
-        banners.forEach {
-            bannerViewlist.add(
-                    BannerViewMapper(
-                            it.id.toString(),
-                            it.image,
-                            it.category.toString()
-                    )
-            )
-        }
-        ctx.status(200)
-        ctx.json(bannerViewlist)/*
+
+    fun paymentMethodsBanners(ctx: Context) {
+        this.banners(ctx, BannerCategory.PAYMENTMETHODS)
+    }
+        /*
      ////        IMPLE PARA PROD
     val onlineClasesBanner = backendBannerService.getBannerByCategory("paymentMethods")
     var allOnlineClassesBanner = aux.bannerClassListToBannerViewList(onlineClasesBanner as MutableCollection<Banner>)
@@ -283,54 +211,54 @@ class BannerController(val backendProveedorService: ProveedorService, backendPro
              mapOf(
                      "Payment methods" to allOnlineClassesBanner))
     ///// */
-    }
+}
 
     //////////////////////
     //FUNCIONES AUXILIARES
     //////////////////////
 
-    private fun readFile(): String {
-        return object {}::class.java.classLoader.getResource("banners.json")!!.readText()
-    }
+//    private fun readFile(): String {
+//        return object {}::class.java.classLoader.getResource("banners.json")!!.readText()
+//    }
+//
+//    fun getIdBanner(): Int {
+//        val lastId = idBanners
+///*        val banners: MutableList<Banner> = this.instanciarBannersDesdeJson()
+//        val lastIndex: Int = banners.lastIndex
+//        val lastId: Int = banners[lastIndex].id!!
+//*/
+//        return lastId + 1
+//    }
+//
+//    fun instanciarBannersDesdeJson(): MutableList<Banner> {
+//        val bannersString = readFile()
+//        val bannerDataType = object : TypeToken<MutableList<Banner>>() {}.type
+//        val banners: MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
+//        return banners
+//    }
+//
+//    fun agregoBannerABanners(banner: Banner, banners: MutableList<Banner> ): MutableList<Banner> {
+//        val bannersWAdd: MutableList<Banner> = banners
+//        bannersWAdd.add(banner)
+//        return bannersWAdd
+//    }
+//
+//    fun eleminoBannerDeBanners(bannerId: String, banners: MutableList<Banner> ): MutableList<Banner> {
+//        val bannersWDel: MutableList<Banner> = banners
+//        bannersWDel.removeIf { it.equals(bannerId) }
+//        return bannersWDel
+//    }
+//
+//    private fun writeFileWUpdateBanners(banners: MutableList<Banner>) {
+//        val jsonString = Gson().toJson(banners)  // json string
+//        val file = File("./src/main/resources/banners.json")
+//
+//        if (!file.exists()) {
+//            file.createNewFile()
+//        }
+//
+//        val bufferToWrite = BufferedWriter(FileWriter("./src/main/resources/banners.json"))
+//        bufferToWrite.write(jsonString)
+//        bufferToWrite.close()
+//    }
 
-    fun getIdBanner(): Int {
-        val lastId = idBanners
-/*        val banners: MutableList<Banner> = this.instanciarBannersDesdeJson()
-        val lastIndex: Int = banners.lastIndex
-        val lastId: Int = banners[lastIndex].id!!
-*/
-        return lastId + 1
-    }
-
-    fun instanciarBannersDesdeJson(): MutableList<Banner> {
-        val bannersString = readFile()
-        val bannerDataType = object : TypeToken<MutableList<Banner>>() {}.type
-        val banners: MutableList<Banner> = Gson().fromJson(bannersString, bannerDataType)
-        return banners
-    }
-
-    fun agregoBannerABanners(banner: Banner, banners: MutableList<Banner> ): MutableList<Banner> {
-        val bannersWAdd: MutableList<Banner> = banners
-        bannersWAdd.add(banner)
-        return bannersWAdd
-    }
-
-    fun eleminoBannerDeBanners(bannerId: String, banners: MutableList<Banner> ): MutableList<Banner> {
-        val bannersWDel: MutableList<Banner> = banners
-        bannersWDel.removeIf { it.equals(bannerId) }
-        return bannersWDel
-    }
-
-    private fun writeFileWUpdateBanners(banners: MutableList<Banner>) {
-        val jsonString = Gson().toJson(banners)  // json string
-        val file = File("./src/main/resources/banners.json")
-
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-
-        val bufferToWrite = BufferedWriter(FileWriter("./src/main/resources/banners.json"))
-        bufferToWrite.write(jsonString)
-        bufferToWrite.close()
-    }
-}

@@ -20,8 +20,8 @@ class BannerServiceImpl(private val bannerDAO: BannerDAO, private val dataBaseTy
 
     override fun recuperarBanner(id: String): Banner {
         return runTrx({
-            this.bannerDAO.get(id)
-        }, listOf(TransactionType.MONGO), this.dataBaseType) ?: throw BannerInexistenteException("El banner no existe")
+            this.obtenerBanner(id)
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     override fun recuperarTodosLosBanners(): List<Banner> {
@@ -46,6 +46,17 @@ class BannerServiceImpl(private val bannerDAO: BannerDAO, private val dataBaseTy
         runTrx({
             this.bannerDAO.deleteAll()
         }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
+    override fun borrarBanner(id: String) {
+        runTrx({
+            this.obtenerBanner(id)
+            this.bannerDAO.delete(id)
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
+    private fun obtenerBanner(id: String): Banner {
+        return this.bannerDAO.get(id) ?: throw BannerInexistenteException("El banner no existe")
     }
 
     private fun asegurarQueBannerNoExista(id: String) {

@@ -8,4 +8,5 @@ interface BannerDAO {
     fun getAll(): List<Banner>
     fun <E> findEq(field:String, value:E ): List<Banner>
     fun deleteAll()
+    fun delete(id: String)
 }
