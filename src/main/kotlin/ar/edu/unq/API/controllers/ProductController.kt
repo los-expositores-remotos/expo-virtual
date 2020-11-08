@@ -19,8 +19,11 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun deleteProduct(ctx: Context){
         try {
             val id = ctx.pathParam("productId")
+            val idProveedor = backendProductoService.recuperarProducto(id).idProveedor
             backendProductoService.borrarProducto(id)
-            ctx.status(204)
+            val updatedProd = aux.productoClassListToProductoViewList(backendProveedorService.recuperarProveedor(idProveedor.toString()).productos)
+            ctx.status(200)
+            ctx.json(updatedProd)
         } catch (e: ProductoInexistenteException) {
             throw BadRequestResponse(e.message.toString())
         }
