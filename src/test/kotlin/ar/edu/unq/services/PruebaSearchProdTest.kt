@@ -17,8 +17,8 @@ class PruebaSearchProdTest {
 
     //USO LA BD DE PRODUCCION, POR ESO NO UTILICE DROPS NI DELETES
         @Test
-        fun buscarProductos(){
-            var result = productoService.buscarProductos("cajonr", emptyList())
+        fun buscarProductos() {
+            val result = productoService.buscarProductos("cajonr", emptyList())
             result.forEach { println(it.itemName) }
             assertEquals(1,1/*this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les", listOf()).map { it.itemName }.toSet()*/)
         }

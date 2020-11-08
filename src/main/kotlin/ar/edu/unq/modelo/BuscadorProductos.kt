@@ -9,6 +9,7 @@ object BuscadorProductos {
     fun ordenar(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto> {
         var resultado = emptyList<Pair<Producto, Int>>().toMutableList()
         for (producto in productos) {
+            println("Entro: " + producto.itemName)
             if (contienePalabrasDelNombre(texto.split(" "), producto.itemName) or contieneTags(texto, producto.listTags) or contienePalabrasDeLaDescripcion(texto, producto.description.split(" "))) {
                 val tupla = Pair(producto, cantidadPalabrasQueCoinciden(texto, producto.description.split(" ")))
                 resultado.add(tupla)
@@ -32,7 +33,7 @@ object BuscadorProductos {
 
     fun contienePalabrasDelNombre(palabrasBuscadas: List<String>, nombre: String): Boolean {
         for (palabraBuscada in palabrasBuscadas) {
-            if (nombre.contains(palabraBuscada)) {
+            if (nombre.contains(palabraBuscada, ignoreCase = true)) {
                 return true
             }
         }
@@ -41,7 +42,7 @@ object BuscadorProductos {
 
     fun contieneTags(texto: String, listaTags: List<String>): Boolean {
         for (tag in listaTags) {
-            if (texto.contains(tag)) {
+            if (texto.contains(tag, ignoreCase = true)) {
                 return true
             }
         }
@@ -50,7 +51,7 @@ object BuscadorProductos {
 
     fun contienePalabrasDeLaDescripcion(texto: String, palabrasDeLaDescripcion: List<String>): Boolean {
         for (palabra in palabrasDeLaDescripcion) {
-            if (texto.contains(palabra)) {
+            if (palabra != "" && texto.contains(palabra, ignoreCase = true)) {
                 return true
             }
         }
