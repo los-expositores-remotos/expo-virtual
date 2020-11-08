@@ -133,6 +133,7 @@
                 <version>0.8.2</version>
                 <configuration>
                     <excludes>
+                        <exclude>**/controllers/*</exclude>
                         <exclude>**/API/*</exclude>
                         <exclude>**/controllers/*</exclude>
                     </excludes>
