@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import '../styles/UpdatProveedor.css'
+import '../styles/DeleteProveedor.css'
 import {Link} from 'react-router-dom'
-import UpdateProveedorForm from './UpdateProveedorForm'
+import ListOfProductToDelete from './ListOfProductToDelete'
 
-const UpdateProveedor = () =>{
-  const [companies, setCompanies] = useState([])
-  const [ cliked , setCliked] = useState(null)
+const DeleteProducto = () =>{
+  const [companies, setCompanies] = useState(null)
+  const [clicked, setClicked] = useState(null)
 
   useEffect(() => {
-    fetch("http://localhost:7000/companies", {
+    if(!companies){
+    fetch(`http://localhost:7000/companies`, {
       headers: {
         "Content-Type":"application/json"
       }
-    })
-    .then((res)=> {
+    }) 
+      .then((res)=> {
       //console.log(res)
       if(res.ok){
         return res.json()
       }
     })
     .then((result)=>{
-      //console.log(result)
+     // console.log(result)
 
         setCompanies(result)        
  
@@ -29,8 +30,8 @@ const UpdateProveedor = () =>{
     .catch((err => {
       console.log(err)
     }))
-  }, [companies, cliked])
-    
+  }
+  }, [companies])
     
     const listOfCompanies = () => {
 
@@ -43,12 +44,12 @@ const UpdateProveedor = () =>{
                 <div class="card-image">
                   <img src={company.companyImage}/>
                   <span class="card-title">{company.companyName}</span>
-                  <a onClick={ ()=> setCliked(<UpdateProveedorForm company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+                  <a onClick={ ()=> setClicked(<ListOfProductToDelete company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
                 </div>
                 <div class="card-content">
                   <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
-                  <a href={"http://"+company.instagram} target="_blank"><p>Instagram</p></a>
-                  <a href={"http://"+company.web} target="_blank"><p>Web</p></a>
+                  <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
+                  <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
                 </div>
               </div>
               </div>
@@ -65,31 +66,32 @@ const UpdateProveedor = () =>{
         }
 
     }
+    console.log(clicked)
     return (
-      cliked ? 
-        cliked
+      clicked ? 
+        clicked
         :
         <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
                 <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
-                </form>
-                </div>
-                <div class='col s2'>
-                <Link>
-                <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
-                </Link>     
-                </div>
-                <div>
-                {
-                  !companies ?
-                  <p>Loading...</p>
-                  :
-                  listOfCompanies()
-                }
-                </div>
-                </div>
+              </form>
+          </div>
+          <div class='col s2'>
+              <Link>
+                  <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
+              </Link>     
+          </div>
+        <div>
+          {
+            !companies ?
+              <p>Loading...</p>
+            :
+              listOfCompanies()
+          }
+        </div>
+      </div>
     )
 }
 
-export default UpdateProveedor;
+export default DeleteProducto;
