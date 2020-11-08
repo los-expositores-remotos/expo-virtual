@@ -8,15 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
   var instances = M.Autocomplete.init(elems, {});
 });
 
-const UpdateProveedorForm = (props)  => {
+const UpdateProductoForm = (props)  => {
   const history = useHistory();
-  const company = props.company
+  const product = props.product
   const [url, setUrl] = useState(null);
-  const [companyName, setcompanyName] = useState(company.companyName )
-  const [companyImage, setcompanyImage] = useState(company.companyImage)
-  const [facebook, setfacebook] = useState(company.facebook)
-  const [instagram, setinstagram] = useState(company.instagram)
-  const [web, setweb] = useState(company.web)
+  const [itemName, setitemName] = useState(product.itemName )
+  const [images, setimages] = useState(product.images[0])
+  const [description, setdescription] = useState(product.description)
+  const [stock, setstock] = useState(product.stock)
+  const [itemPrice, setitemPrice] = useState(product.itemPrice)
+  const [promotionalPrice, setpromotionalPrice] = useState(product.promotionalPrice)
 
   useEffect(() => {
     if (url) {
@@ -24,10 +25,10 @@ const UpdateProveedorForm = (props)  => {
     }
   },[url]);
 
-  const agregarProveedor = () => {
+  const agregarProducto = () => {
     if(SubirAlaNube()){
     const data = new FormData();
-    data.append("file", companyImage);
+    data.append("file", images);
     data.append("upload_preset", "insta-clon-GB");
     data.append("cloud_name", "instaclongbarreiro");
     fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/image/upload", {
@@ -43,35 +44,37 @@ const UpdateProveedorForm = (props)  => {
         console.log(err);
       });
     }else{
-      setUrl(companyImage)
+      setUrl(images)
     }
   };
 
   const SubirAlaNube = () => {
-    return (! typeof companyImage === 'string')
+    return (! typeof images === 'string')
   }
-  const postComapanyImage = () =>{
+  const postProductImage = () =>{
     if(SubirAlaNube()){
       return url
     }else{
-      return companyImage
+      return images
     }
   }
   
   const postearUpdate = () => {
     
 
-      fetch(`http://localhost:7000/companies/${company.id}`, {
+      fetch(`http://localhost:7000/products/${product.id}`, {
         method: "PUT",
         headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        "companyName": companyName ,
-        "companyImage": postComapanyImage(),
-        "facebook": facebook ,
-        "instagram": instagram ,
-        "web": web
+        "idProveedor": product.idProveedor,
+        "itemName": itemName,
+        "description": description,
+        "images": [url] ,
+        "stock": stock,
+        "itemPrice": itemPrice,
+        "promotionalPrice": promotionalPrice
       })
     })
       .then((res) => res.json())
@@ -80,7 +83,7 @@ const UpdateProveedorForm = (props)  => {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
           M.toast({
-            html: "Proveedor modificado exitosamente",
+            html: "Producto modificado exitosamente",
             classes: "#388e3c green darken-2",
           });
         }
@@ -91,40 +94,38 @@ const UpdateProveedorForm = (props)  => {
     
   };
 
-  console.log(company)
+  console.log(product)
   return (
         <div class="row">
           <form class="col s12">
         <div class="row">
-          <div class="input-field col s6">
-              <input 
-              id="Nombre_de_la_Empresa" onChange={(e) => { 
-                setcompanyName(e.target.value)
-                console.log(companyName)
-                }} type="text" class="validate" value={companyName}/>
-               <label class="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
-          </div>
               <div class="input-field col s6">
-              <input id="Web" onChange={(e) => setweb(e.target.value)} type="text" class="validate" value={web }/>
-               <label class="active" for="Web">Web</label>
+              <input id="ItemName" onChange={(e) => setitemName(e.target.value)} type="text" class="validate" value={itemName}/>
+               <label class="active" for="ItemName">Nombre del producto</label>
               </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <input id="instagram" onChange={(e) => setinstagram(e.target.value)} type="text" class="validate" value={instagram }/>
-               <label class="active" for="instagram">Instagram</label>
+              <input id="description" onChange={(e) => setdescription(e.target.value)} type="text" class="validate" value={description}/>
+               <label class="active" for="description">Descripción</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <input id="Facebook" onChange={(e) => setfacebook(e.target.value)} type="text" class="validate" value={facebook}/>
-               <label class="active" for="Facebook">Facebook</label>
+              <input id="Stock" type="number" onChange={(e) => setstock(e.target.value)} class="validate" value={stock}/>
+               <label class="active" for="Stock">Stock</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <input id="email" type="email" class="validate" value={company? company.email : undefined }/> 
-               <label class="active" for="email">Email</label>
+              <input id="ItemPrice" type="number" class="validate" value={itemPrice}/> 
+               <label class="active" for="ItemPrice">Precio</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+              <input id="PromotionalPrice" type="number" class="validate" value={promotionalPrice}/> 
+               <label class="active" for="PromotionalPrice">Precio promocional</label>
           </div>
         </div>
         <form action="#">
@@ -132,12 +133,12 @@ const UpdateProveedorForm = (props)  => {
             <div class="btn" id='buttonUploadImages'>
               <span>Cargar Imagen</span>
               <input type="file" onChange={(e) => {
-                setcompanyImage(e.target.files[0])
-                console.log(companyImage)
+                setimages(e.target.files[0])
+                console.log(images)
                 }}/>
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={typeof companyImage === 'string' ? companyImage : url }/>
+              <input class="file-path validate" type="text" value={typeof images === 'string' ? images : url }/>
             </div>
           </div>
         </form>
@@ -145,21 +146,22 @@ const UpdateProveedorForm = (props)  => {
           <div class="col s12">
                  
                 <a  onClick={() => {
-                  console.log(companyImage)
+                  console.log(images)
                   console.log(url)
-                  console.log(companyImage === url)
+                  console.log(images === url)
               
-                    agregarProveedor();
-                    if (!companyName ||
-                      !companyImage ||
-                      !facebook ||
-                      !instagram ||
-                      !web) {
+                    agregarProducto();
+                    if (!itemName ||
+                      !images ||
+                      !description ||
+                      !stock||
+                      !promotionalPrice||
+                      !itemPrice) {
                       postearUpdate()
                   }
                   }
                 } 
-                class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>
+                class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Producto</a>
               
           </div>
         </div>
@@ -167,4 +169,4 @@ const UpdateProveedorForm = (props)  => {
       </div>
   );
 };
-export default UpdateProveedorForm;
+export default UpdateProductoForm;

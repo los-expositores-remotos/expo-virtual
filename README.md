@@ -1,7 +1,7 @@
 
-[![Build Status](https://travis-ci.org/los-expositores-remotos/expo-virtual.svg?branch=ramaMisticaConFuncionesFalopas)](https://travis-ci.org/los-expositores-remotos/expo-virtual)
+[![Build Status](https://travis-ci.org/los-expositores-remotos/expo-virtual.svg?branch=development)](https://travis-ci.org/los-expositores-remotos/expo-virtual)
 
-[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/ramaMisticaConFuncionesFalopas/graph/badge.svg?token=5FWJMSJHQC)](https://codecov.io/gh/los-expositores-remotos/expo-virtual)
+[![codecov](https://codecov.io/gh/los-expositores-remotos/expo-virtual/branch/development/graph/badge.svg?token=5FWJMSJHQC)](https://codecov.io/gh/los-expositores-remotos/expo-virtual)
 
 # Expo Virtual
 Armar el setup inicial del proyecto
