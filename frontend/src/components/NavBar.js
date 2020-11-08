@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {Link} from 'react-router-dom'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
@@ -10,7 +10,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const NavBar = () => {
+
+    const [search, SetSearch] = useState(" ");
+   
+    const handleInput = (e) => {
+        SetSearch(e.target.value)
+    }
+
     
+   
 
       return (
     
@@ -21,11 +29,11 @@ const NavBar = () => {
                </div>
                <div className="col s6">
                    <form className="form-inline">
-                       <input className="form-control sm-2" id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
+                       <input className="form-control sm-2" id='inputSearch' type="search" placeholder="Search" aria-label="Search" onChange={handleInput}/>
                    </form>
                </div>
                <div className="col s1">
-                   <Link to="/">
+                   <Link to={"/search/"+search}>
                        <i className="small material-icons left" id="iconSearch">search</i>
                    </Link>     
                </div>

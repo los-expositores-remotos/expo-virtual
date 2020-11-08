@@ -10,6 +10,7 @@ import Contact from './components/routes/Contact.js'
 import Admin from './components/routes/Admin.js';
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import Search from './components/Search.js';
 //modificacion
 const Routing = () => {
   return (
@@ -38,6 +39,9 @@ const Routing = () => {
             </Route>
             <Route path="/admin" component={Admin}>
               <Admin />
+            </Route>
+            <Route path="/search/:search" component={Search}>
+              <Search/>
             </Route>
         </Switch>
       </div>
