@@ -1,6 +1,7 @@
 
 import React, {useState} from 'react';
 import emailjs from 'emailjs-com';
+import "../../styles/Contact.css"
 
 const Contact = () => {
    const frmContact = { userName:'', userEmail:'', userTel:'', message:''};
@@ -34,7 +35,7 @@ const Contact = () => {
 		<form onSubmit={handleSubmit}>
 			  <div className="pt-3"><h3 className="font-weight-bold"> Dejanos tu mensaje !! </h3></div>
 			  <div class="input-field col s12">
-					<div className="form-group text-left"> 
+					<div id="header" className="form-group text-left"> 
 						<i class="material-icons prefix">account_circle</i>
 						<input required type="text" value={contact.userName} name="userName" onChange={handleChange} className="form-control" placeholder="Tu nombre" />
 						<label for="icon_prefix">Nombre</label>					
@@ -58,7 +59,7 @@ const Contact = () => {
 					<div className="form-group text-left">
 						<i class="material-icons prefix">mode_edit</i>
 						<textarea id="icon_prefix2" required name="message" onChange={handleChange} className="form-control" placeholder="Dejanos tu mensaje" value={contact.message}></textarea>
-						<label for="icon_prefix2">Mensaje</label>
+						<label>Mensaje</label>
 					</div>
 			  </div>
 			  <div className="pt-3 col-md-5 mx-auto text-left">
