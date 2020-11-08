@@ -3,14 +3,26 @@
     margin-bottom: 100px;
   }
 
-.icon_prefix2{
-    margin-top: 1000px;
+#icon_prefix2{
+    min-height: 10rem;
+    font-size: 16px;
+    margin-top: 10px;
+    margin-left: 44px;
+    padding: 10px;
 }
 
-.contactBoton{
-    margin-bottom: 2rem;
+#contactBoton{
+    margin-left: 50%;
+    margin-bottom: 50px;
 }
 
-.textarea{
-    height: 6rem;
+#header{
+    margin-top: 40px;
+}
+
+.alert-success{
+    margin-top: 60px;
+    font-size: 23px;
+    color: #4cc14c;
+    font-weight: bold;
 }
