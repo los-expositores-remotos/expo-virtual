@@ -36,11 +36,11 @@ class BannerServiceImpl(private val bannerDAO: BannerDAO, private val dataBaseTy
         }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
-    override fun recuperarBannersPorCategoria(bannerCategory: BannerCategory): List<Banner> {
-        return runTrx({
-            this.bannerDAO.findEq("category", bannerCategory)
-        }, listOf(TransactionType.MONGO), this.dataBaseType)
-    }
+//    override fun recuperarBannersPorCategoria(bannerCategory: BannerCategory): List<Banner> {
+//        return runTrx({
+//            this.bannerDAO.findEq("category", bannerCategory)
+//        }, listOf(TransactionType.MONGO), this.dataBaseType)
+//    }
 
     override fun deleteAll() {
         runTrx({

@@ -13,7 +13,8 @@ import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 
 
-class BannerController(
+class BannerController
+    (
     val backendBannerService: BannerService,
     val backendProveedorService: ProveedorService,
     backendProductoService: ProductoService
