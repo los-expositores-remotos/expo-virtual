@@ -42,7 +42,26 @@ class BannerController(
         ctx.json(bannerlist)
     }
 
-    private fun addBanner(ctx: Context, bannerCategory: BannerCategory) {
+    fun addBanner(ctx: Context) {
+        try {
+            val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
+                    .check(
+                            { it.image != null && it.category != null && BannerCategory.isValid(it.category)},
+                            "Invalid body : all fields are required. All fields must be valids"
+                    )
+                    .get()
+
+            println(newBanner.category)
+            val banner = Banner(newBanner.image!!, BannerCategory.valueOf(newBanner.category!!))
+            this.backendBannerService.crearBanner(banner)
+            ctx.status(201)
+            ctx.json(OkResultMapper("ok"))
+        } catch (e: BannerExistenteException) {
+            throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+    private fun addBanner1(ctx: Context, bannerCategory: BannerCategory) {
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
                 .check(
@@ -64,7 +83,7 @@ class BannerController(
     }
 
     fun addHomeBanner(ctx: Context) {
-        this.addBanner(ctx, BannerCategory.HOME)
+        this.addBanner1(ctx, BannerCategory.HOME)
     }
 
     fun deleteBanner(ctx: Context) {
@@ -83,7 +102,7 @@ class BannerController(
     }
 
     fun addScheduleBanner(ctx: Context) {
-        this.addBanner(ctx, BannerCategory.SCHEDULE)
+        this.addBanner1(ctx, BannerCategory.SCHEDULE)
     }
 
     fun classBanners(ctx: Context) {
@@ -91,7 +110,7 @@ class BannerController(
     }
 
     fun addClassBanner(ctx: Context) {
-        this.addBanner(ctx, BannerCategory.CLASS)
+        this.addBanner1(ctx, BannerCategory.CLASS)
     }
 
     fun getClassBanner(ctx: Context) {

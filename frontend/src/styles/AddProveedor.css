@@ -25,3 +25,6 @@
 #buttonUploadImages {
   background-color: #ee6e73;
 }
+#Category {
+  display: inline;
+}
