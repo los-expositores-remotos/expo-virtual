@@ -51,13 +51,13 @@ const Live = () => {
     if(classes){
     const list = classes.map((clase)=>{
         return(
-                <div class='col s6'>
+                <div className='col s6'>
                     <img id="imgClasses" src={clase.image} alt="logo de clases"/>
                 </div>
         )
     })
     return (
-      <div class='row' id="rowId">
+      <div className='row' id="rowId">
         {list}
       </div>
     )}

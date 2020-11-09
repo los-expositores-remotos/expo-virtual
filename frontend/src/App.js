@@ -10,6 +10,17 @@ import Contact from './components/routes/Contact.js'
 import Admin from './components/routes/Admin.js';
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import AddBanner from './components/AdminPanel/AddBanner'
+import AddProveedor from './components/AdminPanel/AddProveedor'
+import DeleteBanner from './components/AdminPanel/DeleteBanner'
+import DeleteProducto from './components/AdminPanel/DeleteProducto'
+import DeleteProveedor from './components/AdminPanel/DeleteProveedor'
+import ScreenSelecEmpresaParaAgregarProduct from './components/AdminPanel/ScreenSelecEmpresaParaAgregarProduct'
+import UpdateProducto from './components/AdminPanel/UpdateProducto'
+import UpdateProveedor from './components/AdminPanel/UpdateProveedor'
+
+
+
 //modificacion
 const Routing = () => {
   return (
@@ -36,8 +47,32 @@ const Routing = () => {
             <Route path="/contact" component={Contact}>
               <Contact />
             </Route>
-            <Route path="/admin" component={Admin}>
+            <Route path="/admin" exact component={Admin}>
               <Admin />
+            </Route>
+            <Route path="/admin/agregarproveedor" component={AddProveedor}>
+              <AddProveedor />
+            </Route>
+            <Route path="/admin/borrarproveedor" component={DeleteProveedor}>
+              <DeleteProveedor />
+            </Route>
+            <Route path="/admin/modificarproveedor" component={UpdateProveedor}>
+              <UpdateProveedor />
+            </Route>
+            <Route path="/admin/agregarproducto" component={ScreenSelecEmpresaParaAgregarProduct}>
+              <ScreenSelecEmpresaParaAgregarProduct />
+            </Route>
+            <Route path="/admin/modificarproducto" component={UpdateProducto}>
+              <UpdateProducto />
+            </Route>
+            <Route path="/admin/borrarproducto" component={DeleteProducto}>
+              <DeleteProducto />
+            </Route>
+            <Route path="/admin/agregarbanner" component={AddBanner}>
+              <AddBanner />
+            </Route>
+            <Route path="/admin/borrarbanner" component={DeleteBanner}>
+              <DeleteBanner />
             </Route>
         </Switch>
       </div>

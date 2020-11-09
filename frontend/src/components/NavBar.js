@@ -43,9 +43,9 @@ const NavBar = () => {
            </div>           
 
            <nav>
-                <div class="nav-wrapper">
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="left hide-on-med-and-down">
+                <div className="nav-wrapper">
+                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                <ul className="left hide-on-med-and-down">
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/suppliers">Empresas</Link></li>
                     <li><Link to="/live">En Vivo</Link></li>
@@ -57,7 +57,7 @@ const NavBar = () => {
                 </div>
             </nav>
 
-            <ul class="sidenav" id="mobile-demo">
+            <ul className="sidenav" id="mobile-demo">
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/suppliers">Empresas</Link></li>
                 <li><Link to="/live">En Vivo</Link></li>

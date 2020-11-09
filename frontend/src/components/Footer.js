@@ -5,15 +5,15 @@ import '../styles/Footer.css'
 
 const Footer = () => {
   return (
-    <footer class="page-footer">
+    <footer className="page-footer">
     <div>
-      <div class="row">
-        <div class="col s3">
-          <h5 class="white-text"  id="footerT">Expo Arte Virtual</h5>
+      <div className="row">
+        <div className="col s3">
+          <h5 className="white-text"  id="footerT">Expo Arte Virtual</h5>
           <p>3, 4 y 5 de octubre!</p>
         </div>
-        <div class="col s3">
-          <h5 class="white-text" id="footerT">Categorias</h5>
+        <div className="col s3">
+          <h5 className="white-text" id="footerT">Categorias</h5>
           <ul>
             <li><Link id="linkList"to="/contact">Contacto</Link></li>
             <li><Link id="linkList"to="/aboutus">Quienes Somos?</Link></li>
@@ -23,45 +23,45 @@ const Footer = () => {
             <li><Link id="linkList"to="/howtobuy">Como comprar?</Link></li>
           </ul>
         </div>
-        <div class="col s3">
-          <h5 class="white-text" id="footerT">Contactenos</h5>
+        <div className="col s3">
+          <h5 className="white-text" id="footerT">Contactenos</h5>
           <ul>
             <li>
               <div>
-              <div class="row">
-                <div class="col" id="iconFooter">
+              <div className="row">
+                <div className="col" id="iconFooter">
                     <SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" style={{ height: 25, width: 25 }}/>
                 </div>
-                <div class="col" id="wpFooter">
+                <div className="col" id="wpFooter">
                     <p>+5491123869642</p>
                 </div>
               </div>
               </div>
             </li>
             <li>
-              <div class="row">
-                  <div class="col" id="iconFooter"><i class="material-icons">email</i></div>
-                  <div class="col" id="wpFooter"><p>eventos@guiadelarte.com.ar</p></div>
+              <div className="row">
+                  <div className="col" id="iconFooter"><i className="material-icons">email</i></div>
+                  <div className="col" id="wpFooter"><p>eventos@guiadelarte.com.ar</p></div>
               </div>
               
               
             </li>
           </ul>
         </div>
-        <div class="col s3">
-          <h5 class="white-text" id="footerT">Sigamos conectados</h5>
+        <div className="col s3">
+          <h5 className="white-text" id="footerT">Sigamos conectados</h5>
         </div>
-        <div class="col l4 offset-l2 s12">   
+        <div className="col l4 offset-l2 s12">   
         </div>
       </div>
     </div>
-    <div class="footer-copyright">
-      <div class="container" id="contFooter">
-        <div class="row">
-          <div class="col s3"><a href='https://www.facebook.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="facebook" bgColor="#ffffff" /></a></div>
-          <div class="col s3"><a href='http://instagram.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="instagram" bgColor="#ffffff" /></a></div>
-          <div class="col s3"><Link id="linkList"to="/contact"><SocialIcon className="SocialIcon" network="email" bgColor="#ffffff" /></Link></div>
-          <div class="col s3"><a href='https://wa.me/5491123869642'><SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" /></a></div>
+    <div className="footer-copyright">
+      <div className="container" id="contFooter">
+        <div className="row">
+          <div className="col s3"><a href='https://www.facebook.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="facebook" bgColor="#ffffff" /></a></div>
+          <div className="col s3"><a href='http://instagram.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="instagram" bgColor="#ffffff" /></a></div>
+          <div className="col s3"><Link id="linkList"to="/contact"><SocialIcon className="SocialIcon" network="email" bgColor="#ffffff" /></Link></div>
+          <div className="col s3"><a href='https://wa.me/5491123869642'><SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" /></a></div>
         </div>
         © 2020 Copyright Expo Arte Virtual
       </div>

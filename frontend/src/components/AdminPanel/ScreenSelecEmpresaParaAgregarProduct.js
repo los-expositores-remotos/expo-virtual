@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../styles/UpdatProveedor.css'
+import '../../styles/UpdatProveedor.css'
 import {Link} from 'react-router-dom'
 import AddProduct from './AddProducto'
 
@@ -43,14 +43,14 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
     const list = mycompanies.map((company)=> {
       return (
         <li>
-        <div class="col s1" id='colCard'>
-          <div class="card" id='cardDelete'>
-            <div class="card-image">
+        <div className="col s1" id='colCard'>
+          <div className="card" id='cardDelete'>
+            <div className="card-image">
               <img src={company.companyImage}/>
-              <span class="card-title">{company.companyName}</span>
-              <a onClick={ ()=> setClicked(<AddProduct company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+              <span className="card-title">{company.companyName}</span>
+              <a onClick={ ()=> setClicked(<AddProduct company={company}/>) } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">mode_edit</i></a>
             </div>
-            <div class="card-content">
+            <div className="card-content">
               <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
               <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
               <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
@@ -77,14 +77,14 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
         const list = companies.map((company)=> {
           return (
             <li>
-            <div class="col s1" id='colCard'>
-              <div class="card" id='cardDelete'>
-                <div class="card-image">
+            <div className="col s1" id='colCard'>
+              <div className="card" id='cardDelete'>
+                <div className="card-image">
                   <img src={company.companyImage}/>
-                  <span class="card-title">{company.companyName}</span>
-                  <a onClick={ ()=> setClicked(<AddProduct company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">mode_edit</i></a>
+                  <span className="card-title">{company.companyName}</span>
+                  <a onClick={ ()=> setClicked(<AddProduct company={company}/>) } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">mode_edit</i></a>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <a href={company.facebook}><p>Facebook</p></a>
                   <a href={company.instagram}><p>Instagram</p></a>
                   <a href={company.web}><p>Web</p></a>
@@ -105,7 +105,36 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
 
     }
     return (
-      cliked ? 
+      <div className="row">
+      <div className="col s4">
+          <ul className="collapsible">
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
+                      <div className="collapsible-body">
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                      </div>
+              </li>
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">place</i>Productos</div>
+                  <div className="collapsible-body">
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproducto">Agregar Productos</Link> 
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproducto">Modificar Productos</Link> 
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproducto">Eliminar Productos</Link> 
+                      </div>
+              </li>
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">whatshot</i>Banners</div>
+                  <div className="collapsible-body">
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarbanner">Agregar Banner</Link>  
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarbanner" >Eliminar Banner</Link>
+                      </div>
+              </li>
+          </ul>      
+      </div>
+      <div className='col s8'>
+      {cliked ? 
         cliked
         :
         <div className="row">
@@ -129,7 +158,12 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
                     listOfCompanies()
                 }
                 </div>
-                </div>
+                </div>}
+      </div> 
+  </div> 
+
+
+      
     )
 }
 
