@@ -89,7 +89,7 @@ const AddProduct = (props)  => {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
           M.toast({
-            html: "Proveedor agregado exitosamente",
+            html: "Producto agregado exitosamente",
             classes: "#388e3c green darken-2",
           });
           history.push("/admin");
