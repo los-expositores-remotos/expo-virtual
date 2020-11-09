@@ -9,6 +9,7 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class EliminarProductoStepDef: AuxProdStepDefs() {
@@ -46,20 +47,32 @@ class EliminarProductoStepDef: AuxProdStepDefs() {
         assertTrue(productosRecuperados.contains(nombreProductoB))
     }
 
-    @Given("^dado un producto$")
-    fun dadoUnProducto() {
-        productoRecuperado = productoService.obtenerProducto(proveedorRecuperado.id.toString(),  productoA.itemName)
+    @Given("^dado un producto \"([^\"]*)\"$")
+    fun dadoUnProducto(productoA: String) {
+        proveedorService.crearProveedor(proveedorA)
+        val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
+        val productoABis = Producto(proveedorA.id, productoA, "SARASA", 7, 1000000, 800000)
+        proveedorRecuperado.addProduct(productoABis)
+        proveedorService.actualizarProveedor(proveedorRecuperado)
+        productoRecuperado = productoService.obtenerProducto(proveedorRecuperado.id.toString(), productoA)
     }
 
-    @When("^lo elimino$")
-    fun loElimino() {
-        productoService.borrarProducto(productoA.id.toString())
+    @When("^elimino el \"([^\"]*)\"$")
+    fun loElimino(productoA: String) {
+        val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
+        val productoRecuperado = proveedorRecuperado.productos.find{it.itemName == productoA}
+        println("producto rec: " +productoRecuperado)
+        productoService.borrarProducto(productoRecuperado!!.id.toString())
     }
 
     @Then("^no figura mas en la base de datos$")
     fun noFiguraMasEnLaBaseDeDatos() {
-        val productosRecuperados = this.productoService.recuperarATodosLosProductos()
-        assertEquals(setOf(productoB.itemName), productosRecuperados.map{it.itemName}.toSet())
+        val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
+        println("proveedor recup: " )
+        val productoBorrado = proveedorRecuperado.productos.map{it.itemName}.contains(productoA.itemName)
+        println("prducto borrado?: " + productoBorrado)
+        assertFalse(productoBorrado)
+        //assertTrue(productosRecuperados.contains(nombreProductoB))
     }
 
     @After

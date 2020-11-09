@@ -11,6 +11,6 @@ Feature: Eliminacion de Producto
 
   Scenario: Al presionar el icono de eliminar se elimina el producto y se recibe una notificación de baja exitosa
 
-    Given dado un producto
-    When lo elimino
+    Given dado un producto "producto1"
+    When elimino el "producto1"
     Then no figura mas en la base de datos
