@@ -1,9 +1,11 @@
+package ar.edu.unq.cucumber
+
 import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
 import ar.edu.unq.modelo.banner.Banner
 import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.PendingException
+import cucumber.api.java.After
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
@@ -19,7 +21,8 @@ class EliminarUnaClaseEnVivoStepdefs {
 
     @Given("^Una clase y una categoria \"([^\"]*)\" y \"([^\"]*)\"$")
     fun unaClaseYUnaCategoriaY(bannerImage: String?, bannerCategory: String?) {
-        this.banners.add(Banner(bannerImage!!, BannerCategory.valueOf(bannerCategory!!)))
+        this.banner = Banner(bannerImage!!, BannerCategory.valueOf(bannerCategory!!))
+        this.banners.add(this.banner)
     }
 
     @When("^Creo la clase$")
@@ -28,6 +31,7 @@ class EliminarUnaClaseEnVivoStepdefs {
     }
 
     @Then("^La clase \"([^\"]*)\" con categoria \"([^\"]*)\" existe$")
+    @Throws(Throwable::class)
     fun laClaseConCategoriaExiste(bannerImage: String?, bannerCategory: String?) {
         val banner = this.banners.find { (it.image == bannerImage!!) and (it.category == BannerCategory.valueOf(bannerCategory!!)) }!!
         assertEquals(banner, this.bannerService.recuperarBanner(banner.id.toString()))
@@ -41,5 +45,10 @@ class EliminarUnaClaseEnVivoStepdefs {
     @And("^La clase ya no existe$")
     fun laClaseYaNoExiste() {
         assertFalse(this.bannerService.recuperarTodosLosBanners().contains(this.banner))
+    }
+
+    @After
+    fun deleteAll(){
+        this.bannerService.deleteAll()
     }
 }
