@@ -60,8 +60,8 @@ const Footer = () => {
         <div class="row">
           <div class="col s3"><a href='https://www.facebook.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="facebook" bgColor="#ffffff" /></a></div>
           <div class="col s3"><a href='http://instagram.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="instagram" bgColor="#ffffff" /></a></div>
-          <div class="col s3"><SocialIcon className="SocialIcon" network="email" bgColor="#ffffff" /></div>
-          <div class="col s3"><SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" /></div>
+          <div class="col s3"><Link id="linkList"to="/contact"><SocialIcon className="SocialIcon" network="email" bgColor="#ffffff" /></Link></div>
+          <div class="col s3"><a href='https://wa.me/5491123869642'><SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" /></a></div>
         </div>
         © 2020 Copyright Expo Arte Virtual
       </div>
