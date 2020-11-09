@@ -6,6 +6,7 @@ import ListOfProductToUpdate from './ListOfProductToUpdate'
 const UpdateProducto = () =>{
   const [companies, setCompanies] = useState(null)
   const [clicked, setClicked] = useState(null)
+  const [search, setsearch] = useState(null)
 
   useEffect(() => {
     if(!companies){
@@ -31,7 +32,48 @@ const UpdateProducto = () =>{
       console.log(err)
     }))
   }
-  }, [companies])
+  }, [search])
+
+  const filterCompanies = () => {
+    let mycompanies = []
+    companies.forEach(element => {
+      if(element.companyName.toLowerCase().includes(search.toLowerCase())){
+        mycompanies.push(element)
+      }
+    });
+
+    const list = mycompanies.map((company)=> {
+      return (
+        <li>
+        <div class="col s1" id='colCard'>
+          <div class="card" id='cardDelete'>
+            <div class="card-image">
+              <img src={company.companyImage}/>
+              <span class="card-title">{company.companyName}</span>
+              <a onClick={ ()=> setClicked(<ListOfProductToUpdate company={company}/>) } class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+            </div>
+            <div class="card-content">
+              <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
+              <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
+              <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
+            </div>
+          </div>
+          </div>
+          </li>
+        )
+    })
+    return(    
+      <ul>    
+        <div className='row'>
+            {list}
+        </div>
+      </ul>
+    )
+
+    
+  }
+
+
     
     const listOfCompanies = () => {
 
@@ -74,7 +116,7 @@ const UpdateProducto = () =>{
         <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
-                <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
+              <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
               </form>
           </div>
           <div class='col s2'>
@@ -87,7 +129,10 @@ const UpdateProducto = () =>{
             !companies ?
               <p>Loading...</p>
             :
-              listOfCompanies()
+               search ? 
+                  filterCompanies()
+                :  
+                  listOfCompanies()
           }
         </div>
       </div>
