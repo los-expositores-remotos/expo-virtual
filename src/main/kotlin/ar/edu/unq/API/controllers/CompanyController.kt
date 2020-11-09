@@ -2,7 +2,6 @@ package ar.edu.unq.API.controllers
 
 
 import ar.edu.unq.API.*
-import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import io.javalin.http.Context

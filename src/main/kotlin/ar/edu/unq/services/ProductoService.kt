@@ -2,6 +2,7 @@ package ar.edu.unq.services
 
 import ar.edu.unq.modelo.Orden
 import ar.edu.unq.modelo.Producto
+import org.bson.types.ObjectId
 
 interface ProductoService {
     fun buscarProductos(texto: String, filtros: List<Orden>): MutableList<Producto>

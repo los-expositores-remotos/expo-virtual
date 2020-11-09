@@ -17,6 +17,8 @@ open class AuxProdStepDefs {
     val proveedorService: ProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
     val productoService: ProductoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
     val productoA = Producto(proveedorA.id, "Les Paul", "SARASA", 7, 1000000, 800000)
+    val productoB = Producto(proveedorA.id, "Stratocaster", "A electric guitar", 7, 1000, 800000)
+
 
 
 }

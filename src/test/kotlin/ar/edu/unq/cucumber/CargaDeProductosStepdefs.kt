@@ -46,7 +46,7 @@ class CargaDeProductosStepdefs: AuxProdStepDefs() {
 
     @Then("^el producto cargado \"([^\"]*)\" se encuentra en la base de datos$")
     fun elProductoSeEncuentraEnLaBaseDeDatos(nombreProducto: String?) {
-        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString()!!, productoA.itemName!!)
+        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString(), productoA.itemName)
         assertEquals(nombreProducto, productoRecuperado.itemName)
     }
 
@@ -61,7 +61,7 @@ class CargaDeProductosStepdefs: AuxProdStepDefs() {
     }
 
     @After
-    fun doSomethingAfter(scenario: Scenario?) {
+    fun doSomethingAfter() {
         proveedorService.deleteAll()
         productoService.deleteAll()
     }

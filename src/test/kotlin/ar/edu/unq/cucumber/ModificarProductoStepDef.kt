@@ -1,6 +1,5 @@
 package ar.edu.unq.cucumber
 
-import ar.edu.unq.AuxProdStepDefs
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.modelo.Producto
@@ -10,8 +9,7 @@ import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.PendingException
-import cucumber.api.java.en.And
+import cucumber.api.java.After
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
@@ -65,7 +63,7 @@ class ModificarProductoStepDef{
 
     @When("^El producto cargado \"([^\"]*)\" se encuentra en la base de datos$")
     fun elProductoSeEncuentraEnLaBaseDeDatos(nombreProducto: String?) {
-        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString()!!, productoA.itemName!!)
+        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString(), productoA.itemName!!)
         assertEquals(nombreProducto, productoRecuperado.itemName)
     }
 
@@ -79,6 +77,11 @@ class ModificarProductoStepDef{
         assertEquals(precioPromocional, productoRecuperado.promotionalPrice)
     }
 
+    @After
+    fun doSomethingAfter() {
+        proveedorService.deleteAll()
+        productoService.deleteAll()
+    }
 
 
 }
