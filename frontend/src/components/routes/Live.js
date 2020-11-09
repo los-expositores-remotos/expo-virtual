@@ -70,7 +70,7 @@ const Live = () => {
       <div>
           {
             schedule ? 
-              <img id="imgSchedule" src={schedule.image}></img>
+              <img id="imgSchedule" src={schedule[0].image}></img>
             :
               <p>Loading...</p>
           }

@@ -46,20 +46,6 @@ fun main(args: Array<String>) {
             path(":bannerCategory"){
                 get(bannerController::banners)
             }
-//            path("classes") {
-//                get(bannerController::classBanners)
-//                post(bannerController::addClassBanner)
-//                path("classId") {
-//                    get(bannerController::getClassBanner)
-//                    delete(bannerController::deleteBanner)
-//                }
-//            }
-//            path("paymentMethods"){
-//                get(bannerController::paymentMethodsBanners)
-//            }
-//            path("courrier"){
-//                get(bannerController::courrierBanners)
-//            }
         }
 
         path("companies") {
