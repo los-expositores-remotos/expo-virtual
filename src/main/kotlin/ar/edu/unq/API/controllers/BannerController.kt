@@ -27,6 +27,23 @@ class BannerController(
 
     fun banners(ctx: Context){
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
+        var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners()
+        println(banners)
+        banners.forEach {
+            bannerlist.add(
+                    BannerViewMapper(
+                            it.id.toString(),
+                            it.image,
+                            it.category.toString()
+                    )
+            )
+        }
+        ctx.status(200)
+        ctx.json(bannerlist)
+    }
+
+    fun bannersByCategory(ctx: Context){
+        val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         val bannerCategory = BannerCategory.valueOf(ctx.pathParam("bannerCategory"))
         println(bannerCategory)
         var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners(bannerCategory)

@@ -9,6 +9,7 @@ import ScreenSelecEmpresaParaAgregarProduct from '../ScreenSelecEmpresaParaAgreg
 import DeleteProducto from "../DeleteProducto";
 import UpdateProducto from "../UpdateProducto";
 import AddBanner from "../AddBanner";
+import DeleteBanner from "../DeleteBanner";
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
@@ -50,7 +51,7 @@ const Admin = () => {
                         <div class="collapsible-header"><i class="material-icons">whatshot</i>Banners</div>
                         <div class="collapsible-body">
                                 <a onClick={()=> setForm(<AddBanner/>)} class="waves-effect waves-light red lighten-2 btn-large">Agregar Banner</a>
-                                <a class="waves-effect waves-light red lighten-2 btn-large">Eliminar Banner</a>
+                                <a onClick={()=> setForm(<DeleteBanner/>)} class="waves-effect waves-light red lighten-2 btn-large">Eliminar Banner</a>
                             </div>
                     </li>
                 </ul>      

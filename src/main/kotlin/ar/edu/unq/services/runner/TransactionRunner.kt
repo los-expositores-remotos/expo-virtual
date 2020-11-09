@@ -52,7 +52,7 @@ class MongoDBTransaction: Transaction {
 enum class DataBaseType {
     TEST {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasbackkikito"
+            MongoSessionFactoryProvider.dataBaseName = "pruebasback"
             return MongoSessionFactoryProvider.instance
         }
     },

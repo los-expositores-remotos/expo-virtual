@@ -104,11 +104,11 @@ const AddBanner = ()  => {
               <div class="input-field col s12">
                 <select id="Category" form="bannerform" type="text" onChange={(e) => setcategory(e.target.value)} class="validate" value={category}>
                     <option>Seleccione una categoría...</option>
-                    <option value="HOME">HOME</option>
-                    <option value="SCHEDULE">SCHEDULE</option>
-                    <option value="CLASS">CLASS</option>
-                    <option value="COURRIER">COURRIER</option>
-                    <option value="PAYMENTMETHODS">PAYMENTMETHODS</option>
+                    <option value="HOME">Inicio</option>
+                    <option value="SCHEDULE">Calendario de clases</option>
+                    <option value="CLASS">Clase en vivo</option>
+                    <option value="COURRIER">Correo</option>
+                    <option value="PAYMENTMETHODS">Metodos de pago</option>
                 </select>
                 <label class="active" htmlFor="Category">Categoría</label>
               </div>
