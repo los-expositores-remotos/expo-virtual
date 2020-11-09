@@ -48,6 +48,9 @@ const ListOfProductToDelete = (props) =>{
         });
       }
     ) 
+    .then(()=>{
+      setproducts([])
+  })  
   }
     
     const listOfProducts = () => {
