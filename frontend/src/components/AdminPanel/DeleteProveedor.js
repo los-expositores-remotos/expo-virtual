@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import '../styles/DeleteProveedor.css'
-import {Link} from 'react-router-dom'
+import '../../styles/DeleteProveedor.css'
+import {Link, useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 
 const DeleteProveedor = () =>{
+  const history = useHistory()
   const [companies, setCompanies] = useState([])
   const [search, setsearch] = useState(null)
   useEffect(() => {
@@ -43,6 +44,7 @@ const DeleteProveedor = () =>{
           html: "Proveedor eliminado exitosamente",
           classes: "#388e3c green darken-2",
         });
+        history.push("/admin");
       }
     ) 
   }
@@ -58,16 +60,16 @@ const DeleteProveedor = () =>{
       const list = mycompanies.map((company)=> {
         return (
           <li>
-          <div class="col s1" id='colCard'>
-            <div class="card" id='cardDelete'>
-              <div class="card-image">
+          <div className="col s1" id='colCard'>
+            <div className="card" id='cardDelete'>
+              <div className="card-image">
                 <img src={company.companyImage}/>
-                <span class="card-title">{company.companyName}</span>
+                <span className="card-title">{company.companyName}</span>
                 <a onClick={()=> {
                   deleteCompany(company.id)
-                  }} class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                  }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
               </div>
-              <div class="card-content">
+              <div className="card-content">
                 <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
                 <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
                 <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
@@ -94,16 +96,16 @@ const DeleteProveedor = () =>{
         const list = companies.map((company)=> {
           return (
             <li>
-            <div class="col s1" id='colCard'>
-              <div class="card" id='cardDelete'>
-                <div class="card-image">
+            <div className="col s1" id='colCard'>
+              <div className="card" id='cardDelete'>
+                <div className="card-image">
                   <img src={company.companyImage}/>
-                  <span class="card-title">{company.companyName}</span>
+                  <span className="card-title">{company.companyName}</span>
                   <a onClick={()=> {
                     deleteCompany(company.id)
-                    }} class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                    }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
                   <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
                   <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
@@ -124,13 +126,42 @@ const DeleteProveedor = () =>{
 
     }
     return (
-        <div className="row">
+      <div className="row">
+      <div className="col s4">
+          <ul className="collapsible">
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
+                      <div className="collapsible-body">
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                      </div>
+              </li>
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">place</i>Productos</div>
+                  <div className="collapsible-body">
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproducto">Agregar Productos</Link> 
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproducto">Modificar Productos</Link> 
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproducto">Eliminar Productos</Link> 
+                      </div>
+              </li>
+              <li>
+                  <div className="collapsible-header"><i className="material-icons">whatshot</i>Banners</div>
+                  <div className="collapsible-body">
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarbanner">Agregar Banner</Link>  
+                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarbanner" >Eliminar Banner</Link>
+                      </div>
+              </li>
+          </ul>      
+      </div>
+      <div className='col s8'>
+      <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
                 <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
               </form>
           </div>
-          <div class='col s2'>
+          <div className='col s2'>
               <Link>
                   <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
               </Link>     
@@ -147,6 +178,11 @@ const DeleteProveedor = () =>{
           }
         </div>
       </div>
+      </div> 
+  </div>
+
+
+       
     )
 }
 

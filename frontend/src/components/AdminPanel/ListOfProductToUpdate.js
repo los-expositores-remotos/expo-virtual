@@ -41,16 +41,16 @@ const ListOfProductToUpdate = (props) =>{
         const list = products.map((product)=> {
           return (
             <li>
-            <div class="col s1" id='colCard'>
-              <div class="card" id='cardDelete'>
-                <div class="card-image">
+            <div className="col s1" id='colCard'>
+              <div className="card" id='cardDelete'>
+                <div className="card-image">
                   <img src={product.images[0]}/>
-                  <span class="card-title">{product.itemName}</span>
+                  <span className="card-title">{product.itemName}</span>
                   <a onClick={()=> {
                     setCliked(<UpdateProductoForm product={product}/>)
-                    }} class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                    }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">edit</i></a>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p > stock : {product.stock} </p>
                   <p > precio : {product.itemPrice} </p>
                   <p > precio Promocional : {product.promotionalPrice} </p>
@@ -71,7 +71,8 @@ const ListOfProductToUpdate = (props) =>{
 
     }
     return (
-        cliked ? 
+      
+      cliked ? 
         cliked
         :
         <div className="row">
@@ -80,7 +81,7 @@ const ListOfProductToUpdate = (props) =>{
                 <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
               </form>
           </div>
-          <div class='col s2'>
+          <div className='col s2'>
               <Link>
                   <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
               </Link>     
@@ -94,6 +95,11 @@ const ListOfProductToUpdate = (props) =>{
           }
         </div>
       </div>
+
+
+
+
+        
     )
 }
 

@@ -5,7 +5,7 @@ import '../../styles/Aboutus.css'
 const Aboutus = () => {
     
     return (
-      <div class="mt-4">
+      <div className="mt-4">
         
         <h1 id='textH1'> Quienes Somos</h1>
         <h3 id="textH3">2001 - 2020</h3>

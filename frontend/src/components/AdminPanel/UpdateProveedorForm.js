@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory ,Link } from "react-router-dom";
 import M from 'materialize-css'
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -83,6 +83,7 @@ const UpdateProveedorForm = (props)  => {
             html: "Proveedor modificado exitosamente",
             classes: "#388e3c green darken-2",
           });
+          history.push("/admin");
         }
       })
       .catch((err) => {
@@ -93,6 +94,8 @@ const UpdateProveedorForm = (props)  => {
 
   console.log(company)
   return (
+      
+
         <div class="row">
           <form class="col s12">
         <div class="row">

@@ -1,10 +1,12 @@
 import React from "react";
 import {useEffect, useState} from "react";
+import {useHistory} from "react-router-dom";
 import M from 'materialize-css'
+import '../../styles/DeleteBanner.css'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
-  var instances = M.Autocomplete.init(elems, {});
+  M.Autocomplete.init(elems, {});
 });
 
 const UpdateProductoForm = (props)  => {
@@ -19,6 +21,7 @@ const UpdateProductoForm = (props)  => {
   const longitud = product.images.length
   const [subir, setSubir] = useState(false)
   const [postear, setpostear] = useState(false)
+  const history = useHistory()
 
   useEffect(() => {
     console.log(url)
@@ -27,7 +30,7 @@ const UpdateProductoForm = (props)  => {
     if (postear) {
       postearUpdate();
     }
-  },[postear]);
+  });
 
   const agregarProducto = () => {
 
@@ -83,6 +86,7 @@ const UpdateProductoForm = (props)  => {
             html: "Producto modificado exitosamente",
             classes: "#388e3c green darken-2",
           });
+          history.push("/admin");
         }
       })
       .catch((err) => {
@@ -90,6 +94,14 @@ const UpdateProductoForm = (props)  => {
       });
     
   };
+
+  const eliminarImagen = (item) => {
+    let newUrls = url
+    var i = newUrls.indexOf( item );
+    newUrls.splice( i, 1 );
+    setUrl(newUrls)
+  }
+
   const listOfImages = () => {
       
     if(url){
@@ -97,13 +109,13 @@ const UpdateProductoForm = (props)  => {
       const list = url.map((elem)=> {
         return (
           <li>
-          <div class="col s1" id='colCard'>
-            <div class="card" id='cardDelete'>
-              <div class="card-image">
+          <div className="col s1" id='colCard'>
+            <div className="card" id='cardDeleteUP'>
+              <div className="card-image">
                 <img src={elem}/>
                 <a onClick={()=> {
-                  console.log("elimino la imagen")
-                  }} class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                  eliminarImagen(elem)
+                  }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
               </div>
             </div>
             </div>
@@ -123,41 +135,42 @@ const UpdateProductoForm = (props)  => {
 
   console.log(product)
   return (
-        <div class="row">
-          <form class="col s12">
-        <div class="row">
-              <div class="input-field col s6">
-              <input id="ItemName" onChange={(e) => setitemName(e.target.value)} type="text" class="validate" value={itemName}/>
-               <label class="active" for="ItemName">Nombre del producto</label>
+            <div className='col s8'>
+            <div className="row">
+          <form className="col s12">
+        <div className="row">
+              <div className="input-field col s6">
+              <input id="ItemName" onChange={(e) => setitemName(e.target.value)} type="text" className="validate" value={itemName}/>
+               <label className="active" for="ItemName">Nombre del producto</label>
               </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="description" onChange={(e) => setdescription(e.target.value)} type="text" class="validate" value={description}/>
-               <label class="active" for="description">Descripción</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="description" onChange={(e) => setdescription(e.target.value)} type="text" className="validate" value={description}/>
+               <label className="active" for="description">Descripción</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="Stock" type="number" onChange={(e) => setstock(e.target.value)} class="validate" value={stock}/>
-               <label class="active" for="Stock">Stock</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="Stock" type="number" onChange={(e) => setstock(e.target.value)} className="validate" value={stock}/>
+               <label className="active" for="Stock">Stock</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="ItemPrice" type="number" onChange={(e) => setitemPrice(e.target.value)} class="validate" value={itemPrice}/> 
-               <label class="active" for="ItemPrice">Precio</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="ItemPrice" type="number" onChange={(e) => setitemPrice(e.target.value)} className="validate" value={itemPrice}/> 
+               <label className="active" for="ItemPrice">Precio</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setpromotionalPrice(e.target.value)} class="validate" value={promotionalPrice}/> 
-               <label class="active" for="PromotionalPrice">Precio promocional</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="PromotionalPrice" type="number" onChange={(e) => setpromotionalPrice(e.target.value)} className="validate" value={promotionalPrice}/> 
+               <label className="active" for="PromotionalPrice">Precio promocional</label>
           </div>
         </div>
         <form action="#">
-          <div class="file-field input-field">
-            <div class="btn" id='buttonUploadImages'>
+          <div className="file-field input-field">
+            <div className="btn" id='buttonUploadImages'>
               <span>Cargar Imagen</span>
               <input type="file" onChange={(e) => {
                 
@@ -166,13 +179,13 @@ const UpdateProductoForm = (props)  => {
                 console.log(images)
                 }} multiple/>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={typeof images === 'string' ? images : url }/>
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" value={typeof images === 'string' ? images : url }/>
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col s12">
+        <div className="row">
+          <div className="col s12">
             <div>
               {listOfImages()}
             </div>
@@ -181,7 +194,7 @@ const UpdateProductoForm = (props)  => {
                   console.log(images)
                   console.log(url)
                   console.log(images === url)
-              
+                    setpostear(true)
                     agregarProducto();
                     if (!itemName ||
                       !images ||
@@ -189,16 +202,18 @@ const UpdateProductoForm = (props)  => {
                       !stock||
                       !promotionalPrice||
                       !itemPrice) {
+                        
                       postearUpdate()
                   }
                   }
                 } 
-                class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Producto</a>
+                className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Producto</a>
               
           </div>
         </div>
       </form>
       </div>
+            </div>
   );
 };
 export default UpdateProductoForm;

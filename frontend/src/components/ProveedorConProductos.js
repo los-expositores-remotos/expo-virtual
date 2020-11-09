@@ -4,7 +4,6 @@ import '../styles/ProveedorConProductos.css'
 import M from 'materialize-css'
 import {Carousel} from 'react-materialize'
 
-
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
   var instances = M.Slider.init(elems, {});
@@ -67,19 +66,19 @@ const listOfProducts = () => {
   
   const result = res.map((product) => {
       return (
-            <div class="col s3" id='cardOfProducts'>
-              <div class="card" id="cardId">
-                <div class="card-image">
+            <div className="col s3" id='cardOfProducts'>
+              <div className="card" id="cardId">
+                <div className="card-image">
                   {imagesOfProducts(product)}
-                  <span class="card-title">{product.itemName}</span>
+                  <span className="card-title">{product.itemName}</span>
                 </div>
-                <div class="card-content">
+                <div className="card-content">
                   <p>{product.description}</p>
                   <p>Stock: {product.stock}</p>
                   <p>Precio: {product.itemPrice}</p>
                   <p>Precio promocional: {product.promotionalPrice}</p>
                 </div>
-                <div class="card-action">
+                <div className="card-action">
                   <a href="#">ver</a>
                 </div>
               </div>
@@ -93,7 +92,7 @@ const listOfProducts = () => {
       for (let index = 1; index < paginas; index++) {
         
         return (
-          <li class={page === index ? "active" : "waves-effect"}>
+          <li className={page === index ? "active" : "waves-effect"}>
             <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
           </li>
         )
@@ -104,23 +103,23 @@ const listOfProducts = () => {
     const Paginacion = () => {
 
       return(
-      <ul class="pagination">
-        <li class="waves-effect">
-          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><a><i class="material-icons">chevron_left</i></a></a>
+      <ul className="pagination">
+        <li className="waves-effect">
+          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><a><i className="material-icons">chevron_left</i></a></a>
           </li>
-          <li class={page === 0 ? "active" : "waves-effect"} onClick={()=>{
+          <li className={page === 0 ? "active" : "waves-effect"} onClick={()=>{
             setPage(0)
             }}><a>1</a></li>
             {numerosDePaginacion()}
-          <li class="waves-effect">
-            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><a><i class="material-icons">chevron_right</i></a></a>
+          <li className="waves-effect">
+            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><a><i className="material-icons">chevron_right</i></a></a>
           </li>
       </ul>)
     };
     
     return (
       <div>
-        <div class="row">
+        <div className="row">
           {result}
         </div>
           {Paginacion()}

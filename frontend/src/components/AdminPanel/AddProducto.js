@@ -1,12 +1,12 @@
 import React from "react";
 import {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import M from 'materialize-css'
-import '../styles/AddProveedor.css'
+import '../../styles/AddProveedor.css'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
-  var instances = M.Autocomplete.init(elems, {});
+  M.Autocomplete.init(elems, {});
 });
 
 const AddProduct = (props)  => {
@@ -19,13 +19,14 @@ const AddProduct = (props)  => {
   const [stock, setstock] = useState(null)
   const [itemPrice, setitemPrice] = useState(null)
   const [promotionalPrice, setpromotionalPrice] = useState(null)
+  const [postear, setPostear] = useState(false)
 
 
   useEffect(() => {
-    if (url.length ==! 0) {
+    if (postear) {
       postearAdd();
     }
-  }, [url]);
+  }, []);
 
   const agregarProveedor = () => {
     if(images && images.length >= 0){
@@ -45,6 +46,7 @@ const AddProduct = (props)  => {
         .then((data) => {
           console.log(data);
           setUrl(url.concat([data.url]));
+          setPostear(true)
         })
         .catch((err) => {
           console.log(err);
@@ -104,55 +106,56 @@ const AddProduct = (props)  => {
   };
  
   return (
-        <div class="row">
-          <form class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
+            <div className="row">
+          <form className="col s12">
+        <div className="row">
+          <div className="input-field col s12">
               <input value={company.companyName} />
-               <label class="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
+               <label className="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
           </div>
-          <div class="input-field col s12">
+          <div className="input-field col s12">
               <input 
-              id="Nombre_de_la_Empresa" onChange={(e) => setitemName(e.target.value)} type="text" class="validate" />
-               <label class="active" for="Nombre_de_la_Empresa">Nombre de la Producto</label>
+              id="Nombre_de_la_Empresa" onChange={(e) => setitemName(e.target.value)} type="text" className="validate" />
+               <label className="active" for="Nombre_de_la_Empresa">Nombre de la Producto</label>
           </div>
-              <div class="input-field col s6">
-              <input id="Web" onChange={(e) => setitemPrice(e.target.value)} type="number" class="validate" />
-               <label class="active" for="Web">Precio</label>
+              <div className="input-field col s6">
+              <input id="Web" onChange={(e) => setitemPrice(e.target.value)} type="number" className="validate" />
+               <label className="active" for="Web">Precio</label>
               </div>
         </div>
-        <div class="row">
-          <div class="input-field col s6">
-              <input id="instagram" onChange={(e) => setpromotionalPrice(e.target.value)} type="number" class="validate" />
-               <label class="active" for="instagram">Precio Promocional</label>
+        <div className="row">
+          <div className="input-field col s6">
+              <input id="instagram" onChange={(e) => setpromotionalPrice(e.target.value)} type="number" className="validate" />
+               <label className="active" for="instagram">Precio Promocional</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="Facebook" onChange={(e) => setdescription(e.target.value)} type="text" class="validate" />
-               <label class="active" for="Facebook">Descripcion</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="Facebook" onChange={(e) => setdescription(e.target.value)} type="text" className="validate" />
+               <label className="active" for="Facebook">Descripcion</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-              <input id="email" onChange={(e) => setstock(e.target.value)} type="number" class="validate"/> 
-               <label class="active" for="email">Stock</label>
+        <div className="row">
+          <div className="input-field col s12">
+              <input id="email" onChange={(e) => setstock(e.target.value)} type="number" className="validate"/> 
+               <label className="active" for="email">Stock</label>
           </div>
         </div>
         <form action="#">
-          <div class="file-field input-field">
-            <div class="btn" id='buttonUploadImages'>
+          <div className="file-field input-field">
+            <div className="btn" id='buttonUploadImages'>
               <span>Cargar Imagenes</span>
               <input type="file" onChange={(e) => setimages(e.target.files)} multiple/>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" />
+            <div className="file-path-wrapper">
+              <input className="file-path validate" type="text" />
             </div>
           </div>
         </form>
-        <div class="row">
-          <div class="col s12">
+        <div className="row">
+          <div className="col s12">
                 <a onClick={() => {
+                  setPostear(true)
                   agregarProveedor();
                   if (!itemName ||
                     !description ||
@@ -162,7 +165,7 @@ const AddProduct = (props)  => {
                     !promotionalPrice){
                     postearAdd();
                   }
-                }} class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Producto</a>
+                }} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Producto</a>
           </div>
         </div>
       </form>

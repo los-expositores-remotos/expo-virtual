@@ -1,12 +1,12 @@
 import React from "react";
 import {useEffect, useState} from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import M from 'materialize-css'
-import '../styles/AddProveedor.css'
+import '../../styles/AddProveedor.css'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
-  var instances = M.Autocomplete.init(elems, {});
+  M.Autocomplete.init(elems, {});
 });
 
 const AddBanner = ()  => {
@@ -21,7 +21,7 @@ const AddBanner = ()  => {
     if (url) {
       postearAdd();
     }
-  }, [url]);
+  },);
 
   const agregarBanner = () => {
     if(image){
@@ -39,7 +39,6 @@ const AddBanner = ()  => {
         console.log(data);
         const urlb = data.url
         seturl(urlb);
-        console.log("dataurl"+":"+urlb+"url"+":"+url)
       })
       .catch((err) => {
         console.log(err);
@@ -98,7 +97,36 @@ const AddBanner = ()  => {
   }
  
   return (
-        <div class="row" onLoad={loadCategories}>
+    <div className="row">
+    <div className="col s4">
+        <ul className="collapsible">
+            <li>
+                <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
+                    <div className="collapsible-body">
+                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
+                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                    </div>
+            </li>
+            <li>
+                <div className="collapsible-header"><i className="material-icons">place</i>Productos</div>
+                <div className="collapsible-body">
+                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproducto">Agregar Productos</Link> 
+                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproducto">Modificar Productos</Link> 
+                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproducto">Eliminar Productos</Link> 
+                    </div>
+            </li>
+            <li>
+                <div className="collapsible-header"><i className="material-icons">whatshot</i>Banners</div>
+                <div className="collapsible-body">
+                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarbanner">Agregar Banner</Link>  
+                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarbanner" >Eliminar Banner</Link>
+                    </div>
+            </li>
+        </ul>      
+    </div>
+    <div className='col s8'>
+    <div class="row" onLoad={loadCategories}>
           <form class="col s12" id="bannerform">
           <div class="row">
               <div class="input-field col s12">
@@ -138,6 +166,10 @@ const AddBanner = ()  => {
       
       </form>
       </div>
+    </div> 
+</div>
+
+        
   );
 };
 

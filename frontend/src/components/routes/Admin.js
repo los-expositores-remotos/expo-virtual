@@ -1,65 +1,47 @@
 import React from "react";
-import {useEffect, useState} from "react";
 import M from 'materialize-css'
 import '../../styles/Admin.css'
-import AddProveedor from "../AddProveedor";
-import UpdateProveedor from '../UpdateProveedor'
-import DeleteProveedor from '../DeleteProveedor'
-import ScreenSelecEmpresaParaAgregarProduct from '../ScreenSelecEmpresaParaAgregarProduct'
-import DeleteProducto from "../DeleteProducto";
-import UpdateProducto from "../UpdateProducto";
-import AddBanner from "../AddBanner";
-import DeleteBanner from "../DeleteBanner";
+import { Link } from "react-router-dom";
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.collapsible');
-    var instances = M.Collapsible.init(elems, {})
+     M.Collapsible.init(elems, {})
     
  });
 
 const Admin = () => {
-     const [form , setForm] = useState(null)
-    useEffect(() => {
-        
-    }, [form])
-
-    const getForm = () =>{
-        return form
-    }
      
      return (
-        <div class="row">
-            <div class="col s4">
-                <ul class="collapsible">
+        <div className="row">
+            <div className="col s4">
+                <ul className="collapsible">
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">Proveedores</i>Proveedores</div>
-                            <div class="collapsible-body">
-                                <a onClick={()=> setForm(<AddProveedor/>)} class="waves-effect waves-light red lighten-2 btn-large">Agregar Proveedor</a>
-                                <a onClick={()=> setForm(<DeleteProveedor/>)} class="waves-effect waves-light red lighten-2 btn-large">Eliminar Proveedor</a>
-                                <a onClick={()=> setForm(<UpdateProveedor/>)} class="waves-effect waves-light red lighten-2 btn-large">Modificar Proveedor</a>
+                        <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
+                            <div className="collapsible-body">
+                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
+                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
                             </div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">place</i>Productos</div>
-                        <div class="collapsible-body">
-                                <a onClick={()=> setForm(<ScreenSelecEmpresaParaAgregarProduct/>)} class="waves-effect waves-light red lighten-2 btn-large">Agregar Productos</a>
-                                <a onClick={()=> setForm(<UpdateProducto/>)} class="waves-effect waves-light red lighten-2 btn-large"> Modificar Productos</a>
-                                <a onClick={()=> setForm(<DeleteProducto/>)} class="waves-effect waves-light red lighten-2 btn-large">Eliminar Productos</a>
+                        <div className="collapsible-header"><i className="material-icons">place</i>Productos</div>
+                        <div className="collapsible-body">
+                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproducto">Agregar Productos</Link> 
+                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproducto">Modificar Productos</Link> 
+                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproducto">Eliminar Productos</Link> 
                             </div>
                     </li>
                     <li>
-                        <div class="collapsible-header"><i class="material-icons">whatshot</i>Banners</div>
-                        <div class="collapsible-body">
-                                <a onClick={()=> setForm(<AddBanner/>)} class="waves-effect waves-light red lighten-2 btn-large">Agregar Banner</a>
-                                <a onClick={()=> setForm(<DeleteBanner/>)} class="waves-effect waves-light red lighten-2 btn-large">Eliminar Banner</a>
+                        <div className="collapsible-header"><i className="material-icons">whatshot</i>Banners</div>
+                        <div className="collapsible-body">
+                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarbanner">Agregar Banner</Link>  
+                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarbanner" >Eliminar Banner</Link>
                             </div>
                     </li>
                 </ul>      
             </div>
             <div className='col s8'>
-                {
-                getForm()
-                }    
+ 
             </div> 
         </div>
   );
