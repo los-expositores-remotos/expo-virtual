@@ -40,12 +40,9 @@ fun main(args: Array<String>) {
 
         path("banners") {
             get(bannerController::homeBanners)
-            //post(bannerController::addHomeBanner)
+            post(bannerController::addBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
-            }
-            path(":bannerCtegory") {
-                post(bannerController::addBanner)
             }
             path("schedule") {
                 get(bannerController::scheduleBanners)

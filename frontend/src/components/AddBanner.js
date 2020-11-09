@@ -51,7 +51,7 @@ const AddBanner = ()  => {
 
   const postearAdd = () => {
     if(image && category){
-    fetch(`http://localhost:7000/banners/${category}`, {
+    fetch("http://localhost:7000/banners/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
