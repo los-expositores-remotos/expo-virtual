@@ -14,7 +14,6 @@ import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import org.bson.types.ObjectId
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals

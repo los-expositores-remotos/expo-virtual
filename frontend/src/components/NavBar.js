@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import logo from '../images/logo.png'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
 
@@ -16,8 +17,8 @@ const NavBar = () => {
     
        <div className="NavBar"> 
            <div className="row">
-               <div className="col s2">
-                   <img className='img-logo' src={require('../images/logo.png')} alt="logo"/>
+               <div className="col s2" >
+                <img id='imgLogo' src={logo}/>
                </div>
                <div className="col s6">
                    <form className="form-inline">
