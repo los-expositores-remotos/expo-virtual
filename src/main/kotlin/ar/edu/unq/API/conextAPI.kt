@@ -39,32 +39,27 @@ fun main(args: Array<String>) {
         }
 
         path("banners") {
-            get(bannerController::homeBanners)
             post(bannerController::addBanner)
             path(":bannerId") {
                 delete(bannerController::deleteBanner)
             }
-            path("schedule") {
-                get(bannerController::scheduleBanners)
-                post(bannerController::addScheduleBanner)
-                path(":bannerId") {
-                    delete(bannerController::deleteBanner)
-                }
+            path(":bannerCategory"){
+                get(bannerController::banners)
             }
-            path("classes") {
-                get(bannerController::classBanners)
-                post(bannerController::addClassBanner)
-                path("classId") {
-                    get(bannerController::getClassBanner)
-                    delete(bannerController::deleteBanner)
-                }
-            }
-            path("paymentMethods"){
-                get(bannerController::paymentMethodsBanners)
-            }
-            path("courrier"){
-                get(bannerController::courrierBanners)
-            }
+//            path("classes") {
+//                get(bannerController::classBanners)
+//                post(bannerController::addClassBanner)
+//                path("classId") {
+//                    get(bannerController::getClassBanner)
+//                    delete(bannerController::deleteBanner)
+//                }
+//            }
+//            path("paymentMethods"){
+//                get(bannerController::paymentMethodsBanners)
+//            }
+//            path("courrier"){
+//                get(bannerController::courrierBanners)
+//            }
         }
 
         path("companies") {

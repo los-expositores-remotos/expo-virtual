@@ -25,7 +25,7 @@ class BannerController(
 
     var idBanners: Int = 500
 
-    private fun banners(ctx: Context, bannerCategory: BannerCategory){
+    private fun banners1(ctx: Context, bannerCategory: BannerCategory){
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners(bannerCategory)
         println(banners)
@@ -36,6 +36,25 @@ class BannerController(
                     it.image,
                     it.category.toString()
                 )
+            )
+        }
+        ctx.status(200)
+        ctx.json(bannerlist)
+    }
+
+    fun banners(ctx: Context){
+        val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
+        val bannerCategory = BannerCategory.valueOf(ctx.pathParam("bannerCategory"))
+        println(bannerCategory)
+        var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners(bannerCategory)
+        println(banners)
+        banners.forEach {
+            bannerlist.add(
+                    BannerViewMapper(
+                            it.id.toString(),
+                            it.image,
+                            it.category.toString()
+                    )
             )
         }
         ctx.status(200)
@@ -79,7 +98,7 @@ class BannerController(
     }
 
     fun homeBanners(ctx: Context) {
-        this.banners(ctx, BannerCategory.HOME)
+        this.banners1(ctx, BannerCategory.HOME)
     }
 
     fun addHomeBanner(ctx: Context) {
@@ -98,7 +117,7 @@ class BannerController(
     }
 
     fun scheduleBanners(ctx: Context) {
-        this.banners(ctx, BannerCategory.SCHEDULE)
+        this.banners1(ctx, BannerCategory.SCHEDULE)
     }
 
     fun addScheduleBanner(ctx: Context) {
@@ -106,7 +125,7 @@ class BannerController(
     }
 
     fun classBanners(ctx: Context) {
-        this.banners(ctx, BannerCategory.CLASS)
+        this.banners1(ctx, BannerCategory.CLASS)
     }
 
     fun addClassBanner(ctx: Context) {
@@ -132,10 +151,10 @@ class BannerController(
     }
 
     fun courrierBanners(ctx: Context) {
-        this.banners(ctx, BannerCategory.COURRIER)
+        this.banners1(ctx, BannerCategory.COURRIER)
     }
 
     fun paymentMethodsBanners(ctx: Context) {
-        this.banners(ctx, BannerCategory.PAYMENTMETHODS)
+        this.banners1(ctx, BannerCategory.PAYMENTMETHODS)
     }
 }

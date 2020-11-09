@@ -7,7 +7,7 @@ const Live = () => {
 
   useEffect(() => {
     if(!schedule){
-    fetch("http://localhost:7000/banners/schedule", {
+    fetch("http://localhost:7000/banners/SCHEDULE", {
         headers: {
           "Content-Type":"application/json"
         }
@@ -26,7 +26,7 @@ const Live = () => {
         }))
 
       if(!classes){
-        fetch("http://localhost:7000/banners/classes", {
+        fetch("http://localhost:7000/banners/CLASS", {
         headers: {
           "Content-Type":"application/json"
         }
