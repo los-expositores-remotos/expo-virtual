@@ -19,6 +19,7 @@ const UpdateProductoForm = (props)  => {
   const [itemPrice, setitemPrice] = useState(product.itemPrice)
   const [promotionalPrice, setpromotionalPrice] = useState(product.promotionalPrice)
 
+
   useEffect(() => {
     if (url) {
       postearUpdate();
@@ -47,6 +48,7 @@ const UpdateProductoForm = (props)  => {
       setUrl(images)
     }
   };
+    
 
   const SubirAlaNube = () => {
     return (! typeof images === 'string')
@@ -61,7 +63,6 @@ const UpdateProductoForm = (props)  => {
   
   const postearUpdate = () => {
     
-
       fetch(`http://localhost:7000/products/${product.id}`, {
         method: "PUT",
         headers: {
@@ -75,8 +76,10 @@ const UpdateProductoForm = (props)  => {
         "stock": stock,
         "itemPrice": itemPrice,
         "promotionalPrice": promotionalPrice
-      })
-    })
+      }
+      )
+    }
+    ) 
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
@@ -118,13 +121,13 @@ const UpdateProductoForm = (props)  => {
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <input id="ItemPrice" type="number" class="validate" value={itemPrice}/> 
+              <input id="ItemPrice" type="number" onChange={(e) => setitemPrice(e.target.value)} class="validate" value={itemPrice}/> 
                <label class="active" for="ItemPrice">Precio</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-              <input id="PromotionalPrice" type="number" class="validate" value={promotionalPrice}/> 
+              <input id="PromotionalPrice" type="number" onChange={(e) => setpromotionalPrice(e.target.value)} class="validate" value={promotionalPrice}/> 
                <label class="active" for="PromotionalPrice">Precio promocional</label>
           </div>
         </div>

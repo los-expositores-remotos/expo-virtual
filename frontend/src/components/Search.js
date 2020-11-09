@@ -9,7 +9,7 @@ const Search = () => {
 
     useEffect(() => {
         if(!result){
-          fetch("http://localhost:7000/companies/search?text="+search, {
+          fetch("http://localhost:7000/products/search?text="+search, {
             headers: {
               "Content-Type":"application/json"
             }

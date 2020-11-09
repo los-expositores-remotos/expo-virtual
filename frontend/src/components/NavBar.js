@@ -34,7 +34,7 @@ const NavBar = () => {
                </div>
                <div className="col s1">
                    <Link to={"/search/"+search}>
-                       <i className="small material-icons left" id="iconSearch">search</i>
+                       <i className="small material-icons left" id="iconSearch" onKeyPress={handleInput}>search</i>
                    </Link>     
                </div>
                <div className="col s1">
