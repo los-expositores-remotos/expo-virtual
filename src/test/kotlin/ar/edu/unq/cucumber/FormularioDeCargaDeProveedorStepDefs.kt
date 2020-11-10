@@ -6,10 +6,13 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
+import cucumber.api.DataTable
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
+import org.bson.types.ObjectId
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 import kotlin.test.assertEquals
 
 class FormularioDeCargaDeProveedorStepDefs {
@@ -17,29 +20,9 @@ class FormularioDeCargaDeProveedorStepDefs {
     private lateinit var proveedor2: Proveedor
     private val proveedorService: ProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
 
-    @Given("^Un nombre de proveedor \"([^\"]*)\"$")
-    fun unNombreDeProveedor(nombreProveedor: String?) {
-        this.proveedor1 = Proveedor(nombreProveedor!!)
-    }
-
-    @Given("^Un enlace a una imagen \"([^\"]*)\"$")
-    fun unEnlaceAUnaImagen(linkImage: String?) {
-        this.proveedor1.companyImage = linkImage!!
-    }
-
-    @Given("^Un enlace a facebook \"([^\"]*)\"$")
-    fun unEnlaceAFacebook(linkFacebook: String?) {
-        this.proveedor1.facebook = linkFacebook!!
-    }
-
-    @Given("^Un enlace a instagram \"([^\"]*)\"$")
-    fun unEnlaceAInstagram(linkInstagram: String?) {
-        this.proveedor1.instagram = linkInstagram!!
-    }
-
-    @Given("^Un enlace a su pagina web \"([^\"]*)\"$")
-    fun unEnlaceASuPaginaWeb(linkWeb: String?) {
-        this.proveedor1.web = linkWeb!!
+    @Given("^Un proveedor con los siguientes datos")
+    fun unNombreDeProveedor(proveedorData: Map<String, String>) {
+        this.proveedor1 = Proveedor(proveedorData["companyName"]!!, proveedorData["companyImage"]!!, proveedorData["facebook"]!!, proveedorData["instagram"]!!, proveedorData["web"]!!)
     }
 
     @When("^Creo al proveedor con esos datos$")
@@ -53,25 +36,24 @@ class FormularioDeCargaDeProveedorStepDefs {
         assertEquals(nombreProveedor, proveedorRecuperado.companyName)
     }
 
-    @And("^Sus datos son \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
-    fun susDatosSon(linkImage: String?, linkFacebook: String?, linkInstagram: String?, linkWeb: String?) {
+    @And("^Sus datos son$")
+    fun susDatosSon(proveedorData: Map<String, String>) {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())
-        assertEquals(linkImage, proveedorRecuperado.companyImage)
-        assertEquals(linkFacebook, proveedorRecuperado.facebook)
-        assertEquals(linkInstagram, proveedorRecuperado.instagram)
-        assertEquals(linkWeb, proveedorRecuperado.web)
+        assertEquals(proveedorData["companyImage"], proveedorRecuperado.companyImage)
+        assertEquals(proveedorData["facebook"], proveedorRecuperado.facebook)
+        assertEquals(proveedorData["instagram"], proveedorRecuperado.instagram)
+        assertEquals(proveedorData["web"], proveedorRecuperado.web)
     }
 
-    @Given("^Un proveedor \"([^\"]*)\" sin ningun productos$")
-    fun unProveedorSinNingunProductos(nombreProveedor: String?) {
-        this.proveedor2 = Proveedor(nombreProveedor!!)
+    @Given("^Un proveedor \"([^\"]*)\" sin ningun producto$")
+    fun unProveedorSinNingunProducto(nombreProveedor: String?) {
+        this.proveedor2 = Proveedor(nombreProveedor!!, "www.images.com/${nombreProveedor}.png", "www.facebook.com/$nombreProveedor", "www.instagram.com/$nombreProveedor", "www.${nombreProveedor}.com")
         this.proveedorService.crearProveedor(this.proveedor2)
     }
 
     @When("^Le agrego el producto \"([^\"]*)\"$")
     fun leAgregoElProducto(nombreProducto: String?) {
-        val producto = Producto()
-        producto.itemName = nombreProducto!!
+        val producto = Producto(ObjectId(), nombreProducto!!, "Soy$nombreProducto", 0, 0 , 0)
         this.proveedor2.addProduct(producto)
         this.proveedorService.actualizarProveedor(this.proveedor2)
     }
