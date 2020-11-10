@@ -7,7 +7,11 @@ enum class BannerCategory {
     COURRIER,
     PAYMENTMETHODS;
 
-    fun isValid(string: String): Boolean{
-        return values().map { it.name }.contains(string)
+    companion object{
+        @JvmStatic
+        fun isValid(string: String): Boolean{
+            return values().map { it.name }.contains(string)
+        }
     }
+
 }

@@ -1,0 +1,25 @@
+#colCard {
+  width: 28%;
+  margin-left: auto;
+  right: auto;
+}
+
+#cardDeleteBD {
+  width: 86%;
+  height: 100%;
+}
+
+#cardDeleteUP {
+  width: 86%;
+  height: 100%;
+}
+
+#iconSearchFormAdmin {
+  margin-top: 19px;
+  margin-left: -10px;
+  color: gray;
+}
+
+#formimputSearch {
+  margin-bottom: 60px;
+}

@@ -7,7 +7,7 @@ const Live = () => {
 
   useEffect(() => {
     if(!schedule){
-    fetch("http://localhost:7000/banners/schedule", {
+    fetch("http://localhost:7000/banners/SCHEDULE", {
         headers: {
           "Content-Type":"application/json"
         }
@@ -26,7 +26,7 @@ const Live = () => {
         }))
 
       if(!classes){
-        fetch("http://localhost:7000/banners/classes", {
+        fetch("http://localhost:7000/banners/CLASS", {
         headers: {
           "Content-Type":"application/json"
         }
@@ -51,13 +51,13 @@ const Live = () => {
     if(classes){
     const list = classes.map((clase)=>{
         return(
-                <div class='col s6'>
+                <div className='col s6'>
                     <img id="imgClasses" src={clase.image} alt="logo de clases"/>
                 </div>
         )
     })
     return (
-      <div class='row' id="rowId">
+      <div className='row' id="rowId">
         {list}
       </div>
     )}
@@ -70,7 +70,7 @@ const Live = () => {
       <div>
           {
             schedule ? 
-              <img id="imgSchedule" src={schedule.image}></img>
+              <img id="imgSchedule" src={schedule[0].image}></img>
             :
               <p>Loading...</p>
           }

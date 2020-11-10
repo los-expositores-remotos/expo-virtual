@@ -9,7 +9,7 @@ const Faqs = () => {
 
   useEffect(() => {
     if(!imagesPM){
-    fetch("http://localhost:7000/banners/paymentMethods", {
+    fetch("http://localhost:7000/banners/PAYMENTMETHODS", {
         headers: {
           "Content-Type":"application/json"
         }
@@ -27,7 +27,7 @@ const Faqs = () => {
           console.log(err)
         }))
         if(!imagesC){
-          fetch("http://localhost:7000/banners/courrier", {
+          fetch("http://localhost:7000/banners/COURRIER", {
           headers: {
             "Content-Type":"application/json"
           }
@@ -80,7 +80,7 @@ const Faqs = () => {
       return (
           <div className="row">
              <div className="col s1">
-                 <img id="imgcorreo"src={imagesC.image}/>
+                 <img id="imgcorreo"src={imagesC[0].image}/>
             </div>
           </div>
         )

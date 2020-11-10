@@ -13,6 +13,7 @@ import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
+import org.bson.types.ObjectId
 
 class ProductoServiceImpl(
         private val proveedorDAO: ProveedorDAO,

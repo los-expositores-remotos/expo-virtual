@@ -10,6 +10,7 @@ import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
 
+
 class ProveedorServiceImpl(
         private val proveedorDAO: ProveedorDAO,
         private val dataBaseType: DataBaseType

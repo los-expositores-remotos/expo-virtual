@@ -6,7 +6,7 @@ const Banner = () => {
 
   useEffect(() => {
     if(!banners){
-      fetch("http://localhost:7000/banners", {
+      fetch("http://localhost:7000/banners/HOME", {
         headers: {
           "Content-Type":"application/json"
         }

@@ -1,5 +1,6 @@
 import React from "react";
 import {Link} from 'react-router-dom'
+import logo from '../images/logo.png'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
 
@@ -16,8 +17,8 @@ const NavBar = () => {
     
        <div className="NavBar"> 
            <div className="row">
-               <div className="col s2">
-                   <Link to='/'><img className='img-logo' src={require('../images/logo.png')} alt="logo"/></Link>
+               <div className="col s2" >
+                <img id='imgLogo' src={logo}/>
                </div>
                <div className="col s6">
                    <form className="form-inline">
@@ -42,9 +43,9 @@ const NavBar = () => {
            </div>           
 
            <nav>
-                <div class="nav-wrapper">
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                <ul class="left hide-on-med-and-down">
+                <div className="nav-wrapper">
+                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                <ul className="left hide-on-med-and-down">
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/suppliers">Empresas</Link></li>
                     <li><Link to="/live">En Vivo</Link></li>
@@ -56,7 +57,7 @@ const NavBar = () => {
                 </div>
             </nav>
 
-            <ul class="sidenav" id="mobile-demo">
+            <ul className="sidenav" id="mobile-demo">
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/suppliers">Empresas</Link></li>
                 <li><Link to="/live">En Vivo</Link></li>

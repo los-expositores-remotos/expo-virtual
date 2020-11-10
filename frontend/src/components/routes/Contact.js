@@ -34,30 +34,30 @@ const Contact = () => {
 		{ showMessage ? <div className="alert alert-success col-md-5 mx-auto" role="alert">Email enviado, pronto te responderemos. Gracias por ser parte de Expo Arte Virtual!!</div> : ``}
 		<form onSubmit={handleSubmit}>
 			  <div className="pt-3"><h3 className="font-weight-bold"> Dejanos tu mensaje !! </h3></div>
-			  <div class="input-field col s12">
+			  <div className="input-field col s12">
 					<div id="header" className="form-group text-left"> 
-						<i class="material-icons prefix">account_circle</i>
+						<i className="material-icons prefix">account_circle</i>
 						<input required type="text" value={contact.userName} name="userName" onChange={handleChange} className="form-control" placeholder="Tu nombre" />
 						<label for="icon_prefix">Nombre</label>					
 					</div>
 			  </div>
-			  <div class="input-field col s12">
+			  <div className="input-field col s12">
 					<div className="form-group text-left">
-						<i class="material-icons prefix">email</i>
+						<i className="material-icons prefix">email</i>
 						<input required type="text" value={contact.userEmail} name="userEmail" onChange={handleChange} className="form-control" placeholder="Tu Email" />
 						<label for="icon_telephone">Email</label>
 					</div>
 			  </div>
-			  <div class="input-field col s12">
+			  <div className="input-field col s12">
 					<div className="form-group text-left"> 
-						<i class="material-icons prefix">phone</i>
+						<i className="material-icons prefix">phone</i>
 						<input value={contact.userTel} required type="text" name="userTel" onChange={handleChange}  className="form-control" placeholder="Tu Telefono" />
 						<label for="icon_telephone">Telefono</label>
 					</div>
 			  </div>
-			  <div class="input-field col s12">
+			  <div className="input-field col s12">
 					<div className="form-group text-left">
-						<i class="material-icons prefix">mode_edit</i>
+						<i className="material-icons prefix">mode_edit</i>
 						<textarea id="icon_prefix2" required name="message" onChange={handleChange} className="form-control" placeholder="Dejanos tu mensaje" value={contact.message}></textarea>
 						<label>Mensaje</label>
 					</div>
