@@ -1,6 +1,5 @@
-package ar.edu.unq
+package ar.edu.unq.modelo
 
-import ar.edu.unq.modelo.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

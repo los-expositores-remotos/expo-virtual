@@ -1,13 +1,10 @@
 package ar.edu.unq.modelo
 
 
-import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
 
-class Producto{
-    @BsonProperty("id")
-    var id: ObjectId = ObjectId()
+class Producto : ModelObjectWithBsonId{
     lateinit var idProveedor: ObjectId
     var itemName: String = ""
     var description: String = ""
@@ -41,9 +38,7 @@ class Producto{
     }
 
     fun addImage(imagesUrl: List<String>) {
-        for (img in imagesUrl) {
-            listImages.add(img)
-        }
+        listImages.addAll(imagesUrl)
     }
 
     fun addTag(tag: String) {
@@ -51,9 +46,7 @@ class Producto{
     }
 
     fun addTag(tags: List<String>) {
-        for (tag in tags) {
-            listTags.add(tag)
-        }
+        listTags.addAll(tags)
     }
 
     fun cargarVenta(cantidadACargar: Int) {
@@ -62,20 +55,7 @@ class Producto{
 
     fun removeStock(quantity: Int) {
         this.stock -= quantity
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Producto
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return id.hashCode()
+        //TODO: Podria unificarse con logica de cargar venta en una funcion vender(cantidad) haciendo que stock sea calculado como (stockInicial - vendidos)
+        //TODO: Chequear que no sea menor que cero
     }
 }

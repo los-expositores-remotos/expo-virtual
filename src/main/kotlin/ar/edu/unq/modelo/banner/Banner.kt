@@ -1,11 +1,8 @@
 package ar.edu.unq.modelo.banner
 
-import org.bson.codecs.pojo.annotations.BsonProperty
-import org.bson.types.ObjectId
+import ar.edu.unq.modelo.ModelObjectWithBsonId
 
-class Banner {
-    @BsonProperty("id")
-    var id: ObjectId = ObjectId()
+class Banner : ModelObjectWithBsonId {
     var image: String = ""
     lateinit var category: BannerCategory
 
@@ -14,20 +11,5 @@ class Banner {
     constructor(image: String, category: BannerCategory) {
         this.image = image
         this.category = category
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Banner
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return id.hashCode()
     }
 }
