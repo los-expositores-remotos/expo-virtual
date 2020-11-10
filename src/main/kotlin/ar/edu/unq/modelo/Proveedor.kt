@@ -11,9 +11,6 @@ class Proveedor : ModelObjectWithBsonId {
     var web: String = ""
     var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     constructor()
-    constructor(companyName: String) {
-        this.companyName = companyName
-    }
 
     constructor(companyName: String, companyImage: String, facebook: String, instagram: String, web: String) {
         this.companyName = companyName
