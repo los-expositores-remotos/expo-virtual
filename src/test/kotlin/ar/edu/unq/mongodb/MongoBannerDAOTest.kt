@@ -8,7 +8,7 @@ import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
 import kotlin.test.assertEquals
 
-class MongoBannerDAOTest : GenericMongoDAOTest<Banner>() {
+class MongoBannerDAOTest : GenericMongoDAOTest<Banner>(MongoBannerDAOImpl()) {
     override fun generarItems() {
         val i = 2
         BannerCategory.values().forEach {category ->
@@ -18,10 +18,6 @@ class MongoBannerDAOTest : GenericMongoDAOTest<Banner>() {
             i.inc()
         }
         TransactionRunner.runTrx({ this.dao.save(this.items) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-    }
-
-    override fun generarDAO() {
-        this.dao = MongoBannerDAOImpl()
     }
 
     override fun encontrarItemsQueCumplenPropiedad() {
