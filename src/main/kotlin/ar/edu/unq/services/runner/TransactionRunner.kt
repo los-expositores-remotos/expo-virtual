@@ -25,19 +25,19 @@ class MongoDBTransaction: Transaction {
 
     override fun start(dataBaseType: DataBaseType) {
         staticSessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
-        session = staticSessionFactoryProvider!!.createSession()
-        session?.startTransaction()
+        session = sessionFactoryProvider.createSession()
+        currentSession.startTransaction()
     }
 
     override fun commit() {
-        session?.commitTransaction()
-        session?.close()
+        currentSession.commitTransaction()
+        currentSession.close()
         session = null
     }
 
     override fun rollback() {
-        session?.abortTransaction()
-        session?.close()
+        currentSession.abortTransaction()
+        currentSession.close()
         session = null
     }
 }

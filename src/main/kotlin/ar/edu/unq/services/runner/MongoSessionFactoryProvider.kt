@@ -13,7 +13,7 @@ import org.bson.codecs.pojo.PojoCodecProvider
 class MongoSessionFactoryProvider(databasename: String) {
     private var client : MongoClient
     private var dataBase : MongoDatabase
-    private val session : ClientSession? = null //TODO: Revisar uso ~
+    private var session : ClientSession? = null
 
     init {
         val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
@@ -59,6 +59,8 @@ class MongoSessionFactoryProvider(databasename: String) {
     }
 
     fun createSession(): ClientSession {
-        return this.client.startSession()
+        val session = this.client.startSession()
+        this.session = session
+        return session
     }
 }

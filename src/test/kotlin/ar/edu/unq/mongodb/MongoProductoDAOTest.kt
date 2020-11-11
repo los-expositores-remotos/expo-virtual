@@ -41,7 +41,7 @@ class MongoProductoDAOTest : GenericMongoDAOTest<Producto>(MongoProductoDAOImpl(
             this.proveedor.removeProduct(this.items[0])
             this.items.removeAt(0)
         }
-        runTrx({ this.proveedorDAO.update(proveedor, proveedor.id.toString()) }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        this.proveedorDAO.update(proveedor, proveedor.id.toString())
     }
 
     @Test(expected = Exception::class)
