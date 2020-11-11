@@ -99,7 +99,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         if(productToSearch!!.isBlank()){
             throw BadRequestResponse("Invalid query - param text is empty")
         }
-        val productsResult= backendProductoService.buscarProductos(productToSearch, listOf())
+        val productsResult= backendProductoService.buscarProductos(productToSearch)
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
