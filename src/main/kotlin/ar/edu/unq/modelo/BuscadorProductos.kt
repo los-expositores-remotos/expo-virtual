@@ -1,7 +1,7 @@
 package ar.edu.unq.modelo
 
 enum class Orden {
-    PRECIO, ALFABETICAMENTE, ANTIGUEDAD, VENDIDOS, PROMOCION
+    PRECIO, ALFABETICAMENTE, PROMOCION//, ANTIGUEDAD, VENDIDOS
 }
 
 object BuscadorProductos {
@@ -9,22 +9,21 @@ object BuscadorProductos {
     fun ordenar(texto: String, productos: Collection<Producto>, filtros: List<Orden>): MutableList<Producto> {
         var resultado = emptyList<Pair<Producto, Int>>().toMutableList()
         for (producto in productos) {
-            println("Entro: " + producto.itemName)
             if (contienePalabrasDelNombre(texto.split(" "), producto.itemName) or contieneTags(texto, producto.listTags) or contienePalabrasDeLaDescripcion(texto, producto.description.split(" "))) {
                 val tupla = Pair(producto, cantidadPalabrasQueCoinciden(texto, producto.description.split(" ")))
                 resultado.add(tupla)
             }
         }
         loop@ for (filtro in filtros) {
-            when (filtro) {
-                Orden.PRECIO -> resultado = resultado.sortedWith(compareBy() { it.first.itemPrice }).toMutableList()
-                Orden.ALFABETICAMENTE -> resultado = resultado.sortedWith(
+            resultado = when (filtro) {
+                Orden.PRECIO -> resultado.sortedWith(compareBy { it.first.itemPrice }).toMutableList()
+                Orden.ALFABETICAMENTE -> resultado.sortedWith(
                         compareBy(String.CASE_INSENSITIVE_ORDER) { it.first.itemName }
                 ).toMutableList()
-                Orden.ANTIGUEDAD -> resultado.sortedWith(compareBy { it.first.itemPrice })
-                Orden.VENDIDOS -> resultado.sortedWith(compareBy { it.first.itemPrice })
-                Orden.PROMOCION -> resultado = resultado.sortedWith(
-                        compareBy() { it.first.promotionalPrice }
+                //Orden.ANTIGUEDAD -> resultado.sortedWith(compareBy { it.first.itemPrice })
+                //Orden.VENDIDOS -> resultado.sortedWith(compareBy { it.first.itemPrice })
+                Orden.PROMOCION -> resultado.sortedWith(
+                        compareBy { it.first.promotionalPrice }
                 ).toMutableList()
             }
         }
