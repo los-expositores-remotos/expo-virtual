@@ -1,19 +1,25 @@
 package ar.edu.unq
 
-import ar.edu.unq.API.controllers.CompanyController
-import ar.edu.unq.API.controllers.BannerController
-import ar.edu.unq.API.controllers.ProductController
+import ar.edu.unq.API.JWTAccessManager
+import ar.edu.unq.API.TokenJWT
+import ar.edu.unq.API.controllers.*
 import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
-import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
+import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
 import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
+import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.core.security.Role
+
+enum class Roles : Role {
+    ANYONE, USER
+}
 
 fun main(args: Array<String>) {
 
@@ -21,20 +27,38 @@ fun main(args: Array<String>) {
     val backendProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
     val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.PRODUCCION)
+    val backendUsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.PRODUCCION)
+    val tokenJWT = TokenJWT()
+    val jwtAccessManager = JWTAccessManager(tokenJWT, backendUsuarioService)
     val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
     val searchController = SearchController(backendProveedorService, backendProductoService)
+    val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
+        it.accessManager(jwtAccessManager)
         it.enableCorsForAllOrigins()
+    }
+
+    app.before {
+        it.header("Access-Control-Expose-Headers", "*")
+        it.header("Access-Control-Allow-Origin", "*")
     }
 
     app.start(7000)
     app.routes {
-
-        path("search") {
+        path("/register") {
+            post(userController::createUser, mutableSetOf<Role>(Roles.ANYONE))
+        }
+        path("/login") {
+            post(userController::loginUser, mutableSetOf<Role>(Roles.ANYONE))
+        }
+        path("/user") {
+            get(userController::getUser, mutableSetOf<Role>(Roles.USER))
+        }
+            path("search") {
             get(searchController::searchByText)
         }
 
