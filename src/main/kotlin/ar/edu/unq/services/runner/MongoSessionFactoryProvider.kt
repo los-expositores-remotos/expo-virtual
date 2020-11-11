@@ -46,6 +46,11 @@ class MongoSessionFactoryProvider(databasename: String) {
                 return INSTANCE!!
             }
 
+        fun reset(){
+            INSTANCE = null
+            dataBaseName = null
+        }
+
         fun destroy() {
             if (INSTANCE != null && INSTANCE!!.session != null) {
                 INSTANCE!!.client.close()
