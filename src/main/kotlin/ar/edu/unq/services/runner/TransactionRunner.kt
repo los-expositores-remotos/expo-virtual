@@ -46,19 +46,18 @@ class MongoDBTransaction: Transaction {
     fun currentSession(): ClientSession{
         return session ?: throw Exception("No hay una sesión en el contexto")
     }
-
 }
 
 enum class DataBaseType {
     TEST {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasback"
+            MongoSessionFactoryProvider.dataBaseName = "pruebasbackkikito"
             return MongoSessionFactoryProvider.instance
         }
     },
     PRODUCCION {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "produccionback"
+            MongoSessionFactoryProvider.dataBaseName = "kikitoUsers"
             return MongoSessionFactoryProvider.instance
         }
     };

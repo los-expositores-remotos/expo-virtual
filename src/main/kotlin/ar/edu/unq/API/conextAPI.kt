@@ -18,7 +18,7 @@ import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.security.Role
 
 enum class Roles : Role {
-    ANYONE, USER
+    ANYONE, USER, ADMIN
 }
 
 fun main(args: Array<String>) {
@@ -56,7 +56,7 @@ fun main(args: Array<String>) {
             post(userController::loginUser, mutableSetOf<Role>(Roles.ANYONE))
         }
         path("/user") {
-            get(userController::getUser, mutableSetOf<Role>(Roles.USER))
+            get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN))
         }
             path("search") {
             get(searchController::searchByText)

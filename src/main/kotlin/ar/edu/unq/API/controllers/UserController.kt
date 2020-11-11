@@ -31,12 +31,14 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
 
     fun loginUser(ctx: Context) {
         try {
+            println("estoy al comienzo de loginUser")
             val userLogin = ctx.bodyValidator<UserLogin>()
                 .check(
                     { it.userName != null && it.password != null },
                     "Invalid body : userName and password is required"
                 )
                 .get()
+            println("pase el mapper estoy por validar el usuario")
             val user = this.validarUser(userLogin.userName!!, userLogin.password!!)
             ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(200)
