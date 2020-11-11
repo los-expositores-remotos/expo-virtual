@@ -35,6 +35,10 @@ class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: Usuari
                 getUser(token)
                 handler.handle(ctx)
             }
+            roles.contains(Roles.ADMIN) -> {
+                getUser(token)
+                handler.handle(ctx)
+            }
         }
     }
 }

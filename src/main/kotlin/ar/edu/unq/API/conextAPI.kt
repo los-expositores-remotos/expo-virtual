@@ -111,41 +111,6 @@ fun main(args: Array<String>) {
                     get(productController::getProductsBySuppId)
                 }
             }
-            /*
-            path("bestSellers") {
-                get(companyController::productsBestSellers)
-            }
-            path("newest") {
-                get(companyController::productsNewest)
-            }
-            path("promoPrice") {
-                get(companyController::productsWPromoPrice)
-            }
-            path("order") {
-            path(":byLowerPrice") {
-                get(companyController::orderByLowerPrice)
-            }
-            path(":byHigherPrice") {
-                get(companyController::orderByHigherPrice)
-            }
-            path(":byOldest") {
-                get(companyController::orderByOldest)
-            }
-            path(":byNewest") {
-                get(companyController::orderByNewest)
-            }
-            path(":byBestSellers") {
-                get(companyController::orderByBestSellers)
-            }
-            path(":byAlphabeticalOrderDesc") {
-                get(companyController::orderByAlphabeticDesc)
-            }
-            path(":byAlphabeticalOrderAsc") {
-                get(companyController::orderByAlphabeticAsc)
-            }
-        }*/
-            //  path("/user") {
-            //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
         }
     }
 }
