@@ -11,9 +11,9 @@ import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.PojoCodecProvider
 
 class MongoSessionFactoryProvider(databasename: String) {
-    var client : MongoClient
+    private var client : MongoClient
     private var dataBase : MongoDatabase
-    val session : ClientSession? = null
+    private val session : ClientSession? = null //TODO: Revisar uso ~
 
     init {
         val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(

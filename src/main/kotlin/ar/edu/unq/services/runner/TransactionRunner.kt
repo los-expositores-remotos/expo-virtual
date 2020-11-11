@@ -11,19 +11,21 @@ interface Transaction {
 class MongoDBTransaction: Transaction {
     companion object {
         private var session: ClientSession? = null
-        private var sessionFactoryProvider: MongoSessionFactoryProvider? = null
-        val currentSession: ClientSession?
-            get() {
-                if (session == null) {
-                    throw RuntimeException("No hay ninguna session en el contexto")
-                }
-                return session
-            }
+        private var staticSessionFactoryProvider: MongoSessionFactoryProvider? = null
     }
 
+    val currentSession: ClientSession
+        get() {
+            return session ?: throw Exception("No hay una sesión en el contexto")
+        }
+    val sessionFactoryProvider: MongoSessionFactoryProvider
+        get() {
+            return staticSessionFactoryProvider ?: throw Exception("No hay una sesión en el contexto")
+        }
+
     override fun start(dataBaseType: DataBaseType) {
-        sessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
-        session = sessionFactoryProvider!!.createSession()
+        staticSessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
+        session = staticSessionFactoryProvider!!.createSession()
         session?.startTransaction()
     }
 
@@ -38,21 +40,12 @@ class MongoDBTransaction: Transaction {
         session?.close()
         session = null
     }
-
-    fun sessionFactoryProvider(): MongoSessionFactoryProvider {
-        return sessionFactoryProvider ?: throw Exception("No hay una sesión en el contexto")
-    }
-
-    fun currentSession(): ClientSession{
-        return session ?: throw Exception("No hay una sesión en el contexto")
-    }
-
 }
 
 enum class DataBaseType {
     TEST {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasback"
+            MongoSessionFactoryProvider.dataBaseName = "pruebasbackadrian"
             return MongoSessionFactoryProvider.instance
         }
     },
