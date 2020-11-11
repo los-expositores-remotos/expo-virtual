@@ -7,7 +7,7 @@ import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
 import kotlin.test.assertEquals
 
-class MongoProveedorDAOTest: GenericMongoDAOTest<Proveedor>() {
+class MongoProveedorDAOTest: GenericMongoDAOTest<Proveedor>(MongoProveedorDAOImpl()) {
     override fun generarItems() {
         this.items.add(Proveedor("LaCompany",
                 "www.imagenes.com/lacompany.png", "www.facebook.com/LaCompany",
@@ -18,10 +18,6 @@ class MongoProveedorDAOTest: GenericMongoDAOTest<Proveedor>() {
         TransactionRunner.runTrx({
             this.dao.save(this.items)
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-    }
-
-    override fun generarDAO() {
-        this.dao = MongoProveedorDAOImpl()
     }
 
     override fun borrarNItems(n: Int) {

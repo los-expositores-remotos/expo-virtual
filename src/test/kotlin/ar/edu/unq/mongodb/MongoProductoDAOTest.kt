@@ -13,7 +13,7 @@ import ar.edu.unq.services.runner.TransactionType
 import org.junit.Test
 import kotlin.test.assertEquals
 
-class MongoProductoDAOTest : GenericMongoDAOTest<Producto>() {
+class MongoProductoDAOTest : GenericMongoDAOTest<Producto>(MongoProductoDAOImpl()) {
 
     private val proveedorDAO: ProveedorDAO = MongoProveedorDAOImpl()
     private lateinit var proveedor: Proveedor
@@ -22,10 +22,6 @@ class MongoProductoDAOTest : GenericMongoDAOTest<Producto>() {
         super.deleteColection()
         val database = TransactionRunner.getTransaction().sessionFactoryProvider().getDatabase()
         database.getCollection("Proveedor").drop()
-    }
-
-    override fun generarDAO() {
-        this.dao = MongoProductoDAOImpl()
     }
 
     override fun generarItems() {

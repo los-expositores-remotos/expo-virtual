@@ -12,20 +12,16 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertNotEquals
 
-abstract class GenericMongoDAOTest<T> {
+abstract class GenericMongoDAOTest<T>(protected val dao: GenericMongoDAO<T>) {
 
-    lateinit var dao: GenericMongoDAO<T>
     var items: MutableList<T> = emptyList<T>().toMutableList()
 
     @Before
     fun setUp() {
-        this.generarDAO()
         this.generarItems()
     }
 
     abstract fun generarItems()
-
-    abstract fun generarDAO()
 
     open fun obtenerTodos(): List<T>{
         return this.dao.getAll()

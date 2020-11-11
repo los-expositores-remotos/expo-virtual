@@ -12,6 +12,8 @@ import ar.edu.unq.services.impl.exceptions.ProductoInexistenteException
 import ar.edu.unq.services.impl.exceptions.ProductoNoEncontradoException
 import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
+import ar.edu.unq.services.runner.TransactionRunner.runTrx
+import ar.edu.unq.services.runner.TransactionType
 import org.bson.types.ObjectId
 import org.junit.After
 import org.junit.Before
@@ -41,12 +43,10 @@ class ProductoServiceImplTest {
         productoA = Producto(proveedorA.id, "Les Paul", "SARASA", 7, 1000000, 800000)
         productoB = Producto(proveedorB.id, "Les PaulB", "SARASA", 7, 1000000, 800000)
         productoC = Producto(proveedorC.id, "Les PaulC", "SARASA", 7, 1000000, 800000)
-        this.proveedorService.crearProveedor(this.proveedorA)
-        this.proveedorService.crearProveedor(this.proveedorB)
-        this.proveedorService.crearProveedor(this.proveedorC)
-        this.productoService.nuevoProducto(productoA)
-        this.productoService.nuevoProducto(productoB)
-        this.productoService.nuevoProducto(productoC)
+        proveedorA.addProduct(productoA)
+        proveedorB.addProduct(productoB)
+        proveedorC.addProduct(productoC)
+        runTrx({this.proveedorDAO.save(listOf(this.proveedorA, this.proveedorB, proveedorC))}, listOf(TransactionType.MONGO),DataBaseType.TEST)
         this.productos.addAll(setOf(this.productoA, this.productoB, this.productoC))
     }
 
