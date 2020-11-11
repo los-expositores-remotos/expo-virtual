@@ -11,12 +11,12 @@ abstract class ModelObjectWithBsonId {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as ModelObjectWithBsonId
-
-        if (id != other.id) return false
+        if (id != this.castearAMiTipo(other).id) return false
 
         return true
     }
+
+    abstract fun castearAMiTipo(other: Any): ModelObjectWithBsonId
 
     override fun hashCode(): Int {
         return id.hashCode()
