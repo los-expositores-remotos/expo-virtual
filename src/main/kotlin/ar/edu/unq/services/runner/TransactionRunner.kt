@@ -1,5 +1,7 @@
 package ar.edu.unq.services.runner
 
+import ar.edu.unq.services.runner.exceptions.NoSessionContextException
+import ar.edu.unq.services.runner.exceptions.NoTransactionsException
 import com.mongodb.client.ClientSession
 
 interface Transaction {
@@ -16,11 +18,11 @@ class MongoDBTransaction: Transaction {
 
     val currentSession: ClientSession
         get() {
-            return session ?: throw Exception("No hay una sesión en el contexto")
+            return session ?: throw NoSessionContextException("No hay una sesión en el contexto")
         }
     val sessionFactoryProvider: MongoSessionFactoryProvider
         get() {
-            return staticSessionFactoryProvider ?: throw Exception("No hay una sesión en el contexto")
+            return staticSessionFactoryProvider ?: throw NoSessionContextException("No hay una sesión en el contexto")
         }
 
     override fun start(dataBaseType: DataBaseType) {
@@ -32,30 +34,35 @@ class MongoDBTransaction: Transaction {
     override fun commit() {
         currentSession.commitTransaction()
         currentSession.close()
+        MongoSessionFactoryProvider.destroy()
+        staticSessionFactoryProvider = null
         session = null
     }
 
     override fun rollback() {
         currentSession.abortTransaction()
         currentSession.close()
+        MongoSessionFactoryProvider.destroy()
+        staticSessionFactoryProvider = null
         session = null
     }
 }
 
 enum class DataBaseType {
     TEST {
-        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasbackadrian"
-            return MongoSessionFactoryProvider.instance
-        }
+        override val databasename: String
+            get() = "pruebasbackadrian"
     },
     PRODUCCION {
-        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "produccionback"
-            return MongoSessionFactoryProvider.instance
-        }
+        override val databasename: String
+            get() = "produccionback"
     };
-    abstract fun getSessionFactoryProvider(): MongoSessionFactoryProvider
+    fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
+        MongoSessionFactoryProvider.dataBaseName = this.databasename
+        return MongoSessionFactoryProvider.instance
+    }
+
+    abstract val databasename: String
 }
 
 enum class TransactionType {
@@ -75,20 +82,22 @@ object TransactionRunner {
         if(transactions.isNotEmpty()){
             return transactions[0]
         }else{
-            throw Exception("Debe haber al menos una transaccion en curso")
+            throw NoTransactionsException("Debe haber al menos una transaccion en curso")
         }
     }
 
 
-    fun <T> runTrx(bloque: ()->T, types: List<TransactionType> = listOf(), dataBaseType: DataBaseType): T {
+    fun <T> runTrx(bloque: ()->T, types: List<TransactionType>, dataBaseType: DataBaseType): T {
         transactions = types.map { it.getTransaction() }
         try{
             transactions.forEach { it.start(dataBaseType) }
             val result = bloque()
             transactions.forEach { it.commit() }
+            transactions = emptyList()
             return result
         } catch (exception:Throwable){
             transactions.forEach { it.rollback() }
+            transactions = emptyList()
             throw exception
         }
     }
