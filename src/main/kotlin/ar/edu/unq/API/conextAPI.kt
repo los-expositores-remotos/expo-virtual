@@ -61,9 +61,6 @@ fun main(args: Array<String>) {
             path("massive") {
                 post(companyController::createMassive)
             }
-            path("search"){
-                get(companyController::searchCompanies)
-            }
             path(":supplierId") {
                 get(companyController::getSupplierById)
                 delete(companyController::deleteSupplier)
