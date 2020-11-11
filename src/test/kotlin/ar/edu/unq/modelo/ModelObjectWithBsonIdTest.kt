@@ -34,6 +34,11 @@ abstract class ModelObjectWithBsonIdTest<T: ModelObjectWithBsonId>(private val e
     }
 
     @Test
+    fun testUnObjetoEsDistintoDeNull(){
+        assertNotEquals(this.t1, null)
+    }
+
+    @Test
     fun testUnObjetoEsDistintoDeOtroConDiferenteId(){
         val t = entityType.getDeclaredConstructor().newInstance()
         assertNotEquals(this.t1!!.id, t.id)
