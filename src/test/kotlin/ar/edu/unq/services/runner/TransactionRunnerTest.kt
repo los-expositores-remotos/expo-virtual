@@ -37,17 +37,17 @@ class TransactionRunnerTest {
 
     @Test
     fun testSiDuranteUnaTransaccionAgregoUnDocumentoYEnElProcesoSeProduceUnErrorLosCambiosNoSeConfirman() {
+        runTrx({
+            val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
+            if(dataBase.listCollectionNames().contains("Transacciones")){
+                dataBase.getCollection("Transacciones").drop()
+            }
+            dataBase.createCollection("Transacciones")
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         try {
             runTrx({
                 val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-                if(dataBase.listCollectionNames().contains("Transacciones")){
-                    dataBase.getCollection("Transacciones").drop()
-                }
-                dataBase.createCollection("Transacciones")
-            }, listOf(TransactionType.MONGO), DataBaseType.TEST)
-            runTrx({
-                val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-                dataBase.getCollection("Transacciones").insertOne(Document.parse("{name: elpepe}"))
+                dataBase.getCollection("Transacciones").insertOne(getTransaction().currentSession, Document.parse("{\"name\": \"elpepe\"}"))
                 throw Exception("ExcepcionDuranteTransaccion")
             }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         }catch(e: Exception){
@@ -56,7 +56,12 @@ class TransactionRunnerTest {
                 dataBase.getCollection("Transacciones").find().toList()
             }, listOf(TransactionType.MONGO), DataBaseType.TEST)
             assertEquals(emptyList(), result)
+            assertEquals("ExcepcionDuranteTransaccion" ,e.message)
         }
+        runTrx({
+            val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
+            dataBase.getCollection("Transacciones").drop()
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
 
 }

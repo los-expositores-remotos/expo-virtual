@@ -1,5 +1,6 @@
 package ar.edu.unq.services.runner
 
+import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.ClientSession
@@ -13,7 +14,7 @@ import org.bson.codecs.pojo.PojoCodecProvider
 class MongoSessionFactoryProvider(databasename: String) {
     private var client : MongoClient
     private var dataBase : MongoDatabase
-    private var session : ClientSession? = null
+    var session : ClientSession? = null
 
     init {
         val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
@@ -40,7 +41,7 @@ class MongoSessionFactoryProvider(databasename: String) {
                     INSTANCE =
                         MongoSessionFactoryProvider(
                             dataBaseName
-                                ?: throw Exception("La base de datos no esta definida")
+                                ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
                         )
                 }else if(INSTANCE!!.getDatabase().name != dataBaseName){
                     INSTANCE!!.dataBase = INSTANCE!!.client.getDatabase(dataBaseName!!)
@@ -51,8 +52,10 @@ class MongoSessionFactoryProvider(databasename: String) {
         fun destroy() {
             if (INSTANCE != null && INSTANCE!!.session != null) {
                 INSTANCE!!.client.close()
+                INSTANCE!!.session = null
             }
             INSTANCE = null
+            dataBaseName = null
         }
     }
 

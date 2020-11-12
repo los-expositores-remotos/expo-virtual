@@ -11,13 +11,13 @@ import org.bson.types.ObjectId
 
 abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     open fun deleteAll() {
-        this.sessionCheck()
-        this.getCollection(entityType.simpleName, entityType).deleteMany(Document())
+        val session = this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).deleteMany(session, Document())
     }
 
     fun getAll(): List<T> {
-        this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find().toMutableList()
+        val session = this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find(session).toMutableList()
     }
 
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
@@ -38,13 +38,13 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun update(anObject: T, id: String?) {
-        this.sessionCheck()
-        this.getCollection(entityType.simpleName, entityType).replaceOne(eq("id", ObjectId(id)), anObject)
+        val session = this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).replaceOne(session, eq("id", ObjectId(id)), anObject)
     }
 
     open fun save(objects: List<T>) {
-        this.sessionCheck()
-        this.getCollection(entityType.simpleName, entityType).insertMany(objects)
+        val session = this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).insertMany(session, objects)
     }
 
     open fun delete(id: String){
@@ -52,7 +52,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     open fun <E> deleteBy(property:String, value: E?){
-        this.getCollection(entityType.simpleName, entityType).deleteOne(eq(property, value))
+        val session = this.sessionCheck()
+        this.getCollection(entityType.simpleName, entityType).deleteOne(session, eq(property, value))
     }
 
     operator fun get(id: String?): T? {
@@ -60,8 +61,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     fun <E> getBy(property:String, value: E?): T? {
-        this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find(Document(property,value)).first()
+        val session = this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find(session, Document(property,value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {
@@ -69,8 +70,8 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
     }
 
     fun find(filter:Bson): List<T> {
-        this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find(filter).toMutableList()
+        val session = this.sessionCheck()
+        return this.getCollection(entityType.simpleName, entityType).find(session, filter).toMutableList()
     }
 
 //    fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {
