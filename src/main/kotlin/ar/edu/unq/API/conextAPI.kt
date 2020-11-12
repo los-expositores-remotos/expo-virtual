@@ -23,11 +23,6 @@ enum class Roles : Role {
 
 fun main(args: Array<String>) {
 
-
-
-
-
-
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
@@ -38,15 +33,15 @@ fun main(args: Array<String>) {
     val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
-    val searchController = SearchController(backendProveedorService, backendProductoService)
+/*    val searchController = SearchController(backendProveedorService, backendProductoService)*/
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
     val adminController = AdminController(backendUsuarioService, tokenJWT, jwtAccessManager)
 
-    println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
+ //   println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
 
-    runTrx({
+/*    runTrx({
         MongoAdminDAOImpl().save(Admin("admin","admin"))
-    }, listOf(TransactionType.MONGO),DataBaseType.PRODUCCION)
+    }, listOf(TransactionType.MONGO),DataBaseType.PRODUCCION)*/
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
@@ -74,54 +69,54 @@ fun main(args: Array<String>) {
         path("/user") {
             get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN))
         }
-            path("search") {
-            get(searchController::searchByText)
-        }
+/*            path("search") {
+            get(searchController::searchByText, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+        }*/
 
         path("banners") {
-            get(bannerController::banners)
-            post(bannerController::addBanner)
+            get(bannerController::banners, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(bannerController::addBanner, mutableSetOf<Role>(Roles.ADMIN))
             path(":bannerId") {
-                delete(bannerController::deleteBanner)
+                delete(bannerController::deleteBanner, mutableSetOf<Role>(Roles.ADMIN))
             }
             path(":bannerCategory"){
-                get(bannerController::bannersByCategory)
+                get(bannerController::bannersByCategory, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
         }
 
         path("companies") {
-            get(companyController::allCompanies)
-            post(companyController::createSupplier)
+            get(companyController::allCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(companyController::createSupplier, mutableSetOf<Role>(Roles.ADMIN))
             path("images") {
-                get(companyController::imagesCompanies)
+                get(companyController::imagesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path("names") {
-                get(companyController::namesCompanies)
+                get(companyController::namesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path("massive") {
-                post(companyController::createMassive)
+                post(companyController::createMassive, mutableSetOf<Role>(Roles.ADMIN))
             }
             path(":supplierId") {
-                get(companyController::getSupplierById)
-                delete(companyController::deleteSupplier)
-                put(companyController::modifySupplier)
+                get(companyController::getSupplierById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+                delete(companyController::deleteSupplier, mutableSetOf<Role>(Roles.ADMIN))
+                put(companyController::modifySupplier, mutableSetOf<Role>(Roles.ADMIN))
             }
         }
 
         path("products") {
-            get(productController::allProducts)
-            post(productController::addProduct)
+            get(productController::allProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(productController::addProduct, mutableSetOf<Role>(Roles.ADMIN))
             path("search") {
-                get(productController::searchProducts)
+                get(productController::searchProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path(":productId") {
-                get(productController::getProductById)
-                delete(productController::deleteProduct)
-                put(productController::modifyProduct)  //verlo a fondo no funciona bien
+                get(productController::getProductById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+                delete(productController::deleteProduct, mutableSetOf<Role>(Roles.ADMIN))
+                put(productController::modifyProduct, mutableSetOf<Role>(Roles.ADMIN))
             }
             path("supplier") {
                 path(":supplierId") {
-                    get(productController::getProductsBySuppId)
+                    get(productController::getProductsBySuppId, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
                 }
             }
         }

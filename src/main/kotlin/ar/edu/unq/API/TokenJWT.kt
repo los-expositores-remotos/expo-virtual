@@ -23,6 +23,8 @@ class AdminGenerator : JWTGenerator<Admin> {
 
 class NotFoundToken: Exception()
 
+class NotFoundException: Exception()
+
 class TokenJWT {
 
     val algorithm = Algorithm.HMAC256("very_secret")

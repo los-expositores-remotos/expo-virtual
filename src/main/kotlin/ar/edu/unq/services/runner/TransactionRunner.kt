@@ -51,13 +51,13 @@ class MongoDBTransaction: Transaction {
 enum class DataBaseType {
     TEST {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasbackkikito"
+            MongoSessionFactoryProvider.dataBaseName = "pruebasbackkikito2"
             return MongoSessionFactoryProvider.instance
         }
     },
     PRODUCCION {
         override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "kikitoUsers"
+            MongoSessionFactoryProvider.dataBaseName = "produccionback"
             return MongoSessionFactoryProvider.instance
         }
     };
