@@ -60,7 +60,7 @@ class TransactionRunnerTest {
         }
         runTrx({
             val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-            dataBase.getCollection("Transacciones").drop()
+            dataBase.getCollection("Transacciones").drop(getTransaction().sessionFactoryProvider.session!!)
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
 

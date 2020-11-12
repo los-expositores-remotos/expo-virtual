@@ -37,16 +37,13 @@ class MongoSessionFactoryProvider(databasename: String) {
         var dataBaseName: String? = null
         val instance: MongoSessionFactoryProvider
             get() {
-                if (INSTANCE == null) {
-                    INSTANCE =
-                        MongoSessionFactoryProvider(
-                            dataBaseName
-                                ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
-                        )
-                }else if(INSTANCE!!.getDatabase().name != dataBaseName){
-                    INSTANCE!!.dataBase = INSTANCE!!.client.getDatabase(dataBaseName!!)
+                val databasename: String = dataBaseName ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
+                val sessionFactoryProvider: MongoSessionFactoryProvider = INSTANCE ?: MongoSessionFactoryProvider(databasename)
+                if(sessionFactoryProvider.getDatabase().name != databasename){
+                    sessionFactoryProvider.dataBase = sessionFactoryProvider.client.getDatabase(databasename)
                 }
-                return INSTANCE!!
+                INSTANCE = sessionFactoryProvider
+                return sessionFactoryProvider
             }
 
         fun destroy() {

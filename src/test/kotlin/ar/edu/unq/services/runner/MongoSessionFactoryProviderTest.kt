@@ -5,6 +5,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -46,6 +47,16 @@ class MongoSessionFactoryProviderTest {
         assertNotNull(sessionFactoryProvider.session)
         MongoSessionFactoryProvider.destroy()
         assertNull(sessionFactoryProvider.session)
+    }
+
+    @Test
+    fun testEsPosibleDestruirElSessionFactoryProviderCuandoYaFueDestruido() {
+        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
+        val sessionFactoryProvider = MongoSessionFactoryProvider.instance
+        MongoSessionFactoryProvider.destroy()
+        MongoSessionFactoryProvider.destroy()
+        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
+        assertNotEquals(sessionFactoryProvider, MongoSessionFactoryProvider.instance)
     }
 
     @After
