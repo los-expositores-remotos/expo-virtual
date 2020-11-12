@@ -39,7 +39,7 @@ class TransactionRunnerTest {
     fun testSiDuranteUnaTransaccionAgregoUnDocumentoYEnElProcesoSeProduceUnErrorLosCambiosNoSeConfirman() {
         runTrx({
             val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-            if(dataBase.listCollectionNames().contains("Transacciones")){
+            if(dataBase.listCollectionNames().toList().contains("Transacciones")){
                 dataBase.getCollection("Transacciones").drop()
             }
             dataBase.createCollection("Transacciones")
@@ -53,14 +53,14 @@ class TransactionRunnerTest {
         }catch(e: Exception){
             val result = runTrx({
                 val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-                dataBase.getCollection("Transacciones").find().toList()
+                dataBase.getCollection("Transacciones").find(getTransaction().currentSession).toList()
             }, listOf(TransactionType.MONGO), DataBaseType.TEST)
             assertEquals(emptyList(), result)
             assertEquals("ExcepcionDuranteTransaccion" ,e.message)
         }
         runTrx({
             val dataBase = getTransaction().sessionFactoryProvider.getDatabase()
-            dataBase.getCollection("Transacciones").drop(getTransaction().sessionFactoryProvider.session!!)
+            dataBase.getCollection("Transacciones").drop()
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
     }
 
