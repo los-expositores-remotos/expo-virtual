@@ -25,6 +25,8 @@ class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: Usuari
         }
     }
 
+
+
     override fun manage(handler: Handler, ctx: Context, roles: MutableSet<Role>) {
         val token = ctx.header("Authorization")
         when {

@@ -2,6 +2,7 @@ package ar.edu.unq.dao
 
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.modelo.Usuario
+import ar.edu.unq.modelo.banner.Banner
 
 interface UsuarioDAO {
     fun save(anObject: Usuario)
@@ -11,4 +12,5 @@ interface UsuarioDAO {
     fun getAll() : List<Usuario>
     fun deleteAll()
     fun delete(id: String)
+    fun <E> findEq(field:String, value:E ): List<Usuario>
 }

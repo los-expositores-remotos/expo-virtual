@@ -3,19 +3,22 @@ package ar.edu.unq.modelo
 import org.bson.types.ObjectId
 
 class Usuario : ModelObjectWithBsonId {
-    var userName: String = ""
-    var password: String = ""
-    /*var level: String = ""*/
+    var nombre: String = ""
+    var apellido: String = ""
+    var dni : Int = 0
 
     constructor()
 
     constructor(
-        userName: String,
-        password: String/*,
-        level: String*/
+        nombre: String,
+        apellido: String,
+        dni: Int
     ) {
-        this.userName = userName
-        this.password = password
-      /*  this.level = level*/
+        this.nombre = nombre
+        this.apellido = apellido
+        this.dni = dni
+    }
+    override fun castearAMiTipo(other: Any): Usuario {
+        return  other as Usuario
     }
 }
