@@ -34,7 +34,6 @@ class MongoDBTransaction: Transaction {
     override fun commit() {
         currentSession.commitTransaction()
         currentSession.close()
-        MongoSessionFactoryProvider.reset()
         staticSessionFactoryProvider = null
         session = null
     }
@@ -42,7 +41,6 @@ class MongoDBTransaction: Transaction {
     override fun rollback() {
         currentSession.abortTransaction()
         currentSession.close()
-        MongoSessionFactoryProvider.reset()
         staticSessionFactoryProvider = null
         session = null
     }

@@ -42,14 +42,11 @@ class MongoSessionFactoryProvider(databasename: String) {
                             dataBaseName
                                 ?: throw Exception("La base de datos no esta definida")
                         )
+                }else if(INSTANCE!!.getDatabase().name != dataBaseName){
+                    INSTANCE!!.dataBase = INSTANCE!!.client.getDatabase(dataBaseName!!)
                 }
                 return INSTANCE!!
             }
-
-        fun reset(){
-            INSTANCE = null
-            dataBaseName = null
-        }
 
         fun destroy() {
             if (INSTANCE != null && INSTANCE!!.session != null) {
