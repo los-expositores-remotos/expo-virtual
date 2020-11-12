@@ -1,5 +1,6 @@
 package ar.edu.unq.API
 
+import ar.edu.unq.modelo.Admin
 import ar.edu.unq.modelo.Usuario
 import javalinjwt.JWTProvider
 import com.auth0.jwt.JWT
@@ -13,17 +14,30 @@ class UserGenerator : JWTGenerator<Usuario> {
     }
 }
 
+class AdminGenerator : JWTGenerator<Admin> {
+    override fun generate(admin: Admin, algorithm: Algorithm): String {
+        val token = JWT.create().withClaim("id", admin.id.toString())
+        return token.sign(algorithm)
+    }
+}
+
 class NotFoundToken: Exception()
 
 class TokenJWT {
 
     val algorithm = Algorithm.HMAC256("very_secret")
     val generator = UserGenerator()
+    val generatorAdmin = AdminGenerator()
     val verifier = JWT.require(algorithm).build()
     val provider = JWTProvider(algorithm, generator, verifier)
+    val providerAdmin = JWTProvider(algorithm, generatorAdmin, verifier)
 
     fun generateToken(user: Usuario): String {
         return provider.generateToken(user)
+    }
+
+    fun generateTokenAdmin(admin: Admin): String {
+        return providerAdmin.generateToken(admin)
     }
 
     fun validate(token: String): String {

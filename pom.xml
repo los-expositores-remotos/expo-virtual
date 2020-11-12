@@ -28,8 +28,7 @@
         <dependency>
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
-            <version>...</version>
-        </dependency>
+            </dependency>
         <dependency>
             <groupId>com.github.kmehrunes</groupId>
             <artifactId>javalin-jwt</artifactId>

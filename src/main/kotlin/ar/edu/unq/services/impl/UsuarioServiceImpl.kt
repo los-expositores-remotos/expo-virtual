@@ -1,9 +1,13 @@
 package ar.edu.unq.services.impl
 
 
+import ar.edu.unq.dao.AdminDAO
 import ar.edu.unq.dao.UsuarioDAO
+import ar.edu.unq.dao.mongodb.MongoAdminDAOImpl
+import ar.edu.unq.modelo.Admin
 import ar.edu.unq.modelo.Usuario
 import ar.edu.unq.services.UsuarioService
+import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
 import ar.edu.unq.services.impl.exceptions.ProveedorExistenteException
 import ar.edu.unq.services.impl.exceptions.UsuarioExistenteException
 import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
@@ -16,9 +20,17 @@ class UsuarioServiceImpl(
     private val dataBaseType: DataBaseType
 ) : UsuarioService {
 
+    private val adminDAO: AdminDAO = MongoAdminDAOImpl()
+
     override fun recuperarUsuario(id: String): Usuario {
         return TransactionRunner.runTrx({
             this.obtenerUsuario(id)
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
+    override fun recuperarUsuario(dni: Int): Usuario {
+        return TransactionRunner.runTrx({
+            this.usuarioDAO.findEq("dni",dni).firstOrNull()?: throw UsuarioInexistenteException("El usuario no existe")
         }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
@@ -29,8 +41,18 @@ class UsuarioServiceImpl(
         }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
+
+
     override fun recuperarATodosLosUsuarios(): Collection<Usuario> {
         return TransactionRunner.runTrx({ this.usuarioDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
+    }
+
+    override fun recuperarAdmin(userName: String?, password: String?): Admin {
+        return TransactionRunner.runTrx({
+            this.adminDAO.findEq("userName",userName).filter{
+                it.password == password
+            }.firstOrNull() ?: throw AdministradorInexistenteException("El Admin no existe")
+        }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
     private fun obtenerUsuario(id: String): Usuario{

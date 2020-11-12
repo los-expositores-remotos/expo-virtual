@@ -25,6 +25,8 @@ class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: Usuari
         }
     }
 
+
+
     override fun manage(handler: Handler, ctx: Context, roles: MutableSet<Role>) {
         val token = ctx.header("Authorization")
         when {
@@ -32,6 +34,10 @@ class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: Usuari
             token == null -> throw UnauthorizedResponse("Token not found")          //tambien lo lanzaria en el validate
             roles.contains(Roles.ANYONE) -> handler.handle(ctx)                 //asociado a la pregunta de la primer linea
             roles.contains(Roles.USER) -> {
+                getUser(token)
+                handler.handle(ctx)
+            }
+            roles.contains(Roles.ADMIN) -> {
                 getUser(token)
                 handler.handle(ctx)
             }

@@ -3,15 +3,15 @@ package ar.edu.unq
 import ar.edu.unq.API.JWTAccessManager
 import ar.edu.unq.API.TokenJWT
 import ar.edu.unq.API.controllers.*
-import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
-import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
+import ar.edu.unq.dao.mongodb.*
+import ar.edu.unq.modelo.Admin
 import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
+import ar.edu.unq.services.runner.TransactionRunner.runTrx
+import ar.edu.unq.services.runner.TransactionType
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
@@ -22,6 +22,11 @@ enum class Roles : Role {
 }
 
 fun main(args: Array<String>) {
+
+
+
+
+
 
     val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
     val backendProductoService =
@@ -35,6 +40,13 @@ fun main(args: Array<String>) {
     val companyController = CompanyController(backendProveedorService, backendProductoService)
     val searchController = SearchController(backendProveedorService, backendProductoService)
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
+    val adminController = AdminController(backendUsuarioService, tokenJWT, jwtAccessManager)
+
+    println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
+
+    runTrx({
+        MongoAdminDAOImpl().save(Admin("admin","admin"))
+    }, listOf(TransactionType.MONGO),DataBaseType.PRODUCCION)
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
@@ -54,7 +66,11 @@ fun main(args: Array<String>) {
         }
         path("/login") {
             post(userController::loginUser, mutableSetOf<Role>(Roles.ANYONE))
+            path("/admin") {
+                post(adminController::loginUserAdmin, mutableSetOf<Role>(Roles.ANYONE))
+            }
         }
+
         path("/user") {
             get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN))
         }
