@@ -24,9 +24,10 @@ class UsuarioServiceImplTest {
     //--fun recuperarUsuario(id: String): Usuario
     //--fun recuperarUsuario(dni: Int): Usuario
     //--fun crearUsuario(usuario: Usuario)
-    //fun recuperarAdmin(userName: String?, password: String?): Admin
+    //--NO EXISTE LA FORMA DE CREAR UN ADMIN fun recuperarAdmin(userName: String?, password: String?): Admin
     //fun obtenerUsuario(id: String): Usuario
     //fun asegurarQueUsuarioNoExista(id: String)
+    //fun recuperarATodosLosUsuarios(): Collection<Usuario> {
 
     private lateinit var usuario: Usuario
     private lateinit var admin: Admin
@@ -71,8 +72,6 @@ class UsuarioServiceImplTest {
     @Test(expected = AdministradorInexistenteException::class)
     fun testRecuperarUnAdminInexitente(){
         this.usuarioService.recuperarAdmin("sarasa", "sanchez")
-
-
     }
 
     @Test
@@ -81,12 +80,14 @@ class UsuarioServiceImplTest {
         assertEquals(this.usuario, usuarioRecuperado)
     }
 
-
-
-
-
-
-
+    @Test
+    fun testRecuperarATodosLosUsuarios(){
+        val usuarioAdrian = Usuario("Adrian", "Cardozo", 1200)
+        this.usuarioService.crearUsuario(usuarioAdrian)
+        this.usuarios.add(usuarioAdrian)
+        val usuariosRecuperados = this.usuarioService.recuperarATodosLosUsuarios().toSet()
+        assertEquals(this.usuarios, usuariosRecuperados)
+    }
 
     @After
     fun deleteAll(){
