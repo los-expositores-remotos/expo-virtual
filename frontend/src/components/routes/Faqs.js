@@ -81,6 +81,9 @@ const Faqs = () => {
           <div className="row">
              <div className="col s1">
                  <img id="imgcorreo"src={imagesC[0].image}/>
+             </div>
+            <div className="col s1">
+                <img id="imgcorreo2"src={imagesC[1].image}/>
             </div>
           </div>
         )
