@@ -76,6 +76,7 @@ class ModelTest {
 
     @Test
     fun getResultFromProductoSearch() {
+        productoA.addTag("Guitar")
         val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC))
         Assert.assertEquals("Les Paul", resultList.first().itemName)
         Assert.assertEquals("Explorer", resultList[1].itemName)
