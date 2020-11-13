@@ -41,8 +41,6 @@ class UsuarioServiceImpl(
         }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
-
-
     override fun recuperarATodosLosUsuarios(): Collection<Usuario> {
         return TransactionRunner.runTrx({ this.usuarioDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
@@ -63,5 +61,9 @@ class UsuarioServiceImpl(
         if(this.usuarioDAO.get(id) != null){
             throw UsuarioExistenteException("El usuario ya existe")
         }
+    }
+
+    override fun deleteAll() {
+        TransactionRunner.runTrx({ this.usuarioDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 }
