@@ -7,9 +7,9 @@ object BuscadorProductos {
     }
 
     private fun cantidadDeItemsContenidasEnTexto(palabras: Iterable<String>, texto: String): Int {
-        val palabrasMinusculas = palabras.map { palabra -> palabra.toLowerCase() }
-        val conjuntoPalabrasMinusculas = palabrasMinusculas.toSet()
-        return conjuntoPalabrasMinusculas.count({ texto.toLowerCase().contains(it) })
+        val bloqueMap = { palabra: String -> palabra.toLowerCase() }
+        val bloqueCount = { palabra: String -> texto.toLowerCase().contains(palabra) }
+        return palabras.map(bloqueMap).toSet().count(bloqueCount)
     }
 
     private fun palabrasContenidasEnTexto(texto: String): Iterable<String> {
