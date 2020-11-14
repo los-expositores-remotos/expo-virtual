@@ -1,11 +1,12 @@
 package ar.edu.unq.API.controllers
 
 import ar.edu.unq.API.*
+import ar.edu.unq.services.AdminService
 import ar.edu.unq.services.UsuarioService
 import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
 import io.javalin.http.Context
 
-class AdminController(private val backendUsuarioService: UsuarioService, val tokenJWT: TokenJWT, val jwtAccessManager: JWTAccessManager) {
+class AdminController(private val backendAdminService: AdminService, val tokenJWT: TokenJWT, val jwtAccessManager: JWTAccessManager) {
 
     fun loginUserAdmin(ctx: Context){
         try {
@@ -17,7 +18,7 @@ class AdminController(private val backendUsuarioService: UsuarioService, val tok
                 )
                 .get()
             println("pase el mapper estoy por validar el usuario")
-            val admin = this.backendUsuarioService.recuperarAdmin(adminLogin.userName, adminLogin.password)
+            val admin = this.backendAdminService.recuperarAdmin(adminLogin.userName, adminLogin.password)
             println(admin.userName)
             ctx.header("Authorization", tokenJWT.generateTokenAdmin(admin))
             ctx.status(200)

@@ -1,10 +1,12 @@
 package ar.edu.unq.services
 
+import ar.edu.unq.dao.mongodb.MongoAdminDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
 import ar.edu.unq.modelo.Admin
 import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.modelo.Usuario
+import ar.edu.unq.services.impl.AdminServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
@@ -32,6 +34,7 @@ class UsuarioServiceImplTest {
     private lateinit var usuario: Usuario
     private lateinit var admin: Admin
     private val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
+    private val adminService: AdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.TEST)
     private lateinit var usuarios : MutableSet<Usuario>
 
     @Before
@@ -71,7 +74,7 @@ class UsuarioServiceImplTest {
 
     @Test(expected = AdministradorInexistenteException::class)
     fun testRecuperarUnAdminInexitente(){
-        this.usuarioService.recuperarAdmin("sarasa", "sanchez")
+        this.adminService.recuperarAdmin("sarasa", "sanchez")
     }
 
     @Test

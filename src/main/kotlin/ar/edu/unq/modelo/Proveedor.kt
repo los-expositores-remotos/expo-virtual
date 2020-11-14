@@ -29,7 +29,7 @@ class Proveedor : ModelObjectWithBsonId {
         productos.remove(productoNuevo)
     }
 
-    override fun castearAMiTipo(other: Any): Proveedor {
-        return  other as Proveedor
-    }
+//    override fun castearAMiTipo(other: Any): Proveedor {
+//        return  other as Proveedor
+//    }
 }
