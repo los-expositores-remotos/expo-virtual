@@ -12,4 +12,5 @@ interface UsuarioService {
     fun recuperarAdmin(userName: String?, password: String?): Admin
     fun deleteAll()
 
+
 }

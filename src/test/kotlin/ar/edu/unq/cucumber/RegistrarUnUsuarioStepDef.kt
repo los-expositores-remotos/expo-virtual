@@ -8,6 +8,7 @@ import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.UsuarioService
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.impl.UsuarioServiceImpl
+import ar.edu.unq.services.impl.exceptions.UsuarioConDniInvalidoException
 import ar.edu.unq.services.runner.DataBaseType
 import cucumber.api.PendingException
 import cucumber.api.java.en.And
@@ -15,12 +16,14 @@ import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 
 class RegistrarUnUsuarioStepDef {
 
     val usuario = Usuario("Tobias", "Towers", 39484178)
     val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
+    var exceptionUsuarioConDniInvalidoException: UsuarioConDniInvalidoException? = null
 
 
     @Given("^un nombre \"([^\"]*)\"$")
@@ -47,7 +50,6 @@ class RegistrarUnUsuarioStepDef {
     fun elUsuarioSeEncuentraEnLaDB() {
         val usuarioRecuperado = this.usuarioService.recuperarUsuario(usuario.dni)
         assertEquals(usuario.dni, usuarioRecuperado.dni)
-
     }
 
     @And("^sus datos son \"([^\"]*)\", \"([^\"]*)\", (\\d+)$")
@@ -57,4 +59,20 @@ class RegistrarUnUsuarioStepDef {
         assertEquals(usuario.apellido, usuarioRecuperado.apellido)
         assertEquals(usuario.dni, usuarioRecuperado.dni)
     }
+
+
+    @When("^se quiere registrar un usuario$")
+    fun seQuiereRegistrarUnUsuarioConDniInvalido(){
+        try {
+            this.usuarioService.crearUsuario(usuario)
+        } catch(e: UsuarioConDniInvalidoException){
+            exceptionUsuarioConDniInvalidoException = e
+        }
+    }
+
+    @Then("^el usuario no se puede registrar por ingresar un dni invalido$")
+    fun elUsuarioNoSePuedeRegistrarPorIngresarUnDniInvalido(){
+        assertNotNull(exceptionUsuarioConDniInvalidoException)
+    }
+
 }

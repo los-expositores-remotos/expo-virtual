@@ -8,3 +8,10 @@ Feature: Registro de usuario
     Then el usuario se encuentra en la DB
     And sus datos son "nombre", "apellido", 39484178
 
+  Scenario: Si el usuario ingresa un dni inválido se le notifica y no puede registrarse
+    Given un nombre "nombre"
+    Given un apellido "apellido"
+    Given un dni 84178
+    When se quiere registrar un usuario
+    Then el usuario no se puede registrar por ingresar un dni invalido
+
