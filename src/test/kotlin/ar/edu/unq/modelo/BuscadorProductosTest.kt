@@ -4,7 +4,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class ModelTest {
+class BuscadorProductosTest {
 
     lateinit var proveedorA: Proveedor
     lateinit var proveedorB: Proveedor
@@ -24,58 +24,8 @@ class ModelTest {
     }
 
     @Test
-    fun addProductoToProveedor() {
-        Assert.assertEquals(0, proveedorA.productos.count())
-        proveedorA.addProduct(productoA)
-        Assert.assertEquals(1, proveedorA.productos.count())
-    }
-
-    @Test
-    fun removeProductToProvider() {
-        proveedorA.addProduct(productoA)
-        Assert.assertEquals(1, proveedorA.productos.count())
-        proveedorA.removeProduct(productoA)
-        Assert.assertEquals(0, proveedorA.productos.count())
-    }
-
-    @Test
-    fun addImageToProduct() {
-        Assert.assertEquals(0, productoA.listImages.count())
-        productoA.addImage("urlfalsa123")
-        Assert.assertEquals(1, productoA.listImages.count())
-        val urlImagesList = listOf("urlfalsa1234", "urlfalsa12345", "urlfalsa123456")
-        productoA.addImage(urlImagesList)
-        Assert.assertEquals(4, productoA.listImages.count())
-    }
-
-    @Test
-    fun removeStockToProduct() {
-        productoA.removeStock(2)
-        Assert.assertEquals(5, productoA.stock)
-    }
-
-    @Test
-    fun getProductDescription() {
-        Assert.assertEquals("A electric guitar", productoA.description)
-    }
-
-    @Test
-    fun getProductItemPrice() {
-        Assert.assertEquals(100, productoA.itemPrice)
-    }
-
-    @Test
-    fun getProductPromotionalItemPrice() {
-        Assert.assertEquals(10, productoA.promotionalPrice)
-    }
-
-    @Test
-    fun getProductProviderId() {
-        Assert.assertEquals(proveedorA.id, productoA.idProveedor)
-    }
-
-    @Test
     fun getResultFromProductoSearch() {
+        productoA.addTag("Guitar")
         val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC))
         Assert.assertEquals("Les Paul", resultList.first().itemName)
         Assert.assertEquals("Explorer", resultList[1].itemName)

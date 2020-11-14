@@ -34,7 +34,7 @@ class CargaDeProductosStepdefs: AuxProdStepDefs() {
 
     @Given("^un precio promocional (\\d+)$")
     fun unPrecioPromocional(precioPromocional: Int) {
-        this.productoA.promotionalPrice = precioPromocional!!
+        this.productoA.promotionalPrice = precioPromocional
     }
 
     @When("^creo un producto con estos datos$")

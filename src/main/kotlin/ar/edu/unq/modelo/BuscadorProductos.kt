@@ -33,7 +33,8 @@ object BuscadorProductos {
 
     fun contienePalabrasDeLaDescripcion(texto: String, palabrasDeLaDescripcion: List<String>): Boolean {
         for (palabra in palabrasDeLaDescripcion) {
-            if (palabra != "" && texto.contains(palabra, ignoreCase = true)) {
+            if (palabra != " " && texto.contains(palabra, ignoreCase = true)) {
+                println(palabra)
                 return true
             }
         }

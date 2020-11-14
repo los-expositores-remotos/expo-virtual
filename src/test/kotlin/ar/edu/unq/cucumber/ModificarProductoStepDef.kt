@@ -45,7 +45,7 @@ class ModificarProductoStepDef{
 
     @Given("^Un precio promocional (\\d+)$")
     fun unPrecioPromocional(precioPromocional: Int) {
-        this.productoA.promotionalPrice = precioPromocional!!
+        this.productoA.promotionalPrice = precioPromocional
     }
 
     @When("^Cuando modifico su nombre por \"([^\"]*)\"$")
@@ -63,7 +63,7 @@ class ModificarProductoStepDef{
 
     @When("^El producto cargado \"([^\"]*)\" se encuentra en la base de datos$")
     fun elProductoSeEncuentraEnLaBaseDeDatos(nombreProducto: String?) {
-        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString(), productoA.itemName!!)
+        val productoRecuperado = productoService.obtenerProducto(proveedorA.id.toString(), productoA.itemName)
         assertEquals(nombreProducto, productoRecuperado.itemName)
     }
 
