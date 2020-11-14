@@ -3,6 +3,7 @@ import {useState} from "react";
 import '../styles/ProveedorConProductos.css'
 import M from 'materialize-css'
 import {Carousel} from 'react-materialize'
+import ProductCard from "./ProductCard";
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
@@ -13,32 +14,6 @@ const ProveedorConProductos = (props) => {
   const company = props.company
     
   const [page, setPage] = useState(0)
-
-
-const imagesOfProducts = (product) =>{
-  //console.log(product)
-const images = product.images
-
-return (
-   
-  <Carousel
-  carouselId="Carousel-2"
-  images={images}
-  options={{
-    dist: -100,
-    duration: 200,
-    fullWidth: false,
-    indicators: false,
-    noWrap: false,
-    numVisible: 5,
-    onCycleTo: null,
-    padding: 0,
-    shift: 0
-  }}
-/>
-   
-)
-}
 
 
 const listOfProducts = () => {
@@ -66,23 +41,7 @@ const listOfProducts = () => {
   
   const result = res.map((product) => {
       return (
-            <div className="col s3" id='cardOfProducts'>
-              <div className="card" id="cardId">
-                <div className="card-image">
-                  {imagesOfProducts(product)}
-                  <span className="card-title">{product.itemName}</span>
-                </div>
-                <div className="card-content">
-                  <p>{product.description}</p>
-                  <p>Stock: {product.stock}</p>
-                  <p>Precio: {product.itemPrice}</p>
-                  <p>Precio promocional: {product.promotionalPrice}</p>
-                </div>
-                <div className="card-action">
-                  <a href="#">ver</a>
-                </div>
-              </div>
-            </div>
+            <ProductCard product={product}/>
       )
     }
     )
