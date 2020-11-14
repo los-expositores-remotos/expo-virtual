@@ -15,33 +15,21 @@ class MongoSessionFactoryProviderTest {
 
     }
 
-    @Test(expected = DataBaseNameNotSettedException::class)
-    fun testAlPedirInstanciaSinSetearPreviamenteLaBaseDeDatosLanzaUnaExcepcion() {
-        MongoSessionFactoryProvider.destroy()
-        MongoSessionFactoryProvider.instance
+    @Test
+    fun testSePuedeObtenerUnaBaseDeDatosSabiendoSuNombre(){
+        val dataBaseName = "ElPepeDataBase"
+        assertEquals(dataBaseName, MongoSessionFactoryProvider.instance.getDatabase(dataBaseName).name)
+        MongoSessionFactoryProvider.instance.getDatabase(dataBaseName).drop()
     }
 
     @Test
-    fun testPedirUnaInstanciaConUnaBaseDeDatosYaSeteada() {
-        MongoSessionFactoryProvider.destroy()
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
+    fun siElSessionFactoryProviderNoEsDestruidoReutilizaLaInstancia() {
         val sessionFactoryProvider = MongoSessionFactoryProvider.instance
-        assertEquals("PepitoDataBase" ,sessionFactoryProvider.getDatabase().name)
-    }
-
-    @Test
-    fun testAlSetearElDataBaseNameSeteoLaBaseDeDatosALaQueMeConecto() {
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
-        var sessionFactoryProvider = MongoSessionFactoryProvider.instance
-        assertEquals("PepitoDataBase" ,sessionFactoryProvider.getDatabase().name)
-        MongoSessionFactoryProvider.dataBaseName = "ElPepeDataBase"
-        sessionFactoryProvider = MongoSessionFactoryProvider.instance
-        assertEquals("ElPepeDataBase" ,sessionFactoryProvider.getDatabase().name)
+        assertEquals(sessionFactoryProvider, MongoSessionFactoryProvider.instance)
     }
 
     @Test
     fun testAlDestruirElSessionFactoryProviderSeDestruyeTambienLaSession() {
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
         val sessionFactoryProvider = MongoSessionFactoryProvider.instance
         sessionFactoryProvider.createSession()
         assertNotNull(sessionFactoryProvider.session)
@@ -50,22 +38,18 @@ class MongoSessionFactoryProviderTest {
     }
 
     @Test
-    fun testEsPosibleDestruirElSessionFactoryProviderCuandoYaFueDestruido() {
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
+    fun testAlPedirUnaInstanciaLuegoDeDestruirElSessionFactoryProviderSeGeneraUnaNueva() {
         val sessionFactoryProvider = MongoSessionFactoryProvider.instance
         MongoSessionFactoryProvider.destroy()
-        MongoSessionFactoryProvider.destroy()
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
         assertNotEquals(sessionFactoryProvider, MongoSessionFactoryProvider.instance)
     }
 
-    @After
-    fun deleteAll() {
-        MongoSessionFactoryProvider.dataBaseName = "PepitoDataBase"
-        var sessionFactoryProvider = MongoSessionFactoryProvider.instance
-        sessionFactoryProvider.getDatabase().drop()
-        MongoSessionFactoryProvider.dataBaseName = "ElPepeDataBase"
-        sessionFactoryProvider = MongoSessionFactoryProvider.instance
-        sessionFactoryProvider.getDatabase().drop()
+    @Test
+    fun testEsPosibleDestruirElSessionFactoryProviderCuandoYaFueDestruido() {
+        val sessionFactoryProvider = MongoSessionFactoryProvider.instance
+        MongoSessionFactoryProvider.destroy()
+        MongoSessionFactoryProvider.destroy()
+        assertNotEquals(sessionFactoryProvider, MongoSessionFactoryProvider.instance)
     }
+
 }

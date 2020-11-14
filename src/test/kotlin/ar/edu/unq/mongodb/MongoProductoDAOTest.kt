@@ -20,7 +20,7 @@ class MongoProductoDAOTest : GenericMongoDAOTest<Producto>(MongoProductoDAOImpl(
 
     override fun deleteColection() {
         super.deleteColection()
-        val database = TransactionRunner.getTransaction().sessionFactoryProvider.getDatabase()
+        val database = TransactionRunner.getTransaction().dataBase
         database.getCollection("Proveedor").drop()
     }
 

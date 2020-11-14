@@ -83,12 +83,10 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 //    }
 
     protected fun getDatabase(): MongoDatabase{
-        val database = TransactionRunner.getTransaction().sessionFactoryProvider.getDatabase()
-        return database
+        return TransactionRunner.getTransaction().dataBase
     }
 
     private fun sessionCheck(): ClientSession{
-        val session: ClientSession = TransactionRunner.getTransaction().currentSession
-        return session
+        return TransactionRunner.getTransaction().currentSession
     }
 }

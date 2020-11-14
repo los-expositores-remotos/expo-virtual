@@ -49,7 +49,7 @@ abstract class GenericMongoDAOTest<T>(protected val dao: GenericMongoDAO<T>) {
     abstract fun encontrarItemsQueCumplenPropiedad()
 
     open fun deleteColection(){
-        val database = TransactionRunner.getTransaction().sessionFactoryProvider.getDatabase()
+        val database = TransactionRunner.getTransaction().dataBase
         database.getCollection(this.dao.entityType.simpleName).drop()
     }
 

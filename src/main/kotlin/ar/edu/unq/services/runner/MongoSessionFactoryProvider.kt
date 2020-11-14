@@ -11,9 +11,8 @@ import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.PojoCodecProvider
 
-class MongoSessionFactoryProvider(databasename: String) {
+class MongoSessionFactoryProvider() {
     private var client : MongoClient
-    private var dataBase : MongoDatabase
     var session : ClientSession? = null
 
     init {
@@ -28,22 +27,15 @@ class MongoSessionFactoryProvider(databasename: String) {
                 .applyConnectionString(connectionString)
                 .build()
         client = MongoClients.create(settings)
-        dataBase = client.getDatabase(databasename)
     }
 
     companion object {
 
         private var INSTANCE: MongoSessionFactoryProvider? = null
-        var dataBaseName: String? = null
         val instance: MongoSessionFactoryProvider
             get() {
-                val databasename: String = dataBaseName ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
-                val sessionFactoryProvider: MongoSessionFactoryProvider = INSTANCE ?: MongoSessionFactoryProvider(databasename)
-                if(sessionFactoryProvider.getDatabase().name != databasename){
-                    sessionFactoryProvider.dataBase = sessionFactoryProvider.client.getDatabase(databasename)
-                }
-                INSTANCE = sessionFactoryProvider
-                return sessionFactoryProvider
+                INSTANCE = INSTANCE ?: MongoSessionFactoryProvider()
+                return  INSTANCE!!
             }
 
         fun destroy() {
@@ -52,12 +44,11 @@ class MongoSessionFactoryProvider(databasename: String) {
                 INSTANCE!!.session = null
             }
             INSTANCE = null
-            dataBaseName = null
         }
     }
 
-    fun getDatabase(): MongoDatabase{
-        return dataBase
+    fun getDatabase(databasename: String): MongoDatabase{
+        return this.client.getDatabase(databasename)
     }
 
     fun createSession(): ClientSession {

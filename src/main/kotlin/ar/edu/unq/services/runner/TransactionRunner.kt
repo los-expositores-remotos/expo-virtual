@@ -1,8 +1,10 @@
 package ar.edu.unq.services.runner
 
+import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
 import ar.edu.unq.services.runner.exceptions.NoSessionContextException
 import ar.edu.unq.services.runner.exceptions.NoTransactionsException
 import com.mongodb.client.ClientSession
+import com.mongodb.client.MongoDatabase
 
 interface Transaction {
     fun start(dataBaseType: DataBaseType)
@@ -16,6 +18,7 @@ class MongoDBTransaction: Transaction {
         private var staticSessionFactoryProvider: MongoSessionFactoryProvider? = null
     }
 
+    private var dataBaseName: String? = null
     val currentSession: ClientSession
         get() {
             return session ?: throw NoSessionContextException("No hay una sesión en el contexto")
@@ -24,9 +27,15 @@ class MongoDBTransaction: Transaction {
         get() {
             return staticSessionFactoryProvider ?: throw NoSessionContextException("No hay una sesión en el contexto")
         }
+    val dataBase: MongoDatabase
+        get(){
+            val databasename = this.dataBaseName ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
+            return this.sessionFactoryProvider.getDatabase(databasename)
+        }
 
     override fun start(dataBaseType: DataBaseType) {
-        staticSessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
+        this.dataBaseName = dataBaseType.databasename
+        staticSessionFactoryProvider = MongoSessionFactoryProvider.instance
         session = sessionFactoryProvider.createSession()
         currentSession.startTransaction()
     }
@@ -34,6 +43,7 @@ class MongoDBTransaction: Transaction {
     override fun commit() {
         currentSession.commitTransaction()
         currentSession.close()
+        dataBaseName = null
         staticSessionFactoryProvider = null
         session = null
     }
@@ -41,6 +51,7 @@ class MongoDBTransaction: Transaction {
     override fun rollback() {
         currentSession.abortTransaction()
         currentSession.close()
+        dataBaseName = null
         staticSessionFactoryProvider = null
         session = null
     }
@@ -55,10 +66,6 @@ enum class DataBaseType {
         override val databasename: String
             get() = "produccionback"
     };
-    fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-        MongoSessionFactoryProvider.dataBaseName = this.databasename
-        return MongoSessionFactoryProvider.instance
-    }
 
     abstract val databasename: String
 }
