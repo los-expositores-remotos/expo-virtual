@@ -3,10 +3,10 @@ package ar.edu.unq.modelo
 object BuscadorProductos {
 
     private fun cantidadPalabrasContenidasEnTexto(textoDeBusqueda: String, texto: String): Int {
-        return cantidadDeItemsContenidasEnTexto(palabrasContenidasEnTexto(textoDeBusqueda), texto)
+        return cantidadDeItemsContenidasEnTexto(palabrasContenidasEnTexto(textoDeBusqueda).toList(), texto)
     }
 
-    private fun cantidadDeItemsContenidasEnTexto(palabras: Iterable<String>, texto: String): Int {
+    private fun cantidadDeItemsContenidasEnTexto(palabras: List<String>, texto: String): Int {
         val bloqueMap = { palabra: String -> palabra.toLowerCase() }
         val bloqueCount = { palabra: String -> texto.toLowerCase().contains(palabra) }
         return palabras.map(bloqueMap).toSet().count(bloqueCount)
