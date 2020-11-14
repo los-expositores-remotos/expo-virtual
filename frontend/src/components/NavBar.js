@@ -1,5 +1,5 @@
-import React from "react";
-import {Link} from 'react-router-dom'
+import React, { useState } from "react";
+import {Link, useHistory} from 'react-router-dom'
 import logo from '../images/logo.png'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
@@ -11,8 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 const NavBar = () => {
-    
+    const [textsearch, setTextSearch ] = useState('')
+    const history = useHistory()
+    const handleSubmit = event => {
+        event.preventDefault();
 
+        history.push(`/resultsearch/${textsearch}`)
+      };
       return (
     
        <div className="NavBar"> 
@@ -21,12 +26,12 @@ const NavBar = () => {
                 <img id='imgLogo' src={logo}/>
                </div>
                <div className="col s6">
-                   <form className="form-inline">
-                       <input className="form-control sm-2" id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
+                   <form className="form-inline" onSubmit={handleSubmit}>
+                       <input className="form-control sm-2" onKeyPress={event => event.key === 'Enter'   } onChange={(e)=> setTextSearch(e.target.value)} value = {textsearch} id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
                    </form>
                </div>
                <div className="col s1">
-                   <Link to="/">
+                   <Link to={`/resultsearch/${textsearch}`}>
                        <i className="small material-icons left" id="iconSearch">search</i>
                    </Link>     
                </div>
@@ -38,6 +43,11 @@ const NavBar = () => {
                <div className="col s1">
                    <Link to="/myaccount">
                        <i className="small material-icons left" id="iconSearch">account_box</i>
+                   </Link>     
+               </div>
+               <div className="col s1">
+                   <Link to="/shoppingcart">
+                       <i className="small material-icons left" id="iconSearch">shopping_cart</i>
                    </Link>     
                </div>
            </div>           
