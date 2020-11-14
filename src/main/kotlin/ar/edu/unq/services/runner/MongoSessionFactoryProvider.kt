@@ -1,5 +1,6 @@
 package ar.edu.unq.services.runner
 
+import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.ClientSession
@@ -10,10 +11,9 @@ import org.bson.codecs.configuration.CodecRegistries
 import org.bson.codecs.configuration.CodecRegistry
 import org.bson.codecs.pojo.PojoCodecProvider
 
-class MongoSessionFactoryProvider(databasename: String) {
-    var client : MongoClient
-    private var dataBase : MongoDatabase
-    val session : ClientSession? = null
+class MongoSessionFactoryProvider() {
+    private var client : MongoClient
+    var session : ClientSession? = null
 
     init {
         val codecRegistry: CodecRegistry = CodecRegistries.fromRegistries(
@@ -27,38 +27,33 @@ class MongoSessionFactoryProvider(databasename: String) {
                 .applyConnectionString(connectionString)
                 .build()
         client = MongoClients.create(settings)
-        dataBase = client.getDatabase(databasename)
     }
 
     companion object {
 
         private var INSTANCE: MongoSessionFactoryProvider? = null
-        var dataBaseName: String? = null
         val instance: MongoSessionFactoryProvider
             get() {
-                if (INSTANCE == null) {
-                    INSTANCE =
-                        MongoSessionFactoryProvider(
-                            dataBaseName
-                                ?: throw Exception("La base de datos no esta definida")
-                        )
-                }
-                return INSTANCE!!
+                INSTANCE = INSTANCE ?: MongoSessionFactoryProvider()
+                return  INSTANCE!!
             }
 
         fun destroy() {
             if (INSTANCE != null && INSTANCE!!.session != null) {
                 INSTANCE!!.client.close()
+                INSTANCE!!.session = null
             }
             INSTANCE = null
         }
     }
 
-    fun getDatabase(): MongoDatabase{
-        return dataBase
+    fun getDatabase(databasename: String): MongoDatabase{
+        return this.client.getDatabase(databasename)
     }
 
     fun createSession(): ClientSession {
-        return this.client.startSession()
+        val session = this.client.startSession()
+        this.session = session
+        return session
     }
 }

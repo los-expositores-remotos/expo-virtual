@@ -16,7 +16,9 @@ abstract class ModelObjectWithBsonId {
         return true
     }
 
-    protected abstract fun castearAMiTipo(other: Any): ModelObjectWithBsonId
+    fun castearAMiTipo(other: Any): ModelObjectWithBsonId {
+        return other as ModelObjectWithBsonId
+    }
 
     override fun hashCode(): Int {
         return id.hashCode()

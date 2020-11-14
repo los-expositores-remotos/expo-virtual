@@ -43,14 +43,6 @@ class UsuarioServiceImpl(
         return TransactionRunner.runTrx({ this.usuarioDAO.getAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }
 
-    override fun recuperarAdmin(userName: String?, password: String?): Admin {
-        return TransactionRunner.runTrx({
-            this.adminDAO.findEq("userName",userName).filter{
-                it.password == password
-            }.firstOrNull() ?: throw AdministradorInexistenteException("El Admin no existe")
-        }, listOf(TransactionType.MONGO), this.dataBaseType)
-    }
-
     private fun obtenerUsuario(id: String): Usuario{
         val usuarioRecuperado = this.usuarioDAO.get(id)
         return usuarioRecuperado?:throw UsuarioInexistenteException("El usuario no existe")
