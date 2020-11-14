@@ -3,25 +3,23 @@ package ar.edu.unq.modelo
 object BuscadorProductos {
 
     private fun cantidadPalabrasContenidasEnTexto(textoDeBusqueda: String, texto: String): Int {
-        return cantidadDeItemsCoincidentes(palabrasContenidasEnTexto(textoDeBusqueda), palabrasContenidasEnTexto(texto))
+        return cantidadDeItemsContenidasEnTexto(palabrasContenidasEnTexto(textoDeBusqueda), texto)
     }
 
-    private fun cantidadDeItemsCoincidentes(palabras1: Iterable<String>, palabras2: Iterable<String>): Int {
-        val palabrasMinuscula1 = palabras1.map { it.toLowerCase() }.toSet()
-        val palabrasMinuscula2 = palabras2.map { it.toLowerCase() }.toSet()
-        return palabrasMinuscula1.intersect(palabrasMinuscula2).count()
+    private fun cantidadDeItemsContenidasEnTexto(palabras: Iterable<String>, texto: String): Int {
+        return palabras.map { it.toLowerCase() }.toSet().count { texto.toLowerCase().contains(it) }
     }
 
     private fun palabrasContenidasEnTexto(texto: String): Iterable<String> {
-        val palabras = texto.split(" ").toMutableList()
-        palabras.removeAll(listOf(""))
-        return palabras
+//        val palabras = texto.split(" ").toMutableList()
+//        palabras.removeAll(listOf(""))
+        return texto.split(" ").toMutableList().filter { it != "" }
     }
 
     fun filtrar(texto: String, productos: Collection<Producto>): MutableList<Producto> {
         return productos.map {
             Pair(
-                    cantidadPalabrasContenidasEnTexto(texto, it.itemName) + cantidadDeItemsCoincidentes(it.listTags, palabrasContenidasEnTexto(texto)) + cantidadPalabrasContenidasEnTexto(texto, it.description),
+                    cantidadPalabrasContenidasEnTexto(texto, it.itemName) + cantidadDeItemsContenidasEnTexto(it.listTags, texto) + cantidadPalabrasContenidasEnTexto(texto, it.description),
                     it
             )
         }.filter { it.first > 0 }.sortedBy {  it.second.itemName }.sortedByDescending { it.first }.map { it.second }.toMutableList()
