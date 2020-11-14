@@ -10,13 +10,14 @@ object BuscadorProductos {
         val palabrasMinusculas = palabras.map { it.toLowerCase() }
         val conjuntoPalabrasMinusculas = palabrasMinusculas.toSet()
         return conjuntoPalabrasMinusculas.count {
-            texto.contains(it, ignoreCase = true)
+            texto.toLowerCase().contains(it)
         }
     }
 
     private fun palabrasContenidasEnTexto(texto: String): Iterable<String> {
-        val palabras = texto.split(" ")
-        return palabras.filter { it != "" }
+        val palabras = texto.split(" ").toMutableList()
+        palabras.removeAll(listOf(""))
+        return palabras
     }
 
     fun filtrar(texto: String, productos: Collection<Producto>): MutableList<Producto> {
