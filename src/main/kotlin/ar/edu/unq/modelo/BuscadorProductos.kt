@@ -2,15 +2,15 @@ package ar.edu.unq.modelo
 
 object BuscadorProductos {
 
-    fun cantidadPalabrasContenidasEnTexto(textoDeBusqueda: String, texto: String): Int {
+    private fun cantidadPalabrasContenidasEnTexto(textoDeBusqueda: String, texto: String): Int {
         return cantidadDeItemsContenidasEnTexto(palabrasContenidasEnTexto(textoDeBusqueda), texto)
     }
 
-    fun cantidadDeItemsContenidasEnTexto(palabras: Iterable<String>, texto: String): Int {
+    private fun cantidadDeItemsContenidasEnTexto(palabras: Iterable<String>, texto: String): Int {
         return palabras.map { it.toLowerCase() }.toSet().count { texto.contains(it, ignoreCase = true) }
     }
 
-    fun palabrasContenidasEnTexto(texto: String): Iterable<String> {
+    private fun palabrasContenidasEnTexto(texto: String): Iterable<String> {
         return texto.split(" ").filter { it != "" }
     }
 

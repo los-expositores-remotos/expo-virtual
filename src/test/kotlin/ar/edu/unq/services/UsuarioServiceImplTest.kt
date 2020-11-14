@@ -16,6 +16,7 @@ import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionType
+import org.bson.types.ObjectId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -32,15 +33,12 @@ class UsuarioServiceImplTest {
     //fun recuperarATodosLosUsuarios(): Collection<Usuario> {
 
     private lateinit var usuario: Usuario
-    private lateinit var admin: Admin
     private val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
-    private val adminService: AdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.TEST)
     private lateinit var usuarios : MutableSet<Usuario>
 
     @Before
     fun setUp(){
         this.usuario = Usuario("Tobias", "Towers", 39484178)
-        this.admin = Admin ("agustina", "pinero")
         this.usuarioService.crearUsuario(this.usuario)
         this.usuarios = setOf(this.usuario).toMutableSet()
     }
@@ -72,9 +70,9 @@ class UsuarioServiceImplTest {
         this.usuarioService.recuperarUsuario(28380637)
     }
 
-    @Test(expected = AdministradorInexistenteException::class)
-    fun testRecuperarUnAdminInexitente(){
-        this.adminService.recuperarAdmin("sarasa", "sanchez")
+    @Test(expected = UsuarioInexistenteException::class)
+    fun testRecuperarUnUsuarioInexistentePorId(){
+        this.usuarioService.recuperarUsuario(ObjectId().toString())
     }
 
     @Test

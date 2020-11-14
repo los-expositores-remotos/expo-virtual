@@ -6,6 +6,7 @@ import org.junit.Test
 
 class BuscadorProductosTest {
 
+    lateinit var productoD: Producto
     lateinit var proveedorA: Proveedor
     lateinit var proveedorB: Proveedor
     lateinit var proveedorC: Proveedor
@@ -21,12 +22,13 @@ class BuscadorProductosTest {
         productoA = Producto(proveedorA.id, "Les Paul", "A electric guitar", 7, 100, 10)
         productoB = Producto(proveedorA.id, "Stratocaster", "Red guitar", 7, 1000, 100)
         productoC = Producto(proveedorA.id, "Explorer", "Black electric guitar", 7, 1000000, 10000)
+        productoD = Producto(proveedorA.id, "", "", 7, 1000000, 10000)
     }
 
     @Test
     fun getResultFromProductoSearch() {
         productoA.addTag("Guitar")
-        val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC))
+        val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC, productoD))
         Assert.assertEquals("Les Paul", resultList.first().itemName)
         Assert.assertEquals("Explorer", resultList[1].itemName)
     }
