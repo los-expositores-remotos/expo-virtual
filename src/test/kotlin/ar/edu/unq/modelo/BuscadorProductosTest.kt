@@ -34,7 +34,14 @@ class BuscadorProductosTest {
         productoA.addTag("Guitar")
         productoB.addTag("Hola")
         val resultList = BuscadorProductos.filtrar("A   electric guitar", listOf(productoA, productoB, productoC, productoD, productoE, productoF))
-        Assert.assertEquals("Les Paul", resultList.first().itemName)
-        Assert.assertEquals("Explorer", resultList[1].itemName)
+        Assert.assertEquals(listOf(productoA, productoC, productoB, productoD), resultList)
+    }
+
+    @Test
+    fun testBusquedaConTags() {
+        productoF.addTag("guitar")
+        productoF.addTag("electric")
+        val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC, productoD, productoE, productoF))
+        Assert.assertEquals(listOf(productoA, productoC, productoB, productoF, productoD), resultList)
     }
 }
