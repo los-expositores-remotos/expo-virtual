@@ -54,4 +54,6 @@ data class ProductRegisterMapper(val idProveedor: String?,
                                  val itemPrice: Int?,
                                  val promotionalPrice: Int?)
 
+data class ProductListRegisterMapper(val products: Collection<ProductRegisterMapper>)
+
 data class OkResultMapper(val result: String)
