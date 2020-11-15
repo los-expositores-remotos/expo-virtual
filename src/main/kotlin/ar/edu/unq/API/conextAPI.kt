@@ -65,7 +65,7 @@ fun main(args: Array<String>) {
         }
 
         path("/user") {
-            get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN))
+            get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN, Roles.ANYONE))
         }
 /*            path("search") {
             get(searchController::searchByText, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
@@ -73,18 +73,18 @@ fun main(args: Array<String>) {
 
         path("banners") {
             get(bannerController::banners, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-            post(bannerController::addBanner, mutableSetOf<Role>(Roles.ADMIN))
+            post(bannerController::addBanner, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path(":bannerId") {
-                delete(bannerController::deleteBanner, mutableSetOf<Role>(Roles.ADMIN))
+                delete(bannerController::deleteBanner, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path(":bannerCategory"){
-                get(bannerController::bannersByCategory, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+                get(bannerController::bannersByCategory, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN, Roles.ANYONE))
             }
         }
 
         path("companies") {
             get(companyController::allCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-            post(companyController::createSupplier, mutableSetOf<Role>(Roles.ADMIN))
+            post(companyController::createSupplier, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path("images") {
                 get(companyController::imagesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
@@ -92,32 +92,34 @@ fun main(args: Array<String>) {
                 get(companyController::namesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path("massive") {
-                post(companyController::createMassive, mutableSetOf<Role>(Roles.ADMIN))
+                post(companyController::createMassive, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path(":supplierId") {
                 get(companyController::getSupplierById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-                delete(companyController::deleteSupplier, mutableSetOf<Role>(Roles.ADMIN))
-                put(companyController::modifySupplier, mutableSetOf<Role>(Roles.ADMIN))
+                delete(companyController::deleteSupplier, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+                put(companyController::modifySupplier, mutableSetOf<Role>(Roles.ANYONE, Roles.ADMIN))
             }
         }
 
         path("products") {
             get(productController::allProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-            post(productController::addProduct, mutableSetOf<Role>(Roles.ADMIN))
+            post(productController::addProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path("search") {
                 get(productController::searchProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path(":productId") {
                 get(productController::getProductById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-                delete(productController::deleteProduct, mutableSetOf<Role>(Roles.ADMIN))
-                put(productController::modifyProduct, mutableSetOf<Role>(Roles.ADMIN))
+                delete(productController::deleteProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+                put(productController::modifyProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path("supplier") {
                 path(":supplierId") {
                     get(productController::getProductsBySuppId, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
                 }
             }
+            path("massive") {
+                post(productController::createMassive, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+            }
         }
     }
 }
-
