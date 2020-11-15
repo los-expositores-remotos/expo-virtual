@@ -29,6 +29,7 @@ class OrdenarProductosPorPreciosStepdefs {
         val productoD = Producto(proveedorA.id, productoDName!!, "A electric guitar", 7, 80, 800000)
         val productoE = Producto(proveedorA.id, productoEName!!, "A electric guitar", 7, 90, 800000)
         val productoF = Producto(proveedorA.id, productoFName!!, "A electric guitar", 7, 100, 800000)
+
         println(productoA.itemName)
         proveedorA.addProduct(productoA)
         proveedorA.addProduct(productoB)
