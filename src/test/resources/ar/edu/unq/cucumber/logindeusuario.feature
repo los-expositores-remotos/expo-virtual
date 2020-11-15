@@ -1,4 +1,4 @@
-Feature Login de Usuario
+Feature: Login de Usuario
 
   Scenario: Se loguea con los datos ingresados
     Given un dni del usuario 39484178

@@ -14,6 +14,7 @@ import cucumber.api.java.en.When
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
+
 class LoginUsuarioStepDef {
 
     val usuario = Usuario("Tobias", "Towers", 39484178)
@@ -29,7 +30,7 @@ class LoginUsuarioStepDef {
 
     @Given("^un dni del usuario (\\d+)$")
     fun unDni(dni: Int?) {
-        this.usuario.dni = dni!!
+      this.usuario.dni = dni!!
     }
 
     @When("^el usuario ingresa su dni para loguearse$")
@@ -39,7 +40,7 @@ class LoginUsuarioStepDef {
 
     @Then("^el usuario se loguea$")
     fun elUsuarioSeLoguea() {
-        assertEquals(usuario.dni, usuarioRecuperado.dni)
+       assertEquals(usuario.dni, usuarioRecuperado.dni)
     }
 
     @When("^el usuario intenta loguearse$")

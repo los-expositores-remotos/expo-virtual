@@ -6,6 +6,8 @@ import ar.edu.unq.services.UsuarioService
 import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.impl.exceptions.UsuarioConDniInvalidoException
 import ar.edu.unq.services.runner.DataBaseType
+import cucumber.api.Scenario
+import cucumber.api.java.After
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
@@ -68,6 +70,11 @@ class RegistrarUnUsuarioStepDef {
     @Then("^el usuario no se puede registrar por ingresar un dni invalido$")
     fun elUsuarioNoSePuedeRegistrarPorIngresarUnDniInvalido(){
         assertNotNull(exceptionUsuarioConDniInvalidoException)
+    }
+
+    @After
+    fun doSomethingAfter(scenario: Scenario?) {
+        usuarioService.deleteAll()
     }
 
 }
