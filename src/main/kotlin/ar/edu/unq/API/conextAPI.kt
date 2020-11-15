@@ -5,10 +5,7 @@ import ar.edu.unq.API.TokenJWT
 import ar.edu.unq.API.controllers.*
 import ar.edu.unq.dao.mongodb.*
 import ar.edu.unq.modelo.Admin
-import ar.edu.unq.services.impl.BannerServiceImpl
-import ar.edu.unq.services.impl.ProductoServiceImpl
-import ar.edu.unq.services.impl.ProveedorServiceImpl
-import ar.edu.unq.services.impl.UsuarioServiceImpl
+import ar.edu.unq.services.impl.*
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
 import ar.edu.unq.services.runner.TransactionType
@@ -28,6 +25,7 @@ fun main(args: Array<String>) {
         ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
     val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.PRODUCCION)
     val backendUsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.PRODUCCION)
+    val backendAdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.PRODUCCION)
     val tokenJWT = TokenJWT()
     val jwtAccessManager = JWTAccessManager(tokenJWT, backendUsuarioService)
     val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
@@ -35,7 +33,7 @@ fun main(args: Array<String>) {
     val companyController = CompanyController(backendProveedorService, backendProductoService)
 /*    val searchController = SearchController(backendProveedorService, backendProductoService)*/
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
-    val adminController = AdminController(backendUsuarioService, tokenJWT, jwtAccessManager)
+    val adminController = AdminController(backendAdminService, tokenJWT, jwtAccessManager)
 
  //   println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
 

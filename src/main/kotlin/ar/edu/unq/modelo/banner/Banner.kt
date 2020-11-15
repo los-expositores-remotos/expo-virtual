@@ -13,7 +13,7 @@ class Banner : ModelObjectWithBsonId {
         this.category = category
     }
 
-    override fun castearAMiTipo(other: Any): Banner {
-        return other as Banner
-    }
+//    override fun castearAMiTipo(other: Any): Banner {
+//        return other as Banner
+//    }
 }

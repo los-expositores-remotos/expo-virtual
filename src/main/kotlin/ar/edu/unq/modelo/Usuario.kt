@@ -18,7 +18,7 @@ class Usuario : ModelObjectWithBsonId {
         this.apellido = apellido
         this.dni = dni
     }
-    override fun castearAMiTipo(other: Any): Usuario {
-        return  other as Usuario
-    }
+//    override fun castearAMiTipo(other: Any): Usuario {
+//        return  other as Usuario
+//    }
 }

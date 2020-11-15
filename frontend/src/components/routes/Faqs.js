@@ -80,10 +80,10 @@ const Faqs = () => {
       return (
           <div className="row">
              <div className="col s1">
-                 <img id="imgcorreo"src={imagesC[0].image}/>
+                 <img id="correo"src={imagesC[0].image}/>
              </div>
             <div className="col s1">
-                <img id="imgcorreo2"src={imagesC[1].image}/>
+                <img id="correo2"src={imagesC[1].image}/>
             </div>
           </div>
         )
