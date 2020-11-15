@@ -67,8 +67,8 @@ class RegistrarUnUsuarioStepDef {
         }
     }
 
-    @Then("^el usuario no se puede registrar por ingresar un dni invalido$")
-    fun elUsuarioNoSePuedeRegistrarPorIngresarUnDniInvalido(){
+    @Then("^el usuario no se puede registrar por ingresar un dni menor a un millon$")
+    fun elUsuarioNoSePuedeRegistrarPorIngresarUnDniMenorAUnMillon(){
         assertNotNull(exceptionUsuarioConDniInvalidoException)
     }
 
