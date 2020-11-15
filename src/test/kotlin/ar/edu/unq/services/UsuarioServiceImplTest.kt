@@ -73,7 +73,7 @@ class UsuarioServiceImplTest {
 
     @Test
     fun testRecuperarATodosLosUsuarios(){
-        val usuarioAdrian = Usuario("Adrian", "Cardozo", 1200)
+        val usuarioAdrian = Usuario("Adrian", "Cardozo", 1200000000)
         this.usuarioService.crearUsuario(usuarioAdrian)
         this.usuarios.add(usuarioAdrian)
         val usuariosRecuperados = this.usuarioService.recuperarATodosLosUsuarios().toSet()

@@ -1,16 +1,11 @@
 package ar.edu.unq.cucumber
 
-import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
-import ar.edu.unq.modelo.Admin
 import ar.edu.unq.modelo.Usuario
-import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.UsuarioService
-import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.impl.exceptions.UsuarioConDniInvalidoException
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.PendingException
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
