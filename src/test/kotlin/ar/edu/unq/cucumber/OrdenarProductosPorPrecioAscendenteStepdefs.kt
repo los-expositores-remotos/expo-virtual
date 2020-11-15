@@ -47,7 +47,6 @@ class OrdenarProductosPorPrecioAscendenteStepdefs {
     @Then("^obtengo los productos ordenados por precio$")
     fun obtengoLosProductosOrdenadosPorPrecio() {
         val productoRecuperados = proveedorService.recuperarProveedor(proveedorA.id.toString()).productos.sortedBy { it.itemPrice }
-
         Assert.assertEquals(productoRecuperados, this.productosOrdenados)
     }
 
