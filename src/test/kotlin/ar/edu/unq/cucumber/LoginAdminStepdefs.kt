@@ -49,13 +49,10 @@ class LoginAdminStepdefs {
 
     @When("^el admin intenta loguearse$")
     fun elAdminIntentaLoguearse(){
-        println("pasó por aca1")
         val any = try {
-            println("pasó por aca2")
             this.adminService.recuperarAdmin(admin.userName, admin.password)
 
         } catch (e: AdministradorInexistenteException) {
-            println("pasó por aca3")
             adminInexistenteException = e
 
         }
