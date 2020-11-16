@@ -21,6 +21,8 @@ import UpdateProveedor from './components/AdminPanel/UpdateProveedor'
 import ResultSearch from './components/ResultSearch.js';
 import ShoppingCart from './components/ShoppingCart.js';
 import GlobalState from './components/context/GlobalState'
+import Singin from './components/routes/Singin' 
+import Singup from './components/routes/Singup'
 
 
 //modificacion
@@ -81,6 +83,12 @@ const Routing = () => {
             </Route>
             <Route path="/shoppingcart" component={ShoppingCart}>
               <ShoppingCart />
+            </Route>
+            <Route path="/login" component={Singin}>
+              <Singin />
+            </Route>
+            <Route path="/register" component={Singup}>
+              <Singup />
             </Route>
         </Switch>
       </div>

@@ -1,0 +1,36 @@
+.mycard {
+  width: 40%;
+  height: 44rem;
+  margin-left: 33%;
+  margin-top: 5rem;
+}
+
+#botonLogin {
+  margin-left: 46%;
+  margin-top: 10%;
+}
+
+#H5Register {
+  text-align: end;
+  margin-top: 12%;
+  font-family: -webkit-body;
+  font-size: 126%;
+}
+#linkRegister {
+  color: aliceblue;
+  text-align: end;
+}
+
+.logo-login {
+  width: 30%;
+  margin-left: 37%;
+}
+
+#inputLogin {
+  width: 50%;
+  margin-left: 27%;
+}
+
+#fondoTarjetaLogin {
+  background-color: lightcoral;
+}
