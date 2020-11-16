@@ -7,7 +7,6 @@ import ar.edu.unq.API.client.APIClient
 import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.API.controllers.CompanyController
 import ar.edu.unq.API.controllers.ProductController
-import ar.edu.unq.API.controllers.SearchController
 import ar.edu.unq.API.levantarAPI
 import ar.edu.unq.dao.ProveedorDAO
 import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
@@ -45,19 +44,18 @@ class APITest {
         private const val puerto = 8000
         private val apiClient = APIClient(this.url, this.puerto)
         lateinit var app: Javalin
-        private val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
-        private val backendProductoService =
-            ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
-        private val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.TEST)
-        private val searchController = SearchController(backendProveedorService, backendProductoService)
-        private val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
-        private val productController = ProductController(backendProveedorService, backendProductoService)
-        private val companyController = CompanyController(backendProveedorService, backendProductoService)
+//        private val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
+//        private val backendProductoService =
+//            ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
+//        private val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.TEST)
+//        private val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
+//        private val productController = ProductController(backendProveedorService, backendProductoService)
+//        private val companyController = CompanyController(backendProveedorService, backendProductoService)
 
         @BeforeClass
         @JvmStatic
         fun arrancarAPI() {
-            app = levantarAPI(puerto, bannerController, productController, companyController, searchController)
+            app = levantarAPI(puerto, DataBaseType.TEST)
         }
 
         @AfterClass

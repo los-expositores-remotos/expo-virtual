@@ -12,4 +12,8 @@ class Banner : ModelObjectWithBsonId {
         this.image = image
         this.category = category
     }
+
+//    override fun castearAMiTipo(other: Any): Banner {
+//        return other as Banner
+//    }
 }

@@ -9,6 +9,7 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.exceptions.ProductoInexistenteException
+import ar.edu.unq.services.impl.exceptions.ProveedorExistenteException
 import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import org.bson.types.ObjectId
 
@@ -99,7 +100,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         if(productToSearch!!.isBlank()){
             throw BadRequestResponse("Invalid query - param text is empty")
         }
-        val productsResult= backendProductoService.buscarProductos(productToSearch, listOf())
+        val productsResult= backendProductoService.buscarProductos(productToSearch)
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
@@ -107,5 +108,25 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
                 "Products" to allP
             )
         )
+    }
+    fun createMassive(ctx: Context){
+        try {
+            val newListProducts = ctx.bodyValidator<ProductListRegisterMapper>()
+                    .check(
+                            { it.products.all  { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null }   },
+                            "Invalid body : companyName, companyImage, facebook, instagram and web are required"
+                    )
+                    .get()
+            newListProducts.products.forEach {
+                val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!)
+                product.addImage(it.images!!)
+                println(product.itemName)
+                backendProductoService.nuevoProducto(product)
+            }
+            ctx.status(201)
+            ctx.json(OkResultMapper("ok"))
+        } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
+            throw BadRequestResponse(e.message.toString())
+        }
     }
 }

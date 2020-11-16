@@ -1,6 +1,10 @@
 package ar.edu.unq.services.runner
 
+import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
+import ar.edu.unq.services.runner.exceptions.NoSessionContextException
+import ar.edu.unq.services.runner.exceptions.NoTransactionsException
 import com.mongodb.client.ClientSession
+import com.mongodb.client.MongoDatabase
 
 interface Transaction {
     fun start(dataBaseType: DataBaseType)
@@ -11,58 +15,60 @@ interface Transaction {
 class MongoDBTransaction: Transaction {
     companion object {
         private var session: ClientSession? = null
-        private var sessionFactoryProvider: MongoSessionFactoryProvider? = null
-        val currentSession: ClientSession?
-            get() {
-                if (session == null) {
-                    throw RuntimeException("No hay ninguna session en el contexto")
-                }
-                return session
-            }
+        private var staticSessionFactoryProvider: MongoSessionFactoryProvider? = null
     }
 
+    private var dataBaseName: String? = null
+    val currentSession: ClientSession
+        get() {
+            return session ?: throw NoSessionContextException("No hay una sesión en el contexto")
+        }
+    val sessionFactoryProvider: MongoSessionFactoryProvider
+        get() {
+            return staticSessionFactoryProvider ?: throw NoSessionContextException("No hay una sesión en el contexto")
+        }
+    val dataBase: MongoDatabase
+        get(){
+            val databasename = this.dataBaseName ?: throw DataBaseNameNotSettedException("La base de datos no esta definida")
+            return this.sessionFactoryProvider.getDatabase(databasename)
+        }
+
     override fun start(dataBaseType: DataBaseType) {
-        sessionFactoryProvider = dataBaseType.getSessionFactoryProvider()
-        session = sessionFactoryProvider!!.createSession()
-        session?.startTransaction()
+        this.dataBaseName = dataBaseType.databasename
+        staticSessionFactoryProvider = MongoSessionFactoryProvider.instance
+        session = sessionFactoryProvider.createSession()
+        currentSession.startTransaction()
     }
 
     override fun commit() {
-        session?.commitTransaction()
-        session?.close()
+        currentSession.commitTransaction()
+        currentSession.close()
+        dataBaseName = null
+        staticSessionFactoryProvider = null
         session = null
     }
 
     override fun rollback() {
-        session?.abortTransaction()
-        session?.close()
+        currentSession.abortTransaction()
+        currentSession.close()
+        dataBaseName = null
+        staticSessionFactoryProvider = null
         session = null
     }
-
-    fun sessionFactoryProvider(): MongoSessionFactoryProvider {
-        return sessionFactoryProvider ?: throw Exception("No hay una sesión en el contexto")
-    }
-
-    fun currentSession(): ClientSession{
-        return session ?: throw Exception("No hay una sesión en el contexto")
-    }
-
 }
 
 enum class DataBaseType {
     TEST {
-        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "pruebasbackadrian"
-            return MongoSessionFactoryProvider.instance
-        }
+        override val databasename: String
+            get() = "pruebasback"
     },
+
     PRODUCCION {
-        override fun getSessionFactoryProvider(): MongoSessionFactoryProvider {
-            MongoSessionFactoryProvider.dataBaseName = "produccionback"
-            return MongoSessionFactoryProvider.instance
-        }
+        override val databasename: String
+            get() = "produccionback"
     };
-    abstract fun getSessionFactoryProvider(): MongoSessionFactoryProvider
+
+    abstract val databasename: String
 }
 
 enum class TransactionType {
@@ -82,20 +88,22 @@ object TransactionRunner {
         if(transactions.isNotEmpty()){
             return transactions[0]
         }else{
-            throw Exception("Debe haber al menos una transaccion en curso")
+            throw NoTransactionsException("Debe haber al menos una transaccion en curso")
         }
     }
 
 
-    fun <T> runTrx(bloque: ()->T, types: List<TransactionType> = listOf(), dataBaseType: DataBaseType): T {
+    fun <T> runTrx(bloque: ()->T, types: List<TransactionType>, dataBaseType: DataBaseType): T {
         transactions = types.map { it.getTransaction() }
         try{
             transactions.forEach { it.start(dataBaseType) }
             val result = bloque()
             transactions.forEach { it.commit() }
+            transactions = emptyList()
             return result
         } catch (exception:Throwable){
             transactions.forEach { it.rollback() }
+            transactions = emptyList()
             throw exception
         }
     }

@@ -139,7 +139,7 @@ class ProductoServiceImplTest {
 
     @Test
     fun buscarProductos(){
-        assertEquals(this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les", listOf()).map { it.itemName }.toSet())
+        assertEquals(this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les").map { it.itemName }.toSet())
     }
 
     @After

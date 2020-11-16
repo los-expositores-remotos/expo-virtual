@@ -130,21 +130,6 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         ctx.status(200)
         ctx.json(newestP)
     }
-
-    fun searchCompanies(ctx: Context){
-        val companieToSearch = ctx.queryParam("text")
-        if(companieToSearch!!.isBlank()){
-            throw BadRequestResponse("Invalid query - param text is empty")
-        }
-        val companieResult= backendProveedorService.buscarProveedores(companieToSearch)
-        val allC = aux.proveedorClassListToProveedorViewList(companieResult as MutableCollection<Proveedor>)
-        ctx.status(200)
-        ctx.json(
-            mapOf(
-                "Companies" to allC
-            )
-        )
-    }
 }
 
 //data class BannersRelatedViewMapper(val banners: Collection<BannerRelatedData>)

@@ -1,138 +1,134 @@
 package ar.edu.unq.API
 
-import ar.edu.unq.API.controllers.CompanyController
-import ar.edu.unq.API.controllers.BannerController
-import ar.edu.unq.API.controllers.ProductController
-import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
-import ar.edu.unq.API.controllers.SearchController
-import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
-import ar.edu.unq.services.impl.BannerServiceImpl
-import ar.edu.unq.services.impl.ProductoServiceImpl
-import ar.edu.unq.services.impl.ProveedorServiceImpl
+import ar.edu.unq.API.JWTAccessManager
+import ar.edu.unq.API.TokenJWT
+import ar.edu.unq.API.controllers.*
+import ar.edu.unq.dao.mongodb.*
+import ar.edu.unq.modelo.Admin
+import ar.edu.unq.services.impl.*
 import ar.edu.unq.services.runner.DataBaseType
+import ar.edu.unq.services.runner.TransactionRunner.runTrx
+import ar.edu.unq.services.runner.TransactionType
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
+import io.javalin.core.security.Role
+
+enum class Roles : Role {
+    ANYONE, USER, ADMIN
+}
 
 fun main(args: Array<String>) {
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.PRODUCCION)
+
+    levantarAPI(7000, DataBaseType.PRODUCCION)
+}
+
+fun levantarAPI(port: Int, dataBaseType: DataBaseType): Javalin {
+    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), dataBaseType)
     val backendProductoService =
-        ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.PRODUCCION)
-    val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.PRODUCCION)
-    val searchController = SearchController(backendProveedorService, backendProductoService)
+            ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), dataBaseType)
+    val backendBannerService = BannerServiceImpl(MongoBannerDAOImpl(), dataBaseType)
     val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
 
-    levantarAPI(7000, bannerController, productController, companyController, searchController)
-}
+    val backendUsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), dataBaseType)
+    val backendAdminService = AdminServiceImpl(MongoAdminDAOImpl(), dataBaseType)
+    val tokenJWT = TokenJWT()
+    val jwtAccessManager = JWTAccessManager(tokenJWT, backendUsuarioService)
+/*    val searchController = SearchController(backendProveedorService, backendProductoService)*/
+    val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
+    val adminController = AdminController(backendAdminService, tokenJWT, jwtAccessManager)
 
-fun levantarAPI(port: Int, bannerController: BannerController, productController: ProductController, companyController: CompanyController, searchController: SearchController): Javalin {
+    //   println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
+
+/*    runTrx({
+        MongoAdminDAOImpl().save(Admin("admin","admin"))
+    }, listOf(TransactionType.MONGO),DataBaseType.PRODUCCION)*/
+
+
 
     val app = Javalin.create {
         it.defaultContentType = "application/json"
+        it.accessManager(jwtAccessManager)
         it.enableCorsForAllOrigins()
+    }
+
+    app.before {
+        it.header("Access-Control-Expose-Headers", "*")
+        it.header("Access-Control-Allow-Origin", "*")
     }
 
     app.start(port)
     app.routes {
-
-        path("search") {
-            get(searchController::searchByText)
+        path("/register") {
+            post(userController::createUser, mutableSetOf<Role>(Roles.ANYONE))
+        }
+        path("/login") {
+            post(userController::loginUser, mutableSetOf<Role>(Roles.ANYONE))
+            path("/admin") {
+                post(adminController::loginUserAdmin, mutableSetOf<Role>(Roles.ANYONE))
+            }
         }
 
+        path("/user") {
+            get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN, Roles.ANYONE))
+        }
+/*            path("search") {
+            get(searchController::searchByText, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+        }*/
+
         path("banners") {
-            get(bannerController::banners)
-            post(bannerController::addBanner)
+            get(bannerController::banners, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(bannerController::addBanner, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path(":bannerId") {
-                delete(bannerController::deleteBanner)
+                delete(bannerController::deleteBanner, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path(":bannerCategory"){
-                get(bannerController::bannersByCategory)
+                get(bannerController::bannersByCategory, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN, Roles.ANYONE))
             }
         }
 
         path("companies") {
-            get(companyController::allCompanies)
-            post(companyController::createSupplier)
+            get(companyController::allCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(companyController::createSupplier, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path("images") {
-                get(companyController::imagesCompanies)
+                get(companyController::imagesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path("names") {
-                get(companyController::namesCompanies)
+                get(companyController::namesCompanies, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path("massive") {
-                post(companyController::createMassive)
-            }
-            path("search"){
-                get(companyController::searchCompanies)
+                post(companyController::createMassive, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path(":supplierId") {
-                get(companyController::getSupplierById)
-                delete(companyController::deleteSupplier)
-                put(companyController::modifySupplier)
+                get(companyController::getSupplierById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+                delete(companyController::deleteSupplier, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+                put(companyController::modifySupplier, mutableSetOf<Role>(Roles.ANYONE, Roles.ADMIN))
             }
         }
 
         path("products") {
-            get(productController::allProducts)
-            post(productController::addProduct)
+            get(productController::allProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+            post(productController::addProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             path("search") {
-                get(productController::searchProducts)
+                get(productController::searchProducts, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
             }
             path(":productId") {
-                get(productController::getProductById)
-                delete(productController::deleteProduct)
-                put(productController::modifyProduct)  //verlo a fondo no funciona bien
+                get(productController::getProductById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
+                delete(productController::deleteProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+                put(productController::modifyProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
             path("supplier") {
                 path(":supplierId") {
-                    get(productController::getProductsBySuppId)
+                    get(productController::getProductsBySuppId, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
                 }
             }
-            /*
-            path("bestSellers") {
-                get(companyController::productsBestSellers)
-            }
-            path("newest") {
-                get(companyController::productsNewest)
-            }
-            path("promoPrice") {
-                get(companyController::productsWPromoPrice)
-            }*/
-            }
 
-
-/*        path("order") {
-
+            path("massive") {
+                post(productController::createMassive, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
-            path("order") {
-            path(":byLowerPrice") {
-                get(companyController::orderByLowerPrice)
-            }
-            path(":byHigherPrice") {
-                get(companyController::orderByHigherPrice)
-            }
-            path(":byOldest") {
-                get(companyController::orderByOldest)
-            }
-            path(":byNewest") {
-                get(companyController::orderByNewest)
-            }
-            path(":byBestSellers") {
-                get(companyController::orderByBestSellers)
-            }
-            path(":byAlphabeticalOrderDesc") {
-                get(companyController::orderByAlphabeticDesc)
-            }
-            path(":byAlphabeticalOrderAsc") {
-                get(companyController::orderByAlphabeticAsc)
-            }
-        }*/
-            //  path("/user") {
-            //    get(mC.userController::getUser, mutableSetOf<Role>(Roles.USER))
         }
+    }
     return app!!
 }
-

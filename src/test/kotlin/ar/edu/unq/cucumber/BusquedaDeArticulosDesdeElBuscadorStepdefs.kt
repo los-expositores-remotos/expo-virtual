@@ -41,7 +41,7 @@ class BusquedaDeArticulosDesdeElBuscadorStepdefs {
 
     @When("^Busco productos con ese dato$")
     fun buscoProductosConEseDato() {
-        this.productosEncontrados = productoService.buscarProductos(this.textoBusqueda, listOf())
+        this.productosEncontrados = productoService.buscarProductos(this.textoBusqueda)
     }
 
     @Then("^Devuelvo de los productos \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\" y \"([^\"]*)\", los que coinciden con la busqueda$")

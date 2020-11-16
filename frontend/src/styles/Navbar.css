@@ -14,7 +14,19 @@
   margin-top: 50px;
   color: antiquewhite;
 }
+#iconCart {
+  margin-top: 50px;
+  color: antiquewhite;
+  margin-left: -64px;
+}
 
 .row .col {
   margin-left: 7%;
+}
+
+#cantidadProductos {
+  margin-top: 44px;
+  font-size: x-large;
+  margin-left: -27px;
+  color: aliceblue;
 }

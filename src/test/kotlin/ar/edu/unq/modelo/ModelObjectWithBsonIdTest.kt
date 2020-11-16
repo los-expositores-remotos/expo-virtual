@@ -29,8 +29,13 @@ abstract class ModelObjectWithBsonIdTest<T: ModelObjectWithBsonId>(private val e
 
     @Test
     fun testUnObjetoEsDistintoAUnObjetoDeOtraClase(){
-        val objeto = Any()
+        val objeto = emptyList<String>()
         assertFalse(this.t1 == objeto)
+    }
+
+    @Test
+    fun testUnObjetoEsDistintoDeNull(){
+        assertNotEquals(this.t1, null)
     }
 
     @Test

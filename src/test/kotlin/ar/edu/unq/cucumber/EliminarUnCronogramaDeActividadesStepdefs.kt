@@ -6,6 +6,7 @@ import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.BannerService
 import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
+import cucumber.api.java.After
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
@@ -30,5 +31,10 @@ class EliminarUnCronogramaDeActividadesStepdefs {
     @Then("^El cronograma ya no existe$")
     fun elCronogramaYaNoExiste() {
         assertEquals(emptySet(), this.bannerService.recuperarTodosLosBanners().toSet())
+    }
+
+    @After
+    fun deleteAll(){
+        this.bannerService.deleteAll()
     }
 }

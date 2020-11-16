@@ -32,8 +32,13 @@
   margin-top: 2%;
 }
 
-#correo {
+#correo1 {
   width: 50%;
   margin-left: 19%;
   margin-top: 1%;
+}
+#correo2 {
+  margin-left: 82%;
+  margin-top: 3%;
+  height: 78px;
 }

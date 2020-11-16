@@ -18,7 +18,9 @@ import DeleteProveedor from './components/AdminPanel/DeleteProveedor'
 import ScreenSelecEmpresaParaAgregarProduct from './components/AdminPanel/ScreenSelecEmpresaParaAgregarProduct'
 import UpdateProducto from './components/AdminPanel/UpdateProducto'
 import UpdateProveedor from './components/AdminPanel/UpdateProveedor'
-
+import ResultSearch from './components/ResultSearch.js';
+import ShoppingCart from './components/ShoppingCart.js';
+import GlobalState from './components/context/GlobalState'
 
 
 //modificacion
@@ -74,6 +76,12 @@ const Routing = () => {
             <Route path="/admin/borrarbanner" component={DeleteBanner}>
               <DeleteBanner />
             </Route>
+            <Route path="/resultsearch/:textsearch" component={ResultSearch}>
+              <ResultSearch />
+            </Route>
+            <Route path="/shoppingcart" component={ShoppingCart}>
+              <ShoppingCart />
+            </Route>
         </Switch>
       </div>
    
@@ -83,11 +91,13 @@ const Routing = () => {
 
 function App() {
   return (
+    <GlobalState>
     <Router>
         <NavBar />
           <Routing/>
         <Footer />
     </Router>
+    </GlobalState>
   );
 }
 
