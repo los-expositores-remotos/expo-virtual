@@ -120,7 +120,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             newListProducts.products.forEach {
                 val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!)
                 product.addImage(it.images!!)
-                println(product.itemName)
                 backendProductoService.nuevoProducto(product)
             }
             ctx.status(201)
