@@ -72,9 +72,16 @@ class RegistrarUnUsuarioStepDef {
         assertNotNull(exceptionUsuarioConDniInvalidoException)
     }
 
+    @Given("^el usuario que se quiere volver a registrar$")
+    fun siUnUsuarioRegistradoSeQuiereVolverARegistrarSeLeNotificaQueYaLoEstá(){
+
+    }
+
     @After
     fun doSomethingAfter(scenario: Scenario?) {
         usuarioService.deleteAll()
     }
+
+
 
 }

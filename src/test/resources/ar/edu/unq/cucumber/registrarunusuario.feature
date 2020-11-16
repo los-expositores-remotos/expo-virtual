@@ -15,3 +15,9 @@ Feature: Registro de usuario
     When se quiere registrar un usuario
     Then el usuario no se puede registrar por ingresar un dni menor a un millon
 
+    Scenario: Si un usuario registrado se quiere volver a registrar, se le notifica que ya lo está
+      Given un dni 39484178
+      Given el usuario que se quiere volver a registrar
+      When se registra
+      Then el usuario no se puede volver a registrar con un dni ya registrado
+
