@@ -20,7 +20,7 @@ import UpdateProducto from './components/AdminPanel/UpdateProducto'
 import UpdateProveedor from './components/AdminPanel/UpdateProveedor'
 import ResultSearch from './components/ResultSearch.js';
 import ShoppingCart from './components/ShoppingCart.js';
-
+import GlobalState from './components/context/GlobalState'
 
 
 //modificacion
@@ -91,11 +91,13 @@ const Routing = () => {
 
 function App() {
   return (
+    <GlobalState>
     <Router>
         <NavBar />
           <Routing/>
         <Footer />
     </Router>
+    </GlobalState>
   );
 }
 
