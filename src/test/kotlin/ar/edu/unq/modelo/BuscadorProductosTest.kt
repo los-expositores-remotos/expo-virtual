@@ -1,5 +1,6 @@
 package ar.edu.unq.modelo
 
+import org.bson.types.ObjectId
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -57,5 +58,30 @@ class BuscadorProductosTest {
         productoF.addTag("electric")
         val resultList = BuscadorProductos.filtrar("A electric guitar", emptyList())
         Assert.assertEquals(emptyList<Producto>(), resultList)
+    }
+
+    @Test
+    fun testBusquedaConMasProductos() {
+        val producto1 = Producto(ObjectId(), "Lapicera BiC", "Lapicera BiC muy buena lapicera", 1000, 2000, 3000)
+        producto1.addTag("Lapicera")
+        producto1.addTag("Azul")
+        val producto2 = Producto(ObjectId(), "Lapicera BiC", "Lapicera BiC muy buena lapicera", 1000, 2000, 3000)
+        producto2.addTag("Lapicera")
+        producto2.addTag("Rojo")
+        val producto3 = Producto(ObjectId(), "Sarten grande", "Sarten duradera tres metros de diametro", 1000, 2000, 3000)
+        producto3.addTag("Sarten")
+        producto3.addTag("Azul")
+        val producto4 = Producto(ObjectId(), "Cuaderno azul", "El mejor cuaderno de toda la patagonia", 1000, 2000, 3000)
+        producto4.addTag("Cuaderno")
+        val producto5 = Producto(ObjectId(), "Puerta de acero", "Puerta en buen estado azul electrico", 1000, 2000, 3000)
+        val producto6 = Producto(ObjectId(), "Guitarra electrica con poco uso", "Guitarra electrica dos meses de uso impecable", 1000, 2000, 3000)
+        producto6.addTag("Guitarra")
+        producto6.addTag("Usado")
+        producto6.addTag("Electrodomesticos")
+        producto6.addTag("Instrumentos")
+        producto6.addTag("Musica")
+        producto6.addTag("Guitarristas")
+        val resultList = BuscadorProductos.filtrar("azul", listOf(producto1, producto2, producto3, producto4, producto5, producto6))
+        Assert.assertEquals(listOf(producto4, producto1, producto5, producto3), resultList)
     }
 }
