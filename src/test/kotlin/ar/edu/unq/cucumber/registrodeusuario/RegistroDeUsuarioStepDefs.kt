@@ -78,6 +78,7 @@ class RegistroDeUsuarioStepDefs {
 
     @When("^se intenta registrar nuevamente$")
     fun seRegistraNuevamente(){
+        this.usuarioService.crearUsuario(usuario)
         try {
             this.usuarioService.crearUsuario(usuario)
         } catch (e: UsuarioExistenteException) {
