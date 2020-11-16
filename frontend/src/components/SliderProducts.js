@@ -10,7 +10,7 @@ const SliderProducts = () => {
       if(!products){
           fetch("http://localhost:7000/products", {
             headers: {
-              "Content-Type":"application/json"
+   
             }
           })
             .then((res)=> {

@@ -8,7 +8,7 @@ const Banner = () => {
     if(!banners){
       fetch("http://localhost:7000/banners/HOME", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
         .then((res)=> {
