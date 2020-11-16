@@ -2,6 +2,8 @@ import React from 'react';
 import {BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/routes/Home.js'
 import Suppliers from './components/routes/Suppliers.js'
+import Register from './components/routes/Register.js'
+import Login from './components/routes/Login.js'
 import Live from './components/routes/Live.js'
 import Faqs from './components/routes/Faqs.js'
 import Howtobuy from './components/routes/Howtobuy.js'
@@ -28,6 +30,12 @@ const Routing = () => {
   return (
       <div>
         <Switch>
+            <Route exact path="/register" component={Register}>
+              <Register />
+            </Route>
+            <Route exact path="/login" component={Login}>
+              <Login />
+            </Route>
             <Route exact path="/" component={Home}>
               <Home />
             </Route>

@@ -41,7 +41,7 @@ const NavBar = () => {
                    </Link>     
                </div>
                <div className="col s1">
-                   <Link to="/myaccount">
+                   <Link to="/login">
                        <i className="small material-icons left" id="iconSearch">account_box</i>
                    </Link>     
                </div>
