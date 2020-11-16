@@ -3,6 +3,7 @@ import {Link, useHistory} from 'react-router-dom'
 import logo from '../images/logo.png'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
+import ShopContext from './context/shop-context'
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -10,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Sidenav.init(elems, {});
 });
 
-const NavBar = () => {
+const NavBar = (props) => {
     const [textsearch, setTextSearch ] = useState('')
     const history = useHistory()
     const handleSubmit = event => {
@@ -19,6 +20,9 @@ const NavBar = () => {
         history.push(`/resultsearch/${textsearch}`)
       };
       return (
+        <ShopContext.Consumer>
+        {context => (
+          <React.Fragment>
     
        <div className="NavBar"> 
            <div className="row">
@@ -47,7 +51,16 @@ const NavBar = () => {
                </div>
                <div className="col s1">
                    <Link to="/shoppingcart">
-                       <i className="small material-icons left" id="iconSearch">shopping_cart</i>
+                       <div className='row'>
+                           <div className='col s6'>
+                            <p id='cantidadProductos'>
+                                {context.cart.reduce((count, curItem) => { return count + curItem.quantity;}, 0)}
+                            </p>
+                           </div>
+                           <div className='col s6'>
+                            <i className="small material-icons left" id="iconCart">shopping_cart</i>
+                           </div>
+                       </div>
                    </Link>     
                </div>
            </div>           
@@ -77,6 +90,9 @@ const NavBar = () => {
                 <li><Link to="/contact">Contacto</Link></li>
             </ul>
     </div>
+    </React.Fragment>
+      )}
+    </ShopContext.Consumer>
   );
 };
 

@@ -16,7 +16,7 @@ const TbodyItemCart = (props) => {
         setCant(value)
         var myProducts =  JSON.parse(localStorage.getItem("products")) || []
         let index = myProducts.findIndex((product)=> product.id === myProduct.id )
-        myProducts[index].cant = cant
+        myProducts[index].cant = value
         localStorage.setItem("products", JSON.stringify(myProducts))
 
       }
@@ -26,8 +26,9 @@ const TbodyItemCart = (props) => {
         <td id="tdCart">{myProduct.itemName}</td>
         <td id="tdCart">
         <div className="input-field col s12">
-            <input id="inptCartCant" type="number" onChange={(e) => changeCant(e.target.value <= 1 ? 1 : e.target.value )} className="validate" value={cant}/>
-            <label className="active" for="Stock">Stock</label>
+            <button onClick={()=> cant > 1 ? changeCant(cant-1) : cant}>-</button>
+            <input id="inptCartCant" className="validate" value={cant}/>
+            <button onClick={()=> changeCant(cant+1)}>+</button>
         </div>    
         </td>
         <td id="tdCart">$ {myProduct.itemPrice * cant}</td>
