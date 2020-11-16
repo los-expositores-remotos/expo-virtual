@@ -13,34 +13,34 @@ import Banner from '../Banner'
   });
 
 const Home = () => {
-  const [companyImage, setConpanyImage] = useState([])
+  const [companyImage, setConpanyImage] = useState(null)
   
   useEffect(() => {
-    
+    if(!companyImage){
       fetch("http://localhost:7000/companies", {
         headers: {
-          "Content-Type":"application/json"
+         
         }
       })
         .then((res)=> {
-          //console.log(res)
+          console.log(res)
           if(res.ok){
             return res.json()
         }})
         .then((result)=>{
-          //console.log(result)
+          console.log(result)
+          if(result){
           const rta = result.map((company)=> 
             company.companyImage
-          )
-          //console.log(rta)
-          setConpanyImage(rta)        
-        })
-        .catch((err => {
-          console.log(err)
-        }))
-    
-
-  }, [companyImage]);
+            )
+            console.log(rta)
+            setConpanyImage(rta)}        
+          })
+          .catch((err => {
+            console.log(err)
+          }))
+        }
+        }, [companyImage]);
   
   return (
     <div>
@@ -54,7 +54,7 @@ const Home = () => {
     </div>
    <div>
       {
-        companyImage.length === 0 ? 
+        ! companyImage ? 
         <div className="preloader-wrapper active">
           <div className="spinner-layer spinner-red-only">
             <div className="circle-clipper left">
