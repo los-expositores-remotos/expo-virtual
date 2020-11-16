@@ -17,7 +17,6 @@ Feature: Registro de usuario
 
     Scenario: Si un usuario registrado se quiere volver a registrar, se le notifica que ya lo está
       Given un dni 39484178
-      Given el usuario que se quiere volver a registrar
-      When se registra
+      When se intenta registrar nuevamente
       Then el usuario no se puede volver a registrar con un dni ya registrado
 
