@@ -59,6 +59,11 @@ class AdminServiceImplTest {
     }
 
     @Test(expected = AdministradorInexistenteException::class)
+    fun testRecuperarUnAdminConPasswordIncorrecto(){
+        this.adminService.recuperarAdmin("Tobias", "sanchez")
+    }
+
+    @Test(expected = AdministradorInexistenteException::class)
     fun testRecuperarUnAdminInexitentePorId(){
         this.adminService.recuperarAdmin(ObjectId().toString())
     }
