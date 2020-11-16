@@ -6,7 +6,7 @@ import ProductCard from "./ProductCard";
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
-  var instances = M.Slider.init(elems, {});
+  M.Slider.init(elems, {});
 });
 
 const ProveedorConProductos = (props) => {
@@ -17,7 +17,7 @@ const ProveedorConProductos = (props) => {
 
 const listOfProducts = () => {
   const products = company.products
-  console.log(products)
+  //console.log(products)
   if(products.length > 0)  {
   const res = []
       for (let index = (page * 4); index < ((page + 1) * 4); index++) {
@@ -25,16 +25,16 @@ const listOfProducts = () => {
         //console.log(products)
         //console.log(index)
 
-          console.log(products[index])
+          //console.log(products[index])
           const element = products[index];
-          console.log(element)
+          //console.log(element)
           if(products[index] === undefined){
             
             console.log("el elemnto es undefined")
             
           }else{
             res.push(element)
-            console.log(res)
+            //console.log(res)
           }
       }
   
@@ -52,7 +52,7 @@ const listOfProducts = () => {
          list.push(
 
          <li className={page === index ? "active" : "waves-effect"}>
-            <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
+            <a href="" onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
           </li>
         )         
       }
@@ -62,13 +62,13 @@ const listOfProducts = () => {
     const Paginacion = () => {
 
       return(
-      <ul className="pagination">
+      <ul id="mypaginacion" className="pagination">
         <li className="waves-effect">
-          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><a><i className="material-icons">chevron_left</i></a></a>
+          <a href="" onClick={()=>{if(page > 0){setPage(page - 1)}}}><i className="material-icons">chevron_left</i></a>
           </li>
             {numerosDePaginacion()}
           <li className="waves-effect">
-            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><a><i className="material-icons">chevron_right</i></a></a>
+            <a href="" onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i className="material-icons">chevron_right</i></a>
           </li>
       </ul>)
     };
@@ -81,6 +81,10 @@ const listOfProducts = () => {
           {Paginacion()}
       </div>
       )
+    }else{
+      return(
+      <h5> Por el Momento la empresa: <strong>{company.companyName}</strong> no tiene productos para mostrar </h5>
+      )
     }
   }
 
@@ -91,8 +95,11 @@ const listOfProducts = () => {
               <p>Loading...</p>
             :
             <div>
+              <img id="imagenEmpresa" alt={company.companyName} src={company.companyImage}/>
+              <br/>
               <h2>{company.companyName}</h2>
               {listOfProducts(company)}
+              <hr/>
             </div>
           }
         </div>

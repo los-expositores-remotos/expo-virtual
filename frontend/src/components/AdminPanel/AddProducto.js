@@ -30,10 +30,10 @@ const AddProduct = (props)  => {
 
   const agregarProveedor = () => {
     if(images && images.length >= 0){
-      console.log(images)
+      //console.log(images)
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
-        console.log(image)
+        //console.log(image)
         const data = new FormData();  
         data.append("file", image);
         data.append("upload_preset", "insta-clon-GB");
@@ -44,7 +44,7 @@ const AddProduct = (props)  => {
         })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          //console.log(data);
           setUrl(url.concat([data.url]));
           setPostear(true)
         })
@@ -52,7 +52,7 @@ const AddProduct = (props)  => {
           console.log(err);
         });
       };
-      console.log(url)
+      //console.log(url)
       
     }else{
       M.toast({ html: "cargar imagen", classes: "#c62828 red darken-3" });
@@ -68,7 +68,7 @@ const AddProduct = (props)  => {
       itemPrice &&
       promotionalPrice){
 
-      console.log(url)
+      //console.log(url)
     fetch("http://localhost:7000/products", {
       method: "POST",
       headers: {
@@ -86,7 +86,7 @@ const AddProduct = (props)  => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        //console.log(data)
         if (data.error) {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
@@ -98,7 +98,7 @@ const AddProduct = (props)  => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     }else{
       M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });

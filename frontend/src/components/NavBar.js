@@ -8,16 +8,19 @@ import ShopContext from './context/shop-context'
 
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems, {});
+    M.Sidenav.init(elems, {});
 });
 
 const NavBar = (props) => {
-    const [textsearch, setTextSearch ] = useState('')
+    const [textsearch, setTextSearch ] = useState(null)
     const history = useHistory()
     const handleSubmit = event => {
         event.preventDefault();
-
-        history.push(`/resultsearch/${textsearch}`)
+        if(textsearch){
+            history.push(`/resultsearch/${textsearch}`)
+        }else{
+            history.push("/resultsearch/ ")
+        }
       };
       return (
         <ShopContext.Consumer>
@@ -27,7 +30,7 @@ const NavBar = (props) => {
        <div className="NavBar"> 
            <div className="row">
                <div className="col s2" >
-                <img id='imgLogo' src={logo}/>
+                <img alt="logo" id='imgLogo' src={logo}/>
                </div>
                <div className="col s6">
                    <form className="form-inline" onSubmit={handleSubmit}>
@@ -35,7 +38,7 @@ const NavBar = (props) => {
                    </form>
                </div>
                <div className="col s1">
-                   <Link to={`/resultsearch/${textsearch}`}>
+                   <Link to={textsearch ? `/resultsearch/${textsearch}` : "/resultsearch/ " }>
                        <i className="small material-icons left" id="iconSearch">search</i>
                    </Link>     
                </div>
@@ -67,7 +70,7 @@ const NavBar = (props) => {
 
            <nav>
                 <div className="nav-wrapper">
-                <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                <a href="" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                 <ul className="left hide-on-med-and-down">
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/suppliers">Empresas</Link></li>

@@ -9,7 +9,7 @@ import Banner from '../Banner'
 
   document.addEventListener('DOMContentLoaded', function() {
     var elems2 = document.querySelectorAll('.slider');
-    var instances2 = M.Slider.init(elems2, {});
+    M.Slider.init(elems2, {});
   });
 
 const Home = () => {
@@ -23,16 +23,16 @@ const Home = () => {
         }
       })
         .then((res)=> {
-          console.log(res)
+          //console.log(res)
           if(res.ok){
             return res.json()
         }})
         .then((result)=>{
-          console.log(result)
+          //console.log(result)
           const rta = result.map((company)=> 
             company.companyImage
           )
-          console.log(rta)
+          //console.log(rta)
           setConpanyImage(rta)        
         })
         .catch((err => {

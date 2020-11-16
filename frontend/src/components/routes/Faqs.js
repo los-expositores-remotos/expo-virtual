@@ -9,43 +9,47 @@ const Faqs = () => {
 
   useEffect(() => {
     if(!imagesPM){
-    fetch("http://localhost:7000/banners/PAYMENTMETHODS", {
+
+      fetch("http://localhost:7000/banners/PAYMENTMETHODS", {
         headers: {
           "Content-Type":"application/json"
         }
       })
-        .then((res)=> {
+      .then((res)=> {
           if(res.ok){
             return res.json()
-        }})
+          }})
         .then((result)=>{
-          console.log(result)
-
+          //console.log(result)
+          
           setimagesPM(result)        
         })
         .catch((err => {
           console.log(err)
         }))
-        if(!imagesC){
-          fetch("http://localhost:7000/banners/COURRIER", {
-          headers: {
-            "Content-Type":"application/json"
-          }
-        })
-          .then((res)=> {
-            if(res.ok){
-              return res.json()
-          }})
+      }
+      }, [imagesPM])
+  useEffect(() => {
+    if(!imagesC){
+
+      fetch("http://localhost:7000/banners/COURRIER", {
+        headers: {
+          "Content-Type":"application/json"
+        }
+      })
+      .then((res)=> {
+        if(res.ok){
+          return res.json()
+        }})
           .then((result)=>{
-            console.log(result)
+            //console.log(result)
             setimagesC(result)        
           })
           .catch((err => {
             console.log(err)
-          }))}
-        }  
-      
-    }, [imagesPM, imagesC])
+          }))
+      }
+    }, [imagesC])
 
     const payMethodImg = () => {
       if(imagesPM){
@@ -75,15 +79,14 @@ const Faqs = () => {
       }
     }
     const CourrierImg = () => {
-      if(imagesC){
-                
+      if(imagesC){        
       return (
           <div className="row">
             <div className="col s1">
-                <img id="correo1"src={imagesC[0].image}/>
+                <img alt="1" id="correo1"src={imagesC[0].image}/>
             </div>
             <div className="col s1">
-                <img id="correo2"src={imagesC[1].image}/>
+                <img alt="2" id="correo2"src={imagesC[1].image}/>
             </div>
           </div>
         )
@@ -111,8 +114,6 @@ const Faqs = () => {
 
       <h5 id = "h5Text">¿Cuánto tarda en llegar el pedido?</h5>
       <p id = "pText2">El tiempo de entrega dependerá del tipo de envío seleccionado. En general la demora se encuentra entre 3 y 7 días hábiles luego de acreditado el pago.</p>
-
-    
     </div>
   );
 };
