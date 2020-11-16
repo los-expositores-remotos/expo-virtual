@@ -14,7 +14,7 @@ class Admin : ModelObjectWithBsonId {
         this.userName = userName
         this.password = password
         }
-    override fun castearAMiTipo(other: Any): Admin {
-        return  other as Admin
-    }
+//    override fun castearAMiTipo(other: Any): Admin {
+//        return  other as Admin
+//    }
 }

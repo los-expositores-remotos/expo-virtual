@@ -9,7 +9,7 @@ interface UsuarioService {
     fun recuperarUsuario(dni: Int): Usuario
     fun crearUsuario(usuario: Usuario)
     fun recuperarATodosLosUsuarios(): Collection<Usuario>
-    fun recuperarAdmin(userName: String?, password: String?): Admin
     fun deleteAll()
+
 
 }

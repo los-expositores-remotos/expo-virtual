@@ -9,8 +9,8 @@ interface UsuarioDAO {
     fun save(objects: List<Usuario>)
     fun update(anObject: Usuario, id: String?)
     fun get(id: String?): Usuario?
-    fun getAll() : List<Usuario>
+    fun getAll(): List<Usuario>
     fun deleteAll()
     fun delete(id: String)
-    fun <E> findEq(field:String, value:E ): List<Usuario>
+    fun <E> findEq(field: String, value: E): List<Usuario>
 }

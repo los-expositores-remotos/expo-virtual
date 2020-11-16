@@ -28,11 +28,9 @@ class MongoBannerDAOTest : GenericMongoDAOTest<Banner>(MongoBannerDAOImpl()) {
     }
 
     override fun borrarNItems(n: Int) {
-        TransactionRunner.runTrx({
-            for(i in 0..n){
-                this.dao.delete(this.items[0].id.toString())
-                this.items.removeAt(0)
-            }
-        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        for (i in 0..n) {
+            this.dao.delete(this.items[0].id.toString())
+            this.items.removeAt(0)
+        }
     }
 }
