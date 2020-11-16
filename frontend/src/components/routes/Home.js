@@ -29,11 +29,12 @@ const Home = () => {
         }})
         .then((result)=>{
           //console.log(result)
+          if(result){
           const rta = result.map((company)=> 
             company.companyImage
           )
           //console.log(rta)
-          setConpanyImage(rta)        
+          setConpanyImage(rta)}        
         })
         .catch((err => {
           console.log(err)

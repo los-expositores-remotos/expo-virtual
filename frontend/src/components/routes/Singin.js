@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import "../../styles/Singin.css";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
@@ -8,6 +8,7 @@ const Login = () => {
   const [dni, setdni] = useState(null);
 
   const PostData = () => {
+       
     if (dni < 1000000) {
       M.toast({ html: "DNI Invalido", classes: "#c62828 red darken-3" });
     } else {
@@ -20,26 +21,23 @@ const Login = () => {
           dni,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          //console.log(data);
-          if (data.error) {
-            M.toast({ html: data.error, classes: "#c62828 red darken-3" });
-          } else {
-            localStorage.setItem("jwt", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
-            M.toast({
-              html: "signed success",
-              classes: "#388e3c green darken-2",
-            });
-            history.push("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .then((res) => {
+          if(!res.ok){
+          M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
+        }else{
+          M.toast({
+            html: "Loggeado exitosamente",
+            classes: "#388e3c green darken-2",
+          });
+          history.push("/");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   };
+
   return (
     <div className="mycard">
       <div id="fondoTarjetaLogin"  className="card auth-card input-field">
@@ -59,11 +57,12 @@ const Login = () => {
           Singin
         </button>
         <h5 id="H5Register">
+          <Link id="linkRegister" to="/login/admin">Logearse como usuario</Link>
+          <tr/>
           <Link id="linkRegister" to="/register">Registrate acá</Link>
         </h5>
       </div>
-    </div>
-  );
-};
+    </div>)
+  }
 
 export default Login;
