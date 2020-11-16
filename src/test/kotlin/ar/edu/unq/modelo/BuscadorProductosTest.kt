@@ -44,4 +44,18 @@ class BuscadorProductosTest {
         val resultList = BuscadorProductos.filtrar("A electric guitar", listOf(productoA, productoB, productoC, productoD, productoE, productoF))
         Assert.assertEquals(listOf(productoA, productoC, productoB, productoF, productoD), resultList)
     }
+
+    @Test
+    fun testBusquedaConCadenaVacia() {
+        val resultList = BuscadorProductos.filtrar("", listOf(productoA, productoB, productoC, productoD, productoE, productoF))
+        Assert.assertEquals(emptyList<Producto>(), resultList)
+    }
+
+    @Test
+    fun testBusquedaConListaDeProductosVacia() {
+        productoF.addTag("guitar")
+        productoF.addTag("electric")
+        val resultList = BuscadorProductos.filtrar("A electric guitar", emptyList())
+        Assert.assertEquals(emptyList<Producto>(), resultList)
+    }
 }
