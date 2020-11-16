@@ -49,6 +49,12 @@ class UsuarioServiceImplTest {
         this.usuarioService.crearUsuario(this.usuario)
     }
 
+    @Test(expected = UsuarioExistenteException::class)
+    fun testCreacionUsuarioConDNIYaExistente(){
+        this.usuario.id = ObjectId()
+        this.usuarioService.crearUsuario(this.usuario)
+    }
+
     @Test
     fun testRecuperarUsuario(){
         val usuarioRecuperado = usuarioService.recuperarUsuario(39484178)
