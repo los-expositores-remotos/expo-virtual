@@ -35,7 +35,7 @@ const ListOfProductToDelete = (props) =>{
         }, [products])
 
   const deleteProduct = (id) =>{
-    console.log(id)
+    //console.log(id)
     fetch(`http://localhost:7000/products/${id}`, {
       method: 'DELETE',
       headers: {

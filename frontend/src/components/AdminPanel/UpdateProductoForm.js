@@ -24,21 +24,16 @@ const UpdateProductoForm = (props)  => {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(url)
-    console.log(url.length)
-    console.log(longitud)
-    if (postear) {
+if (postear) {
       postearUpdate();
     }
   });
 
   const agregarProducto = () => {
-
-    console.log(images)
     if(subir){
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
-        console.log(image)
+        //console.log(image)
         const data = new FormData();
           data.append("file", image);
           data.append("upload_preset", "insta-clon-GB");
@@ -49,7 +44,7 @@ const UpdateProductoForm = (props)  => {
           })
             .then((res) => res.json())
             .then((data) => {
-              console.log(data);
+              //console.log(data);
               setUrl(url.concat([data.url]));
               setpostear(true)
             })

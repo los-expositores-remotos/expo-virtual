@@ -14,7 +14,7 @@ const DeleteProveedor = () =>{
       }
     }) 
       .then((res)=> {
-      //console.log(res)
+      ////(res)
       if(res.ok){
         return res.json()
       }
@@ -32,7 +32,7 @@ const DeleteProveedor = () =>{
   }, [search])
     
   const deleteCompany = (id) =>{
-    console.log(id)
+    //console.log(id)
     fetch(`http://localhost:7000/companies/${id}`, {
       method: 'DELETE',
       headers: {

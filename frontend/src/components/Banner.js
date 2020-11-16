@@ -16,7 +16,7 @@ const Banner = () => {
             return res.json()
         }})
         .then((result)=>{
-          console.log(result)
+          //console.log(result)
           
           setbanners(result)        
         })

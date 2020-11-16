@@ -17,7 +17,7 @@ const Live = () => {
             return res.json()
         }})
         .then((result)=>{
-          console.log(result)
+          //console.log(result)
 
           setschedule(result)        
         })
@@ -36,7 +36,7 @@ const Live = () => {
             return res.json()
         }})
         .then((result)=>{
-          console.log(result)
+          //console.log(result)
           setClasses(result)        
         })
         .catch((err => {
@@ -70,7 +70,7 @@ const Live = () => {
       <div>
           {
             schedule ? 
-              <img id="imgSchedule" src={schedule[0].image}></img>
+              <img atl="img" id="imgSchedule" src={schedule[0].image}></img>
             :
               <p>Loading...</p>
           }
