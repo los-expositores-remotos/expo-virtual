@@ -8,6 +8,7 @@ import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import cucumber.api.Scenario
 import cucumber.api.java.After
+import cucumber.api.java.Before
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
 import cucumber.api.java.en.When
@@ -22,14 +23,14 @@ class LoginUsuarioStepDef {
     var exceptionUsuarioInexistenteException: UsuarioInexistenteException? = null
     lateinit var usuarioRecuperado: Usuario
 
-    @cucumber.api.java.Before
+    @Before
     fun registrarUsuario(){
         this.usuarioService.crearUsuario(usuario)
     }
 
 
     @Given("^un dni del usuario (\\d+)$")
-    fun unDni(dni: Int?) {
+    fun unDniDelUsuario(dni: Int?) {
       this.usuario.dni = dni!!
     }
 

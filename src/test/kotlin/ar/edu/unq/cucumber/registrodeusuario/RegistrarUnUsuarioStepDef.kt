@@ -1,4 +1,4 @@
-package ar.edu.unq.cucumber
+package ar.edu.unq.cucumber.registrodeusuario
 
 import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
 import ar.edu.unq.modelo.Usuario
@@ -8,6 +8,7 @@ import ar.edu.unq.services.impl.exceptions.UsuarioConDniInvalidoException
 import ar.edu.unq.services.runner.DataBaseType
 import cucumber.api.Scenario
 import cucumber.api.java.After
+import cucumber.api.java.Before
 import cucumber.api.java.en.And
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
