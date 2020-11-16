@@ -34,6 +34,7 @@ class UsuarioServiceImpl(
     override fun crearUsuario(usuario: Usuario) {
         TransactionRunner.runTrx({
             this.asegurarQueUsuarioNoExista(usuario.id.toString())
+            this.asegurarQueUsuarioNoExista(usuario.dni)
             this.validateDni(usuario.dni)
             this.usuarioDAO.save(usuario)
         }, listOf(TransactionType.MONGO), this.dataBaseType)
@@ -48,7 +49,14 @@ class UsuarioServiceImpl(
         return usuarioRecuperado?:throw UsuarioInexistenteException("El usuario no existe")
     }
     private fun asegurarQueUsuarioNoExista(id: String) {
-        if(this.usuarioDAO.get(id) != null){
+        val usuario = this.usuarioDAO.get(id)
+        if(usuario != null){
+            throw UsuarioExistenteException("El usuario ya existe")
+        }
+    }
+    private fun asegurarQueUsuarioNoExista(dni: Int) {
+        val usuario = this.usuarioDAO.findEq("dni", dni).firstOrNull()
+        if(usuario != null){
             throw UsuarioExistenteException("El usuario ya existe")
         }
     }

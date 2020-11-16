@@ -16,20 +16,21 @@ const Home = () => {
   const [companyImage, setConpanyImage] = useState([])
   
   useEffect(() => {
-    if(companyImage.length === 0){
-      fetch("http://localhost:7000/companies/images", {
+    
+      fetch("http://localhost:7000/companies", {
         headers: {
           "Content-Type":"application/json"
         }
       })
         .then((res)=> {
+          console.log(res)
           if(res.ok){
             return res.json()
         }})
         .then((result)=>{
           console.log(result)
-          const rta = result.map((image)=> 
-            image.companyImage
+          const rta = result.map((company)=> 
+            company.companyImage
           )
           console.log(rta)
           setConpanyImage(rta)        
@@ -37,7 +38,7 @@ const Home = () => {
         .catch((err => {
           console.log(err)
         }))
-    }
+    
 
   }, [companyImage]);
   

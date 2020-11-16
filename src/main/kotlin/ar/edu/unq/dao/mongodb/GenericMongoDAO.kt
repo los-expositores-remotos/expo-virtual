@@ -17,7 +17,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
     fun getAll(): List<T> {
         val session = this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find(session).toMutableList()
+        return this.getCollection(entityType.simpleName, entityType).find().toMutableList()
     }
 
      protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
@@ -62,7 +62,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
     fun <E> getBy(property:String, value: E?): T? {
         val session = this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find(session, Document(property,value)).first()
+        return this.getCollection(entityType.simpleName, entityType).find(Document(property,value)).first()
     }
 
     fun <E> findEq(field:String, value:E ): List<T> {
@@ -71,7 +71,7 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
 
     fun find(filter:Bson): List<T> {
         val session = this.sessionCheck()
-        return this.getCollection(entityType.simpleName, entityType).find(session, filter).toMutableList()
+        return this.getCollection(entityType.simpleName, entityType).find(filter).toMutableList()
     }
 
 //    fun <T> aggregate(pipeline:List<Bson> , resultClass:Class<T>): List<T> {
