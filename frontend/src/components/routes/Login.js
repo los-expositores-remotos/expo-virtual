@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import Notifications,{notify} from 'react-notify-toast';
+import M from 'materialize-css'
+import '../../styles/Login.css'
 
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.autocomplete');
+    M.Autocomplete.init(elems, {});
+  });
 
-const Login = ({/*props*/}) => {
+const Login = () => {
 
-  const [dni, setdni] = useState("")//verificar que sea INT
-  const [error,setError] = useState(false)
+  const [dni, setdni] = useState("")
   const history = useHistory();
 
   let myColor = { background: '#0E1717', text: "#FFFFFF" };
@@ -21,16 +25,18 @@ const Login = ({/*props*/}) => {
               "dni": dni
             })
           })
-        .then(success =>{
-                console.log("success", success);
-                localStorage.setItem('tokenValido', success.headers.authorization);
-                history.push("/");
+          .then(response => console.log(response.statusText))
+          .catch(error => console.log(error.statusText));
+  /*      .then(response =>{
+            if (!response.ok) {console.log(response)};
             })
+            .then(response => {
+                localStorage.setItem('tokenValido', response.headers.authorization)
+                history.push("/")})
             .catch(error => {
-                console.log("error : ", error.response.data.message);
-                const errorUser = error.response.data.message ;
-                notify.show(errorUser,"error",5000,myColor);     
-            })
+                console.log("error : ", "error.message");
+                M.toast({ html: error, classes: "#c62828 red darken-3" });
+            });*/
         }
 
   const handleUsername = (e) => {
@@ -38,25 +44,19 @@ const Login = ({/*props*/}) => {
   }
 
   return (
-    <div className="boxInicio">
-        <Notifications/>
+    <div className="container">
       <div className="user-login">
 {/*     <img id="login_logo" src={logo} alt="expovirtual" /> */}
         <div className="user-into">
-          <input id="inputdni" type="text" value={dni} name='dni' placeholder='User' onChange={handleUsername} />
+          <input id="inputdni" type="text" value={dni} name='dni' placeholder='Dni' onChange={handleUsername} />
         </div>
         <div className="boton-login" >
-          <button type='button' className= "btn btn-info" onClick={logearse}>Login</button>
+          <button type='button' className="btn-small pink accent-1" onClick={logearse}>Login</button>
         </div>
-        <span className="regis"> <Link to="/register">Registrar</Link></span>
-        <div className = "error">
-           {error &&
-                     <label className = "mesajeError">Dni incorrecto o inexistente</label>
-
-           }
-        </div>
-      </div>
+        <Link className= "btn-small btn-info" to="/register">Registro</Link>
+    </div>
     </div>
   )
-        }
+
+}
 export default Login;

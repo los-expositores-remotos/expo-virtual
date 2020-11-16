@@ -1,8 +1,6 @@
-
-.boxInicio{
-width: 500px;
-}
-
-#inputdni{
-width: 100px;
+.user-login{
+    width: 400px;
+    margin-top: 100px;
+    margin-bottom: 150px;
+    align-content: center;
 }

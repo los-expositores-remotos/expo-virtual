@@ -1,11 +1,18 @@
+import { data } from 'jquery';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import M from 'materialize-css'
+import '../../styles/Register.css'
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.autocomplete');
+    M.Autocomplete.init(elems, {});
+  });
 
 const Register = () => {
     const [nombre, setNombre] = useState("")
     const [dni, setDni] = useState("")
     const [apellido, setApellido] = useState("")
-    const [error,setError]  = useState(false)
     const history = useHistory();
 
     const handleNombre = (e) => {
@@ -32,16 +39,26 @@ const Register = () => {
               "dni": dni
             })
           })
-            .then(success => { history.push("/login")})
-            .catch(e => {
-                console.log(e.response)
-                setError(true)
-            })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.error) {
+              M.toast({ html: data.error, classes: "#c62828 red darken-3" });
+            } else {
+              M.toast({
+                html: "Registro exitoso",
+                classes: "#388e3c green darken-2",
+              });
+              history.push("/login");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        
+      };
     
-        }
-
     return (
-        <div className="boxInicio">
+        <div className="container">
             <div className="user-register">
                 <div className="Register-form">
                     <div>
@@ -55,12 +72,7 @@ const Register = () => {
                     </div>
  
                     <div className="boton-register">
-                        <button type='button' className= "btn btn-info" onClick={registrarse}> Register </button>
-                    </div>
-                    <div className = "error">
-                        {error &&
-                         <label className = "mesajeError">Usuario ya existente</label>
-                        }
+                        <button type='button' className= "btn-small pink accent-1" onClick={registrarse}> Register </button>
                     </div>
                 </div>
             </div>
