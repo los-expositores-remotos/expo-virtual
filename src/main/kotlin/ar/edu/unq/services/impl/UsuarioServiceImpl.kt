@@ -67,10 +67,6 @@ class UsuarioServiceImpl(
         }
     }
 
-
-
-
-
     override fun deleteAll() {
         TransactionRunner.runTrx({ this.usuarioDAO.deleteAll() }, listOf(TransactionType.MONGO), this.dataBaseType)
     }

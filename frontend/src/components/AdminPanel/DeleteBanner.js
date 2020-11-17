@@ -37,7 +37,7 @@ const DeleteBanner = () =>{
   }, [banners])
     
   const deleteBanner = (id) =>{
-    console.log(id)
+    //console.log(id)
     fetch(`http://localhost:7000/banners/${id}`, {
       method: 'DELETE',
       headers: {

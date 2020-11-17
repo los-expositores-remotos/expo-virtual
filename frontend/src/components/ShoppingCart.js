@@ -9,8 +9,15 @@ const ShoppingCart = () => {
   const context = useContext(ShopContext);
 
   useEffect(() => {
-    console.log(context);
+    //console.log(context);
   }, []);
+  const precioTotal = (products) => {
+    let contador = 0
+    products.forEach((cartItem)=>{
+      contador = contador + (cartItem.itemPrice * cartItem.quantity)
+    })
+    return contador
+  }
 
   return (
     /**
@@ -24,6 +31,7 @@ const ShoppingCart = () => {
           context.cart.length <= 0 ? 
           <p>No Item in the Cart!</p>
           :
+          <div>
           <table>
           <thead>
               <tr>
@@ -49,7 +57,7 @@ const ShoppingCart = () => {
                   <button onClick={context.addProductToCart.bind(this, cartItem)}>+</button>
               </div>    
               </td>
-              <td id="tdCart">$ {cartItem.itemPrice * cartItem.quantity  }</td>
+              <td id="tdCart">$ {cartItem.itemPrice * cartItem.quantity}</td>
               <td id="tdCart"> <button
                     onClick={context.deleteProductFromCart.bind(
                       this,
@@ -61,6 +69,12 @@ const ShoppingCart = () => {
           </tbody>
             ))}
          </table>
+          <h3>
+            <strong>
+                Precio Total : ${precioTotal(context.cart)}
+            </strong>
+          </h3>
+        </div>
         }
       </main>
     </React.Fragment>

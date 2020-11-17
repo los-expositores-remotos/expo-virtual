@@ -1,6 +1,7 @@
 import React from 'react'
 import {Carousel} from 'react-materialize'
 import ShopContext from './context/shop-context';
+import '../styles/ProductCard.css'
 
 const ProductCard = (props) => {
 const product = props.product
@@ -39,14 +40,14 @@ return (
               <div className="card-image">
                 {imagesOfProducts(product)}
               </div>
-              <div className="card-content">
+              <div id= "cardContent" className="card-content">
                 <strong><h5>{product.itemName}</h5></strong>
                 <p>Stock: {product.stock}</p>
                 <p>Precio: {product.itemPrice}</p>
                 <p>Precio promocional: {product.promotionalPrice}</p>
               </div>
               <div className="card-action">
-              <button onClick={context.addProductToCart.bind(this, product)}>Agregar al Carrito</button>
+              <button id="botonAgregarAlCarrito" onClick={context.addProductToCart.bind(this, product)}>Agregar al Carrito</button>
               </div>
             </div>
             </div>

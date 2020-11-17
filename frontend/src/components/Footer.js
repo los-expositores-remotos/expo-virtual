@@ -8,11 +8,11 @@ const Footer = () => {
     <footer className="page-footer">
     <div>
       <div className="row">
-        <div className="col s3">
+        <div className="col s4">
           <h5 className="white-text"  id="footerT">Expo Arte Virtual</h5>
           <p>3, 4 y 5 de octubre!</p>
         </div>
-        <div className="col s3">
+        <div className="col s4">
           <h5 className="white-text" id="footerT">Categorias</h5>
           <ul>
             <li><Link id="linkList"to="/contact">Contacto</Link></li>
@@ -23,7 +23,7 @@ const Footer = () => {
             <li><Link id="linkList"to="/howtobuy">Como comprar?</Link></li>
           </ul>
         </div>
-        <div className="col s3">
+        <div className="col s4">
           <h5 className="white-text" id="footerT">Contactenos</h5>
           <ul>
             <li>
@@ -47,9 +47,6 @@ const Footer = () => {
               
             </li>
           </ul>
-        </div>
-        <div className="col s3">
-          <h5 className="white-text" id="footerT">Sigamos conectados</h5>
         </div>
         <div className="col l4 offset-l2 s12">   
         </div>

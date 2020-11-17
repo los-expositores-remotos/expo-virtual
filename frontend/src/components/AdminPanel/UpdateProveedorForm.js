@@ -36,7 +36,7 @@ const UpdateProveedorForm = (props)  => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setUrl(data.url);
       })
       .catch((err) => {
@@ -136,7 +136,7 @@ const UpdateProveedorForm = (props)  => {
               <span>Cargar Imagen</span>
               <input type="file" onChange={(e) => {
                 setcompanyImage(e.target.files[0])
-                console.log(companyImage)
+                //console.log(companyImage)
                 }}/>
             </div>
             <div class="file-path-wrapper">
@@ -148,10 +148,9 @@ const UpdateProveedorForm = (props)  => {
           <div class="col s12">
                  
                 <a  onClick={() => {
-                  console.log(companyImage)
-                  console.log(url)
-                  console.log(companyImage === url)
-              
+                  //console.log(companyImage)
+                  //console.log(url)
+                  //console.log(companyImage === url)        
                     agregarProveedor();
                     if (!companyName ||
                       !companyImage ||

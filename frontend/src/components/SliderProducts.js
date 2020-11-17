@@ -10,11 +10,11 @@ const SliderProducts = () => {
       if(!products){
           fetch("http://localhost:7000/products", {
             headers: {
-              "Content-Type":"application/json"
+   
             }
           })
             .then((res)=> {
-              console.log(res)
+              //console.log(res)
               if(res.ok){
                   return res.json()
               }
@@ -57,7 +57,7 @@ const SliderProducts = () => {
         }else{
         let index = 0 
         const placenment = ["center", "right", "left"]
-        console.log(products)
+        //console.log(products)
         const productlist = products.map((product)=>   
             <Slide image={<img className="prodImg" alt="" src={product.images[0]}/>}>
                 <Caption id="prodcaption" placement={placenment[dinamicIndex(index)]}>

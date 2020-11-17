@@ -42,7 +42,7 @@ const addProductToCart = (product, state) => {
 5) RETORNA EL ESTADO PREVIO Y SETEA EL UPDATEDCART EN EL CART
 ***/
 const removeProductFromCart = (productId, state) => {
-  console.log('Removing product with id: ' + productId);
+  //console.log('Removing product with id: ' + productId);
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(item => item.id === productId);
 
@@ -53,8 +53,8 @@ const removeProductFromCart = (productId, state) => {
   if (! updatedItem.quantity <= 0) {
     updatedCart[updatedItemIndex] = updatedItem;
     
-    console.log(updatedCart)
-    console.log(updatedItem)
+    //console.log(updatedCart)
+    //console.log(updatedItem)
   } 
   localStorage.setItem('cart', JSON.stringify(updatedCart))
   return { ...state, cart: updatedCart };

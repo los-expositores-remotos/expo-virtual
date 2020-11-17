@@ -39,7 +39,7 @@ const AddProveedor = (props)  => {
     })
     .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setUrl(data.url);
       })
       .catch((err) => {
@@ -79,7 +79,7 @@ const AddProveedor = (props)  => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
       });
     }else{
       M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });

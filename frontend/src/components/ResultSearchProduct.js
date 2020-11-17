@@ -72,7 +72,7 @@ const ResultSearchProduct = (props) => {
 
     
     const listOfProducts = (productos) => {
-        console.log(products)
+        //console.log(products)
         if(productos.length > 0)  {
         const res = []
             for (let index = 0; index < productos.length ; index++) {
@@ -80,16 +80,16 @@ const ResultSearchProduct = (props) => {
               //console.log(productos)
               //console.log(index)
       
-                console.log(productos[index])
+               // console.log(productos[index])
                 const element = productos[index];
-                console.log(element)
+               // console.log(element)
                 if(productos[index] === undefined){
                   
-                  console.log("el elemnto es undefined")
+               //   console.log("el elemnto es undefined")
                   
                 }else{
                   res.push(element)
-                  console.log(res)
+                //  console.log(res)
                 }
             }
         
