@@ -52,7 +52,7 @@ const listOfProducts = () => {
          list.push(
 
          <li className={page === index ? "active" : "waves-effect"}>
-            <a href="" onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
+            <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
           </li>
         )         
       }
@@ -64,11 +64,11 @@ const listOfProducts = () => {
       return(
       <ul id="mypaginacion" className="pagination">
         <li className="waves-effect">
-          <a href="" onClick={()=>{if(page > 0){setPage(page - 1)}}}><i className="material-icons">chevron_left</i></a>
+          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i className="material-icons">chevron_left</i></a>
           </li>
             {numerosDePaginacion()}
           <li className="waves-effect">
-            <a href="" onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i className="material-icons">chevron_right</i></a>
+            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i className="material-icons">chevron_right</i></a>
           </li>
       </ul>)
     };

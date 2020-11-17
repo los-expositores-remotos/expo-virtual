@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, {useContext, useState } from "react";
 import {Link, useHistory} from 'react-router-dom'
 import logo from '../images/logo.png'
 import "../styles/Navbar.css"
 import M from 'materialize-css'
 import ShopContext from './context/shop-context'
+import {userContext} from "../App"
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,9 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     M.Sidenav.init(elems, {});
 });
 
-const NavBar = (props) => {
+const NavBar = () => {
     const [textsearch, setTextSearch ] = useState(null)
     const history = useHistory()
+    const { state, dispatch } = useContext(userContext);
     const handleSubmit = event => {
         event.preventDefault();
         if(textsearch){
@@ -22,6 +24,53 @@ const NavBar = (props) => {
             history.push("/resultsearch/ ")
         }
       };
+
+
+
+      const renderButton = () => {
+        if (state) {
+            return(
+        <button 
+            id ="botonSesion"
+            className="btn #c62828 red darken-3" 
+            onClick={() => {
+                            localStorage.clear();
+                            dispatch({ type: "CLEAR" });
+                            M.toast({
+                                html: "Sesión cerrada exitosamente",
+                                classes: "#388e3c green darken-2",
+                              });
+                              history.push("/");
+                            }}
+            >
+                Cerrar sesión
+        </button> )
+        }else{
+            return(
+            <button 
+                id ="botonSesion"
+                className="btn #c62828 red darken-3" 
+                onClick={() => {
+                                history.push("/login");
+                                }}
+                >
+                    Iniciar sesión
+             </button> )
+        }
+    }
+
+    const renderPanelAdmin = () => {
+        if(state === "admin"){
+            return(
+            <Link to="/admin">
+                <i className="small material-icons left" id="iconSearch">settings</i>
+            </Link>)    
+        }
+    }
+
+
+
+
       return (
         <ShopContext.Consumer>
         {context => (
@@ -32,7 +81,7 @@ const NavBar = (props) => {
                <div className="col s2" >
                 <img alt="logo" id='imgLogo' src={logo}/>
                </div>
-               <div className="col s6">
+               <div className="col s5">
                    <form className="form-inline" onSubmit={handleSubmit}>
                        <input className="form-control sm-2" onKeyPress={event => event.key === 'Enter'   } onChange={(e)=> setTextSearch(e.target.value)} value = {textsearch} id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
                    </form>
@@ -43,9 +92,7 @@ const NavBar = (props) => {
                    </Link>     
                </div>
                <div className="col s1">
-                   <Link to="/admin">
-                       <i className="small material-icons left" id="iconSearch">settings</i>
-                   </Link>     
+                    {renderPanelAdmin()}
                </div>
                <div className="col s1">
                    <Link to="/myaccount">
@@ -65,6 +112,9 @@ const NavBar = (props) => {
                            </div>
                        </div>
                    </Link>     
+               </div>
+               <div id="colBotonSesion" className="col s1">
+                    {renderButton()}
                </div>
            </div>           
 

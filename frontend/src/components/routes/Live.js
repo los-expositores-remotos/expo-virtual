@@ -9,7 +9,7 @@ const Live = () => {
     if(!schedule){
     fetch("http://localhost:7000/banners/SCHEDULE", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
         .then((res)=> {
@@ -28,7 +28,7 @@ const Live = () => {
       if(!classes){
         fetch("http://localhost:7000/banners/CLASS", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
         .then((res)=> {

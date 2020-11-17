@@ -1,4 +1,5 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useContext} from "react";
+import { userContext } from "../../App"
 import "../../styles/Singin.css";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
@@ -7,6 +8,7 @@ const Login = () => {
   const history = useHistory();
   const [mail, setmail] = useState(null);
   const [password, setpassword] = useState(null);
+  const { state, dispatch } = useContext(userContext);
 
 
   const PostData = () => {
@@ -25,6 +27,8 @@ const Login = () => {
           if(!res.ok){
             M.toast({ html:"datos invalidos o el Administrador no existe", classes: "#c62828 red darken-3" });
           }else{
+            localStorage.setItem("user", "admin");
+            dispatch({ type: "USER", payload: "admin" });
             M.toast({
               html: "Loggeado exitosamente",
               classes: "#388e3c green darken-2",

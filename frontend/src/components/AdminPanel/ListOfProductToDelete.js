@@ -12,7 +12,7 @@ const ListOfProductToDelete = (props) =>{
       if(products.length === 0){      
             fetch(`http://localhost:7000/products/supplier/${company.id}`, {
             headers: {
-                "Content-Type":"application/json"
+     
             }
             }) 
             .then((res)=> {
@@ -39,7 +39,7 @@ const ListOfProductToDelete = (props) =>{
     fetch(`http://localhost:7000/products/${id}`, {
       method: 'DELETE',
       headers: {
-        "Content-Type":"application/json"
+       
       }
     }).then((res)=> 
       {
