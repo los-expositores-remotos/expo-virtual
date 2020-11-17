@@ -14,6 +14,10 @@ class Producto : ModelObjectWithBsonId{
     var itemPrice: Int = 0
     var promotionalPrice: Int = 0
     var vendidos = 0
+    var longitud: Int = 0
+    var ancho: Int = 0
+    var alto : Int = 0
+    var pesoKg: Int = 0
 
     constructor()
 
@@ -23,7 +27,11 @@ class Producto : ModelObjectWithBsonId{
         description: String,
         stock: Int,
         itemPrice: Int,
-        promotionalPrice: Int
+        promotionalPrice: Int,
+        longitud: Int,
+        ancho: Int,
+        alto : Int,
+        peso: Int
     ) {
         this.idProveedor = idProveedor
         this.itemName = itemName
@@ -31,6 +39,10 @@ class Producto : ModelObjectWithBsonId{
         this.stock = stock
         this.itemPrice = itemPrice
         this.promotionalPrice = promotionalPrice
+        this.longitud = longitud
+        this.ancho = ancho
+        this.alto = alto
+        this.pesoKg = peso
     }
 
     fun addImage(imageUrl: String) {

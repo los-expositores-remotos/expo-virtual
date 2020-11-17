@@ -42,7 +42,7 @@ class VisualizacionDeProveedoresStepdefs {
     @When("^Agrego un producto \"([^\"]*)\"$")
     fun agregoUnProducto(nombreProducto: String?) {
         val idDeProveedor = ObjectId(proveedorId)
-        val productoNuevo = Producto(idDeProveedor, nombreProducto!!, "", 5, 5, 5)
+        val productoNuevo = Producto(idDeProveedor, nombreProducto!!, "", 5, 5, 5, 10, 10, 10, 10)
         productoService.nuevoProducto(productoNuevo)
     }
 
@@ -66,7 +66,7 @@ class VisualizacionDeProveedoresStepdefs {
         )
         proveedorService.crearProveedor(proveedor)
         proveedorId = proveedor.id.toString()
-        val productoNuevo = Producto(proveedor.id, "ElProducto", "", 5, 5, 5)
+        val productoNuevo = Producto(proveedor.id, "ElProducto", "", 5, 5, 5, 10, 10, 10, 10)
         productoService.nuevoProducto(productoNuevo)
         productoNombre = productoNuevo.itemName
     }

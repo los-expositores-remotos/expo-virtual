@@ -23,11 +23,11 @@ class OrdenarAlfabeticamenteLosProductosStepdefs {
 
     @Given("^Una base de datos con cinco productos: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     fun unaBaseDeDatosConCincoProductos(productoEName: String?, productoCName: String?, productoBName: String?, productoAName: String?, productoDName: String?) {
-            val productoA = Producto(proveedorA.id, productoAName!!, "A electric guitar", 7, 100, 800000)
-            val productoB = Producto(proveedorA.id, productoBName!!, "A electric guitar", 7, 100, 800000)
-            val productoC = Producto(proveedorA.id, productoCName!!, "A electric guitar", 7, 1000, 800000)
-            val productoD = Producto(proveedorA.id, productoDName!!, "A electric guitar", 7, 1000000, 800000)
-            val productoE = Producto(proveedorA.id, productoEName!!, "A electric guitar", 7, 1000000, 800000)
+            val productoA = Producto(proveedorA.id, productoAName!!, "A electric guitar", 7, 100, 800000, 10, 10, 10, 10)
+            val productoB = Producto(proveedorA.id, productoBName!!, "A electric guitar", 7, 100, 800000, 10, 10, 10, 10)
+            val productoC = Producto(proveedorA.id, productoCName!!, "A electric guitar", 7, 1000, 800000, 10, 10, 10, 10)
+            val productoD = Producto(proveedorA.id, productoDName!!, "A electric guitar", 7, 1000000, 800000, 10, 10, 10, 10)
+            val productoE = Producto(proveedorA.id, productoEName!!, "A electric guitar", 7, 1000000, 800000, 10, 10, 10, 10)
 
             proveedorA.addProduct(productoA)
             proveedorA.addProduct(productoB)

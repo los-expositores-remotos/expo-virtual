@@ -51,7 +51,7 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @When("^Le agrego el producto \"([^\"]*)\"$")
     fun leAgregoElProducto(nombreProducto: String?) {
-        val producto = Producto(ObjectId(), nombreProducto!!, "Soy$nombreProducto", 0, 0 , 0)
+        val producto = Producto(ObjectId(), nombreProducto!!, "Soy$nombreProducto", 0, 0 , 0, 10, 10, 10, 10)
         this.proveedor2.addProduct(producto)
         this.proveedorService.actualizarProveedor(this.proveedor2)
     }

@@ -3,6 +3,7 @@ package ar.edu.unq.API.controllers
 import ar.edu.unq.API.*
 import ar.edu.unq.modelo.Usuario
 import ar.edu.unq.services.UsuarioService
+import ar.edu.unq.services.impl.exceptions.UsuarioConDniInvalidoException
 import ar.edu.unq.services.impl.exceptions.UsuarioExistenteException
 import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
 import io.javalin.http.BadRequestResponse
@@ -25,6 +26,8 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
             ctx.json(OkResultMapper("ok"))
         } catch (e: UsuarioExistenteException) {
             throw BadRequestResponse(e.message.toString())
+        } catch (e: UsuarioConDniInvalidoException) {
+            throw BadRequestResponse(e.message.toString())
         }
     }
 
@@ -41,7 +44,7 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
             val user = backendUsuarioService.recuperarUsuario(userLogin.dni!!)
             ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(200)
-            ctx.json(OkResultMapper("ok"))
+            ctx.json(UserViewMapper(user.nombre, user.apellido))
         } catch (e: UsuarioInexistenteException) {
             ctx.status(404)
             ctx.json(ErrorViewMapper("error", "User not found"))
@@ -52,7 +55,7 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
         try {
             val token = ctx.header("Authorization")!!
             val user = jwtAccessManager.getUser(token)
-            ctx.json(UserViewMapper(user.nombre,user.apellido,user.dni))
+            ctx.json(UserViewMapper(user.nombre,user.apellido))
         } catch (e: UsuarioInexistenteException) {
             throw NotFoundResponse("User not found")
         }

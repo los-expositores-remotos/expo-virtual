@@ -32,8 +32,8 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
 
     fun addProduct(ctx: Context){
         try {
-            val newProduct = aux.productBodyvalidation(ctx)
-            val product = Producto(ObjectId(newProduct.idProveedor), newProduct.itemName!!, newProduct.description!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+            val newProduct = aux.productBodyValidation(ctx)
+            val product = Producto(ObjectId(newProduct.idProveedor), newProduct.itemName!!, newProduct.description!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!, newProduct.longitud!!, newProduct.ancho!!, newProduct.alto!!, newProduct.pesoKg!!)
             product.addImage(newProduct.images!!)
             backendProductoService.nuevoProducto(product)
             ctx.status(201)
@@ -57,7 +57,7 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun modifyProduct(ctx: Context) {
         try {
             val id = ctx.pathParam("productId")
-            val newProduct = aux.productBodyvalidation(ctx)
+            val newProduct = aux.productBodyValidation(ctx)
             val producto = backendProductoService.recuperarProducto(id)
 
             producto.itemName = newProduct.itemName!!
@@ -66,6 +66,10 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             producto.stock = newProduct.stock!!
             producto.itemPrice = newProduct.itemPrice!!
             producto.promotionalPrice = newProduct.promotionalPrice!!
+            producto.longitud = newProduct.longitud!!
+            producto.ancho = newProduct.ancho!!
+            producto.alto = newProduct.alto!!
+            producto.pesoKg = newProduct.pesoKg!!
 
             backendProductoService.actualizarProducto(producto)
 
@@ -113,14 +117,13 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         try {
             val newListProducts = ctx.bodyValidator<ProductListRegisterMapper>()
                     .check(
-                            { it.products.all  { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null }   },
+                            { it.products.all  { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null }   },
                             "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                     )
                     .get()
             newListProducts.products.forEach {
-                val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!)
+                val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!, it.longitud!!, it.ancho!!, it.alto!!, it.pesoKg!!)
                 product.addImage(it.images!!)
-                println(product.itemName)
                 backendProductoService.nuevoProducto(product)
             }
             ctx.status(201)

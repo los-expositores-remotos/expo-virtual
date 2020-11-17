@@ -19,7 +19,7 @@ class EliminarUnaImagenDeUnProductoMyStepdefs {
 
     private val productoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
     private val proveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
-    private val producto = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000)
+    private val producto = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 10, 10, 10, 10)
 
 
     @Given("^Un producto con las imagenes$")

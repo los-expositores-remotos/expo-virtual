@@ -1,11 +1,6 @@
 package ar.edu.unq.API
 
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KVisibility
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
-
-data class UserViewMapper(val nombre :String?, val apellido : String?, val dni : Int?)
+data class UserViewMapper(val nombre :String?, val apellido : String?)
 
 data class AdminLogin(val userName : String?, val password : String?)
 
@@ -36,7 +31,11 @@ data class ProductViewMapper(val id: String,
                              val images: List<String>,
                              val stock: Int,
                              val itemPrice: Int,
-                             val promotionalPrice: Int)
+                             val promotionalPrice: Int,
+                             val longitud: Int,
+                             val ancho: Int,
+                             val alto: Int,
+                             val pesoKg: Int)
 
 data class BannerRegisterMapper(val image: String?, val category: String?)
 
@@ -52,7 +51,11 @@ data class ProductRegisterMapper(val idProveedor: String?,
                                  val images: List<String>?,
                                  val stock: Int?,
                                  val itemPrice: Int?,
-                                 val promotionalPrice: Int?)
+                                 val promotionalPrice: Int?,
+                                 val longitud: Int?,
+                                 val ancho: Int?,
+                                 val alto: Int?,
+                                 val pesoKg: Int?)
 
 data class ProductListRegisterMapper(val products: Collection<ProductRegisterMapper>)
 
