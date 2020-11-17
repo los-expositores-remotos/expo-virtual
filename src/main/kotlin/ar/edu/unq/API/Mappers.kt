@@ -5,7 +5,7 @@ import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
-data class UserViewMapper(val nombre :String?, val apellido : String?, val dni : Int?)
+data class UserViewMapper(val nombre :String?, val apellido : String?)
 
 data class AdminLogin(val userName : String?, val password : String?)
 

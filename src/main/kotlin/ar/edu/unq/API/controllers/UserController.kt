@@ -44,7 +44,7 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
             val user = backendUsuarioService.recuperarUsuario(userLogin.dni!!)
             ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(200)
-            ctx.json(OkResultMapper("ok"))
+            ctx.json(UserViewMapper(user.nombre, user.apellido))
         } catch (e: UsuarioInexistenteException) {
             ctx.status(404)
             ctx.json(ErrorViewMapper("error", "User not found"))
@@ -55,7 +55,7 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
         try {
             val token = ctx.header("Authorization")!!
             val user = jwtAccessManager.getUser(token)
-            ctx.json(UserViewMapper(user.nombre,user.apellido,user.dni))
+            ctx.json(UserViewMapper(user.nombre,user.apellido))
         } catch (e: UsuarioInexistenteException) {
             throw NotFoundResponse("User not found")
         }
