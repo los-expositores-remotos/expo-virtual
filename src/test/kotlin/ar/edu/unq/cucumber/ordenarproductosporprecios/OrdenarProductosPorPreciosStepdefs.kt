@@ -24,12 +24,12 @@ class OrdenarProductosPorPreciosStepdefs {
 
     @Given("^una base de datos con seis productos cuyos precios son: (\\d+), (\\d+), (\\d+), (\\d+), (\\d+), (\\d+)$")
     fun unaBaseDeDatosConSeisProductosCuyosPreciosSon(precioA: Int, precioB: Int, precioC: Int, precioD: Int, precioE: Int, precioF: Int) {
-        val productoA = Producto(proveedorA.id, "prod1", "A electric guitar", 7, precioA, 800000)
-        val productoB = Producto(proveedorA.id, "prod2", "A electric guitar", 7, precioB, 800000)
-        val productoC = Producto(proveedorA.id, "prod3", "A electric guitar", 7, precioC, 800000)
-        val productoD = Producto(proveedorA.id, "prod4", "A electric guitar", 7, precioD, 800000)
-        val productoE = Producto(proveedorA.id, "prod5", "A electric guitar", 7, precioE, 800000)
-        val productoF = Producto(proveedorA.id, "prod6", "A electric guitar", 7, precioF, 800000)
+        val productoA = Producto(proveedorA.id, "prod1", "A electric guitar", 7, precioA, 800000, 10, 10, 10, 10)
+        val productoB = Producto(proveedorA.id, "prod2", "A electric guitar", 7, precioB, 800000, 10, 10, 10, 10)
+        val productoC = Producto(proveedorA.id, "prod3", "A electric guitar", 7, precioC, 800000, 10, 10, 10, 10)
+        val productoD = Producto(proveedorA.id, "prod4", "A electric guitar", 7, precioD, 800000, 10, 10, 10, 10)
+        val productoE = Producto(proveedorA.id, "prod5", "A electric guitar", 7, precioE, 800000, 10, 10, 10, 10)
+        val productoF = Producto(proveedorA.id, "prod6", "A electric guitar", 7, precioF, 800000, 10, 10, 10, 10)
         proveedorA.addProduct(productoA)
         proveedorA.addProduct(productoB)
         proveedorA.addProduct(productoC)
