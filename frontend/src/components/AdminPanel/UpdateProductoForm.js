@@ -18,7 +18,10 @@ const UpdateProductoForm = (props)  => {
   const [stock, setstock] = useState(product.stock)
   const [itemPrice, setitemPrice] = useState(product.itemPrice)
   const [promotionalPrice, setpromotionalPrice] = useState(product.promotionalPrice)
-  const longitud = product.images.length
+  const [longitud,setlongitud] = useState(product.longitud)
+  const [ancho,setancho] = useState(product.ancho)
+  const [alto,setalto] = useState(product.alto)
+  const [pesoKg,setpesoKg] = useState(product.pesoKg)
   const [subir, setSubir] = useState(false)
   const [postear, setpostear] = useState(false)
   const history = useHistory()
@@ -69,7 +72,11 @@ if (postear) {
         "images": url ,
         "stock": stock,
         "itemPrice": itemPrice,
-        "promotionalPrice": promotionalPrice
+        "promotionalPrice": promotionalPrice,
+        "longitud": longitud ,
+        "ancho": ancho ,
+        "alto": alto ,
+        "pesoKg": pesoKg 
       })
     })
       .then((res) => res.json())
@@ -96,11 +103,18 @@ if (postear) {
     newUrls.splice( i, 1 );
     setUrl(newUrls)
   }
+  const nosePuedeEliminarImagen = () =>{
+    return(
+      M.toast({
+        html: "No se puede borrar esta imagen, debe haber por lo menos una imagen por producto",
+        classes: "#388e3c red darken-2",
+      })
+    )
+  }
 
   const listOfImages = () => {
       
     if(url){
-      
       const list = url.map((elem)=> {
         return (
           <li>
@@ -109,8 +123,12 @@ if (postear) {
               <div className="card-image">
                 <img src={elem}/>
                 <a onClick={()=> {
+                  url.length === 1 ?
+                  nosePuedeEliminarImagen()
+                  :
                   eliminarImagen(elem)
-                  }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
+                }
+                } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
               </div>
             </div>
             </div>
@@ -128,7 +146,7 @@ if (postear) {
 
   }
 
-  console.log(product)
+  //console.log(product)
   return (
             <div className='col s8'>
             <div className="row">
@@ -163,6 +181,24 @@ if (postear) {
                <label className="active" for="PromotionalPrice">Precio promocional</label>
           </div>
         </div>
+        <div className="row">
+          <div className="input-field col s2">
+              <input id="PromotionalPrice" type="number" onChange={(e) => setlongitud(e.target.value)} className="validate" value={longitud}/> 
+               <label className="active" for="PromotionalPrice">Longitud</label>
+          </div>
+          <div className="input-field col s2">
+              <input id="PromotionalPrice" type="number" onChange={(e) => setancho(e.target.value)} className="validate" value={ancho}/> 
+               <label className="active" for="PromotionalPrice">Ancho</label>
+          </div>
+          <div className="input-field col s2">
+              <input id="PromotionalPrice" type="number" onChange={(e) => setalto(e.target.value)} className="validate" value={alto}/> 
+               <label className="active" for="PromotionalPrice">Alto</label>
+          </div>
+          <div className="input-field col s2">
+              <input id="PromotionalPrice" type="number" onChange={(e) => setpesoKg(e.target.value)} className="validate" value={pesoKg}/> 
+               <label className="active" for="PromotionalPrice">Peso en Kg</label>
+          </div>
+        </div>
         <form action="#">
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
@@ -186,9 +222,7 @@ if (postear) {
             </div>
                  
                 <a  onClick={() => {
-                  console.log(images)
-                  console.log(url)
-                  console.log(images === url)
+
                     setpostear(true)
                     agregarProducto();
                     if (!itemName ||
