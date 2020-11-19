@@ -8,8 +8,12 @@ Feature: Carga de un producto
         Given un stock 10
         Given un precio normal 100
         Given un precio promocional 90
-        Given creo un producto con estos datos
+        Given una longitud 11
+        Given un ancho 12
+        Given un alto 13
+        Given un peso en kilos 1
+        When creo un producto con estos datos
         Then el producto cargado "producto" se encuentra en la base de datos
-        And Sus datos son "producto", "descripcion", 10, 100, 90
+        And Sus datos son "producto", "descripcion", 10, 100, 90, 11, 12, 13, 1
 
 
