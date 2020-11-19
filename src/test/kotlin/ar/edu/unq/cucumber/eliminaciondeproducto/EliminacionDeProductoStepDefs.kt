@@ -3,10 +3,10 @@ package ar.edu.unq.cucumber.eliminaciondeproducto
 import ar.edu.unq.AuxProdStepDefs
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
-import cucumber.api.java.After
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.After
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 

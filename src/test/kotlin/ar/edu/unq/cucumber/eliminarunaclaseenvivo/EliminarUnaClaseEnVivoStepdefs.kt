@@ -5,11 +5,11 @@ import ar.edu.unq.modelo.banner.Banner
 import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.impl.BannerServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.java.After
-import cucumber.api.java.en.And
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.After
+import io.cucumber.java.en.And
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
