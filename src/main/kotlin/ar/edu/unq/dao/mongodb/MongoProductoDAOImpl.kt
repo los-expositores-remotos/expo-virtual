@@ -1,6 +1,7 @@
 package ar.edu.unq.dao.mongodb
 
 import ar.edu.unq.dao.ProductoDAO
+import ar.edu.unq.helpers.PropertyHelper.publicProperties
 import ar.edu.unq.modelo.Producto
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.MongoDatabase
@@ -13,6 +14,8 @@ import org.bson.types.ObjectId
 import java.util.*
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
+import kotlin.reflect.KVisibility
 import kotlin.reflect.full.memberProperties
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
@@ -60,20 +63,16 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
     }
 
     private fun borrarViewSiCambiaronAtributos(database: MongoDatabase){
-        if(this.propiedadesViewProducto(database) != this.propiedadesProducto().map { it.name }.toSet()){
+        if(database.listCollectionNames().contains("Producto") && this.propiedadesViewProducto(database) != publicProperties<Producto>().map { it.name }.toSet()){
             database.getCollection("Producto").drop()
         }
     }
 
     private fun estructuraDeProducto(): Document{
-        return Document(mutableMapOf<String,String>().plus(this.propiedadesProducto().map { Pair(it.name, "\$listProducts.${it.name}") }))
+        return Document(mutableMapOf<String,String>().plus(publicProperties<Producto>().map { Pair(it.name, "\$listProducts.${it.name}") }))
     }
 
-    private fun propiedadesProducto(): List<KMutableProperty<*>> {
-        return Producto::class.java.kotlin.memberProperties.filterIsInstance<KMutableProperty<*>>()
-    }
-
-    private fun propiedadesViewProducto(database: MongoDatabase): Set<String>?{
-        return (database.listCollections().toList().find { it["name"] == "Producto" }?.get("options", Document::class.java)?.get("pipeline", List::class.java)?.lastOrNull() as Document?)?.get("\$project", Document::class.java)?.keys
+    private fun propiedadesViewProducto(database: MongoDatabase): Set<String>{
+        return database.listCollections().toList().first { it["name"] == "Producto" }.get("options", Document::class.java).get("pipeline", listOf(Document("pipeline", Document("\$project", emptyList<String>())))).last().get("\$project", Document::class.java).keys
     }
 }
