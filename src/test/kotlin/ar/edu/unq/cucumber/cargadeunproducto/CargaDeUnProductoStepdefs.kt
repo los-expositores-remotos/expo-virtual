@@ -83,7 +83,7 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
     }
 
     @And("^Sus datos son \"([^\"]*)\", \"([^\"]*)\", (\\d+), (\\d+), (\\d+), (\\d+), (\\d+), (\\d+), (\\d+)$")
-    fun susDatosSon(nombreProducto: String?, descripcion: String?, stock: Int, precioNormal: Int, precioPromocional: Int, longitud: Int, alto: Int, ancho: Int, peso: Int) {
+    fun susDatosSon(nombreProducto: String?, descripcion: String?, stock: Int, precioNormal: Int, precioPromocional: Int, longitud: Int, ancho: Int, alto: Int, peso: Int) {
         val productoRecuperado = productoService.obtenerProducto(this.proveedorA.id.toString(), this.productoA.itemName)
 
         println("longitudRecuperada: " + productoRecuperado.longitud)

@@ -60,9 +60,15 @@ class MongoProductoDAOImpl : ProductoDAO, GenericMongoDAO<Producto>(Producto::cl
         estructuraProducto["itemName"] = "\$listProducts.itemName"
         estructuraProducto["description"] = "\$listProducts.description"
         estructuraProducto["listImages"] = "\$listProducts.listImages"
+        estructuraProducto["listTags"] = "\$listProducts.listTags"
         estructuraProducto["stock"] = "\$listProducts.stock"
         estructuraProducto["itemPrice"] = "\$listProducts.itemPrice"
         estructuraProducto["promotionalPrice"] = "\$listProducts.promotionalPrice"
+        estructuraProducto["alto"] = "\$listProducts.alto"
+        estructuraProducto["ancho"] = "\$listProducts.ancho"
+        estructuraProducto["longitud"] = "\$listProducts.longitud"
+        estructuraProducto["pesoKg"] = "\$listProducts.pesoKg"
+        estructuraProducto["vendidos"] = "\$listProducts.vendidos"
         return estructuraProducto
     }
 }
