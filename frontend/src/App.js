@@ -5,6 +5,7 @@ import Suppliers from './components/routes/Suppliers.js'
 import Live from './components/routes/Live.js'
 import Faqs from './components/routes/Faqs.js'
 import Howtobuy from './components/routes/Howtobuy.js'
+import TestForm from './client/js/index.js'
 import Aboutus from './components/routes/Aboutus.js'
 import Contact from './components/routes/Contact.js'
 import PageNotFound from './components/routes/PageNotFound.js'
@@ -37,6 +38,9 @@ const Routing = () => {
   return (
       <div>
         <Switch>
+            <Route exact path="/testform" component={TestForm}>
+              <TestForm />
+            </Route>
             <Route exact path="/" component={Home}>
               <Home />
             </Route>

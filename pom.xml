@@ -107,6 +107,11 @@
             <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId> com.mercadopago </groupId>
+            <artifactId> dx-java </artifactId>
+            <version> 1.7.1 </version>
+        </dependency>
     </dependencies>
 
     <build>

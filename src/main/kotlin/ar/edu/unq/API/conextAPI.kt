@@ -34,6 +34,7 @@ fun main(args: Array<String>) {
 /*    val searchController = SearchController(backendProveedorService, backendProductoService)*/
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
     val adminController = AdminController(backendAdminService, tokenJWT, jwtAccessManager)
+    val paymentController = PaymentController()
 
  //   println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
 
@@ -54,6 +55,11 @@ fun main(args: Array<String>) {
 
     app.start(7000)
     app.routes {
+        path("/process_payment") {
+            post(paymentController::processPayment, mutableSetOf<Role>(Roles.ANYONE))
+        }
+
+
         path("/register") {
             post(userController::createUser, mutableSetOf<Role>(Roles.ANYONE))
         }
