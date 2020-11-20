@@ -1,27 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import '../css/index.css';
 import $ from 'jquery'
+import { useHistory } from "react-router-dom";
+import imagen from '../img/product.png'
+import M from 'materialize-css'
+
+document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.autocomplete');
+  M.Autocomplete.init(elems, {});
+});
+
 
 const TestForm = () => {
-
+  const history = useHistory();
    //REPLACE WITH YOUR PUBLIC KEY AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
 window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61");
 window.Mercadopago.getIdentificationTypes();
 
-const [quantity, setQuantity] = useState(null);
+const [quantity, setQuantity] = useState(1);
 const unitPrice = useState(10);
-const [amount, setAmount] = useState(null);
+const [amount, setAmount] = useState(10);
 const description = useState("Some book");
 const [cardNumber, setCardNumber] = useState("");
 const [paymentmethod, setpaymentmethod] = useState(null);
 const [paymentmethodId, setpaymentmethodId] = useState(null);
 const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
 const [cartTotal, setCartTotal] = useState("$ 10");
+const [email, setEmail] = useState("");
+const [docType, setDocType] = useState(null);
+
+const [token, setToken] = useState(null);
 
 function guessPaymentMethod(event) {
     cleanCardInfo();
     setCardNumber(event.target.value);
 
+    console.log(cardNumber)
     if (cardNumber.length >= 6) {
         let bin = cardNumber.substring(0,6);
         window.Mercadopago.getPaymentMethod({
@@ -33,16 +47,16 @@ function guessPaymentMethod(event) {
 function setPaymentMethod(status, response) {
     if (status === 200) {
         setpaymentmethod(response[0]);
-        setpaymentmethodId(paymentmethod.id);
-        setpaymentmethodThumbnail('url('+paymentmethod.thumbnail+')');        
-        if(paymentmethod.additional_info_needed.includes("issuer_id")){
-            getIssuers(paymentmethod.id);
+        setpaymentmethodId(response[0].id);
+        setpaymentmethodThumbnail('url('+response[0].thumbnail+')');        
+        if(response[0].additional_info_needed.includes("issuer_id")){
+            getIssuers(response[0].id);
 
         } else {
             document.getElementById('issuerInput').classList.add("hidden");
 
             getInstallments(
-              paymentmethod.id,
+              response[0].id,
                 document.getElementById('amount').value
             );
         }
@@ -130,16 +144,26 @@ function getCardToken(event){
     }
 };
 
+const myAwesomeFunction = {
+  backgroundImage: paymentmethodThumbnail,
+};
+
+
+
 function setCardTokenAndPay(status, response) {
     if (status === 200 || status === 201) {
-        let form = document.getElementById('paymentForm');
-        let card = document.createElement('input');
-        card.setAttribute('name', 'token');
-        card.setAttribute('type', 'hidden');
-        card.setAttribute('value', response.id);
-        form.appendChild(card);
+        // let form = document.getElementById('paymentForm');
+        // let card = document.createElement('input');
+        // card.setAttribute('name', 'token');
+        // card.setAttribute('type', 'hidden');
+        // card.setAttribute('value', response.id);
+        setToken(response.id)
+        console.log(response.id)
+
+        // form.appendChild(card);
         doSubmit=true;
-        form.submit(); //Submit form data to your backend
+        // form.submit(); //Submit form data to your backend
+        postearPago(response.id)
     } else {
         alert("Verify filled data!\n"+JSON.stringify(response, null, 4));
     }
@@ -171,9 +195,64 @@ function goBackContainerPayment(){
 
 //Handle price update
 function updatePrice(value){
+  if(parseInt(value) >= 1){
     setQuantity(value);
-    setAmount(parseInt(unitPrice) * parseInt(quantity));
-    setCartTotal('$ ' + amount);
+    setAmount(parseInt(unitPrice) * parseInt(value));
+    setCartTotal('$ ' + (parseInt(unitPrice) * parseInt(value)));
+    console.log("Quionda"+(parseInt(unitPrice) * parseInt(value)))
+  }else{
+    setQuantity(1);
+    setAmount(parseInt(unitPrice));
+    setCartTotal('$ ' + (parseInt(unitPrice)));
+  }
+};
+// const [quantity, setQuantity] = useState(1);
+// const unitPrice = useState(10);
+// const [amount, setAmount] = useState(10);
+// const description = useState("Some book");
+// const [cardNumber, setCardNumber] = useState("");
+// const [paymentmethod, setpaymentmethod] = useState(null);
+// const [paymentmethodId, setpaymentmethodId] = useState(null);
+// const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
+// const [cartTotal, setCartTotal] = useState("$ 10");
+// const [email, setEmail] = useState("");
+// const [docType, setDocType] = useState(null);
+const postearPago = (tokenString) => {
+  if(true){//cartTotal && unitPrice && email && description && amount && quantity && token){
+  fetch("http://localhost:7000/process_payment/", {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": tokenString,
+      "cartTotal": cartTotal,
+      "unitPrice": unitPrice,
+      "email": email,
+      "description": description,
+      "amount": amount,
+      "quantity": quantity
+    })
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      //console.log(data)
+      if (data.error) {
+        M.toast({ html: data.error, classes: "#c62828 red darken-3" });
+      } else {
+        M.toast({
+          html: "Transacción iniciada correctamente",
+          classes: "#388e3c green darken-2",
+        });
+        history.push("/");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }else{
+    M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });
+  }
 };
 
   return (
@@ -193,7 +272,7 @@ function updatePrice(value){
                       <div class="product-details">
                         <div class="row justify-content-md-center">
                           <div class="col-md-3">
-                            <img class="img-fluid mx-auto d-block image" src="img/product.png"/>
+                            <img class="img-fluid mx-auto d-block image" src={imagen}/>
                           </div>
                           <div class="col-md-4 product-detail">
                             <h5>Product</h5>
@@ -206,7 +285,7 @@ function updatePrice(value){
                           </div>
                           <div class="col-md-3 product-detail">
                             <label for="quantity"><h5>Quantity</h5></label>
-                            <input type="number" id="quantity" value="1" class="form-control" onChange={(e) => updatePrice(e.target.value)}/>
+                            <input type="number" id="quantity" value = {quantity} class="form-control" onChange={(e) => updatePrice(e.target.value)}/>
                           </div>
                         </div>
                       </div>
@@ -217,7 +296,7 @@ function updatePrice(value){
               <div class="col-md-12 col-lg-4">
                 <div class="summary">
                   <h3>Cart</h3>
-                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" value={cartTotal}></span></div>
+                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" >{cartTotal}</span></div>
                   <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick={checkoutShoppingCart}>Checkout</button>
                 </div>
               </div>
@@ -241,12 +320,12 @@ function updatePrice(value){
               <div class="total">Total<span class="price" id="summary-total" >{cartTotal}</span></div>
             </div>
             <div class="payment-details">
-              <form action="/process_payment" method="post" id="paymentForm">
+              <form action="#" id="paymentForm">
                   <h3 class="title">Buyer Details</h3>
                   <div class="row">
                     <div class="form-group col">
                       <label for="email">E-Mail</label>
-                      <input id="email" name="email" type="text" class="form-control"/>
+                      <input id="email" name="email" type="text" class="form-control" onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                   </div>
                   <div class="row">
@@ -279,7 +358,7 @@ function updatePrice(value){
                     <div class="form-group col-sm-8">
                       <label for="cardNumber">Card Number</label>
                       <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
-                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={ "backgroundImage:" + {paymentmethodThumbnail} } autocomplete='off' onChange={guessPaymentMethod}/>
+                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={myAwesomeFunction} autocomplete='off' onChange={guessPaymentMethod}/>
                     </div>
                     <div class="form-group col-sm-4">
                       <label for="securityCode">CVV</label>
@@ -299,7 +378,12 @@ function updatePrice(value){
                       <input type="hidden" name="paymentMethodId" id="paymentMethodId" value={paymentmethodId} />
                       <input type="hidden" name="description" id="description" value={description} />
                       <br/>
-                      <button type="submit" class="btn btn-primary btn-block" onSubmit={getCardToken}>Pay</button>
+                      <div className="row">
+          <div className="col s12">
+                <a onClick={getCardToken} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Pagar</a>
+          </div>
+        </div>
+                      {/* <button class="btn btn-primary btn-block" onSubmit={getCardToken}>Pay</button> */}
                       <br/>
                       <a id="go-back" onClick={goBackContainerPayment}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
