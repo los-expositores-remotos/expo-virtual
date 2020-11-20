@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/index.css';
 import $ from 'jquery'
 
@@ -8,12 +8,22 @@ const TestForm = () => {
 window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61");
 window.Mercadopago.getIdentificationTypes();
 
+const [quantity, setQuantity] = useState(null);
+const unitPrice = useState(10);
+const [amount, setAmount] = useState(null);
+const description = useState("Some book");
+const [cardNumber, setCardNumber] = useState("");
+const [paymentmethod, setpaymentmethod] = useState(null);
+const [paymentmethodId, setpaymentmethodId] = useState(null);
+const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
+const [cartTotal, setCartTotal] = useState("$ 10");
+
 function guessPaymentMethod(event) {
     cleanCardInfo();
+    setCardNumber(event.target.value);
 
-    let cardnumber = document.getElementById("cardNumber").value;
-    if (cardnumber.length >= 6) {
-        let bin = cardnumber.substring(0,6);
+    if (cardNumber.length >= 6) {
+        let bin = cardNumber.substring(0,6);
         window.Mercadopago.getPaymentMethod({
             "bin": bin
         }, setPaymentMethod);
@@ -22,19 +32,17 @@ function guessPaymentMethod(event) {
 
 function setPaymentMethod(status, response) {
     if (status === 200) {
-        let paymentMethod = response[0];
-        
-        document.getElementById('paymentMethodId').value = paymentMethod.id;
-        document.getElementById('cardNumber').style.backgroundImage = 'url(' + paymentMethod.thumbnail + ')';
-        
-        if(paymentMethod.additional_info_needed.includes("issuer_id")){
-            getIssuers(paymentMethod.id);
+        setpaymentmethod(response[0]);
+        setpaymentmethodId(paymentmethod.id);
+        setpaymentmethodThumbnail('url('+paymentmethod.thumbnail+')');        
+        if(paymentmethod.additional_info_needed.includes("issuer_id")){
+            getIssuers(paymentmethod.id);
 
         } else {
             document.getElementById('issuerInput').classList.add("hidden");
 
             getInstallments(
-                paymentMethod.id,
+              paymentmethod.id,
                 document.getElementById('amount').value
             );
         }
@@ -141,7 +149,9 @@ function setCardTokenAndPay(status, response) {
  * UX functions 
  */
 
+
 function cleanCardInfo() {
+
     document.getElementById('cardNumber').style.backgroundImage = '';
     document.getElementById('issuerInput').classList.add("hidden");
     document.getElementById('issuer').options.length = 0;
@@ -160,22 +170,11 @@ function goBackContainerPayment(){
 }
 
 //Handle price update
-function updatePrice(){
-    let quantity = document.getElementById('quantity').value;
-    let unitPrice = document.getElementById('unit-price').innerHTML;
-    let amount = parseInt(unitPrice) * parseInt(quantity);
-
-    document.getElementById('cart-total').innerHTML = '$ ' + amount;
-    document.getElementById('summary-price').innerHTML = '$ ' + unitPrice;
-    document.getElementById('summary-quantity').innerHTML = quantity;
-    document.getElementById('summary-total').innerHTML = '$ ' + amount;
-    document.getElementById('amount').value = amount;
+function updatePrice(value){
+    setQuantity(value);
+    setAmount(parseInt(unitPrice) * parseInt(quantity));
+    setCartTotal('$ ' + amount);
 };
-document.getElementById('quantity').addEventListener('change', updatePrice);
-updatePrice();
-
-//Retrieve product description
-document.getElementById('description').value = document.getElementById('product-description').innerHTML;
 
   return (
 <div>
@@ -199,15 +198,15 @@ document.getElementById('description').value = document.getElementById('product-
                           <div class="col-md-4 product-detail">
                             <h5>Product</h5>
                             <div class="product-info">
-                              <p><b>Description: </b><span id="product-description">Some book</span><br/>
+                              <p><b>Description: </b><span id="product-description">{description}</span><br/>
                               <b>Author: </b>Dale Carnegie<br/>
                               <b>Number of pages: </b>336<br/>
-                              <b>Price:</b> $ <span id="unit-price">10</span></p>
+                              <b>Price:</b> $ <span id="unit-price" >{unitPrice}</span></p>
                             </div>
                           </div>
                           <div class="col-md-3 product-detail">
                             <label for="quantity"><h5>Quantity</h5></label>
-                            <input type="number" id="quantity" value="1" class="form-control"/>
+                            <input type="number" id="quantity" value="1" class="form-control" onChange={(e) => updatePrice(e.target.value)}/>
                           </div>
                         </div>
                       </div>
@@ -218,7 +217,7 @@ document.getElementById('description').value = document.getElementById('product-
               <div class="col-md-12 col-lg-4">
                 <div class="summary">
                   <h3>Cart</h3>
-                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total"></span></div>
+                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" value={cartTotal}></span></div>
                   <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick={checkoutShoppingCart}>Checkout</button>
                 </div>
               </div>
@@ -236,10 +235,10 @@ document.getElementById('description').value = document.getElementById('product-
             <div class="products">
               <h2 class="title">Summary</h2>
               <div class="item">
-                <span class="price" id="summary-price"></span>
-                <p class="item-name">Book x <span id="summary-quantity"></span></p>
+                <span class="price" id="summary-price" value={'$ ' + unitPrice}></span>
+                <p class="item-name">Book x <span id="summary-quantity" value={quantity}></span></p>
               </div>
-              <div class="total">Total<span class="price" id="summary-total"></span></div>
+              <div class="total">Total<span class="price" id="summary-total" >{cartTotal}</span></div>
             </div>
             <div class="payment-details">
               <form action="/process_payment" method="post" id="paymentForm">
@@ -280,7 +279,7 @@ document.getElementById('description').value = document.getElementById('product-
                     <div class="form-group col-sm-8">
                       <label for="cardNumber">Card Number</label>
                       <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
-                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete='off' onChange={guessPaymentMethod}/>
+                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={ "backgroundImage:" + {paymentmethodThumbnail} } autocomplete='off' onChange={guessPaymentMethod}/>
                     </div>
                     <div class="form-group col-sm-4">
                       <label for="securityCode">CVV</label>
@@ -296,9 +295,9 @@ document.getElementById('description').value = document.getElementById('product-
                       <select type="text" id="installments" name="installments" class="form-control"></select>
                     </div>
                     <div class="form-group col-sm-12">
-                      <input type="hidden" name="transactionAmount" id="amount" value="10" />
-                      <input type="hidden" name="paymentMethodId" id="paymentMethodId" />
-                      <input type="hidden" name="description" id="description" />
+                      <input type="hidden" name="transactionAmount" id="amount" value={amount}/>
+                      <input type="hidden" name="paymentMethodId" id="paymentMethodId" value={paymentmethodId} />
+                      <input type="hidden" name="description" id="description" value={description} />
                       <br/>
                       <button type="submit" class="btn btn-primary btn-block" onSubmit={getCardToken}>Pay</button>
                       <br/>
@@ -317,6 +316,6 @@ document.getElementById('description').value = document.getElementById('product-
       </section>
       </div>
       );
-    }
     
+  }
     export default TestForm;
