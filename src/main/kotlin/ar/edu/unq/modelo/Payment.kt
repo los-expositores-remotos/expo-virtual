@@ -1,3 +1,6 @@
+package ar.edu.unq.modelo
+
+import ar.edu.unq.API.PaymentMapper
 import com.mercadopago.MercadoPago
 import com.mercadopago.exceptions.MPConfException
 import com.mercadopago.exceptions.MPException
@@ -36,20 +39,20 @@ class Payment {
     }
 }*/
 
-object Main {
+object Payment {
     @Throws(MPException::class, MPConfException::class)
     @JvmStatic
-    fun main(args: Array<String>) {
+    fun main(pago: PaymentMapper) {
         MercadoPago.SDK.setAccessToken("TEST-7449182497630729-111823-239354f2a2c6af76c94c4f937d954c26-58849892")
         val payment = Payment()
-                .setTransactionAmount(500f)
-                .setToken("your_cardtoken")
-                .setDescription("description")
-                .setInstallments(1)
-                .setPaymentMethodId("visa")
+                .setTransactionAmount(pago.amount)
+                .setToken(pago.token)
+                .setDescription(pago.description)
+                .setInstallments(pago.installments)
+                .setPaymentMethodId(pago.paymentMethodId)
                 .setPayer(Payer()
-                        .setEmail("dummy_email"))
-        val pago = payment.save()
-        println(pago);
+                        .setEmail(pago.email))
+        val response = payment.save()
+        println(response.feeDetails)
     }
 }

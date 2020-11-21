@@ -18,13 +18,15 @@ window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61"
 window.Mercadopago.getIdentificationTypes();
 
 const [quantity, setQuantity] = useState(1);
-const unitPrice = useState(10);
+const [unitPrice] = useState(10);
 const [amount, setAmount] = useState(10);
-const description = useState("Some book");
+const [description] = useState("Some book");
 const [cardNumber, setCardNumber] = useState("");
 const [paymentmethod, setpaymentmethod] = useState(null);
 const [paymentmethodId, setpaymentmethodId] = useState(null);
+var installments = null;
 const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
+const [paymentmethodThumbnailStyle, setpaymentmethodThumbnailStyle] = useState({backgroundImage:null,});
 const [cartTotal, setCartTotal] = useState("$ 10");
 const [email, setEmail] = useState("");
 const [docType, setDocType] = useState(null);
@@ -41,14 +43,18 @@ function guessPaymentMethod(event) {
         window.Mercadopago.getPaymentMethod({
             "bin": bin
         }, setPaymentMethod);
-    }
+      }
+        
 };
 
 function setPaymentMethod(status, response) {
     if (status === 200) {
+      console.log(paymentmethodThumbnailStyle)  
         setpaymentmethod(response[0]);
         setpaymentmethodId(response[0].id);
-        setpaymentmethodThumbnail('url('+response[0].thumbnail+')');        
+        setpaymentmethodThumbnail('url(' + response[0].thumbnail + ')');
+        setpaymentmethodThumbnailStyle({backgroundImage:'url(' + response[0].thumbnail + ')',});
+        console.log(paymentmethodThumbnailStyle)        
         if(response[0].additional_info_needed.includes("issuer_id")){
             getIssuers(response[0].id);
 
@@ -144,7 +150,7 @@ function getCardToken(event){
     }
 };
 
-const myAwesomeFunction = {
+const updatePaymentMethodThumbnail = {
   backgroundImage: paymentmethodThumbnail,
 };
 
@@ -158,8 +164,6 @@ function setCardTokenAndPay(status, response) {
         // card.setAttribute('type', 'hidden');
         // card.setAttribute('value', response.id);
         setToken(response.id)
-        console.log(response.id)
-
         // form.appendChild(card);
         doSubmit=true;
         // form.submit(); //Submit form data to your backend
@@ -176,7 +180,7 @@ function setCardTokenAndPay(status, response) {
 
 function cleanCardInfo() {
 
-    document.getElementById('cardNumber').style.backgroundImage = '';
+  setpaymentmethodThumbnailStyle({backgroundImage:"",})
     document.getElementById('issuerInput').classList.add("hidden");
     document.getElementById('issuer').options.length = 0;
     document.getElementById('installments').options.length = 0;
@@ -218,6 +222,7 @@ function updatePrice(value){
 // const [email, setEmail] = useState("");
 // const [docType, setDocType] = useState(null);
 const postearPago = (tokenString) => {
+  console.log(installments)
   if(true){//cartTotal && unitPrice && email && description && amount && quantity && token){
   fetch("http://localhost:7000/process_payment/", {
     method: "POST",
@@ -226,12 +231,13 @@ const postearPago = (tokenString) => {
     },
     body: JSON.stringify({
       "token": tokenString,
-      "cartTotal": cartTotal,
       "unitPrice": unitPrice,
       "email": email,
       "description": description,
       "amount": amount,
-      "quantity": quantity
+      "quantity": quantity,
+      "paymentMethodId": paymentmethodId,
+      "installments": installments
     })
   })
     .then((res) => res.json())
@@ -358,7 +364,7 @@ const postearPago = (tokenString) => {
                     <div class="form-group col-sm-8">
                       <label for="cardNumber">Card Number</label>
                       <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
-                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={myAwesomeFunction} autocomplete='off' onChange={guessPaymentMethod}/>
+                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={paymentmethodThumbnailStyle} autocomplete='off' onChange={guessPaymentMethod}/>
                     </div>
                     <div class="form-group col-sm-4">
                       <label for="securityCode">CVV</label>
@@ -371,7 +377,7 @@ const postearPago = (tokenString) => {
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="installments">Installments</label>
-                      <select type="text" id="installments" name="installments" class="form-control"></select>
+                      <select type="text" id="installments" name="installments" class="form-control" onChange={(e) => {installments = e.target.value}}></select>
                     </div>
                     <div class="form-group col-sm-12">
                       <input type="hidden" name="transactionAmount" id="amount" value={amount}/>

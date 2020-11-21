@@ -2,6 +2,8 @@ package ar.edu.unq.API
 
 data class UserViewMapper(val nombre :String?, val apellido : String?)
 
+data class PaymentMapper(val token :String?, val unitPrice : Int?, val email : String?, val description: String?, val amount : Float?, val quantity : Int?, val paymentMethodId: String?, val installments: Int?)
+
 data class AdminLogin(val userName : String?, val password : String?)
 
 data class UserRegisterMapper(val nombre:String?, val apellido : String?, val dni : Int?)
