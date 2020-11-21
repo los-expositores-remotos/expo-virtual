@@ -24,12 +24,11 @@ const [description] = useState("Some book");
 const [cardNumber, setCardNumber] = useState("");
 const [paymentmethod, setpaymentmethod] = useState(null);
 const [paymentmethodId, setpaymentmethodId] = useState(null);
-var installments = null;
+let installments = null;
 const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
 const [paymentmethodThumbnailStyle, setpaymentmethodThumbnailStyle] = useState({backgroundImage:null,});
 const [cartTotal, setCartTotal] = useState("$ 10");
 const [email, setEmail] = useState("");
-const [docType, setDocType] = useState(null);
 
 const [token, setToken] = useState(null);
 
@@ -237,7 +236,10 @@ const postearPago = (tokenString) => {
       "amount": amount,
       "quantity": quantity,
       "paymentMethodId": paymentmethodId,
-      "installments": installments
+      "installments": document.getElementById("installments").value,
+      "issuerId": document.getElementById("issuer").value,
+      "docType": document.getElementById("docType").value,
+      "docNumber": document.getElementById("docNumber").value
     })
   })
     .then((res) => res.json())

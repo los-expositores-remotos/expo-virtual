@@ -5,6 +5,7 @@ import com.mercadopago.MercadoPago
 import com.mercadopago.exceptions.MPConfException
 import com.mercadopago.exceptions.MPException
 import com.mercadopago.resources.Payment
+import com.mercadopago.resources.datastructures.payment.Identification
 import com.mercadopago.resources.datastructures.payment.Payer
 
 /*
@@ -44,15 +45,26 @@ object Payment {
     @JvmStatic
     fun main(pago: PaymentMapper) {
         MercadoPago.SDK.setAccessToken("TEST-7449182497630729-111823-239354f2a2c6af76c94c4f937d954c26-58849892")
+
         val payment = Payment()
-                .setTransactionAmount(pago.amount)
+        payment.setTransactionAmount(pago.amount)
                 .setToken(pago.token)
                 .setDescription(pago.description)
-                .setInstallments(pago.installments)
-                .setPaymentMethodId(pago.paymentMethodId)
-                .setPayer(Payer()
-                        .setEmail(pago.email))
+                .setIssuerId(pago.issuerId)
+                .setInstallments(pago.installments).paymentMethodId = pago.paymentMethodId
+
+        val identification = Identification()
+        identification.setType(pago.docType).number = pago.docNumber
+
+        val payer = Payer()
+        payer.setEmail(pago.email).identification = identification
+
+        payment.payer = payer
+
         val response = payment.save()
-        println(response.feeDetails)
+
+        println(response.status)
+        println(payment.status)
+        println(response.metadata)
     }
 }

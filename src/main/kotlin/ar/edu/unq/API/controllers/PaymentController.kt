@@ -13,6 +13,7 @@ class PaymentController {
     private val backendPaymentService: PaymentService = PaymentServiceImpl()
 
     fun processPayment(ctx: Context){
+        println(ctx.body())
         this.backendPaymentService.realizarPago(ctx.body<PaymentMapper>())
 
         //this.backendPaymentService.realizarPago()
