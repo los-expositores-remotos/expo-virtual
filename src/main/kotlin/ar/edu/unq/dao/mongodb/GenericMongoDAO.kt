@@ -20,14 +20,14 @@ abstract class GenericMongoDAO<T>(val entityType: Class<T>) {
         return this.getCollection(entityType.simpleName, entityType).find().toMutableList()
     }
 
-     protected open fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
+     private fun getCollection(objectType: String, classType: Class<T>): MongoCollection<T>{
         // Precondición: Debe haber una sesión en el contexto
         val database = this.getDatabase()
         this.createColection(objectType,database)
         return database.getCollection(objectType, classType)
     }
 
-    protected fun createColection(objectType: String, database: MongoDatabase){
+    protected open fun createColection(objectType: String, database: MongoDatabase){
         if(database.listCollectionNames().contains(objectType).not()) {
             database.createCollection(objectType)
         }

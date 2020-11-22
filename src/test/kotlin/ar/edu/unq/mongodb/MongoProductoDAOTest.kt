@@ -10,6 +10,9 @@ import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
 import ar.edu.unq.services.runner.TransactionType
+import com.mongodb.client.model.Aggregates
+import org.bson.Document
+import org.junit.Assert
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -74,5 +77,38 @@ class MongoProductoDAOTest : GenericMongoDAOTest<Producto>(MongoProductoDAOImpl(
             this.dao.findEq("itemName", "LesPaul")
         }, listOf(TransactionType.MONGO), DataBaseType.TEST)
         assertEquals(this.items.filter { it.itemName == "LesPaul" }.toSet(), productosRecuperados.toSet())
+    }
+
+    @Test
+    fun testSiLosAtributosDeLosElementosDeLaViewNoCoincidenSeCreaNuevamente() {
+        runTrx({
+            val database = TransactionRunner.getTransaction().dataBase
+            database.getCollection("Producto").drop()
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+
+        runTrx({
+            val database = TransactionRunner.getTransaction().dataBase
+            val proyectarProductos = Aggregates.project(Document("listProducts", "\$productos"))
+            val separarProductos = Aggregates.unwind("\$listProducts")
+            val proyectarProductosIndividuales = Aggregates.project(this.estructuraDeProductoFalsa())
+            database.createView("Producto", "Proveedor", listOf(
+                proyectarProductos,
+                separarProductos,
+                proyectarProductosIndividuales
+            )
+            )
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+
+        var result = runTrx({
+            val database = TransactionRunner.getTransaction().dataBase
+            database.getCollection("Producto", Producto::class.java).find().toList()
+        }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        Assert.assertNotEquals(this.items.toSet(), result.toSet())
+        result = runTrx({ this.dao.getAll() }, listOf(TransactionType.MONGO), DataBaseType.TEST)
+        Assert.assertEquals(this.items.toSet(), result.toSet())
+    }
+
+    private fun estructuraDeProductoFalsa(): Document {
+        return Document("__estructuraFalsa__", "\$SoyMasFalsaQueBilleteDeTresPesos")
     }
 }

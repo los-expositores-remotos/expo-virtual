@@ -9,9 +9,9 @@ import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import org.junit.Assert
 
 class OrdenarAlfabeticamenteLosProductosStepdefs {
@@ -48,7 +48,7 @@ class OrdenarAlfabeticamenteLosProductosStepdefs {
         Assert.assertEquals(proveedorService.recuperarProveedor(proveedorA.id.toString()).productos, this.productosOrdenados)
     }
 
-    @cucumber.api.java.After
+    @io.cucumber.java.After
     fun clear() {
         productoService.deleteAll()
         proveedorService.deleteAll()
