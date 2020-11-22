@@ -1,7 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
+import {Link} from 'react-router-dom'
 import '../styles/ShoppingCart.css'
 import ShopContext from './context/shop-context'
 
+export const precioTotal = (products) => {
+  let contador = 0
+  products.forEach((cartItem)=>{
+    contador = contador + (cartItem.itemPrice * cartItem.quantity)
+  })
+  return contador
+}
 
 const ShoppingCart = () => {
   
@@ -11,13 +19,6 @@ const ShoppingCart = () => {
   useEffect(() => {
     //console.log(context);
   }, []);
-  const precioTotal = (products) => {
-    let contador = 0
-    products.forEach((cartItem)=>{
-      contador = contador + (cartItem.itemPrice * cartItem.quantity)
-    })
-    return contador
-  }
 
   return (
     /**
@@ -69,12 +70,24 @@ const ShoppingCart = () => {
           </tbody>
             ))}
          </table>
-          <h3>
-            <strong>
-                Precio Total : ${precioTotal(context.cart)}
-            </strong>
-          </h3>
-        </div>
+         <div className="row">
+           <div className="col s6">
+
+            <h3>
+              <strong>
+                  Precio Total : ${precioTotal(context.cart)}
+              </strong>
+            </h3>
+           </div>
+           <div className="col s6 offset-s6">
+             <Link to="/testform">
+                <button>
+                      Comprar
+                </button>
+             </Link>
+           </div>
+          </div>
+         </div>
         }
       </main>
     </React.Fragment>

@@ -32,8 +32,8 @@
 }
 
 #botonSesion {
-  background-color: #ee6e73 !important;
-  width: 129%;
+  background-color: #fff !important;
+  width: 108%;
   height: auto;
   margin-top: 35%;
 }
@@ -41,4 +41,17 @@
 #colBotonSesion {
   width: 10%;
   margin-left: -3%;
+}
+
+.btn,
+.btn-large,
+.btn-small {
+  text-decoration: none;
+  color: #ee6e73 !important;
+  background-color: #fff;
+  text-align: center;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease-out;
+  cursor: pointer;
+  margin: 4px;
 }

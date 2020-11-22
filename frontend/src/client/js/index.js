@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../css/index.css';
 import $ from 'jquery'
 import { useHistory } from "react-router-dom";
-import imagen from '../img/product.png'
 import M from 'materialize-css'
+import MercadoPagoProducto from '../../components/MercadoPagoProducto';
+import ShopContext from '../../components/context/shop-context'
+import {precioTotal} from '../../components/ShoppingCart'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
@@ -14,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
 const TestForm = () => {
   const history = useHistory();
    //REPLACE WITH YOUR PUBLIC KEY AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
-window.Mercadopago.setPublishableKey("TEST-4d86651c-5bb2-4cad-b4e3-a5a629db5d72");
+window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61");
 window.Mercadopago.getIdentificationTypes();
-
+const context = useContext(ShopContext);
 const [quantity, setQuantity] = useState(1);
 const [unitPrice] = useState(10);
 const [amount, setAmount] = useState(10);
@@ -222,7 +224,7 @@ function updatePrice(value){
 // const [docType, setDocType] = useState(null);
 const postearPago = (tokenString) => {
   console.log(installments)
-  if(true){//cartTotal && unitPrice && email && description && amount && quantity && token){
+  if(cartTotal && unitPrice && email && description && amount && quantity && token){//cartTotal && unitPrice && email && description && amount && quantity && token){
   fetch("http://localhost:7000/process_payment/", {
     method: "POST",
     headers: {
@@ -242,17 +244,15 @@ const postearPago = (tokenString) => {
       "docNumber": document.getElementById("docNumber").value
     })
   })
-    .then((res) => res.json())
-    .then((data) => {
-      //console.log(data)
-      if (data.error) {
-        M.toast({ html: data.error, classes: "#c62828 red darken-3" });
+    .then((res) =>{
+      if (!res.ok) {
+        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
       } else {
         M.toast({
           html: "Transacción iniciada correctamente",
           classes: "#388e3c green darken-2",
         });
-        history.push("/");
+        //history.push("/");
       }
     })
     .catch((err) => {
@@ -268,48 +268,21 @@ const postearPago = (tokenString) => {
       <section class="shopping-cart dark">
         <div class="container" id="container">
           <div class="block-heading">
-            <h2>Shopping Cart</h2>
-            <p>This is an example of a Mercado Pago integration</p>
+            <h2>Productos a comprar</h2>
           </div>
-          <div class="content">
             <div class="row">
-              <div class="col-md-12 col-lg-8">
-                <div class="items">
-                  <div class="product">
-                    <div class="info">
-                      <div class="product-details">
-                        <div class="row justify-content-md-center">
-                          <div class="col-md-3">
-                            <img class="img-fluid mx-auto d-block image" src={imagen}/>
-                          </div>
-                          <div class="col-md-4 product-detail">
-                            <h5>Product</h5>
-                            <div class="product-info">
-                              <p><b>Description: </b><span id="product-description">{description}</span><br/>
-                              <b>Author: </b>Dale Carnegie<br/>
-                              <b>Number of pages: </b>336<br/>
-                              <b>Price:</b> $ <span id="unit-price" >{unitPrice}</span></p>
-                            </div>
-                          </div>
-                          <div class="col-md-3 product-detail">
-                            <label for="quantity"><h5>Quantity</h5></label>
-                            <input type="number" id="quantity" value = {quantity} class="form-control" onChange={(e) => updatePrice(e.target.value)}/>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-lg-4">
+                        {context.cart.map(product => (
+                          <MercadoPagoProducto producto={product}/>
+                        ))}
+              <div class="col s12">
                 <div class="summary">
                   <h3>Cart</h3>
-                  <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" >{cartTotal}</span></div>
-                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick={checkoutShoppingCart}>Checkout</button>
-                </div>
+                    <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" >$ {precioTotal(context.cart)}</span></div>
+                    <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick={checkoutShoppingCart}>Checkout</button>
+                  </div>
               </div>
+              
             </div>
-          </div>
         </div>
       </section>
       <section class="payment-form dark">
@@ -323,9 +296,13 @@ const postearPago = (tokenString) => {
               <h2 class="title">Summary</h2>
               <div class="item">
                 <span class="price" id="summary-price" value={'$ ' + unitPrice}></span>
-                <p class="item-name">Book x <span id="summary-quantity" value={quantity}></span></p>
+                {context.cart.map(product => {
+                  return(
+                    <p class="item-name">{product.itemName} <span id="summary-quantity" value={quantity}>x {product.quantity}</span></p>
+                  )
+                })}
               </div>
-              <div class="total">Total<span class="price" id="summary-total" >{cartTotal}</span></div>
+              <div class="total">Total<span class="price" id="summary-total" >$ {precioTotal(context.cart)}.00</span></div>
             </div>
             <div class="payment-details">
               <form action="#" id="paymentForm">
@@ -353,7 +330,7 @@ const postearPago = (tokenString) => {
                       <label for="cardholderName">Card Holder</label>
                       <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control"/>
                     </div>
-                    <div class="form-group col-sm-4">
+                    <div class="col s12">
                       <label for="">Expiration Date</label>
                       <div class="input-group expiration-date">
                         <input type="text" class="form-control" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
@@ -379,7 +356,7 @@ const postearPago = (tokenString) => {
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="installments">Installments</label>
-                      <select type="text" id="installments" name="installments" class="form-control" onChange={(e) => {installments = e.target.value}}></select>
+                      <select type="text" id="installments" name="installments" class="form-control"></select>
                     </div>
                     <div class="form-group col-sm-12">
                       <input type="hidden" name="transactionAmount" id="amount" value={amount}/>
