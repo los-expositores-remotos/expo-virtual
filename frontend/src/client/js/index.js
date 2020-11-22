@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const TestForm = () => {
   const history = useHistory();
    //REPLACE WITH YOUR PUBLIC KEY AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
-window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61");
+window.Mercadopago.setPublishableKey("TEST-4d86651c-5bb2-4cad-b4e3-a5a629db5d72");
 window.Mercadopago.getIdentificationTypes();
 
 const [quantity, setQuantity] = useState(1);

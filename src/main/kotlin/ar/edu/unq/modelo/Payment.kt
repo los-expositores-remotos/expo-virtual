@@ -44,7 +44,7 @@ object Payment {
     @Throws(MPException::class, MPConfException::class)
     @JvmStatic
     fun main(pago: PaymentMapper) {
-        MercadoPago.SDK.setAccessToken("TEST-7449182497630729-111823-239354f2a2c6af76c94c4f937d954c26-58849892")
+        MercadoPago.SDK.setAccessToken("TEST-6560061390922943-112218-de3d46eef8d741cd241093589ce53d32-674668636")
 
         val payment = Payment()
         payment.setTransactionAmount(pago.amount)
