@@ -43,9 +43,10 @@
   margin-left: -3%;
 }
 
-.btn,
+/* .btn,
 .btn-large,
-.btn-small {
+.btn-small 
+.btn-session{
   text-decoration: none;
   color: #ee6e73 !important;
   background-color: #fff;
@@ -54,4 +55,4 @@
   transition: background-color 0.2s ease-out;
   cursor: pointer;
   margin: 4px;
-}
+} */

@@ -7,6 +7,8 @@ import com.mercadopago.exceptions.MPException
 import com.mercadopago.resources.Payment
 import com.mercadopago.resources.datastructures.payment.Identification
 import com.mercadopago.resources.datastructures.payment.Payer
+import kotlin.reflect.KVisibility
+import kotlin.reflect.full.memberProperties
 
 /*
 package ar.edu.unq.modelo
@@ -44,7 +46,7 @@ object Payment {
     @Throws(MPException::class, MPConfException::class)
     @JvmStatic
     fun main(pago: PaymentMapper) {
-        MercadoPago.SDK.setAccessToken("TEST-6560061390922943-112218-de3d46eef8d741cd241093589ce53d32-674668636")
+        MercadoPago.SDK.setAccessToken("TEST-7484070905477197-112319-c2b1400369673f7d22fc5f32bdd028a3-674632494")
 
         val payment = Payment()
         payment.setTransactionAmount(pago.amount)
@@ -58,13 +60,14 @@ object Payment {
 
         val payer = Payer()
         payer.setEmail(pago.email).identification = identification
-
         payment.payer = payer
 
         val response = payment.save()
-
+        println(payment.statusDetail)
         println(response.status)
         println(payment.status)
-        println(response.metadata)
+        println(response.feeDetails)
+
+        Payment::class.java.kotlin.memberProperties.filter { it.visibility == KVisibility.PUBLIC }.forEach { println(it.name + ": " + it.getter.call(response)) }
     }
 }

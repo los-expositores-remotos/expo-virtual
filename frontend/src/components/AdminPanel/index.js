@@ -17,12 +17,12 @@ import {precioTotal, sendMethodCostTopLevel, sendMethodNameTopLevel} from '../..
 const TestForm = () => {
   const history = useHistory();
 //    //REPLACE WITH YOUR PUBLIC KEY AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
-window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61");
-window.Mercadopago.getIdentificationTypes();
+window.Mercadopago.setPublishableKey("TEST-5429f1b7-5db8-46fd-bf95-26ae8fcd39fe");
+// window.Mercadopago.getIdentificationTypes();
 const context = useContext(ShopContext);
 const [quantity, setQuantity] = useState(1);
 const [unitPrice] = useState(10);
-const [amount, setAmount] = useState(10);
+const [amount] = useState(precioTotal(context.cart) + sendMethodCostTopLevel);
 const [description] = useState("Some book");
 const [cardNumber, setCardNumber] = useState("");
 const [paymentmethod, setpaymentmethod] = useState(null);
@@ -32,6 +32,7 @@ const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
 const [paymentmethodThumbnailStyle, setpaymentmethodThumbnailStyle] = useState({backgroundImage:null,});
 const [cartTotal, setCartTotal] = useState("$ 10");
 const [email, setEmail] = useState("");
+const [docTypes, setDocTypes] = useState([])
 
 // const [token, setToken] = useState(null);
 // const [docTypes, setDocTypes] = useState(null);
@@ -68,6 +69,7 @@ function guessPaymentMethod(event) {
     console.log(event.target.value)
     if (event.target.value.length >= 6) {
         let bin = event.target.value.substring(0,6);
+      
         window.Mercadopago.getPaymentMethod({
             "bin": bin
         }, setPaymentMethod);
@@ -95,8 +97,6 @@ function setPaymentMethod(status, response) {
             );
         }
 
-    } else {
-        alert(`payment method info error: ${response}`);
     }
 }
 
@@ -153,7 +153,7 @@ function setInstallments(status, response){
             document.getElementById('installments').appendChild(opt);
         });
     } else {
-        alert(`installments method info error: ${response}`);
+        // alert(`installments method info error: ${response}`);
     }
 }  
 
@@ -248,6 +248,7 @@ const postearPago = (tokenString) => {
     })
   })
     .then((res) =>{
+      window.Mercadopago.clearSession()
       if (!res.ok) {
         M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
       } else {
@@ -265,10 +266,12 @@ const postearPago = (tokenString) => {
     M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });
   }
 };
-const [list, setList] = useState([])
-  const options = ()=>{
-    var li = []
-   if(list.length === 0){
+
+
+
+  
+const selectDocTypes = ()=>{
+   if(docTypes.length === 0){
     fetch("https://api.mercadopago.com/v1/identification_types?public_key=TEST-147fd98d-a235-429b-aa09-a5b157a1fe61", {
     headers: {
       "Content-type": "application/json",
@@ -278,11 +281,14 @@ const [list, setList] = useState([])
         return res.json()
       }
     }).then((response)=>{
-    setList(response)
+      setDocTypes(response)
     })
   }
-
-
+  return(<select id="docType" name="docType" data-checkout="docType" class="form-control select-visible">
+    {docTypes.map((opt => {
+      return(<option value={opt.id}>{opt.name}</option>)
+    }))}
+  </select>)
   }
 
   // function select(){
@@ -304,6 +310,7 @@ const [list, setList] = useState([])
     <div>
       {checkoutShoppingCart()}
       <section class="payment-form dark">
+      
       <div class="container_payment">
           <div class="block-heading">
              <h2>Pago con tarjeta</h2>
@@ -340,7 +347,7 @@ const [list, setList] = useState([])
                <form action="#" id="paymentForm">
                    <h3 class="title">Datos del comprador</h3>
                    <div class="row">
-                     <div class="form-group col">
+                     <div class="form-group col-sm-5">
                        <label for="email">E-Mail</label>
                        <input id="email" name="email" type="text" class="form-control" onChange={(e) => setEmail(e.target.value)}/>
                      </div>
@@ -348,10 +355,7 @@ const [list, setList] = useState([])
                    <div class="row">
                      <div class="form-group col-sm-5">
                        <label for="docType">Tipo de documento</label>
-                       {options()}
-                       <select id="docType" name="docType" data-checkout="docType" class="form-control select-visible">
-
-                       </select>
+                       {selectDocTypes()}
                      </div>
                      <div class="form-group col-sm-7">
                        <label for="docNumber">Numero de documento</label>
@@ -404,7 +408,8 @@ const [list, setList] = useState([])
            </div>
          </div>
                        <br/>
-                       <a id="go-back" onClick={goBackContainerPayment}>
+                       
+                       <a id="go-back" href="/shoppingcart">
                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
                            <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
                          </svg>
