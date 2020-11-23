@@ -165,7 +165,6 @@ const ShoppingCart = () => {
          </div>
          
           <div className="row">
-           
            <h3>
               <strong> 
                    Precio Total: {precioTotalConEnvio()}

@@ -41,7 +41,7 @@
                           </div>
                           <div class="col-md-3 product-detail">
                             <label for="quantity"><h5>Quantity</h5></label>
-                            <input type="number" id="quantity" value="1" class="form-control">
+                            <input type="number" id="quantity" value="1" class="form-control" onchange=updatePrice>
                           </div>
                         </div>
                       </div>
@@ -53,7 +53,7 @@
                 <div class="summary">
                   <h3>Cart</h3>
                   <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total"></span></div>
-                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn">Checkout</button>
+                  <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick=clickEvent>Checkout</button>
                 </div>
               </div>
             </div>
@@ -77,7 +77,7 @@
               <div class="total">Total<span class="price" id="summary-total"></span></div>
             </div>
             <div class="payment-details">
-              <form action="/process_payment" method="post" id="paymentForm">
+              <form action="/process_payment" method="post" id="paymentForm" onsubmit=getCardToken>
                   <h3 class="title">Buyer Details</h3>
                   <div class="row">
                     <div class="form-group col">
@@ -115,7 +115,7 @@
                     <div class="form-group col-sm-8">
                       <label for="cardNumber">Card Number</label>
                       <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
-                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off>
+                        onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off onChange=guessPaymentMethod>
                     </div>
                     <div class="form-group col-sm-4">
                       <label for="securityCode">CVV</label>
@@ -124,7 +124,7 @@
                     </div>
                     <div id="issuerInput" class="form-group col-sm-12 hidden">
                       <label for="issuer">Issuer</label>
-                      <select id="issuer" name="issuer" data-checkout="issuer" class="form-control"></select>
+                      <select id="issuer" name="issuer" data-checkout="issuer" class="form-control" onChange=updateInstallmentsForIssuer></select>
                     </div>
                     <div class="form-group col-sm-12">
                       <label for="installments">Installments</label>
@@ -137,7 +137,7 @@
                       <br>
                       <button type="submit" class="btn btn-primary btn-block">Pay</button>
                       <br>
-                      <a id="go-back">
+                      <a id="go-back" onclick=clickEventGoBack>
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
                           <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
                         </svg>

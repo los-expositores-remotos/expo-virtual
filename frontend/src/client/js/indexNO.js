@@ -3,7 +3,7 @@ window.Mercadopago.setPublishableKey("TEST-147fd98d-a235-429b-aa09-a5b157a1fe61"
 
 window.Mercadopago.getIdentificationTypes();
   
-document.getElementById('cardNumber').addEventListener('change', guessPaymentMethod);
+// document.getElementById('cardNumber').addEventListener('change', guessPaymentMethod);
 function guessPaymentMethod(event) {
     cleanCardInfo();
 
@@ -98,7 +98,7 @@ function setInstallments(status, response){
 }  
 
 //Update offered installments when issuer changes
-document.getElementById('issuer').addEventListener('change', updateInstallmentsForIssuer);
+// document.getElementById('issuer').addEventListener('change', updateInstallmentsForIssuer);
 function updateInstallmentsForIssuer(event) {
     window.Mercadopago.getInstallments({
         "payment_method_id": document.getElementById('paymentMethodId').value,
@@ -108,8 +108,8 @@ function updateInstallmentsForIssuer(event) {
 }
 
 //Proceed with payment
-doSubmit = false;
-document.getElementById('paymentForm').addEventListener('submit', getCardToken);
+var doSubmit = false;
+// document.getElementById('paymentForm').addEventListener('submit', getCardToken);
 function getCardToken(event){
     event.preventDefault();
     if(!doSubmit){
@@ -147,14 +147,16 @@ function cleanCardInfo() {
 }
 
 //Handle transitions
-document.getElementById('checkout-btn').addEventListener('click', function(){ 
+// document.getElementById('checkout-btn').addEventListener('click', 
+function clickEvent(){ 
     $('.shopping-cart').fadeOut(500);
     setTimeout(() => { $('.container_payment').show(500).fadeIn(); }, 500);
-});
-document.getElementById('go-back').addEventListener('click', function(){ 
+}
+// document.getElementById('go-back').addEventListener('click', 
+function clickEventGoBack(){ 
     $('.container_payment').fadeOut(500);
     setTimeout(() => { $('.shopping-cart').show(500).fadeIn(); }, 500);
-});
+}
 
 //Handle price update
 function updatePrice(){
@@ -168,7 +170,7 @@ function updatePrice(){
     document.getElementById('summary-total').innerHTML = '$ ' + amount;
     document.getElementById('amount').value = amount;
 };
-document.getElementById('quantity').addEventListener('change', updatePrice);
+// document.getElementById('quantity').addEventListener('change', updatePrice);
 updatePrice();
 
 //Retrieve product description
