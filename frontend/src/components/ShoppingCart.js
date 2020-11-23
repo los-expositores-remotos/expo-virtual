@@ -176,7 +176,7 @@ const ShoppingCart = () => {
               </strong>
             </h3>
            <div className="col s6 offset-s6">
-             <Link to="/testform">
+             <Link to={localStorage.getItem('user') === "admin" || localStorage.getItem('user') === "usuario" ? "/testform" : "/login"}>
                 <button>
                       Comprar
                 </button>
