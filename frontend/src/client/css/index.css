@@ -1,3 +1,15 @@
+.select-dropdown{
+  display: none;
+}
+
+#docType{
+  display: inline;
+}
+
+.item-total-price {
+  text-align: end;
+}
+
 body {
   background-color: #fff;
   size: 100%;

@@ -1,8 +1,9 @@
-Feature: Eliminar una clase en vivo
+# language: es
+Característica: Eliminar una clase en vivo
 
-  Scenario: Poder eliminar una clase en vivo
-    Given Una clase y una categoria "www.images.com/claseaovivo1.png" y "CLASS"
-    When Creo la clase
-    Then La clase "www.images.com/claseaovivo1.png" con categoria "CLASS" existe
-    And Lo deleteo
-    And La clase ya no existe
+  Escenario: Poder eliminar una clase en vivo
+    Dados Una clase y una categoria "www.images.com/claseaovivo1.png" y "CLASS"
+    Cuando Creo la clase
+    Entonces La clase "www.images.com/claseaovivo1.png" con categoria "CLASS" existe
+    Y Lo deleteo
+    Y La clase ya no existe

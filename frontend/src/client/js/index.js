@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import M from 'materialize-css'
 import MercadoPagoProducto from '../../components/MercadoPagoProducto';
 import ShopContext from '../../components/context/shop-context'
-import {precioTotal} from '../../components/ShoppingCart'
+import {precioTotal, sendMethodCostTopLevel, sendMethodNameTopLevel} from '../../components/ShoppingCart'
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.autocomplete');
@@ -198,30 +198,6 @@ function goBackContainerPayment(){
   setTimeout(() => { $('.shopping-cart').show(500).fadeIn(); }, 500);
 }
 
-//Handle price update
-function updatePrice(value){
-  if(parseInt(value) >= 1){
-    setQuantity(value);
-    setAmount(parseInt(unitPrice) * parseInt(value));
-    setCartTotal('$ ' + (parseInt(unitPrice) * parseInt(value)));
-    console.log("Quionda"+(parseInt(unitPrice) * parseInt(value)))
-  }else{
-    setQuantity(1);
-    setAmount(parseInt(unitPrice));
-    setCartTotal('$ ' + (parseInt(unitPrice)));
-  }
-};
-// const [quantity, setQuantity] = useState(1);
-// const unitPrice = useState(10);
-// const [amount, setAmount] = useState(10);
-// const description = useState("Some book");
-// const [cardNumber, setCardNumber] = useState("");
-// const [paymentmethod, setpaymentmethod] = useState(null);
-// const [paymentmethodId, setpaymentmethodId] = useState(null);
-// const [paymentmethodThumbnail, setpaymentmethodThumbnail] = useState("");
-// const [cartTotal, setCartTotal] = useState("$ 10");
-// const [email, setEmail] = useState("");
-// const [docType, setDocType] = useState(null);
 const postearPago = (tokenString) => {
   console.log(installments)
   if(cartTotal && unitPrice && email && description && amount && quantity && token){//cartTotal && unitPrice && email && description && amount && quantity && token){
@@ -265,48 +241,44 @@ const postearPago = (tokenString) => {
 
   return (
 <div>
-      <section class="shopping-cart dark">
-        <div class="container" id="container">
-          <div class="block-heading">
-            <h2>Productos a comprar</h2>
-          </div>
-            <div class="row">
-                        {context.cart.map(product => (
-                          <MercadoPagoProducto producto={product}/>
-                        ))}
-              <div class="col s12">
-                <div class="summary">
-                  <h3>Cart</h3>
-                    <div class="summary-item"><span class="text">Subtotal</span><span class="price" id="cart-total" >$ {precioTotal(context.cart)}</span></div>
-                    <button class="btn btn-primary btn-lg btn-block" id="checkout-btn" onClick={checkoutShoppingCart}>Checkout</button>
-                  </div>
-              </div>
-              
-            </div>
-        </div>
-      </section>
+      {checkoutShoppingCart()}
       <section class="payment-form dark">
         <div class="container_payment">
           <div class="block-heading">
-            <h2>Card Payment</h2>
-            <p>This is an example of a Mercado Pago integration</p>
+            <h2>Pago con tarjeta</h2>
+            {/* <p>This is an example of a Mercado Pago integration</p> */}
           </div>
           <div class="form-payment">
             <div class="products">
-              <h2 class="title">Summary</h2>
+              <h2 class="title">Resumen</h2>
               <div class="item">
                 <span class="price" id="summary-price" value={'$ ' + unitPrice}></span>
                 {context.cart.map(product => {
                   return(
-                    <p class="item-name">{product.itemName} <span id="summary-quantity" value={quantity}>x {product.quantity}</span></p>
+                    <div className="row">
+                      <div className="col s6">
+                        <p class="item-name">{product.itemName} <span id="summary-quantity" value={quantity}>x {product.quantity}</span></p>
+                      </div>
+                      <div className="col s6">
+                        <p class="item-name item-total-price">$ {product.itemPrice * product.quantity}</p>
+                      </div>
+                    </div>
                   )
                 })}
+                <div className="row">
+                  <div className="col s6">
+                  <p class="item-name">{sendMethodNameTopLevel} <span id="summary-quantity"></span></p>
+                  </div>
+                  <div className="col s6">
+                    <p class="item-name item-total-price">$ {sendMethodCostTopLevel}</p>
+                  </div>
+                </div>
               </div>
-              <div class="total">Total<span class="price" id="summary-total" >$ {precioTotal(context.cart)}.00</span></div>
+              <div class="total">Total<span class="price" id="summary-total" >$ {precioTotal(context.cart) + sendMethodCostTopLevel}</span></div>
             </div>
             <div class="payment-details">
               <form action="#" id="paymentForm">
-                  <h3 class="title">Buyer Details</h3>
+                  <h3 class="title">Datos del comprador</h3>
                   <div class="row">
                     <div class="form-group col">
                       <label for="email">E-Mail</label>
@@ -315,23 +287,23 @@ const postearPago = (tokenString) => {
                   </div>
                   <div class="row">
                     <div class="form-group col-sm-5">
-                      <label for="docType">Document Type</label>
-                      <select id="docType" name="docType" data-checkout="docType" type="text" class="form-control"></select>
+                      <label for="docType">Tipo de documento</label>
+                      <select id="docType" name="docType" data-checkout="docType" class="form-control"></select>
                     </div>
                     <div class="form-group col-sm-7">
-                      <label for="docNumber">Document Number</label>
+                      <label for="docNumber">Numero de documento</label>
                       <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" class="form-control"/>
                     </div>
                   </div>
                   <br/>
-                  <h3 class="title">Card Details</h3>
+                  <h3 class="title">Datos de la tarjeta</h3>
                   <div class="row">
                     <div class="form-group col-sm-8">
-                      <label for="cardholderName">Card Holder</label>
+                      <label for="cardholderName">Titular de la tarjeta</label>
                       <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control"/>
                     </div>
                     <div class="col s12">
-                      <label for="">Expiration Date</label>
+                      <label for="">Fecha de vencimiento</label>
                       <div class="input-group expiration-date">
                         <input type="text" class="form-control" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth"
                           onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete='off'/>
@@ -341,21 +313,21 @@ const postearPago = (tokenString) => {
                       </div>
                     </div>
                     <div class="form-group col-sm-8">
-                      <label for="cardNumber">Card Number</label>
+                      <label for="cardNumber">Número de tarjeta</label>
                       <input type="text" class="form-control input-background" id="cardNumber" data-checkout="cardNumber"
                         onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" style={paymentmethodThumbnailStyle} autocomplete='off' onChange={guessPaymentMethod}/>
                     </div>
                     <div class="form-group col-sm-4">
-                      <label for="securityCode">CVV</label>
+                      <label for="securityCode">Código de seguridad</label>
                       <input id="securityCode" data-checkout="securityCode" type="text" class="form-control"
                         onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete='off'/>
                     </div>
                     <div id="issuerInput" class="form-group col-sm-12 hidden">
-                      <label for="issuer">Issuer</label>
+                      <label for="issuer">Entidad emisora</label>
                       <select id="issuer" name="issuer" data-checkout="issuer" class="form-control" onChange={updateInstallmentsForIssuer}></select>
                     </div>
                     <div class="form-group col-sm-12">
-                      <label for="installments">Installments</label>
+                      <label for="installments">Cuotas</label>
                       <select type="text" id="installments" name="installments" class="form-control"></select>
                     </div>
                     <div class="form-group col-sm-12">
@@ -374,7 +346,7 @@ const postearPago = (tokenString) => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10" class="chevron-left">
                           <path fill="#009EE3" fill-rule="nonzero"id="chevron_left" d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
                         </svg>
-                        Go back to Shopping Cart
+                        Volver al carrito
                       </a>
                     </div>
                   </div>
