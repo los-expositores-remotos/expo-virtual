@@ -17,7 +17,7 @@
 #iconCart {
   margin-top: 50px;
   color: antiquewhite;
-  margin-left: -64px;
+  margin-left: -3px;
 }
 
 .row .col {
@@ -25,14 +25,19 @@
 }
 
 #cantidadProductos {
-  margin-top: 44px;
-  font-size: x-large;
-  margin-left: -27px;
+  margin-top: 32px;
+  font-size: large;
+  position: absolute;
+  background-color: red;
   color: aliceblue;
+  border-radius: 55%;
+  width: 24px;
+  height: 23px;
+  text-align: center;
 }
 
 #botonSesion {
-  background-color: #fff !important;
+  background-color: aliceblue !important;
   width: 108%;
   height: auto;
   margin-top: 35%;
@@ -42,17 +47,3 @@
   width: 10%;
   margin-left: -3%;
 }
-
-/* .btn,
-.btn-large,
-.btn-small 
-.btn-session{
-  text-decoration: none;
-  color: #ee6e73 !important;
-  background-color: #fff;
-  text-align: center;
-  letter-spacing: 0.5px;
-  transition: background-color 0.2s ease-out;
-  cursor: pointer;
-  margin: 4px;
-} */

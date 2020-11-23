@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Row } from 'react-materialize'
 import {Link} from 'react-router-dom'
 import '../styles/ShoppingCart.css'
 import ShopContext from './context/shop-context'
@@ -46,13 +47,16 @@ const ShoppingCart = () => {
   function calcularEnvio(){
     if(codigoPostal >= 1000 && codigoPostal <= 9999){
       console.log("Hola")
-      console.log(context.cart)
+      console.log(codigoPostal)
+      console.log(volumenTotal(context.cart))
+      console.log(pesoTotal(context.cart))
       fetch(`https://api.mercadolibre.com/sites/MLA/shipping_options?zip_code_from=1875&zip_code_to=${codigoPostal}&dimensions=${volumenTotal(context.cart)},${pesoTotal(context.cart)}`, {
       headers: {
         "Content-type": "application/json",
       }
     }) 
       .then((res)=> {
+        console.log(res)
       if(res.ok){
         return res.json()
       }
@@ -93,7 +97,8 @@ const ShoppingCart = () => {
           context.cart.length <= 0 ? 
           <p>No Item in the Cart!</p>
           :
-          <div>
+          <div className="row">
+            <div className="col s12">
           <table>
           <thead>
               <tr>
@@ -131,20 +136,20 @@ const ShoppingCart = () => {
           </tbody>
             ))}
          </table>
-         <div className="row">
-           <div className="col s6">
-
-            <h3>
-              <strong>
-                  Precio Total (Sin envío): $ {precioTotal(context.cart)}
-              </strong>
-            </h3>
+         </div>
+           <div className="col s12">
+              <div className="row">
+                <h4>
+                  <strong>
+                      Precio Total (Sin envío): $ {precioTotal(context.cart)}
+                  </strong>
+                </h4>
            </div>
           </div>
           <div className="row">
-            <div className="col s6">
-                    <input id = "inptCartCant" value={codigoPostal} onChange={(e) => setCodigoPostal(e.target.value)}/>
-                    <button onClick={calcularEnvio}>Calcular envío</button>
+            <div className="col s6 offset-6">
+                    <input id = "inptCartCant" placeholder="Código Postal" value={codigoPostal} onChange={(e) => setCodigoPostal(e.target.value)}/>
+                    <a className="waves-effect waves-light btn" onClick={calcularEnvio}>Calcular envío</a>
            </div>
           </div>
           <div className="row">

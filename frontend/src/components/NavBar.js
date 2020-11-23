@@ -43,7 +43,7 @@ const NavBar = () => {
                               history.push("/");
                             }}
             >
-                Cerrar sesión
+               Logout
         </button> )
         }else{
             return(
@@ -54,7 +54,7 @@ const NavBar = () => {
                                 history.push("/login");
                                 }}
                 >
-                    Iniciar sesión
+                    Login
              </button> )
         }
     }
@@ -101,16 +101,13 @@ const NavBar = () => {
                </div>
                <div className="col s1">
                    <Link to="/shoppingcart">
-                       <div className='row'>
-                           <div className='col s6'>
+                      
                             <p id='cantidadProductos'>
                                 {context.cart.reduce((count, curItem) => { return count + curItem.quantity;}, 0)}
                             </p>
-                           </div>
-                           <div className='col s6'>
+           
                             <i className="small material-icons left" id="iconCart">shopping_cart</i>
-                           </div>
-                       </div>
+              
                    </Link>     
                </div>
                <div id="colBotonSesion" className="col s1">
