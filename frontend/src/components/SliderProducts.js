@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import '../styles/SliderProducts.css'
 import { Button, Slider, Slide, Caption} from "react-materialize"
+import ShopContext from './context/shop-context';
 
 const SliderProducts = () => {
   const [products, setproducts] = useState(null)
@@ -58,20 +59,27 @@ const SliderProducts = () => {
         let index = 0 
         const placenment = ["center", "right", "left"]
         //console.log(products)
-        const productlist = products.map((product)=>   
-            <Slide image={<img className="prodImg" alt="" src={product.images[0]}/>}>
+        const productlist = products.map((product)=>  
+        <ShopContext.Consumer>
+            {context => (
+              <React.Fragment> 
+            <Slide image={<img className="prodImg" alt={product.itemName} src={product.images[0]}/>}>
                 <Caption id="prodcaption" placement={placenment[dinamicIndex(index)]}>
      
                     <h3>
                         {product.itemName}
                     </h3>         
-                    <Button>
+                    <Button onClick={context.addProductToCart.bind(this, product)}>
                         Comprar a solo $ {product.promotionalPrice}
                     </Button>
                 </Caption>
                 </Slide>
+                </React.Fragment>
+      )}
+    </ShopContext.Consumer>
         )
           return (
+            
             <Slider
             fullscreen={false}
             options={{
@@ -84,6 +92,7 @@ const SliderProducts = () => {
                 productlist
               }
             </Slider>
+            
           )
     }
   }

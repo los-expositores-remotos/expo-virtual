@@ -53,7 +53,7 @@ const Live = () => {
     const list = classes.map((clase)=>{
         return(
                 <div className='col s6'>
-                  <a href='https://www.youtube.com/watch?v=vcG6bS4Kn-c&ab_channel=TobiasTorres'>
+                  <a target="_blank"  rel="noreferrer" href='https://www.youtube.com/watch?v=vcG6bS4Kn-c&ab_channel=TobiasTorres'>
                     <img id="imgClasses" src={clase.image} alt="logo de clases"/>
                   </a>
                 </div>
@@ -75,7 +75,24 @@ const Live = () => {
             schedule ? 
               <img atl="img" id="imgSchedule" src={schedule[0].image}></img>
             :
-              <p>Loading...</p>
+            <div>
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                  <div class="circle">
+                  </div>
+                </div>
+                  <div class="gap-patch">
+                    <div class="circle">
+                    </div>
+                  </div>  
+                  <div class="circle-clipper right">
+                  <div class="circle">
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
           }
       </div>
       {bannerClasses()}

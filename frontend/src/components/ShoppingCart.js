@@ -92,11 +92,13 @@ const ShoppingCart = () => {
      */
     <React.Fragment>
      
-      <main className="cart">
         {
           context.cart.length <= 0 ? 
-          <p>No Item in the Cart!</p>
+          <div id="noHayElementos" class="numero">
+              No hay Productos en el carrito!
+          </div>
           :
+        <main className="cart">
           <div className="row">
             <div className="col s12">
           <table>
@@ -184,8 +186,8 @@ const ShoppingCart = () => {
            </div>
           </div>
          </div>
+        </main>
         }
-      </main>
     </React.Fragment>
   );
 };
