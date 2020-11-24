@@ -104,7 +104,7 @@ const listOfProducts = () => {
               <div id="divEmpresaConProd" style={styles}>
                 </div>
                 <br/>
-                <h2>{company.companyName}</h2>
+                <h2 id="nombreEmpresa">{company.companyName}</h2>
                 {listOfProducts(company)}
                 <hr/>
               </div>

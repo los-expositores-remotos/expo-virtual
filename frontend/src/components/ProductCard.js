@@ -37,18 +37,19 @@ return (
         <React.Fragment>
             <div className="col s3" id='cardOfProducts'>
             <div className="card" id="cardId">
-              <div className="card-image">
+              <div className="card-image" id="cardImageId">
                 {imagesOfProducts(product)}
               </div>
               <div id= "cardContent" className="card-content">
+                <hr/>
                 <strong><h5>{product.itemName}</h5></strong>
                 <p>Stock: {product.stock}</p>
                 <p>Precio: {product.itemPrice}</p>
                 <p>Precio promocional: {product.promotionalPrice}</p>
               </div>
-              <div className="card-action">
+              <div className="card-action" id="cardAction">
                 {product.stock === 0 ?
-                <button id="botonAgregarAlCarrito" disabled >Sin Stock</button>
+                <button id="btnDisable" disabled >Sin Stock</button>
                 :
                 <button id="botonAgregarAlCarrito" onClick={context.addProductToCart.bind(this, product)}>Agregar al Carrito</button>
                 }

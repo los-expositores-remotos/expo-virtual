@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import '../../styles/Live.css';
 
 const Live = () => {
@@ -52,7 +53,9 @@ const Live = () => {
     const list = classes.map((clase)=>{
         return(
                 <div className='col s6'>
+                  <a href='https://www.youtube.com/watch?v=vcG6bS4Kn-c&ab_channel=TobiasTorres'>
                     <img id="imgClasses" src={clase.image} alt="logo de clases"/>
+                  </a>
                 </div>
         )
     })

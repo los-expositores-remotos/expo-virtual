@@ -1,8 +1,57 @@
-#botonAgregarAlCarrito {
-  margin-left: 29%;
-  margin-top: 10%;
+#cardContent {
+  height: 14rem;
+  background-color: antiquewhite;
 }
 
-#cardContent {
-  height: 13rem;
+#cardId {
+  transition: box-shadow 0.3s;
+  width: 379px;
+  height: 500px;
+  margin: 50px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  float: left;
+}
+#cardId:hover {
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+#botonAgregarAlCarrito {
+  display: block;
+  background: #d0463c;
+  text-align: center;
+  font-size: 20px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s;
+  height: 46px;
+  width: 100%;
+  border-radius: 5%;
+  border-block-color: black;
+}
+
+#botonAgregarAlCarrito:hover {
+  background: #9accff;
+  color: rgb(3, 3, 3);
+  font-size: 19px;
+  transition: all 0.5s;
+}
+
+#cardImageId {
+  background-color: antiquewhite;
+}
+
+#cardAction {
+  background-color: whitesmoke;
+}
+
+#btnDisable {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  text-decoration: none;
+  transition: all 0.2s;
+  height: 46px;
+  width: 100%;
 }
