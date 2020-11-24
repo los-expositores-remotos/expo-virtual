@@ -59,7 +59,7 @@ const Login = () => {
           className="btn waves-effect waves-light #64b5f6 red darken-1"
           onClick={() => PostData()}
         >
-          Singin
+          Ingresar
         </button>
         <h5 id="H5Register">
           <Link id="linkRegister" to="/login/admin">Logearse como Administrador</Link>

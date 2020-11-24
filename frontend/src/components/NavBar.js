@@ -43,7 +43,7 @@ const NavBar = () => {
                               history.push("/");
                             }}
             >
-               Logout
+               Salir
         </button> )
         }else{
             return(
@@ -54,7 +54,7 @@ const NavBar = () => {
                                 history.push("/login");
                                 }}
                 >
-                    Login
+                    Ingresar
              </button> )
         }
     }
@@ -83,7 +83,7 @@ const NavBar = () => {
                </div>
                <div className="col s5">
                    <form className="form-inline" onSubmit={handleSubmit}>
-                       <input className="form-control sm-2" onKeyPress={event => event.key === 'Enter'   } onChange={(e)=> setTextSearch(e.target.value)} value = {textsearch} id='inputSearch' type="search" placeholder="Search" aria-label="Search"/>
+                       <input className="form-control sm-2" onKeyPress={event => event.key === 'Enter'   } onChange={(e)=> setTextSearch(e.target.value)} value = {textsearch} id='inputSearch' type="search" placeholder="Buscar" aria-label="Search"/>
                    </form>
                </div>
                <div className="col s1">
@@ -121,10 +121,10 @@ const NavBar = () => {
                 <ul className="left hide-on-med-and-down">
                     <li><Link to="/">Inicio</Link></li>
                     <li><Link to="/suppliers">Empresas</Link></li>
-                    <li><Link to="/live">En Vivo</Link></li>
-                    <li><Link to="/faqs">Preguntas Frecuentes</Link></li>
-                    <li><Link to="/howtobuy">Como comprar?</Link></li>
-                    <li><Link to="/aboutus">Quienes Somos?</Link></li>
+                    <li><Link to="/live">En vivo</Link></li>
+                    <li><Link to="/faqs">Preguntas frecuentes</Link></li>
+                    <li><Link to="/howtobuy">¿Cómo comprar?</Link></li>
+                    <li><Link to="/aboutus">¿Quiénes somos?</Link></li>
                     <li><Link to="/contact">Contacto</Link></li>
                 </ul>
                 </div>
