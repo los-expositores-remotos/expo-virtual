@@ -64,12 +64,8 @@ class Producto : ModelObjectWithBsonId{
     }
 
     fun cargarVenta(cantidadACargar: Int) {
-        if(stock >= cantidadACargar) {
-            stock -= cantidadACargar
-            vendidos += cantidadACargar
-        } else {
-            throw ProductoSinStockException("El producto no contiene el stock requerido.")
-        }
+        stock -= cantidadACargar
+        vendidos += cantidadACargar
     }
 
 //
