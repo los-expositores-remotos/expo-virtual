@@ -57,7 +57,7 @@ const ShoppingCart = () => {
     }) 
       .then((res)=> {
         console.log(res)
-      if(res.ok){
+      if(res.ok) {
         return res.json()
       }
     }).then((response)=>{

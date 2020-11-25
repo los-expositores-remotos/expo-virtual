@@ -251,17 +251,19 @@ const postearPago = (tokenString) => {
       window.Mercadopago.clearSession()
       if (!res.ok) {
         console.log("ohboyy")
-        console.log(res)
-        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
-      } else { 
+        console.log(res)        
+        M.toast({ html: "Error inesperado", classes: "#c62828 red darken-3" });
+      } else {
         console.log("realizandoPAGO")
         let estadoPago = res
         console.log(estadoPago)
         M.toast({ html: "Transacción iniciada correctamente", classes: "#388e3c green darken-2" });
         M.toast({ html: "Transaccion "+ estadoPago, classes: "#c62828 red darken-3" });
+        actualizarBaseDeDatos()
+        vacioCarrito()
         history.push("/");
-        }})
-        //history.push("/");
+      }
+    })
     .catch((err) => {
       console.log(err);
     });
@@ -271,43 +273,43 @@ const postearPago = (tokenString) => {
 };
 
 
-const realizarPago = () => {
+const actualizarBaseDeDatos = () => {
   fetch("http://localhost:7000/productSales", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
-      "Authorization": localStorage.getItem('tokenValido')
+      "Authorization": localStorage.getItem("tokenValido")
     },
     body: JSON.stringify({
       "sales": listaProductosEnPares()
     })
   })
-    .then((res) =>{
-      console.log(res)
-      /* if (!res.ok) {
-        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
-      } else {
-        realizarPago()
-        M.toast({
-          html: "Transacción iniciada correctamente",
-          classes: "#388e3c green darken-2",
-        });
-        //history.push("/"); */
-      //}
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+  .then((res) =>{
+    console.log(res)
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 };
 
 const listaProductosEnPares = () => {
   let arrayResultado = []
   context.cart.forEach(
     product => {
-      arrayResultado.concat({"idProducto": product.id, "cantidadVendida": product.quantity})
+      console.log("Pase por (" + product.id + ", " + product.quantity + ")")
+      arrayResultado.push({"idProducto": product.id, "cantidadVendida": product.quantity})
     }
   )
+  console.log(arrayResultado)
   return arrayResultado
+}
+
+const vacioCarrito = () => {
+  context.cart.forEach(
+    product => {
+      context.deleteProductFromCart(product.id)
+    }
+  )
 }
   
 const selectDocTypes = () =>{

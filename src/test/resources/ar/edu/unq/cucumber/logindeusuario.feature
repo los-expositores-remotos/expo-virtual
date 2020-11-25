@@ -1,12 +1,14 @@
-Feature: Login de Usuario
+# language: es
 
-  Scenario: Se loguea con los datos ingresados
-    Given un dni del usuario 39484178
-    When el usuario ingresa su dni para loguearse
-    Then el usuario se loguea
+Característica: Login de Usuario
 
-  Scenario: Solo se loguea un usuario registrado
-    Given un dni del usuario 16900236
-    When el usuario intenta loguearse
-    Then el usuario no se puede loguear por no estar registrado
+  Escenario: Se loguea con los datos ingresados
+    Dado un dni del usuario 39484178
+    Cuando el usuario ingresa su dni para loguearse
+    Entonces el usuario se loguea
+
+  Escenario: Solo se loguea un usuario registrado
+    Dado un dni del usuario 16900236
+    Cuando el usuario intenta loguearse
+    Entonces el usuario no se puede loguear por no estar registrado
 

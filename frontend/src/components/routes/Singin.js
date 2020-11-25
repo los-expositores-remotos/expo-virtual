@@ -13,9 +13,8 @@ const Login = () => {
   const { state, dispatch } = useContext(userContext);
 
   const PostData = () => {
-       
     if (dni < 1000000) {
-      M.toast({ html: "DNI Invalido", classes: "#c62828 red darken-3" });
+      M.toast({ html: "DNI Inválido", classes: "#c62828 red darken-3" });
     } else {
         axios.post("http://localhost:7000/login",
         {
@@ -68,7 +67,6 @@ const Login = () => {
           <Link id="linkRegister" to="/register">Registrate acá</Link>
         </h5>
       </div>
-    </div>)
-  }
+    </div>)};
 
 export default Login;

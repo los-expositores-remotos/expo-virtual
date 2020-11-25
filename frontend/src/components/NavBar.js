@@ -133,10 +133,10 @@ const NavBar = () => {
             <ul className="sidenav" id="mobile-demo">
                 <li><Link to="/">Inicio</Link></li>
                 <li><Link to="/suppliers">Empresas</Link></li>
-                <li><Link to="/live">En Vivo</Link></li>
-                <li><Link to="/faqs">Preguntas Frecuentes</Link></li>
-                <li><Link to="/howtobuy">Como comprar?</Link></li>
-                <li><Link to="/aboutus">Quienes Somos?</Link></li>
+                <li><Link to="/live">En vivo</Link></li>
+                <li><Link to="/faqs">Preguntas frecuentes</Link></li>
+                <li><Link to="/howtobuy">¿Cómo comprar?</Link></li>
+                <li><Link to="/aboutus">¿Quiénes Somos?</Link></li>
                 <li><Link to="/contact">Contacto</Link></li>
             </ul>
     </div>

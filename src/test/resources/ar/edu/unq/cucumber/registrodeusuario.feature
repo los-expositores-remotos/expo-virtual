@@ -1,22 +1,24 @@
-Feature: Registro de usuario
+# language: es
 
-  Scenario:  El usuario ingresa sus datos y se registra
-    Given un nombre "Tobias"
-    Given un apellido "Towers"
-    Given un dni 39484178
-    When se registra un usuario
-    Then el usuario se encuentra en la DB
-    And sus datos son "Tobias", "Towers", 39484178
+Característica: Registro de usuario
 
-  Scenario: Si el usuario ingresa un dni menor a un millón se le notifica y no puede registrarse
-    Given un nombre "nombre"
-    Given un apellido "apellido"
-    Given un dni 84178
-    When se quiere registrar un usuario
-    Then el usuario no se puede registrar por ingresar un dni menor a un millon
+  Escenario:  El usuario ingresa sus datos y se registra
+    Dado un nombre "Tobias"
+    Dado un apellido "Towers"
+    Dado un dni 39484178
+    Cuando se registra un usuario
+    Entonces el usuario se encuentra en la DB
+    Y sus datos son "Tobias", "Towers", 39484178
 
-    Scenario: Si un usuario registrado se quiere volver a registrar, se le notifica que ya lo está
-      Given un dni 39484178
-      When se intenta registrar nuevamente
-      Then el usuario no se puede volver a registrar con un dni ya registrado
+  Escenario: Si el usuario ingresa un dni menor a un millón se le notifica y no puede registrarse
+    Dado un nombre "nombre"
+    Dado un apellido "apellido"
+    Dado un dni 84178
+    Cuando se quiere registrar un usuario
+    Entonces el usuario no se puede registrar por ingresar un dni menor a un millon
+
+  Escenario: Si un usuario registrado se quiere volver a registrar, se le notifica que ya lo está
+    Dado un dni 39484178
+    Cuando se intenta registrar nuevamente
+    Entonces el usuario no se puede volver a registrar con un dni ya registrado
 
