@@ -70,6 +70,6 @@ object Payment {
 
         Payment::class.java.kotlin.memberProperties.filter { it.visibility == KVisibility.PUBLIC }.forEach { println(it.name + ": " + it.getter.call(response)) }
         println(payment.status.toString())
-        return payment.status.toString()
+        return payment.statusDetail.toString()
     }
 }
