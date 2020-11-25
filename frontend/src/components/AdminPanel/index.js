@@ -252,6 +252,7 @@ const postearPago = (tokenString) => {
       if (!res.ok) {
         M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
       } else {
+        realizarPago()
         M.toast({
           html: "Transacción iniciada correctamente",
           classes: "#388e3c green darken-2",
@@ -268,9 +269,46 @@ const postearPago = (tokenString) => {
 };
 
 
+const realizarPago = () => {
+  fetch("http://localhost:7000/productSales", {
+    method: "PUT",
+    headers: {
+      "Content-type": "application/json",
+      "Authorization": localStorage.getItem("")
+    },
+    body: JSON.stringify({
+      "sales": listaProductosEnPares()
+    })
+  })
+    .then((res) =>{
+      console.log(res)
+      /* if (!res.ok) {
+        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
+      } else {
+        realizarPago()
+        M.toast({
+          html: "Transacción iniciada correctamente",
+          classes: "#388e3c green darken-2",
+        });
+        //history.push("/"); */
+      //}
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+};
 
+const listaProductosEnPares = () => {
+  let arrayResultado = []
+  context.cart.forEach(
+    product => {
+      arrayResultado.concat({"idProducto": product.id, "cantidadVendida": product.quantity})
+    }
+  )
+  return arrayResultado
+}
   
-const selectDocTypes = ()=>{
+const selectDocTypes = () =>{
    if(docTypes.length === 0){
     fetch("https://api.mercadopago.com/v1/identification_types?public_key=TEST-147fd98d-a235-429b-aa09-a5b157a1fe61", {
     headers: {

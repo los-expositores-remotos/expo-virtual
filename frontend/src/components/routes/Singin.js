@@ -24,18 +24,17 @@ const Login = () => {
         }),
       })
         .then((res) => {
-          console.log()
-          if(!res.ok){
+          /* if(!res.ok){
           M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
-        }else{
-           localStorage.setItem("user", "usuario");
-           dispatch({ type: "USER", payload: "user" });
-          M.toast({
-            html: "Loggeado exitosamente",
-            classes: "#388e3c green darken-2",
-          });
-          history.push("/");
-        }
+          }else{
+            localStorage.setItem("user", "usuario");
+            dispatch({ type: "USER", payload: "user" });
+            M.toast({
+              html: "Loggeado exitosamente",
+              classes: "#388e3c green darken-2",
+            });
+            history.push("/");
+          } */
       })
       .catch((err) => {
         console.log(err);
