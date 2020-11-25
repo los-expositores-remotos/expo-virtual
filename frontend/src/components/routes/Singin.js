@@ -24,6 +24,8 @@ const Login = () => {
         }),
       })
         .then((res) => {
+          console.log(res.response.json())
+          
           /* if(!res.ok){
           M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
           }else{
