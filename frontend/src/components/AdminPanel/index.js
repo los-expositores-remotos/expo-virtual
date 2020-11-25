@@ -250,14 +250,15 @@ const postearPago = (tokenString) => {
     .then((res) =>{
       window.Mercadopago.clearSession()
       if (!res.ok) {
-        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
+        M.toast({ html: "Error inesperado", classes: "#c62828 red darken-3" });
       } else {
-        realizarPago()
+        actualizarBaseDeDatos()
+        vacioCarrito()
         M.toast({
           html: "Transacción iniciada correctamente",
           classes: "#388e3c green darken-2",
         });
-        //history.push("/");
+        history.push("/");
       }
     })
     .catch((err) => {
@@ -269,43 +270,43 @@ const postearPago = (tokenString) => {
 };
 
 
-const realizarPago = () => {
+const actualizarBaseDeDatos = () => {
   fetch("http://localhost:7000/productSales", {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
-      "Authorization": localStorage.getItem("")
+      "Authorization": localStorage.getItem("tokenValido")
     },
     body: JSON.stringify({
       "sales": listaProductosEnPares()
     })
   })
-    .then((res) =>{
-      console.log(res)
-      /* if (!res.ok) {
-        M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
-      } else {
-        realizarPago()
-        M.toast({
-          html: "Transacción iniciada correctamente",
-          classes: "#388e3c green darken-2",
-        });
-        //history.push("/"); */
-      //}
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+  .then((res) =>{
+    console.log(res)
+  })
+  .catch((error) => {
+    console.log(error);
+  })
 };
 
 const listaProductosEnPares = () => {
   let arrayResultado = []
   context.cart.forEach(
     product => {
-      arrayResultado.concat({"idProducto": product.id, "cantidadVendida": product.quantity})
+      console.log("Pase por (" + product.id + ", " + product.quantity + ")")
+      arrayResultado.push({"idProducto": product.id, "cantidadVendida": product.quantity})
     }
   )
+  console.log(arrayResultado)
   return arrayResultado
+}
+
+const vacioCarrito = () => {
+  context.cart.forEach(
+    product => {
+      context.deleteProductFromCart(product.id)
+    }
+  )
 }
   
 const selectDocTypes = () =>{
