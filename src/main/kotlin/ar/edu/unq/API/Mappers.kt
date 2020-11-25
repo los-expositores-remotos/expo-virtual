@@ -32,6 +32,7 @@ data class ProductViewMapper(val id: String,
                              val description: String,
                              val images: List<String>,
                              val stock: Int,
+                             val vendidos: Int,
                              val itemPrice: Int,
                              val promotionalPrice: Int,
                              val longitud: Int,
@@ -52,12 +53,17 @@ data class ProductRegisterMapper(val idProveedor: String?,
                                  val description: String?,
                                  val images: List<String>?,
                                  val stock: Int?,
+                                 val vendidos: Int?,
                                  val itemPrice: Int?,
                                  val promotionalPrice: Int?,
                                  val longitud: Int?,
                                  val ancho: Int?,
                                  val alto: Int?,
                                  val pesoKg: Int?)
+
+data class SaleMapper(val idProducto: String, val cantidadVendida: Int)
+
+data class SalesMapper(val sales: List<SaleMapper>)
 
 data class ProductListRegisterMapper(val products: Collection<ProductRegisterMapper>)
 

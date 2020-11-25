@@ -1,6 +1,8 @@
 package ar.edu.unq.modelo
 
 
+import ar.edu.unq.services.impl.exceptions.ProductoNoEncontradoException
+import ar.edu.unq.services.impl.exceptions.ProductoSinStockException
 import org.bson.types.ObjectId
 
 
@@ -62,8 +64,12 @@ class Producto : ModelObjectWithBsonId{
     }
 
     fun cargarVenta(cantidadACargar: Int) {
-        stock -= cantidadACargar
-        vendidos += cantidadACargar
+        if(stock >= cantidadACargar) {
+            stock -= cantidadACargar
+            vendidos += cantidadACargar
+        } else {
+            throw ProductoSinStockException("El producto no contiene el stock requerido.")
+        }
     }
 
 //

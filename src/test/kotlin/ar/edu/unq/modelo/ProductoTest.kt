@@ -91,9 +91,9 @@ class ProductoTest : ModelObjectWithBsonIdTest<Producto>(Producto::class.java) {
         val primerDescuentoDeStock = 7
         val segundoDescuentoDeStock = 20
         assertEquals(stockInicial, this.producto.stock)
-        this.producto.removeStock(primerDescuentoDeStock)
+        this.producto.cargarVenta(primerDescuentoDeStock)
         assertEquals(stockInicial - primerDescuentoDeStock, this.producto.stock)
-        this.producto.removeStock(segundoDescuentoDeStock)
+        this.producto.cargarVenta(segundoDescuentoDeStock)
         assertEquals(stockInicial - primerDescuentoDeStock - segundoDescuentoDeStock, this.producto.stock)
     }
 }

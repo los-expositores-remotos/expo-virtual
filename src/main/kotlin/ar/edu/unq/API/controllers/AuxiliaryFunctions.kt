@@ -12,7 +12,7 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     //TODO: toda la funcion es reemplazable por iter.flatten() jaja
 
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
-        return ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.itemPrice, p.promotionalPrice, p.longitud, p.ancho, p.alto, p.pesoKg)
+        return ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.vendidos, p.itemPrice, p.promotionalPrice, p.longitud, p.ancho, p.alto, p.pesoKg)
     }
 
     fun proveedorClassToProveedorView(p: Proveedor): CompanyViewMapper {
@@ -30,7 +30,7 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     fun productBodyValidation(ctx: Context): ProductRegisterMapper {
         val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
             .check(
-                { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null },
+                { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.vendidos != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null },
                 "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
             )
             .get()
