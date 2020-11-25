@@ -117,6 +117,7 @@ fun main(args: Array<String>) {
                 get(productController::getProductById, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
                 delete(productController::deleteProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
                 put(productController::modifyProduct, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
+                put(productController::decreaseProduct, mutableSetOf<Role>(Roles.USER))
             }
             path("supplier") {
                 path(":supplierId") {

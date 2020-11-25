@@ -65,6 +65,7 @@ class Producto : ModelObjectWithBsonId{
         stock -= cantidadACargar
         vendidos += cantidadACargar
     }
+
 //
 //    override fun castearAMiTipo(other: Any): Producto {
 //        return other as Producto

@@ -132,4 +132,15 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             throw BadRequestResponse(e.message.toString())
         }
     }
+
+    fun decreaseProduct(ctx: Context){
+        try {
+            val id = ctx.pathParam("productId")
+            val newProduct = aux.productBodyValidation(ctx)
+            val producto = backendProductoService.recuperarProducto(id)
+
+            producto.cargarVenta(cantidadADecrementar)
+
+        }
+    }
 }
