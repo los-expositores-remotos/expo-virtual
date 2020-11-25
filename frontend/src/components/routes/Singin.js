@@ -4,6 +4,9 @@ import { userContext } from "../../App"
 import "../../styles/Singin.css";
 import M from "materialize-css";
 import logo from "../../images/logo.png"
+import axios from "axios";
+
+
 const Login = () => {
   const history = useHistory();
   const [dni, setdni] = useState(null);
@@ -14,31 +17,23 @@ const Login = () => {
     if (dni < 1000000) {
       M.toast({ html: "DNI Invalido", classes: "#c62828 red darken-3" });
     } else {
-      fetch("http://localhost:7000/login", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
+        axios.post("http://localhost:7000/login",
+        {
+            dni: dni
         },
-        body: JSON.stringify({
-          dni,
-        }),
-      })
-        .then((res) => {
-          /* if(!res.ok){
-          M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
-          }else{
-            localStorage.setItem("user", "usuario");
-            dispatch({ type: "USER", payload: "user" });
-            M.toast({
-              html: "Loggeado exitosamente",
-              classes: "#388e3c green darken-2",
-            });
-            history.push("/");
-          } */
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        )
+        .then(success =>{
+                
+                localStorage.setItem('tokenValido', success.headers.authorization);
+                axios.defaults.headers['authorization'] = localStorage.getItem('tokenValido')
+                console.log("success", success.headers.authorization);
+                history.push("/");
+            }
+        )
+        .catch(error => {
+            console.log(error);
+                    
+        });
     }
   };
 
