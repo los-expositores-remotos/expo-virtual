@@ -62,13 +62,8 @@ class Producto : ModelObjectWithBsonId{
     }
 
     fun cargarVenta(cantidadACargar: Int) {
+        stock -= cantidadACargar
         vendidos += cantidadACargar
-    }
-
-    fun removeStock(quantity: Int) {
-        this.stock -= quantity
-        //TODO: Podria unificarse con logica de cargar venta en una funcion vender(cantidad) haciendo que stock sea calculado como (stockInicial - vendidos)
-        //TODO: Chequear que no sea menor que cero
     }
 //
 //    override fun castearAMiTipo(other: Any): Producto {
