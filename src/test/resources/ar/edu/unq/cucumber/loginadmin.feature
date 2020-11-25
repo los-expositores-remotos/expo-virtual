@@ -1,14 +1,16 @@
-Feature: Login Admin
+# language: es
 
-  Scenario:  Ingresar su usuario y su password.
-    Given un usuario "agustina"
-    Given un password "pinero"
-    When el admin ingresa su usuario y password
-    Then se loguea a la aplicacion
+Característica: Login Admin
 
-  Scenario: Si ingresa los datos de un administrador no registrado se lo notifica con un cartel que lo manifieste
-    Given un usuario "pepita"
-    Given un password "sarasa"
-    When el admin intenta loguearse
-    Then el admin no se puede loguear por no estar registrado
+  Escenario:  Ingresar su usuario y su password.
+    Dado un usuario "agustina"
+    Dado un password "pinero"
+    Cuando el admin ingresa su usuario y password
+    Entonces se loguea a la aplicacion
+
+  Escenario: Si ingresa los datos de un administrador no registrado se lo notifica con un cartel que lo manifieste
+    Dado un usuario "pepita"
+    Dado un password "sarasa"
+    Cuando el admin intenta loguearse
+    Entonces el admin no se puede loguear por no estar registrado
 

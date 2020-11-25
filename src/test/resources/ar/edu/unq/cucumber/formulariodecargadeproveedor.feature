@@ -1,22 +1,24 @@
-Feature: Formulario de carga de proveedor
+# language: es
 
-  Scenario: Poder crear un nuevo proveedor con sus datos personales
-    Given Un proveedor con los siguientes datos
+Característica: Formulario de carga de proveedor
+
+  Escenario: Poder crear un nuevo proveedor con sus datos personales
+    Dado Un proveedor con los siguientes datos
           | companyName   | proveedor         |
           | companyImage  | www.imagen.com    |
           | facebook      | www.facebook.com  |
           | instagram     | www.instagram.com |
           | web           | www.proveedor.com |
-    When Creo al proveedor con esos datos
-    Then El proveedor "proveedor" se encuentra en la base de datos
-    And Sus datos son
+    Cuando Creo al proveedor con esos datos
+    Entonces El proveedor "proveedor" se encuentra en la base de datos
+    Y Sus datos son
          | companyImage  | www.imagen.com    |
          | facebook      | www.facebook.com  |
          | instagram     | www.instagram.com |
          | web           | www.proveedor.com |
 
-  Scenario: Poder agregarle los productos del proveedor
-    Given Un proveedor "proveedor" sin ningun producto
-    When Le agrego el producto "producto1"
-    When Le agrego el producto "producto2"
-    Then Los productos del proveedor recuperado son "producto1" y "producto2"
+  Escenario: Poder agregarle los productos del proveedor
+    Dado Un proveedor "proveedor" sin ningun producto
+    Cuando Le agrego el producto "producto1"
+    Cuando Le agrego el producto "producto2"
+    Entonces Los productos del proveedor recuperado son "producto1" y "producto2"
