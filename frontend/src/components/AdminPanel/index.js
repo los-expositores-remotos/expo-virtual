@@ -250,16 +250,16 @@ const postearPago = (tokenString) => {
     .then((res) =>{
       window.Mercadopago.clearSession()
       if (!res.ok) {
+        console.log("ohboyy")
         M.toast({ html: "error inesperado", classes: "#c62828 red darken-3" });
-      } else {
-        realizarPago()
-        M.toast({
-          html: "Transacción iniciada correctamente",
-          classes: "#388e3c green darken-2",
-        });
+      } else { 
+        console.log("realizandoPAGO")
+        let estadoPago = res.json().result
+        M.toast({ html: "Transacción iniciada correctamente", classes: "#388e3c green darken-2" });
+        M.toast({ html: "Transaccion "+ estadoPago, classes: "#c62828 red darken-3" });
+        history.push("/");
+        }})
         //history.push("/");
-      }
-    })
     .catch((err) => {
       console.log(err);
     });
@@ -274,7 +274,7 @@ const realizarPago = () => {
     method: "PUT",
     headers: {
       "Content-type": "application/json",
-      "Authorization": localStorage.getItem("")
+      "Authorization": localStorage.getItem('tokenValido')
     },
     body: JSON.stringify({
       "sales": listaProductosEnPares()

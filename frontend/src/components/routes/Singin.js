@@ -26,13 +26,20 @@ const Login = () => {
                 
                 localStorage.setItem('tokenValido', success.headers.authorization);
                 axios.defaults.headers['authorization'] = localStorage.getItem('tokenValido')
+                localStorage.setItem("user", "usuario");
+                dispatch({ type: "USER", payload: "user" });
+                M.toast({
+                  html: "Loggeado exitosamente",
+                  classes: "#388e3c green darken-2",
+                });
                 console.log("success", success.headers.authorization);
                 history.push("/");
             }
         )
         .catch(error => {
             console.log(error);
-                    
+            M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
+
         });
     }
   };

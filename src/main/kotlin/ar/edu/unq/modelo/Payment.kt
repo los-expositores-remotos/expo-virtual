@@ -45,8 +45,8 @@ class Payment {
 object Payment {
     @Throws(MPException::class, MPConfException::class)
     @JvmStatic
-    fun main(pago: PaymentMapper) {
-        MercadoPago.SDK.setAccessToken("TEST-7484070905477197-112319-c2b1400369673f7d22fc5f32bdd028a3-674632494")
+    fun main(pago: PaymentMapper): String {
+            MercadoPago.SDK.setAccessToken("TEST-7484070905477197-112319-c2b1400369673f7d22fc5f32bdd028a3-674632494")
 
         val payment = Payment()
         payment.setTransactionAmount(pago.amount)
@@ -69,5 +69,7 @@ object Payment {
         println(response.feeDetails)
 
         Payment::class.java.kotlin.memberProperties.filter { it.visibility == KVisibility.PUBLIC }.forEach { println(it.name + ": " + it.getter.call(response)) }
+        println(payment.status.toString())
+        return payment.status.toString()
     }
 }

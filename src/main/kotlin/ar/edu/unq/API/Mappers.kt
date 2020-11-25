@@ -68,3 +68,5 @@ data class SalesMapper(val sales: List<SaleMapper>)
 data class ProductListRegisterMapper(val products: Collection<ProductRegisterMapper>)
 
 data class OkResultMapper(val result: String)
+
+data class ResultTransaction(val result: String)

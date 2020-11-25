@@ -8,5 +8,5 @@ interface PaymentService {
     procesarPago(request: Request)
 }*/
 interface PaymentService {
-    fun realizarPago(pago: PaymentMapper)
+    fun realizarPago(pago: PaymentMapper): String
 }
