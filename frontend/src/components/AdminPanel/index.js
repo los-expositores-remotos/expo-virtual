@@ -256,7 +256,7 @@ const postearPago = (tokenString) => {
       } else {
         console.log("realizandoPAGO")
         let estadoPago = res
-        console.log(estadoPago)
+        console.log(estadoPago.json)
         M.toast({ html: "Transacción iniciada correctamente", classes: "#388e3c green darken-2" });
         M.toast({ html: "Transaccion "+ estadoPago, classes: "#c62828 red darken-3" });
         actualizarBaseDeDatos()

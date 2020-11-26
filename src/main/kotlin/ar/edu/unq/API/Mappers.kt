@@ -70,3 +70,5 @@ data class ProductListRegisterMapper(val products: Collection<ProductRegisterMap
 data class OkResultMapper(val result: String)
 
 data class ResultTransaction(val result: String)
+
+data class ResultTransactionMapper(val status_detail: String, val comunicacion_sugerida: String)
