@@ -44,7 +44,6 @@ class OrdenarAlfabeticamenteLosProductosStepdefs {
 
     @Then("^obtengo los productos ordendos \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     fun obtengoLosProductosOrdendos(productoAName: String?, productoBName: String?, productoCName: String?, productoDName: String?, productoEName: String?) {
-        println(this.productosOrdenados.map { it.itemName })
         Assert.assertEquals(proveedorService.recuperarProveedor(proveedorA.id.toString()).productos, this.productosOrdenados)
     }
 

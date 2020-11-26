@@ -232,6 +232,7 @@ const TestForm = () => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
+          "Authorization": localStorage.getItem("tokenValido")
         },
         body: JSON.stringify({
           "token": tokenString,
