@@ -12,8 +12,8 @@ import kotlin.test.assertTrue
 
 class EliminacionDeProductoStepDefs: AuxProdStepDefs() {
 
-    lateinit var proveedorRecuperado: Proveedor
-    lateinit var productoRecuperado: Producto
+    private lateinit var proveedorRecuperado: Proveedor
+    private lateinit var productoRecuperado: Producto
 
 
 

@@ -4,11 +4,8 @@ import ar.edu.unq.API.JWTAccessManager
 import ar.edu.unq.API.TokenJWT
 import ar.edu.unq.API.controllers.*
 import ar.edu.unq.dao.mongodb.*
-import ar.edu.unq.modelo.Admin
 import ar.edu.unq.services.impl.*
 import ar.edu.unq.services.runner.DataBaseType
-import ar.edu.unq.services.runner.TransactionRunner.runTrx
-import ar.edu.unq.services.runner.TransactionType
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.*
@@ -28,9 +25,9 @@ fun main(args: Array<String>) {
     val backendAdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.PRODUCCION)
     val tokenJWT = TokenJWT()
     val jwtAccessManager = JWTAccessManager(tokenJWT, backendUsuarioService)
-    val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
+    val bannerController = BannerController(backendBannerService, backendProveedorService)
     val productController = ProductController(backendProveedorService, backendProductoService)
-    val companyController = CompanyController(backendProveedorService, backendProductoService)
+    val companyController = CompanyController(backendProveedorService)
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
     val adminController = AdminController(backendAdminService, tokenJWT, jwtAccessManager)
     val paymentController = PaymentController()

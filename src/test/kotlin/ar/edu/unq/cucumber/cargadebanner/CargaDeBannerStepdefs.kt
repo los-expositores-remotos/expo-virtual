@@ -1,17 +1,10 @@
 package ar.edu.unq.cucumber.cargadebanner
 
-import ar.edu.unq.API.controllers.BannerController
 import ar.edu.unq.dao.mongodb.MongoBannerDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.modelo.banner.Banner
 import ar.edu.unq.modelo.banner.BannerCategory
 import ar.edu.unq.services.BannerService
-import ar.edu.unq.services.ProductoService
-import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.BannerServiceImpl
-import ar.edu.unq.services.impl.ProductoServiceImpl
-import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
 import io.cucumber.java.After
 import io.cucumber.java.en.And
@@ -23,9 +16,6 @@ import kotlin.test.assertEquals
 
 class CargaDeBannerStepdefs {
     private val bannerService: BannerService = BannerServiceImpl(MongoBannerDAOImpl(), DataBaseType.TEST)
-    private val proveedorService: ProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
-    private val productoService: ProductoService = ProductoServiceImpl(MongoProveedorDAOImpl() ,MongoProductoDAOImpl(), DataBaseType.TEST)
-    private val bannerController: BannerController = BannerController(this.bannerService, this.proveedorService, this.productoService)
     private var linkImage: String? = null
     private lateinit var categoria: String
     private lateinit var banner1: Banner

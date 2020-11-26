@@ -6,15 +6,15 @@ import org.junit.Test
 
 class BuscadorProductosTest {
 
-    lateinit var productoD: Producto
+    private lateinit var productoD: Producto
     lateinit var productoE: Producto
-    lateinit var productoF: Producto
+    private lateinit var productoF: Producto
     lateinit var proveedorA: Proveedor
-    lateinit var proveedorB: Proveedor
-    lateinit var proveedorC: Proveedor
+    private lateinit var proveedorB: Proveedor
+    private lateinit var proveedorC: Proveedor
     lateinit var productoA: Producto
     lateinit var productoB: Producto
-    lateinit var productoC: Producto
+    private lateinit var productoC: Producto
 
     @Before
     fun setUp() {

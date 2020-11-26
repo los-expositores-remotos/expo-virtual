@@ -3,11 +3,9 @@ package ar.edu.unq.API.controllers
 import ar.edu.unq.API.*
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
-import ar.edu.unq.services.ProductoService
-import ar.edu.unq.services.ProveedorService
 import io.javalin.http.Context
 
-class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
+class AuxiliaryFunctions {
 
     //TODO: toda la funcion es reemplazable por iter.flatten() jaja
 
@@ -28,22 +26,20 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
     fun productBodyValidation(ctx: Context): ProductRegisterMapper {
-        val newProduct = ctx.bodyValidator<ProductRegisterMapper>()
+        return ctx.bodyValidator<ProductRegisterMapper>()
                 .check(
                         { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.vendidos != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null },
                         "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
-        return newProduct
     }
 
     fun companyBodyValidation(ctx: Context): CompanyRegisterMapper {
-        val newCompany = ctx.bodyValidator<CompanyRegisterMapper>()
+        return ctx.bodyValidator<CompanyRegisterMapper>()
                 .check(
                         { it.companyName != null && it.companyImage != null && it.facebook != null && it.instagram != null && it.web != null },
                         "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                 )
                 .get()
-        return newCompany
     }
 }

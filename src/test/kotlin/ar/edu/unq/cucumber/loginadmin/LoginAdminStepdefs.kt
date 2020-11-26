@@ -17,10 +17,10 @@ import kotlin.test.assertNotNull
 
 class LoginAdminStepdefs {
 
-    val admin = Admin("agustina", "pinero")
-    val adminService: AdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.TEST)
-    var adminInexistenteException: AdministradorInexistenteException? = null
-    lateinit var adminRecuperado: Admin
+    private val admin = Admin("agustina", "pinero")
+    private val adminService: AdminService = AdminServiceImpl(MongoAdminDAOImpl(), DataBaseType.TEST)
+    private var adminInexistenteException: AdministradorInexistenteException? = null
+    private lateinit var adminRecuperado: Admin
 
     @Before
     fun crearAdmin(){

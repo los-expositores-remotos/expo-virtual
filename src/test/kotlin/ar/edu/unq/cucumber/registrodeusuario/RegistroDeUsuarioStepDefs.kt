@@ -20,9 +20,9 @@ import kotlin.test.assertNotNull
 class RegistroDeUsuarioStepDefs {
 
     val usuario = Usuario("Tobias", "Towers", 39484178)
-    val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
-    var exceptionUsuarioConDniInvalidoException: UsuarioConDniInvalidoException? = null
-    var exceptionUsuarioExistenteException: UsuarioExistenteException? = null
+    private val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
+    private var exceptionUsuarioConDniInvalidoException: UsuarioConDniInvalidoException? = null
+    private var exceptionUsuarioExistenteException: UsuarioExistenteException? = null
 
 
     @Given("^un nombre \"([^\"]*)\"$")

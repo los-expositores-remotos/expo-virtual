@@ -16,7 +16,7 @@ import org.bson.types.ObjectId
 
 class ProductController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions()
 
     fun deleteProduct(ctx: Context){
         try {

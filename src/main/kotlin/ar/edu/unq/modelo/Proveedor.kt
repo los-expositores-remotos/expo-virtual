@@ -1,8 +1,5 @@
 package ar.edu.unq.modelo
 
-import org.bson.codecs.pojo.annotations.BsonProperty
-import org.bson.types.ObjectId
-
 class Proveedor : ModelObjectWithBsonId {
     var companyName: String = ""
     var companyImage: String = ""

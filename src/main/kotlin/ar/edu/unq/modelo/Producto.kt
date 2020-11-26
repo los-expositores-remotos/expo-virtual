@@ -1,8 +1,5 @@
 package ar.edu.unq.modelo
 
-
-import ar.edu.unq.services.impl.exceptions.ProductoNoEncontradoException
-import ar.edu.unq.services.impl.exceptions.ProductoSinStockException
 import org.bson.types.ObjectId
 
 

@@ -9,7 +9,7 @@ import io.javalin.http.Context
 import io.javalin.http.Handler
 import io.javalin.http.UnauthorizedResponse
 
-class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: UsuarioService) : AccessManager {
+class JWTAccessManager(val tokenJWT: TokenJWT, private val backendUsuarioService: UsuarioService) : AccessManager {
 
     fun getUser(token: String): Usuario {
         try {

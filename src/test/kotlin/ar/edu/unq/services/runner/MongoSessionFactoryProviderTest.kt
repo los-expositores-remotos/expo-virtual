@@ -1,7 +1,5 @@
 package ar.edu.unq.services.runner
 
-import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -12,7 +10,6 @@ import kotlin.test.assertNull
 class MongoSessionFactoryProviderTest {
     @Before
     fun setUp(){
-
     }
 
     @Test

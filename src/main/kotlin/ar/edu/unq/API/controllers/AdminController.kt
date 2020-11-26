@@ -2,7 +2,6 @@ package ar.edu.unq.API.controllers
 
 import ar.edu.unq.API.*
 import ar.edu.unq.services.AdminService
-import ar.edu.unq.services.UsuarioService
 import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
 import io.javalin.http.Context
 

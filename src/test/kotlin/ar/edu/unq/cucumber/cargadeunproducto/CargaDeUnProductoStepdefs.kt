@@ -18,7 +18,6 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
         productoService.deleteAll()
     }
 
-
     @Given("^un nombre de un producto \"([^\"]*)\"$")
     fun unNombreDeUnProducto(nombreProducto: String?) {
         this.productoA.itemName = nombreProducto!!
@@ -68,7 +67,6 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
     fun creoUnProductoConEstosDatos() {
         this.proveedorService.crearProveedor(this.proveedorA)
         this.productoService.nuevoProducto(this.productoA)
-        val productoRecuperado = productoService.obtenerProducto(this.proveedorA.id.toString(), this.productoA.itemName)
     }
 
     @Then("^el producto cargado \"([^\"]*)\" se encuentra en la base de datos$")

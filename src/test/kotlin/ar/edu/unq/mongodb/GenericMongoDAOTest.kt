@@ -5,12 +5,10 @@ import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionRunner.runTrx
 import ar.edu.unq.services.runner.TransactionType
-import org.bson.types.ObjectId
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertNotEquals
 
 abstract class GenericMongoDAOTest<T>(protected val dao: GenericMongoDAO<T>) {
 

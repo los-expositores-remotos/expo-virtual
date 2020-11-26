@@ -11,9 +11,9 @@ import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.NotFoundResponse
 
-class CompanyController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
+class CompanyController(val backendProveedorService: ProveedorService) {
 
-    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions()
 
     fun createSupplier(ctx: Context) {
         try {

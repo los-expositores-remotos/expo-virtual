@@ -28,11 +28,11 @@ class ProductoServiceImplTest {
     private val proveedorService: ProveedorService = ProveedorServiceImpl(proveedorDAO, DataBaseType.TEST)
     private val productoService: ProductoService = ProductoServiceImpl(proveedorDAO, productoDAO, DataBaseType.TEST)
     lateinit var proveedorA: Proveedor
-    lateinit var proveedorB: Proveedor
-    lateinit var proveedorC: Proveedor
+    private lateinit var proveedorB: Proveedor
+    private lateinit var proveedorC: Proveedor
     lateinit var productoA: Producto
     lateinit var productoB: Producto
-    lateinit var productoC: Producto
+    private lateinit var productoC: Producto
     private var productos: MutableSet<Producto> = emptySet<Producto>().toMutableSet()
 
     @Before

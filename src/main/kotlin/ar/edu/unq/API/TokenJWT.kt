@@ -29,10 +29,10 @@ class TokenJWT {
 
     val algorithm = Algorithm.HMAC256("very_secret")
     val generator = UserGenerator()
-    val generatorAdmin = AdminGenerator()
-    val verifier = JWT.require(algorithm).build()
+    private val generatorAdmin = AdminGenerator()
+    private val verifier = JWT.require(algorithm).build()
     val provider = JWTProvider(algorithm, generator, verifier)
-    val providerAdmin = JWTProvider(algorithm, generatorAdmin, verifier)
+    private val providerAdmin = JWTProvider(algorithm, generatorAdmin, verifier)
 
     fun generateToken(user: Usuario): String {
         return provider.generateToken(user)

@@ -1,6 +1,5 @@
 package ar.edu.unq.services.runner
 
-import ar.edu.unq.services.runner.exceptions.DataBaseNameNotSettedException
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
 import com.mongodb.client.ClientSession

@@ -1,22 +1,16 @@
 package ar.edu.unq.API.controllers
 
-import PaymentService
+import ar.edu.unq.services.PaymentService
 import ar.edu.unq.API.*
 import ar.edu.unq.services.impl.PaymentServiceImpl
-import ar.edu.unq.services.impl.exceptions.BannerExistenteException
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.mercadopago.resources.Payment
-import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 
 class PaymentController {
-
     private val backendPaymentService: PaymentService = PaymentServiceImpl()
-    fun processPayment(ctx: Context){
-        try {
-            val payment = this.backendPaymentService.realizarPago(ctx.body<PaymentMapper>())
-            val statusList: List<ResultTransactionMapper> = listOf<ResultTransactionMapper>(
+
+    fun getResultPayMessage(payment: Payment):ResultTransactionMapper{
+        val statusList: List<ResultTransactionMapper> = listOf<ResultTransactionMapper>(
                 ResultTransactionMapper("accredited","¡Listo! Se acreditó tu pago. En tu resumen verás el cargo de "+payment.transactionAmount+" como "+payment.statementDescriptor+"."),
                 ResultTransactionMapper("pending_contingency","Estamos procesando tu pago.  No te preocupes, menos de 2 días hábiles te avisaremos por e-mail si se acreditó."),
                 ResultTransactionMapper("pending_review_manual","Estamos procesando tu pago.  No te preocupes, menos de 2 días hábiles te avisaremos por e-mail si se acreditó o si necesitamos más información."),
@@ -34,10 +28,15 @@ class PaymentController {
                 ResultTransactionMapper("cc_rejected_invalid_installments",""+payment.paymentMethodId+" no procesa pagos en installments cuotas."),
                 ResultTransactionMapper("cc_rejected_max_attempts","Llegaste al límite de intentos permitidos.  Elige otra tarjeta u otro medio de pago."),
                 ResultTransactionMapper("cc_rejected_other_reason",""+payment.paymentMethodId+" no procesó el pago")
-            )
+        )
+        return statusList.find { it.status_detail.equals(payment.statusDetail.toString()) }!!
+    }
 
-            val resulTrMsg = statusList.find { it.status_detail.equals(payment.statusDetail.toString()) }
-            ctx.status(200)
+    fun processPayment(ctx: Context){
+        try {
+            val payment = this.backendPaymentService.realizarPago(ctx.body<PaymentMapper>())
+            val resulTrMsg = this.getResultPayMessage(payment)
+                 ctx.status(200)
             if (resulTrMsg != null) {
                 ctx.json(resulTrMsg)
             }
