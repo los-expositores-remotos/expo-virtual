@@ -46,12 +46,13 @@ return (
                 <p>Stock: {product.stock}</p>
                 <p>Precio: {product.itemPrice}</p>
                 <p>Precio promocional: {product.promotionalPrice}</p>
+                <p>Vendidos: {product.vendidos}</p>
               </div>
               <div className="card-action" id="cardAction">
                 {product.stock === 0 ?
                 <button id="btnDisable" disabled >Sin Stock</button>
                 :
-                <button id="botonAgregarAlCarrito" onClick={context.addProductToCart.bind(this, product)}>Agregar al Carrito</button>
+                <button id="botonAgregarAlCarrito" onClick={context.addProductToCart.bind(this, product)}>Agregar al carrito</button>
                 }
               </div>
             </div>

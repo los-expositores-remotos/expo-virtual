@@ -82,11 +82,11 @@ const ResultSearchProduct = (props) => {
         setOrderProduct(list)
     }
     const ordenarMasVendidos = () =>{
-        const list = products.sort((a, b) => parseFloat(a.vendidos) - parseFloat(b.vendidos));
+        const list = products.sort((a, b) => parseFloat(b.vendidos) - parseFloat(a.vendidos));
         setOrderProduct(list)
     }
     const ordenarMenosVendidos = () =>{
-        const list = products.sort((a, b) => parseFloat(b.vendidos) - parseFloat(a.vendidos));
+        const list = products.sort((a, b) => parseFloat(a.vendidos) - parseFloat(b.vendidos));
         setOrderProduct(list)
     }
 
@@ -152,7 +152,7 @@ const ResultSearchProduct = (props) => {
                     </div>
                 </div>
             :
-            <p>No existen resultados para " {textsearch} "</p>
+            <p>No existen resultados para "{textsearch}"</p>
         )
     }
 
