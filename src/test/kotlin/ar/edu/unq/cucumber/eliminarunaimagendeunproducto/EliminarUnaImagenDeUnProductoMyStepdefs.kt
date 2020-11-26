@@ -24,7 +24,7 @@ class EliminarUnaImagenDeUnProductoMyStepdefs {
 
     @Given("^Un producto con las imagenes$")
     fun unProductoConLasImagenes(imagenes: List<String>) {
-        val proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.facebook.com/LaCompany", "www.instagram.com/LaCompany", "www.lacompany.com")
+        val proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.banners.com/lacompany.png", "www.facebook.com/LaCompany", "www.instagram.com/LaCompany", "www.lacompany.com")
         proveedorService.crearProveedor(proveedor)
         proveedor.addProduct(producto)
         producto.addImage(imagenes)

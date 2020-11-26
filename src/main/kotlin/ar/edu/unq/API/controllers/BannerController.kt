@@ -65,13 +65,13 @@ class BannerController(
         try {
             val newBanner = ctx.bodyValidator<BannerRegisterMapper>()
                     .check(
-                            { it.image != null && it.category != null && BannerCategory.isValid(it.category)},
+                            { it.banner != null && it.category != null && BannerCategory.isValid(it.category)},
                             "Invalid body : all fields are required. All fields must be valids"
                     )
                     .get()
 
             println(newBanner.category)
-            val banner = Banner(newBanner.image!!, BannerCategory.valueOf(newBanner.category!!))
+            val banner = Banner(newBanner.banner!!, BannerCategory.valueOf(newBanner.category!!))
             this.backendBannerService.crearBanner(banner)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))

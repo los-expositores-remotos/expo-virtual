@@ -22,6 +22,11 @@
   cursor: pointer;
   margin: 4px;
 }
+
 #buttonUploadImages {
+  background-color: #ee6e73;
+}
+
+#buttonUploadBanner {
   background-color: #ee6e73;
 }

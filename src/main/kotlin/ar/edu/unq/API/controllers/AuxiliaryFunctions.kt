@@ -16,7 +16,7 @@ class AuxiliaryFunctions(val backendProveedorService: ProveedorService, val back
     }
 
     fun proveedorClassToProveedorView(p: Proveedor): CompanyViewMapper {
-        return CompanyViewMapper(p.id.toString(), p.companyName, p.companyImage, p.facebook, p.instagram, p.web, this.productoClassListToProductoViewList(p.productos))
+        return CompanyViewMapper(p.id.toString(), p.companyName, p.companyImage, p.companyBanner, p.facebook, p.instagram, p.web, this.productoClassListToProductoViewList(p.productos))
     }
 
     fun productoClassListToProductoViewList(lista: MutableCollection<Producto>): List<ProductViewMapper> {

@@ -14,6 +14,7 @@ const UpdateProveedorForm = (props)  => {
   const [url, setUrl] = useState(null);
   const [companyName, setcompanyName] = useState(company.companyName )
   const [companyImage, setcompanyImage] = useState(company.companyImage)
+  const [companyBanner, setcompanyBanner] = useState(company.companyImage)
   const [facebook, setfacebook] = useState(company.facebook)
   const [instagram, setinstagram] = useState(company.instagram)
   const [web, setweb] = useState(company.web)
@@ -25,18 +26,17 @@ const UpdateProveedorForm = (props)  => {
   },[url]);
 
   const agregarProveedor = () => {
-    if(SubirAlaNube()){
-    const data = new FormData();
-    data.append("file", companyImage);
-    data.append("upload_preset", "insta-clon-GB");
-    data.append("cloud_name", "instaclongbarreiro");
-    fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/image/upload", {
-      method: "POST",
-      body: data,
-    })
+    if(SubirAlaNubeImagen()){
+        const data = new FormData();
+        data.append("file", companyImage);
+        data.append("upload_preset", "insta-clon-GB");
+        data.append("cloud_name", "instaclongbarreiro");
+        fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/image/upload", {
+          method: "POST",
+          body: data,
+        })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data);
         setUrl(data.url);
       })
       .catch((err) => {
@@ -45,18 +45,51 @@ const UpdateProveedorForm = (props)  => {
     }else{
       setUrl(companyImage)
     }
+
+     if(SubirAlaNubeBanner()){
+            const data = new FormData();
+            data.append("file", companyBanner);
+            data.append("upload_preset", "insta-clon-GB");
+            data.append("cloud_name", "instaclongbarreiro");
+            fetch("https://api.cloudinary.com/v1_1/instaclongbarreiro/banner/upload", {
+              method: "POST",
+              body: data,
+            })
+          .then((res) => res.json())
+          .then((data) => {
+            setUrl(data.url);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }else{
+          setUrl(companyBanner)
+        }
   };
 
-  const SubirAlaNube = () => {
+  const SubirAlaNubeImagen = () => {
     return (! typeof companyImage === 'string')
   }
+
+  const SubirAlaNubeBanner = () => {
+      return (! typeof companyBanner === 'string')
+    }
+
   const postComapanyImage = () =>{
-    if(SubirAlaNube()){
+    if(SubirAlaNubeImagen()){
       return url
     }else{
       return companyImage
     }
   }
+
+  const postCompanyBanner = () =>{
+      if(SubirAlaNubeBanner()){
+        return url
+      }else{
+        return companyBanner
+      }
+    }
   
   const postearUpdate = () => {
     
@@ -69,6 +102,7 @@ const UpdateProveedorForm = (props)  => {
       body: JSON.stringify({
         "companyName": companyName ,
         "companyImage": postComapanyImage(),
+        "companyBanner": postCompanyBanner(),
         "facebook": facebook ,
         "instagram": instagram ,
         "web": web
@@ -136,7 +170,6 @@ const UpdateProveedorForm = (props)  => {
               <span>Cargar Imagen</span>
               <input type="file" onChange={(e) => {
                 setcompanyImage(e.target.files[0])
-                //console.log(companyImage)
                 }}/>
             </div>
             <div class="file-path-wrapper">
@@ -144,21 +177,35 @@ const UpdateProveedorForm = (props)  => {
             </div>
           </div>
         </form>
+
+        <form action="#">
+          <div class="file-field input-field">
+            <div class="btn" id='buttonUploadBanner'>
+              <span>Cargar Banner</span>
+              <input type="file" onChange={(e) => {
+                setcompanyBanner(e.target.files[0])
+                //console.log(companyImage)
+                }}/>
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" value={typeof companyBanner === 'string' ? companyBanner : url }/>
+            </div>
+          </div>
+        </form>
+
         <div class="row">
           <div class="col s12">
                  
                 <a  onClick={() => {
-                  //console.log(companyImage)
-                  //console.log(url)
-                  //console.log(companyImage === url)        
                     agregarProveedor();
                     if (!companyName ||
                       !companyImage ||
+                      !companyBanner ||
                       !facebook ||
                       !instagram ||
                       !web) {
-                      postearUpdate()
-                  }
+                        postearUpdate()
+                    }
                   }
                 } 
                 class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>

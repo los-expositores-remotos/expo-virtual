@@ -84,6 +84,8 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             val supplier = backendProveedorService.recuperarProveedor(id)//aux.searchProveedorById(id)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
+            supplier.companyBanner = newSupplier.companyBanner!!
+            println("banner: " + newSupplier.companyBanner)
             supplier.facebook = newSupplier.facebook!!
             supplier.instagram = newSupplier.instagram!!
             supplier.web = newSupplier.web!!

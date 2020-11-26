@@ -21,6 +21,7 @@ data class BannerViewMapper(val id: String, val image: String, val category: Str
 data class CompanyViewMapper(val id: String,
                              val companyName: String,
                              val companyImage: String,
+                             val companyBanner: String,
                              val facebook: String,
                              val instagram: String,
                              val web: String,
@@ -40,7 +41,7 @@ data class ProductViewMapper(val id: String,
                              val alto: Int,
                              val pesoKg: Int)
 
-data class BannerRegisterMapper(val image: String?, val category: String?)
+data class BannerRegisterMapper(val banner: String?, val category: String?)
 
 data class CompanyRegisterMapper(val companyName: String?,
                                  val companyImage: String?,
