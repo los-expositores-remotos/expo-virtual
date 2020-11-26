@@ -12,7 +12,7 @@ class ProveedorTest : ModelObjectWithBsonIdTest<Proveedor>(Proveedor::class.java
     @Before
     override fun setUp(){
         super.setUp()
-        this.proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.facebook.com/LaCompany", "www.instagram.com/LaCompany", "www.lacompany.com")
+        this.proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.images.com/lacompany.com","www.facebook.com/LaCompany", "www.instagram.com/LaCompany", "www.lacompany.com")
         this.producto1 = Producto()
         this.producto2 = Producto()
         this.proveedor.addProduct(this.producto1)

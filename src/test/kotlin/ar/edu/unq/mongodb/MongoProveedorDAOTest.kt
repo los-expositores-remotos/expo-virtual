@@ -10,10 +10,10 @@ import kotlin.test.assertEquals
 class MongoProveedorDAOTest: GenericMongoDAOTest<Proveedor>(MongoProveedorDAOImpl()) {
     override fun generarItems() {
         this.items.add(Proveedor("LaCompany",
-                "www.imagenes.com/lacompany.png", "www.facebook.com/LaCompany",
+                "www.imagenes.com/lacompany.png", "www.imagenes.com/lasegundacompany.png", "www.facebook.com/LaCompany",
                 "www.instagram.com/LaCompany","www.lacompany.com"))
         this.items.add(Proveedor("LaSegundaCompany",
-                "www.imagenes.com/lasegundacompany.png", "www.facebook.com/LaSegundaCompany",
+                "www.imagenes.com/lasegundacompany.png", "www.imagenes.com/lasegundacompany.png","www.facebook.com/LaSegundaCompany",
                 "www.instagram.com/LaSegundaCompany","www.lasegundacompany.com"))
         TransactionRunner.runTrx({
             this.dao.save(this.items)

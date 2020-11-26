@@ -20,7 +20,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         try {
             val newSupplier = aux.companyBodyValidation(ctx)
             val supplier = Proveedor(
-                newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
+                newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.companyBanner!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
             backendProveedorService.crearProveedor(supplier)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
@@ -39,7 +39,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
                 .get()
             newSuppliers.forEach {
                 val supplier = Proveedor(
-                    it.companyName!!, it.companyImage!!, it.facebook!!, it.instagram!!, it.web!!)
+                    it.companyName!!, it.companyImage!!, it.companyBanner!!,it.facebook!!, it.instagram!!, it.web!!)
                 backendProveedorService.crearProveedor(supplier)
             }
             ctx.status(201)

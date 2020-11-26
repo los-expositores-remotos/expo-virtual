@@ -6,15 +6,17 @@ import org.bson.types.ObjectId
 class Proveedor : ModelObjectWithBsonId {
     var companyName: String = ""
     var companyImage: String = ""
+    var companyBanner: String = ""
     var facebook: String = ""
     var instagram: String = ""
     var web: String = ""
     var productos: MutableList<Producto> = emptyList<Producto>().toMutableList()
     constructor()
 
-    constructor(companyName: String, companyImage: String, facebook: String, instagram: String, web: String) {
+    constructor(companyName: String, companyImage: String, companyBanner:String, facebook: String, instagram: String, web: String) {
         this.companyName = companyName
         this.companyImage = companyImage
+        this.companyBanner = companyBanner
         this.facebook = facebook
         this.instagram = instagram
         this.web = web

@@ -42,9 +42,11 @@ data class BannerRegisterMapper(val image: String?, val category: String?)
 
 data class CompanyRegisterMapper(val companyName: String?,
                                  val companyImage: String?,
+                                 val companyBanner: String?,
                                  val facebook: String?,
                                  val instagram: String?,
-                                 val web: String?)
+                                 val web: String?) {
+}
 
 data class ProductRegisterMapper(val idProveedor: String?,
                                  val itemName: String?,
