@@ -249,20 +249,20 @@ const postearPago = (tokenString) => {
   })
     .then((res) =>{
       window.Mercadopago.clearSession()
-      if (!res.ok) {
-        console.log("ohboyy")
-        console.log(res)        
-        M.toast({ html: "Error inesperado", classes: "#c62828 red darken-3" });
-      } else {
-        console.log("realizandoPAGO")
-        let estadoPago = res
-        console.log(estadoPago.json)
-        M.toast({ html: "Transacción iniciada correctamente", classes: "#388e3c green darken-2" });
-        M.toast({ html: "Transaccion "+ estadoPago, classes: "#c62828 red darken-3" });
-        actualizarBaseDeDatos()
-        vacioCarrito()
-        history.push("/");
-      }
+      if(res.ok){
+      return res.json()  
+    }
+      else{
+          M.toast({ html: "Error inesperado", classes: "#c62828 red darken-3" });
+      }})
+    .then((data) => {
+      console.log(data.comunicacion_sugerida)
+      console.log("realizandoPAGO")
+      M.toast({ html: data.comunicacion_sugerida, classes: "#388e3c green darken-2" });
+      M.toast({ html: "Transaccion "+ data.comunicacion_sugerida, classes: "#c62828 red darken-3" });
+      actualizarBaseDeDatos()
+      vacioCarrito()
+      history.push("/");
     })
     .catch((err) => {
       console.log(err);

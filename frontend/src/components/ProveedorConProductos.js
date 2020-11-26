@@ -87,12 +87,14 @@ const listOfProducts = () => {
       )
     }
   }
-  console.log(company.companyImage)
+  console.log("http://res.cloudinary.com/instaclongbarreiro/image/upload/v1606355739/lqbiomw4bllgi6yjb0s5.jpg")
+  console.log("")
     let styles = {
-            backgroundImage: `url(${company.companyImage})`,
-            backgroundSize: '14%',
-            minHeight: " 14.4rem",
-            backgroundRepeat: "repeat-x"
+            backgroundImage: `url(http://res.cloudinary.com/instaclongbarreiro/image/upload/v1606355739/lqbiomw4bllgi6yjb0s5.jpg)`,
+         //   backgroundImage: `url(${company.companyImage})`,
+            backgroundSize: '100%',
+            minHeight: "12rem",
+            backgroundRepeat: "no-repeat"
         }
   return (
     <div>
