@@ -1,23 +1,89 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { Row } from 'react-materialize'
+import {Link} from 'react-router-dom'
 import '../styles/ShoppingCart.css'
 import ShopContext from './context/shop-context'
 
+export var sendMethodCostTopLevel = null
+export var sendMethodNameTopLevel = null
+
+
+export const precioTotal = (products) => {
+  let contador = 0
+  products.forEach((cartItem)=>{
+    contador = contador + (cartItem.itemPrice * cartItem.quantity)
+  })
+  return contador
+}
+
+export const pesoTotal = (products) => {
+  let acumulador = 0
+  products.forEach((cartItem)=>{
+    acumulador = acumulador + (cartItem.pesoKg * cartItem.quantity)
+  })
+  return acumulador
+}
+
+export const volumenTotal = (products) => {
+  let anchoTotal = 0
+  let longitudTotal = 0
+  let alturaTotal = 0
+  products.forEach((cartItem)=>{
+    anchoTotal += cartItem.ancho * cartItem.quantity
+    longitudTotal += cartItem.longitud * cartItem.quantity
+    alturaTotal += cartItem.alto * cartItem.quantity
+  })
+  return `${longitudTotal}x${anchoTotal}x${alturaTotal}`
+}
 
 const ShoppingCart = () => {
   
   /**USO EL CONTEXTO DE SHOPCONTEXT */
   const context = useContext(ShopContext);
+  const [codigoPostal, setCodigoPostal] = useState(null)
+  const [sendMethodName, setSendMethodName] = useState(null)
+  const [sendMethodCost, setSendMethodCost] = useState(null)
+
+  function calcularEnvio(){
+    if(codigoPostal >= 1000 && codigoPostal <= 9999){
+      console.log("Hola")
+      console.log(codigoPostal)
+      console.log(volumenTotal(context.cart))
+      console.log(pesoTotal(context.cart))
+      fetch(`https://api.mercadolibre.com/sites/MLA/shipping_options?zip_code_from=1875&zip_code_to=${codigoPostal}&dimensions=${volumenTotal(context.cart)},${pesoTotal(context.cart)}`, {
+      headers: {
+        "Content-type": "application/json",
+      }
+    }) 
+      .then((res)=> {
+        console.log(res)
+      if(res.ok){
+        return res.json()
+      }
+    }).then((response)=>{
+      console.log(response)
+      let option = response.options.find(option => option.shipping_method_id === 503045)
+      sendMethodNameTopLevel = option.name
+      setSendMethodName(option.name)
+      sendMethodCostTopLevel = option.cost
+      setSendMethodCost(option.cost)
+      console.log(option.name)
+      console.log(option.cost)
+    })
+    .catch((err => {
+      console.log(err)
+    }))
+  }
+  }
+
+  function precioTotalConEnvio(){
+    return sendMethodCost ? "$ " + (precioTotal(context.cart) + sendMethodCost) : "" 
+  }
+  
 
   useEffect(() => {
     //console.log(context);
   }, []);
-  const precioTotal = (products) => {
-    let contador = 0
-    products.forEach((cartItem)=>{
-      contador = contador + (cartItem.itemPrice * cartItem.quantity)
-    })
-    return contador
-  }
 
   return (
     /**
@@ -26,12 +92,15 @@ const ShoppingCart = () => {
      */
     <React.Fragment>
      
-      <main className="cart">
         {
           context.cart.length <= 0 ? 
-          <p>No Item in the Cart!</p>
+          <div id="noHayElementos" class="numero">
+              No hay Productos en el carrito!
+          </div>
           :
-          <div>
+        <main className="cart">
+          <div className="row">
+            <div className="col s12">
           <table>
           <thead>
               <tr>
@@ -69,14 +138,56 @@ const ShoppingCart = () => {
           </tbody>
             ))}
          </table>
-          <h3>
-            <strong>
-                Precio Total : ${precioTotal(context.cart)}
-            </strong>
-          </h3>
-        </div>
+         </div>
+           <div className="col s12">
+              <div className="row">
+                <h4>
+                  <strong>
+                      Precio Total (Sin envío): $ {precioTotal(context.cart)}
+                  </strong>
+                </h4>
+           </div>
+          </div>
+          <div className="row">
+            <div className="col s6 offset-6">
+                    <input id = "inptCartCant" placeholder="Código Postal" value={codigoPostal} onChange={(e) => setCodigoPostal(e.target.value)}/>
+                    <a className="waves-effect waves-light btn" onClick={calcularEnvio}>Calcular envío</a>
+           </div>
+          </div>
+          <div className="row">
+          <div className="col s6">
+          <h4>
+              <strong>
+                  {sendMethodName}
+              </strong>
+            </h4>
+          </div>
+          <div className="col s6">
+          <h4>
+              <strong>
+                  {(sendMethodCost ? "$ " + sendMethodCost : "")}
+              </strong>
+            </h4>
+          </div>
+         </div>
+         
+          <div className="row">
+           <h3>
+              <strong> 
+                   Precio Total: {precioTotalConEnvio()}
+              </strong>
+            </h3>
+           <div className="col s6 offset-s6">
+             <Link to={localStorage.getItem('user') === "admin" || localStorage.getItem('user') === "usuario" ? "/testform" : "/login"}>
+                <button>
+                      Comprar
+                </button>
+             </Link>
+           </div>
+          </div>
+         </div>
+        </main>
         }
-      </main>
     </React.Fragment>
   );
 };

@@ -1,13 +1,16 @@
-import React, { useState} from "react";
-import "../../styles/Singin.css";
+import React, { useState, useEffect, useContext} from "react";
 import { Link, useHistory } from "react-router-dom";
+import { userContext } from "../../App"
+import "../../styles/Singin.css";
 import M from "materialize-css";
 import logo from "../../images/logo.png"
 const Login = () => {
   const history = useHistory();
   const [dni, setdni] = useState(null);
+  const { state, dispatch } = useContext(userContext);
 
   const PostData = () => {
+       
     if (dni < 1000000) {
       M.toast({ html: "DNI Invalido", classes: "#c62828 red darken-3" });
     } else {
@@ -20,26 +23,25 @@ const Login = () => {
           dni,
         }),
       })
-        .then((res) => res.json())
-        .then((data) => {
-          //console.log(data);
-          if (data.error) {
-            M.toast({ html: data.error, classes: "#c62828 red darken-3" });
-          } else {
-            localStorage.setItem("jwt", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
+        .then((res) => {
+          /* if(!res.ok){
+          M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
+          }else{
+            localStorage.setItem("user", "usuario");
+            dispatch({ type: "USER", payload: "user" });
             M.toast({
-              html: "signed success",
+              html: "Loggeado exitosamente",
               classes: "#388e3c green darken-2",
             });
             history.push("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          } */
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   };
+
   return (
     <div className="mycard">
       <div id="fondoTarjetaLogin"  className="card auth-card input-field">
@@ -56,14 +58,15 @@ const Login = () => {
           className="btn waves-effect waves-light #64b5f6 red darken-1"
           onClick={() => PostData()}
         >
-          Singin
+          Ingresar
         </button>
         <h5 id="H5Register">
+          <Link id="linkRegister" to="/login/admin">Logearse como Administrador</Link>
+          <tr/>
           <Link id="linkRegister" to="/register">Registrate acá</Link>
         </h5>
       </div>
-    </div>
-  );
-};
+    </div>)
+  }
 
 export default Login;

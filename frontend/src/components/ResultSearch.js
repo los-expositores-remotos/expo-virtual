@@ -28,7 +28,7 @@ const ResultSearch = () => {
     useEffect(() => {  
           fetch(`http://localhost:7000/products/search?text=${textsearch}`, {
             headers: {
-              "Content-Type":"application/json"
+        
             }
           })
             .then((res)=> {

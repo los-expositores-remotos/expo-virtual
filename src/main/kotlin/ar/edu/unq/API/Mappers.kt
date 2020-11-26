@@ -1,11 +1,8 @@
 package ar.edu.unq.API
 
-import kotlin.reflect.KMutableProperty
-import kotlin.reflect.KVisibility
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
+data class UserViewMapper(val nombre :String?, val apellido : String?)
 
-data class UserViewMapper(val nombre :String?, val apellido : String?, val dni : Int?)
+data class PaymentMapper(val token :String?, val unitPrice : Int?, val email : String?, val description: String?, val amount : Float?, val quantity : Int?, val paymentMethodId: String?, val installments: Int?, val issuerId: String?, val docType: String?, val docNumber: String?)
 
 data class AdminLogin(val userName : String?, val password : String?)
 
@@ -35,8 +32,13 @@ data class ProductViewMapper(val id: String,
                              val description: String,
                              val images: List<String>,
                              val stock: Int,
+                             val vendidos: Int,
                              val itemPrice: Int,
-                             val promotionalPrice: Int)
+                             val promotionalPrice: Int,
+                             val longitud: Int,
+                             val ancho: Int,
+                             val alto: Int,
+                             val pesoKg: Int)
 
 data class BannerRegisterMapper(val image: String?, val category: String?)
 
@@ -53,8 +55,17 @@ data class ProductRegisterMapper(val idProveedor: String?,
                                  val description: String?,
                                  val images: List<String>?,
                                  val stock: Int?,
+                                 val vendidos: Int?,
                                  val itemPrice: Int?,
-                                 val promotionalPrice: Int?)
+                                 val promotionalPrice: Int?,
+                                 val longitud: Int?,
+                                 val ancho: Int?,
+                                 val alto: Int?,
+                                 val pesoKg: Int?)
+
+data class SaleMapper(val idProducto: String, val cantidadVendida: Int)
+
+data class SalesMapper(val sales: List<SaleMapper>)
 
 data class ProductListRegisterMapper(val products: Collection<ProductRegisterMapper>)
 

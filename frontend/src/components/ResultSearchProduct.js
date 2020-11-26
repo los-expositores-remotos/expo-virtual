@@ -33,22 +33,36 @@ const ResultSearchProduct = (props) => {
                         outDuration: 250
                     }}
                             trigger={<Button node="button">Ordenar por</Button>}>
-                    <a href="#" onClick={()=>ordenarprecioAsc() }> Precio Ascendente  </a>
-                    <a href="#" onClick={()=>ordenarprecioDesc() }> Precio Descendente  </a>
+                    <a href="#" onClick={()=>ordenarPrecioAsc() }> Precio Ascendente  </a>
+                    <a href="#" onClick={()=>ordenarPrecioDesc() }> Precio Descendente  </a>
+                    <Divider />
+                    <a href="#" onClick={()=>ordenarPromocionAsc() }> Mayor descuento </a>
+                    <a href="#" onClick={()=>ordenarPromocionDesc() }> Menor descuento </a>
                     <Divider />  
                     <a href="#" onClick={()=>ordenarAlfabeticamenteAsc() }> Alfabeticamente Ascendente</a>
-                    <a href="#" onClick={()=>ordenarAlfabeticamenteDesc() }>Alfabeticamente Desscendente</a>
+                    <a href="#" onClick={()=>ordenarAlfabeticamenteDesc() }>Alfabeticamente Descendente</a>
+                    <Divider />  
+                    <a href="#" onClick={()=>ordenarMasVendidos() }> Más vendidos</a>
+                    <a href="#" onClick={()=>ordenarMenosVendidos() }>Menos vendidos</a>
             </Dropdown>
             )
               
     }
 
-    const ordenarprecioAsc = () =>{
+    const ordenarPrecioAsc = () =>{
         const list = products.sort((a, b) => parseFloat(a.itemPrice) - parseFloat(b.itemPrice));
         setOrderProduct(list)
     }
-    const ordenarprecioDesc = () =>{
+    const ordenarPrecioDesc = () =>{
         const list = products.sort((a, b) => parseFloat(b.itemPrice) - parseFloat(a.itemPrice));
+        setOrderProduct(list)
+    }
+    const ordenarPromocionAsc = () =>{
+        const list = products.sort((a, b) => parseFloat(a.promotionalPrice) - parseFloat(b.promotionalPrice));
+        setOrderProduct(list)
+    }
+    const ordenarPromocionDesc = () =>{
+        const list = products.sort((a, b) => parseFloat(b.promotionalPrice) - parseFloat(a.promotionalPrice));
         setOrderProduct(list)
     }
     const ordenarAlfabeticamenteAsc = () =>{
@@ -65,6 +79,14 @@ const ResultSearchProduct = (props) => {
             if(a.itemName < b.itemName) { return 1; }
             return 0;
         })
+        setOrderProduct(list)
+    }
+    const ordenarMasVendidos = () =>{
+        const list = products.sort((a, b) => parseFloat(a.vendidos) - parseFloat(b.vendidos));
+        setOrderProduct(list)
+    }
+    const ordenarMenosVendidos = () =>{
+        const list = products.sort((a, b) => parseFloat(b.vendidos) - parseFloat(a.vendidos));
         setOrderProduct(list)
     }
 

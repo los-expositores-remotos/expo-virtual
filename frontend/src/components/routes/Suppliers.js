@@ -14,7 +14,7 @@ const Suppliers = () => {
     if(!companies){
     fetch(`http://localhost:7000/companies`, {
       headers: {
-        "Content-Type":"application/json"
+    
       }
     }) 
       .then((res)=> {
@@ -58,11 +58,28 @@ const Suppliers = () => {
     <div>
           {
             !companies ?
-              <p>Loading...</p>
+            <div>
+              <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                  <div class="circle-clipper left">
+                    <div class="circle">
+                    </div>
+                  </div>
+                    <div class="gap-patch">
+                      <div class="circle">
+                      </div>
+                    </div>  
+                    <div class="circle-clipper right">
+                    <div class="circle">
+                    </div>
+                </div>
+              </div>
+              </div>
+            </div>
             :
             getSProveedores()
           }
-        </div>
+    </div>
 
   );
 };

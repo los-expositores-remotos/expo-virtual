@@ -1,16 +1,17 @@
-Feature: Eliminacion de Producto
+# language: es
+Característica: Eliminacion de Producto
 
-  Scenario: Al seleccionar un proveedor y se despliegan todos los productos del proveedor
-    Given un proveedor en la base datos
-    When se le agrega un producto "producto1"
-    When se le agrega otro producto "producto2"
-    Then recupero el proveedor y sus productos son "producto1", "producto2"
+  Escenario: Al seleccionar un proveedor y se despliegan todos los productos del proveedor
+    Dado un proveedor en la base datos
+    Cuando se le agrega un producto "producto1"
+    Cuando se le agrega otro producto "producto2"
+    Entonces recupero el proveedor y sus productos son "producto1", "producto2"
 
 
 
 
-  Scenario: Al presionar el icono de eliminar se elimina el producto y se recibe una notificación de baja exitosa
+  Escenario: Al presionar el icono de eliminar se elimina el producto y se recibe una notificación de baja exitosa
 
-    Given dado un producto "producto1"
-    When elimino el "producto1"
-    Then no figura mas en la base de datos
+    Dado dado un producto "producto1"
+    Cuando elimino el "producto1"
+    Entonces no figura mas en la base de datos

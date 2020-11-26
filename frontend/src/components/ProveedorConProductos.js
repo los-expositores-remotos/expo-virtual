@@ -30,7 +30,7 @@ const listOfProducts = () => {
           //console.log(element)
           if(products[index] === undefined){
             
-            console.log("el elemnto es undefined")
+            //console.log("el elemnto es undefined")
             
           }else{
             res.push(element)
@@ -52,7 +52,7 @@ const listOfProducts = () => {
          list.push(
 
          <li className={page === index ? "active" : "waves-effect"}>
-            <a href="" onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
+            <a onClick={()=>{setPage(index)}}>{index + 1}</a>                                                                         
           </li>
         )         
       }
@@ -64,11 +64,11 @@ const listOfProducts = () => {
       return(
       <ul id="mypaginacion" className="pagination">
         <li className="waves-effect">
-          <a href="" onClick={()=>{if(page > 0){setPage(page - 1)}}}><i className="material-icons">chevron_left</i></a>
+          <a onClick={()=>{if(page > 0){setPage(page - 1)}}}><i className="material-icons">chevron_left</i></a>
           </li>
             {numerosDePaginacion()}
           <li className="waves-effect">
-            <a href="" onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i className="material-icons">chevron_right</i></a>
+            <a onClick={()=>{if((page + 1) <= (products.length / 4) && (products.length % 4) > 0){ setPage(page + 1)}}}><i className="material-icons">chevron_right</i></a>
           </li>
       </ul>)
     };
@@ -87,7 +87,13 @@ const listOfProducts = () => {
       )
     }
   }
-
+  console.log(company.companyImage)
+    let styles = {
+            backgroundImage: `url(${company.companyImage})`,
+            backgroundSize: '14%',
+            minHeight: " 14.4rem",
+            backgroundRepeat: "repeat-x"
+        }
   return (
     <div>
           {
@@ -95,12 +101,13 @@ const listOfProducts = () => {
               <p>Loading...</p>
             :
             <div>
-              <img id="imagenEmpresa" alt={company.companyName} src={company.companyImage}/>
-              <br/>
-              <h2>{company.companyName}</h2>
-              {listOfProducts(company)}
-              <hr/>
-            </div>
+              <div id="divEmpresaConProd" style={styles}>
+                </div>
+                <br/>
+                <h2 id="nombreEmpresa">{company.companyName}</h2>
+                {listOfProducts(company)}
+                <hr/>
+              </div>
           }
         </div>
 

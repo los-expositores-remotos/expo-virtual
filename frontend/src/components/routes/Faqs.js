@@ -12,7 +12,7 @@ const Faqs = () => {
 
       fetch("http://localhost:7000/banners/PAYMENTMETHODS", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
       .then((res)=> {
@@ -34,7 +34,7 @@ const Faqs = () => {
 
       fetch("http://localhost:7000/banners/COURRIER", {
         headers: {
-          "Content-Type":"application/json"
+        
         }
       })
       .then((res)=> {

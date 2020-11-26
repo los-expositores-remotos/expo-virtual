@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Lemonada");
+@import url("https://fonts.googleapis.com/css?family=Caveat");
+
+body {
+  background-color: #e8ece2;
+  background-image: url("../images/imagenBackground.jpg");
+}
+#exclamation-triangle {
+  color: rgb(255, 0, 0);
+  font-size: 12em;
+  text-shadow: 2px 5px #272634;
+  margin-left: 48.9%;
+  position: absolute;
+}
+.numero {
+  font-family: "Lemonada", cursive;
+  color: #fff;
+  font-size: 15rem;
+  margin-top: 8rem;
+  text-shadow: 5px 5px #272634;
+  margin-left: 41rem;
+}
+.leyenda {
+  font-family: "Caveat", cursive;
+  color: #504b4b;
+  font-size: 2.6em;
+  margin-top: -0.9em;
+  margin-left: 45rem;
+}

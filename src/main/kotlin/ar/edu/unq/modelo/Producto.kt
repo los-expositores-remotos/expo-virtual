@@ -1,6 +1,8 @@
 package ar.edu.unq.modelo
 
 
+import ar.edu.unq.services.impl.exceptions.ProductoNoEncontradoException
+import ar.edu.unq.services.impl.exceptions.ProductoSinStockException
 import org.bson.types.ObjectId
 
 
@@ -14,6 +16,10 @@ class Producto : ModelObjectWithBsonId{
     var itemPrice: Int = 0
     var promotionalPrice: Int = 0
     var vendidos = 0
+    var longitud: Int = 0
+    var ancho: Int = 0
+    var alto : Int = 0
+    var pesoKg: Int = 0
 
     constructor()
 
@@ -23,7 +29,11 @@ class Producto : ModelObjectWithBsonId{
         description: String,
         stock: Int,
         itemPrice: Int,
-        promotionalPrice: Int
+        promotionalPrice: Int,
+        longitud: Int,
+        ancho: Int,
+        alto : Int,
+        peso: Int
     ) {
         this.idProveedor = idProveedor
         this.itemName = itemName
@@ -31,6 +41,10 @@ class Producto : ModelObjectWithBsonId{
         this.stock = stock
         this.itemPrice = itemPrice
         this.promotionalPrice = promotionalPrice
+        this.longitud = longitud
+        this.ancho = ancho
+        this.alto = alto
+        this.pesoKg = peso
     }
 
     fun addImage(imageUrl: String) {
@@ -50,14 +64,10 @@ class Producto : ModelObjectWithBsonId{
     }
 
     fun cargarVenta(cantidadACargar: Int) {
+        stock -= cantidadACargar
         vendidos += cantidadACargar
     }
 
-    fun removeStock(quantity: Int) {
-        this.stock -= quantity
-        //TODO: Podria unificarse con logica de cargar venta en una funcion vender(cantidad) haciendo que stock sea calculado como (stockInicial - vendidos)
-        //TODO: Chequear que no sea menor que cero
-    }
 //
 //    override fun castearAMiTipo(other: Any): Producto {
 //        return other as Producto

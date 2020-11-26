@@ -15,7 +15,7 @@ const DeleteBanner = () =>{
   useEffect(() => {
     fetch(`http://localhost:7000/banners`, {
       headers: {
-        "Content-Type":"application/json"
+    
       }
     }) 
       .then((res)=> {
@@ -41,7 +41,6 @@ const DeleteBanner = () =>{
     fetch(`http://localhost:7000/banners/${id}`, {
       method: 'DELETE',
       headers: {
-        "Content-Type":"application/json"
       }
     }).then((res)=> 
       {

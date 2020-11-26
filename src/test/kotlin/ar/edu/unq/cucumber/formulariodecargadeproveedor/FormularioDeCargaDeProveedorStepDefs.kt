@@ -6,10 +6,10 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.java.en.And
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.en.And
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import org.bson.types.ObjectId
 import kotlin.test.assertEquals
 
@@ -51,7 +51,7 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @When("^Le agrego el producto \"([^\"]*)\"$")
     fun leAgregoElProducto(nombreProducto: String?) {
-        val producto = Producto(ObjectId(), nombreProducto!!, "Soy$nombreProducto", 0, 0 , 0)
+        val producto = Producto(ObjectId(), nombreProducto!!, "Soy$nombreProducto", 0, 0 , 0, 10, 10, 10, 10)
         this.proveedor2.addProduct(producto)
         this.proveedorService.actualizarProveedor(this.proveedor2)
     }
@@ -64,7 +64,7 @@ class FormularioDeCargaDeProveedorStepDefs {
         assertEquals(productos, productosRecuperados)
     }
 
-    @cucumber.api.java.After
+    @io.cucumber.java.After
     fun clear() {
         proveedorService.deleteAll()
     }

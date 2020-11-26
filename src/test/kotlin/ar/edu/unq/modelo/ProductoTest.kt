@@ -23,7 +23,7 @@ class ProductoTest : ModelObjectWithBsonIdTest<Producto>(Producto::class.java) {
     @Before
     override fun setUp(){
         super.setUp()
-        this.producto = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000)
+        this.producto = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 10, 10, 10, 100)
         this.image1 = "www.images.com/image1.png"
         this.image2 = "www.images.com/image2.png"
         this.image3 = "www.images.com/image3.png"
@@ -39,6 +39,17 @@ class ProductoTest : ModelObjectWithBsonIdTest<Producto>(Producto::class.java) {
         this.tags = emptySet<String>().toMutableSet()
     }
 
+
+    @Test
+    fun testCalcularVolumenYPeso() {
+        var volumenResultante = 0;
+        var pesoTotal = 0;
+        val productoB = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 10, 10, 10, 200)
+        val productoC = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 5, 30, 10, 10)
+        listOf(producto, productoB, productoC).map { volumenResultante += it.longitud!! * it.ancho!! * it.alto!!; pesoTotal += it.pesoKg!! }
+        assertEquals(3500, volumenResultante)
+        assertEquals(310, pesoTotal)
+    }
 
     @Test
     fun testAgregarImagenes() {
@@ -80,9 +91,9 @@ class ProductoTest : ModelObjectWithBsonIdTest<Producto>(Producto::class.java) {
         val primerDescuentoDeStock = 7
         val segundoDescuentoDeStock = 20
         assertEquals(stockInicial, this.producto.stock)
-        this.producto.removeStock(primerDescuentoDeStock)
+        this.producto.cargarVenta(primerDescuentoDeStock)
         assertEquals(stockInicial - primerDescuentoDeStock, this.producto.stock)
-        this.producto.removeStock(segundoDescuentoDeStock)
+        this.producto.cargarVenta(segundoDescuentoDeStock)
         assertEquals(stockInicial - primerDescuentoDeStock - segundoDescuentoDeStock, this.producto.stock)
     }
 }

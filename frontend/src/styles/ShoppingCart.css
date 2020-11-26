@@ -10,3 +10,10 @@
   width: 20%;
   text-align: center;
 }
+
+#noHayElementos {
+  font-size: 6rem;
+  margin-top: 4rem;
+  margin-left: 13%;
+  min-height: 30rem;
+}

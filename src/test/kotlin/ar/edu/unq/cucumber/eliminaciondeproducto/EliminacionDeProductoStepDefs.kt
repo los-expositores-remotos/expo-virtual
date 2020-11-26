@@ -3,10 +3,10 @@ package ar.edu.unq.cucumber.eliminaciondeproducto
 import ar.edu.unq.AuxProdStepDefs
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
-import cucumber.api.java.After
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.After
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -25,14 +25,14 @@ class EliminacionDeProductoStepDefs: AuxProdStepDefs() {
 
     @When("^se le agrega un producto \"([^\"]*)\"$")
      fun seLeAgregaUnProducto(productoA: String) {
-        val productoABis = Producto(proveedorA.id, productoA, "SARASA", 7, 1000000, 800000)
+        val productoABis = Producto(proveedorA.id, productoA, "SARASA", 7, 1000000, 800000, 10, 10, 10, 10)
         proveedorRecuperado.addProduct(productoABis)
         proveedorService.actualizarProveedor(proveedorRecuperado)
     }
 
     @When("^se le agrega otro producto \"([^\"]*)\"$")
     fun seLeAgregaOtroProducto(productoB: String) {
-        val productoBBis = Producto(proveedorA.id, productoB, "A electric guitar", 7, 1000, 800000)
+        val productoBBis = Producto(proveedorA.id, productoB, "A electric guitar", 7, 1000, 800000, 10, 10, 10, 10)
         proveedorRecuperado.addProduct(productoBBis)
         proveedorService.actualizarProveedor(proveedorRecuperado)
     }
@@ -49,7 +49,7 @@ class EliminacionDeProductoStepDefs: AuxProdStepDefs() {
     fun dadoUnProducto(productoA: String) {
         proveedorService.crearProveedor(proveedorA)
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
-        val productoABis = Producto(proveedorA.id, productoA, "SARASA", 7, 1000000, 800000)
+        val productoABis = Producto(proveedorA.id, productoA, "SARASA", 7, 1000000, 800000, 10, 10, 10, 10)
         proveedorRecuperado.addProduct(productoABis)
         proveedorService.actualizarProveedor(proveedorRecuperado)
         productoRecuperado = productoService.obtenerProducto(proveedorRecuperado.id.toString(), productoA)

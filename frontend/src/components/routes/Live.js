@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import '../../styles/Live.css';
 
 const Live = () => {
@@ -9,7 +10,7 @@ const Live = () => {
     if(!schedule){
     fetch("http://localhost:7000/banners/SCHEDULE", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
         .then((res)=> {
@@ -28,7 +29,7 @@ const Live = () => {
       if(!classes){
         fetch("http://localhost:7000/banners/CLASS", {
         headers: {
-          "Content-Type":"application/json"
+       
         }
       })
         .then((res)=> {
@@ -52,7 +53,9 @@ const Live = () => {
     const list = classes.map((clase)=>{
         return(
                 <div className='col s6'>
+                  <a target="_blank"  rel="noreferrer" href='https://www.youtube.com/watch?v=vcG6bS4Kn-c&ab_channel=TobiasTorres'>
                     <img id="imgClasses" src={clase.image} alt="logo de clases"/>
+                  </a>
                 </div>
         )
     })
@@ -72,7 +75,24 @@ const Live = () => {
             schedule ? 
               <img atl="img" id="imgSchedule" src={schedule[0].image}></img>
             :
-              <p>Loading...</p>
+            <div>
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                  <div class="circle">
+                  </div>
+                </div>
+                  <div class="gap-patch">
+                    <div class="circle">
+                    </div>
+                  </div>  
+                  <div class="circle-clipper right">
+                  <div class="circle">
+                  </div>
+              </div>
+            </div>
+            </div>
+          </div>
           }
       </div>
       {bannerClasses()}

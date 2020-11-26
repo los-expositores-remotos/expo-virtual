@@ -52,7 +52,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-    <div className="footer-copyright">
+    <div className="footer">
       <div className="container" id="contFooter">
         <div className="row">
           <div className="col s3"><a href='https://www.facebook.com/guiadelartedigital'><SocialIcon className="SocialIcon" network="facebook" bgColor="#ffffff" /></a></div>
@@ -60,7 +60,11 @@ const Footer = () => {
           <div className="col s3"><Link id="linkList"to="/contact"><SocialIcon className="SocialIcon" network="email" bgColor="#ffffff" /></Link></div>
           <div className="col s3"><a href='https://wa.me/5491123869642'><SocialIcon className="SocialIcon" network="whatsapp" bgColor="#ffffff" /></a></div>
         </div>
-        © 2020 Copyright Expo Arte Virtual
+        <div className='row'>
+          <div className='col s12'>
+              © 2020 Copyright Expo Arte Virtual
+          </div>
+        </div>
       </div>
     </div>
   </footer>

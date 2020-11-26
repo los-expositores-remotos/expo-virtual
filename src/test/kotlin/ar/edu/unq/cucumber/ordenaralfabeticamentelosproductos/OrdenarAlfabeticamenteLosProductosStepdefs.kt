@@ -9,9 +9,9 @@ import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.ProductoServiceImpl
 import ar.edu.unq.services.impl.ProveedorServiceImpl
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import org.junit.Assert
 
 class OrdenarAlfabeticamenteLosProductosStepdefs {
@@ -23,11 +23,11 @@ class OrdenarAlfabeticamenteLosProductosStepdefs {
 
     @Given("^Una base de datos con cinco productos: \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
     fun unaBaseDeDatosConCincoProductos(productoEName: String?, productoCName: String?, productoBName: String?, productoAName: String?, productoDName: String?) {
-            val productoA = Producto(proveedorA.id, productoAName!!, "A electric guitar", 7, 100, 800000)
-            val productoB = Producto(proveedorA.id, productoBName!!, "A electric guitar", 7, 100, 800000)
-            val productoC = Producto(proveedorA.id, productoCName!!, "A electric guitar", 7, 1000, 800000)
-            val productoD = Producto(proveedorA.id, productoDName!!, "A electric guitar", 7, 1000000, 800000)
-            val productoE = Producto(proveedorA.id, productoEName!!, "A electric guitar", 7, 1000000, 800000)
+            val productoA = Producto(proveedorA.id, productoAName!!, "A electric guitar", 7, 100, 800000, 10, 10, 10, 10)
+            val productoB = Producto(proveedorA.id, productoBName!!, "A electric guitar", 7, 100, 800000, 10, 10, 10, 10)
+            val productoC = Producto(proveedorA.id, productoCName!!, "A electric guitar", 7, 1000, 800000, 10, 10, 10, 10)
+            val productoD = Producto(proveedorA.id, productoDName!!, "A electric guitar", 7, 1000000, 800000, 10, 10, 10, 10)
+            val productoE = Producto(proveedorA.id, productoEName!!, "A electric guitar", 7, 1000000, 800000, 10, 10, 10, 10)
 
             proveedorA.addProduct(productoA)
             proveedorA.addProduct(productoB)
@@ -48,7 +48,7 @@ class OrdenarAlfabeticamenteLosProductosStepdefs {
         Assert.assertEquals(proveedorService.recuperarProveedor(proveedorA.id.toString()).productos, this.productosOrdenados)
     }
 
-    @cucumber.api.java.After
+    @io.cucumber.java.After
     fun clear() {
         productoService.deleteAll()
         proveedorService.deleteAll()

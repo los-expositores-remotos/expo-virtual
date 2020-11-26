@@ -6,12 +6,12 @@ import ar.edu.unq.services.UsuarioService
 import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.Scenario
-import cucumber.api.java.After
-import cucumber.api.java.Before
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.After
+import io.cucumber.java.Before
+import io.cucumber.java.Scenario
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 

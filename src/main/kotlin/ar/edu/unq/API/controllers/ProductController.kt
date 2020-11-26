@@ -9,6 +9,7 @@ import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.services.ProductoService
 import ar.edu.unq.services.ProveedorService
 import ar.edu.unq.services.impl.exceptions.ProductoInexistenteException
+import ar.edu.unq.services.impl.exceptions.ProductoSinStockException
 import ar.edu.unq.services.impl.exceptions.ProveedorExistenteException
 import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import org.bson.types.ObjectId
@@ -32,8 +33,8 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
 
     fun addProduct(ctx: Context){
         try {
-            val newProduct = aux.productBodyvalidation(ctx)
-            val product = Producto(ObjectId(newProduct.idProveedor), newProduct.itemName!!, newProduct.description!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!)
+            val newProduct = aux.productBodyValidation(ctx)
+            val product = Producto(ObjectId(newProduct.idProveedor), newProduct.itemName!!, newProduct.description!!, newProduct.stock!!, newProduct.itemPrice!!, newProduct.promotionalPrice!!, newProduct.longitud!!, newProduct.ancho!!, newProduct.alto!!, newProduct.pesoKg!!)
             product.addImage(newProduct.images!!)
             backendProductoService.nuevoProducto(product)
             ctx.status(201)
@@ -57,15 +58,20 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun modifyProduct(ctx: Context) {
         try {
             val id = ctx.pathParam("productId")
-            val newProduct = aux.productBodyvalidation(ctx)
+            val newProduct = aux.productBodyValidation(ctx)
             val producto = backendProductoService.recuperarProducto(id)
 
             producto.itemName = newProduct.itemName!!
             producto.description = newProduct.description!!
             producto.listImages = newProduct.images!!.toMutableList()
             producto.stock = newProduct.stock!!
+            producto.vendidos = newProduct.vendidos!!
             producto.itemPrice = newProduct.itemPrice!!
             producto.promotionalPrice = newProduct.promotionalPrice!!
+            producto.longitud = newProduct.longitud!!
+            producto.ancho = newProduct.ancho!!
+            producto.alto = newProduct.alto!!
+            producto.pesoKg = newProduct.pesoKg!!
 
             backendProductoService.actualizarProducto(producto)
 
@@ -113,20 +119,56 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         try {
             val newListProducts = ctx.bodyValidator<ProductListRegisterMapper>()
                     .check(
-                            { it.products.all  { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.itemPrice != null && it.promotionalPrice != null }   },
+                            { it.products.all  { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.vendidos != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null }   },
                             "Invalid body : companyName, companyImage, facebook, instagram and web are required"
                     )
                     .get()
             newListProducts.products.forEach {
-                val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!)
+                val product = Producto(ObjectId(it.idProveedor), it.itemName!!, it.description!!, it.stock!!, it.itemPrice!!, it.promotionalPrice!!, it.longitud!!, it.ancho!!, it.alto!!, it.pesoKg!!)
                 product.addImage(it.images!!)
-                println(product.itemName)
                 backendProductoService.nuevoProducto(product)
             }
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
         } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
             throw BadRequestResponse(e.message.toString())
+        }
+    }
+
+    fun decreaseProduct(ctx: Context){
+        try {
+            val ventas = ctx.body<SalesMapper>().sales
+            val productos = emptyList<Producto>().toMutableList()
+            val productosSinStock = emptyList<Producto>().toMutableList()
+            var estado = true
+            for(venta in ventas) {
+                val producto = backendProductoService.recuperarProducto(venta.idProducto)
+                productos.add(producto)
+                val tieneStockSuficiente = (producto.stock >= venta.cantidadVendida)
+                if(!tieneStockSuficiente) {
+                    productosSinStock.add(producto)
+                }
+                estado = estado && tieneStockSuficiente
+            }
+            if(estado) {
+                var indice = 0
+                for (producto in productos) {
+                    producto.cargarVenta(ventas[indice].cantidadVendida)
+                    backendProductoService.actualizarProducto(producto)
+                    indice += 1
+                }
+                ctx.status(201)
+                ctx.json(OkResultMapper("ok"))
+            } else {
+                ctx.status(500)
+                ctx.json(OkResultMapper(
+                                    "Los siguientes productos no tienen el stock requerido: " +
+                                            productosSinStock.map { it.itemName }.toString()
+                                        )
+                )
+            }
+        } catch(e: ProductoSinStockException) {
+            throw NotFoundResponse(e.message.toString())
         }
     }
 }

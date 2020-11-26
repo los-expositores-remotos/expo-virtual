@@ -1,14 +1,16 @@
-Feature:  Visualizacion de productos
+# language: es
 
-  Scenario: Al seleccionar un proveedor se muestran los articulos del mismo
-    Given Un proveedor sin productos
-    When Agrego un producto "producto1"
-    When Agrego un producto "producto2"
-    Then Los productos del proveedor son "producto1" y "producto2"
+Característica:  Visualizacion de productos
 
-  Scenario: Al seleccionar un producto se muestran las caracteristicas y precio del mismo
-    Given Un producto vacio
-    When Le asigno la descripcion "descripcion"
-    When Le asigno el precio 45
-    Then La descripción del producto es "descripcion"
-    And El precio del producto es 45
+  Escenario: Al seleccionar un proveedor se muestran los articulos del mismo
+    Dado Un proveedor sin productos
+    Cuando Agrego un producto "producto1"
+    Cuando Agrego un producto "producto2"
+    Entonces Los productos del proveedor son "producto1" y "producto2"
+
+  Escenario: Al seleccionar un producto se muestran las caracteristicas y precio del mismo
+    Dado Un producto vacio
+    Cuando Le asigno la descripcion "descripcion"
+    Cuando Le asigno el precio 45
+    Entonces La descripción del producto es "descripcion"
+    Y El precio del producto es 45

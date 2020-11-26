@@ -13,7 +13,7 @@ const ListOfProductToUpdate = (props) =>{
       if(products.length === 0){      
             fetch(`http://localhost:7000/products/supplier/${company.id}`, {
             headers: {
-                "Content-Type":"application/json"
+               
             }
             }) 
             .then((res)=> {

@@ -31,3 +31,7 @@
 .preloader-wrapper {
   margin-left: 50%;
 }
+
+#sliderPrduct {
+  background-image: url("../images/imagenBackground.jpg");
+}

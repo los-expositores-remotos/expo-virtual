@@ -6,11 +6,12 @@ import ar.edu.unq.services.AdminService
 import ar.edu.unq.services.impl.AdminServiceImpl
 import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
-import cucumber.api.Scenario
-import cucumber.api.java.After
-import cucumber.api.java.en.Given
-import cucumber.api.java.en.Then
-import cucumber.api.java.en.When
+import io.cucumber.java.After
+import io.cucumber.java.Before
+import io.cucumber.java.Scenario
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import io.cucumber.java.en.When
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -21,7 +22,7 @@ class LoginAdminStepdefs {
     var adminInexistenteException: AdministradorInexistenteException? = null
     lateinit var adminRecuperado: Admin
 
-    @cucumber.api.java.Before
+    @Before
     fun crearAdmin(){
         this.adminService.crearAdmin(admin)
     }
