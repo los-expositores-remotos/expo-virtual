@@ -4,7 +4,12 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class PropertyHelperTest {
-    private class MultiVisibilityPropertiesClass
+    private class MultiVisibilityPropertiesClass{
+        val property1: String = ""
+        val property2: String = ""
+        private val property3: String = ""
+        private val property4: String = ""
+    }
 
     @Test
     fun testObtenerPropiedadesPublicas() {
