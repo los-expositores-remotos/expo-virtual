@@ -5,7 +5,7 @@ import ar.edu.unq.API.PaymentMapper
 import ar.edu.unq.modelo.Payment
 
 class PaymentServiceImpl: PaymentService {
-    override fun realizarPago(pago: PaymentMapper): String {
+    override fun realizarPago(pago: PaymentMapper): com.mercadopago.resources.Payment {
         return Payment.main(pago)
     }
 

@@ -31,12 +31,9 @@ fun main(args: Array<String>) {
     val bannerController = BannerController(backendBannerService, backendProveedorService, backendProductoService)
     val productController = ProductController(backendProveedorService, backendProductoService)
     val companyController = CompanyController(backendProveedorService, backendProductoService)
-/*    val searchController = SearchController(backendProveedorService, backendProductoService)*/
     val userController = UserController(backendUsuarioService, tokenJWT, jwtAccessManager)
     val adminController = AdminController(backendAdminService, tokenJWT, jwtAccessManager)
     val paymentController = PaymentController()
-
- //   println(backendUsuarioService.recuperarAdmin("KikitoGonzalez","muajaja").userName)
 
 /*    runTrx({
         MongoAdminDAOImpl().save(Admin("admin","admin"))
@@ -56,13 +53,13 @@ fun main(args: Array<String>) {
     app.start(7000)
     app.routes {
         path("/process_payment") {
-            post(paymentController::processPayment, mutableSetOf<Role>(Roles.ANYONE))
+            post(paymentController::processPayment, mutableSetOf<Role>(Roles.USER))
         }
-
 
         path("/register") {
             post(userController::createUser, mutableSetOf<Role>(Roles.ANYONE))
         }
+
         path("/login") {
             post(userController::loginUser, mutableSetOf<Role>(Roles.ANYONE))
             path("/admin") {
@@ -73,9 +70,6 @@ fun main(args: Array<String>) {
         path("/user") {
             get(userController::getUser, mutableSetOf<Role>(Roles.USER, Roles.ADMIN, Roles.ANYONE))
         }
-/*            path("search") {
-            get(searchController::searchByText, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
-        }*/
 
         path("banners") {
             get(bannerController::banners, mutableSetOf<Role>(Roles.ANYONE,Roles.USER,Roles.ADMIN))
@@ -126,6 +120,7 @@ fun main(args: Array<String>) {
             path("massive") {
                 post(productController::createMassive, mutableSetOf<Role>(Roles.ADMIN, Roles.ANYONE))
             }
+
         }
         path("productSales") {
             put(productController::decreaseProduct, mutableSetOf<Role>(Roles.USER))

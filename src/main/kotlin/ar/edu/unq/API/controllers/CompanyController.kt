@@ -131,16 +131,3 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         ctx.json(newestP)
     }
 }
-
-//data class BannersRelatedViewMapper(val banners: Collection<BannerRelatedData>)
-//    open fun toBannerData(lista: MutableCollection<Content>): List<BannerRelatedData> {
-//        return lista.map { BannerRelatedData(it.id, it.description, it.title, evalBool(it.state), it.poster) }
-//}
-//data class BannerRelatedData (val id: String, val description: String, val title: String, val state: Boolean, val poster: String)
-// orderByLowerPrice
-//orderByHigherPrice
-//orderByOldest
-//orderByNewest
-//orderByBestSellers
-//orderByAlphabeticDesc
-//orderByAlphabeticAsc

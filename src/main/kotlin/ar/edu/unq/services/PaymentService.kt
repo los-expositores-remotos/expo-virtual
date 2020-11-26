@@ -1,12 +1,6 @@
 import ar.edu.unq.API.PaymentMapper
-
-/*
-package ar.edu.unq.services
+import com.mercadopago.resources.Payment
 
 interface PaymentService {
-
-    procesarPago(request: Request)
-}*/
-interface PaymentService {
-    fun realizarPago(pago: PaymentMapper): String
+    fun realizarPago(pago: PaymentMapper): Payment
 }
