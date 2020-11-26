@@ -15,11 +15,11 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
     fun createUser(ctx: Context) {
         try {
             val newUser = ctx.bodyValidator<UserRegisterMapper>()
-                .check(
-                    { it.nombre != null && it.apellido != null && it.dni != null}
-                    , "Invalid body : nombre, apellido y dni is required"
-                )
-                .get()
+                    .check(
+                            { it.nombre != null && it.apellido != null && it.dni != null}
+                            , "Invalid body : nombre, apellido y dni is required"
+                    )
+                    .get()
             val user = Usuario(newUser.nombre!!,newUser.apellido!!, newUser.dni!!)
             backendUsuarioService.crearUsuario(user)
             ctx.status(201)
@@ -33,14 +33,12 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
 
     fun loginUser(ctx: Context) {
         try {
-            println("estoy al comienzo de loginUser")
             val userLogin = ctx.bodyValidator<UserLogin>()
-                .check(
-                    { it.dni != null  },
-                    "Invalid body : dni is required"
-                )
-                .get()
-            println("pase el mapper estoy por validar el usuario")
+                    .check(
+                            { it.dni != null  },
+                            "Invalid body : dni is required"
+                    )
+                    .get()
             val user = backendUsuarioService.recuperarUsuario(userLogin.dni!!)
             ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(200)
@@ -60,6 +58,4 @@ class UserController(private val backendUsuarioService: UsuarioService, val toke
             throw NotFoundResponse("User not found")
         }
     }
-
-
 }

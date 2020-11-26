@@ -59,16 +59,13 @@ class EliminacionDeProductoStepDefs: AuxProdStepDefs() {
     fun loElimino(productoA: String) {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
         val productoRecuperado = proveedorRecuperado.productos.find{it.itemName == productoA}
-        println("producto rec: " +productoRecuperado)
         productoService.borrarProducto(productoRecuperado!!.id.toString())
     }
 
     @Then("^no figura mas en la base de datos$")
     fun noFiguraMasEnLaBaseDeDatos() {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(proveedorA.id.toString())
-        println("proveedor recup: " )
         val productoBorrado = proveedorRecuperado.productos.map{it.itemName}.contains(productoA.itemName)
-        println("prducto borrado?: " + productoBorrado)
         assertFalse(productoBorrado)
         //assertTrue(productosRecuperados.contains(nombreProductoB))
     }

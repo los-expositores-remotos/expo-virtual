@@ -10,6 +10,4 @@ interface UsuarioService {
     fun crearUsuario(usuario: Usuario)
     fun recuperarATodosLosUsuarios(): Collection<Usuario>
     fun deleteAll()
-
-
 }

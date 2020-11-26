@@ -15,7 +15,6 @@ class PaymentController {
     private val backendPaymentService: PaymentService = PaymentServiceImpl()
     fun processPayment(ctx: Context){
         try {
-            println(ctx.body())
             val payment = this.backendPaymentService.realizarPago(ctx.body<PaymentMapper>())
             val statusList: List<ResultTransactionMapper> = listOf<ResultTransactionMapper>(
                 ResultTransactionMapper("accredited","¡Listo! Se acreditó tu pago. En tu resumen verás el cargo de "+payment.transactionAmount+" como "+payment.statementDescriptor+"."),

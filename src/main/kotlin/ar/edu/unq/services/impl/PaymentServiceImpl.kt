@@ -8,5 +8,4 @@ class PaymentServiceImpl: PaymentService {
     override fun realizarPago(pago: PaymentMapper): com.mercadopago.resources.Payment {
         return Payment.main(pago)
     }
-
 }

@@ -14,21 +14,18 @@ import ar.edu.unq.services.impl.exceptions.BannerInexistenteException
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 
-
 class BannerController(
-    val backendBannerService: BannerService,
-    val backendProveedorService: ProveedorService,
-    backendProductoService: ProductoService
+        val backendBannerService: BannerService,
+        val backendProveedorService: ProveedorService,
+        backendProductoService: ProductoService
 ) {
 
     val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
-
     var idBanners: Int = 500
 
     fun banners(ctx: Context){
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners()
-        println(banners)
         banners.forEach {
             bannerlist.add(
                     BannerViewMapper(
@@ -45,9 +42,7 @@ class BannerController(
     fun bannersByCategory(ctx: Context){
         val bannerlist: MutableList<BannerViewMapper> = mutableListOf()
         val bannerCategory = BannerCategory.valueOf(ctx.pathParam("bannerCategory"))
-        println(bannerCategory)
         var banners: List<Banner> = this.backendBannerService.recuperarTodosLosBanners(bannerCategory)
-        println(banners)
         banners.forEach {
             bannerlist.add(
                     BannerViewMapper(
@@ -69,8 +64,6 @@ class BannerController(
                             "Invalid body : all fields are required. All fields must be valids"
                     )
                     .get()
-
-            println(newBanner.category)
             val banner = Banner(newBanner.image!!, BannerCategory.valueOf(newBanner.category!!))
             this.backendBannerService.crearBanner(banner)
             ctx.status(201)

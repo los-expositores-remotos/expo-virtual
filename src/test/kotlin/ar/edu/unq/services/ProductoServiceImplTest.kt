@@ -72,7 +72,6 @@ class ProductoServiceImplTest {
     @Test
     fun testObtenerProductoPorNombre(){
         val productoRecuperado = this.productoService.obtenerProducto(this.proveedorA.id.toString(),this.productoA.itemName)
-        println("longitudRecup: " + productoRecuperado.longitud)
         assertEquals(this.productoA, productoRecuperado)
     }
 

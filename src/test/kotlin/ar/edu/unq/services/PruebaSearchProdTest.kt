@@ -19,7 +19,6 @@ class PruebaSearchProdTest {
         @Test
         fun buscarProductos() {
             val result = productoService.buscarProductos("Caj")
-            result.forEach { println(it.itemName) }
             assertEquals(1,1/*this.productos.map{ it.itemName }.toSet(), productoService.buscarProductos("Les", listOf()).map { it.itemName }.toSet()*/)
         }
     //USO LA BD DE PRODUCCION, POR ESO NO UTILICE DROPS NI DELETES

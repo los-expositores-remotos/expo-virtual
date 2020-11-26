@@ -110,9 +110,9 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
-            mapOf(
-                "Products" to allP
-            )
+                mapOf(
+                        "Products" to allP
+                )
         )
     }
     fun createMassive(ctx: Context){
@@ -136,9 +136,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
     fun decreaseProduct(ctx: Context){
-        println("##########################################")
-        println(ctx.body())
-        println("##########################################")
         try {
             val ventas = ctx.body<SalesMapper>().sales
             val paresVenta = emptyList<Pair<Producto, Int>>().toMutableList()
@@ -163,9 +160,9 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             } else {
                 ctx.status(500)
                 ctx.json(OkResultMapper(
-                                    "Los siguientes productos no tienen el stock requerido: " +
-                                            productosSinStock.toString()
-                                        )
+                        "Los siguientes productos no tienen el stock requerido: " +
+                                productosSinStock.toString()
+                )
                 )
             }
         } catch(e: ProductoSinStockException) {

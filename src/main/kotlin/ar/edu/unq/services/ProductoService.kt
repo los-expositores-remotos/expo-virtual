@@ -12,5 +12,4 @@ interface ProductoService {
     fun borrarProducto(id: String)
     fun recuperarProducto(id: String): Producto
     fun deleteAll()
-   // fun buscarProducto(palabra : String): ArrayList<Producto> //metodo mistico de busqueda
 }

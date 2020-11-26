@@ -10,16 +10,13 @@ class AdminController(private val backendAdminService: AdminService, val tokenJW
 
     fun loginUserAdmin(ctx: Context){
         try {
-            println("estoy al comienzo de loginUser")
             val adminLogin = ctx.bodyValidator<AdminLogin>()
-                .check(
-                    { it.userName != null && it.password != null},
-                    "Invalid body : userName and password is required"
-                )
-                .get()
-            println("pase el mapper estoy por validar el usuario")
+                    .check(
+                            { it.userName != null && it.password != null},
+                            "Invalid body : userName and password is required"
+                    )
+                    .get()
             val admin = this.backendAdminService.recuperarAdmin(adminLogin.userName, adminLogin.password)
-            println(admin.userName)
             ctx.header("Authorization", tokenJWT.generateTokenAdmin(admin))
             ctx.status(200)
             ctx.json(OkResultMapper("ok"))
@@ -28,6 +25,4 @@ class AdminController(private val backendAdminService: AdminService, val tokenJW
             ctx.json(ErrorViewMapper("error", "Admin not found"))
         }
     }
-
-
 }

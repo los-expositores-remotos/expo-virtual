@@ -9,7 +9,6 @@ import io.javalin.http.Context
 import io.javalin.http.Handler
 import io.javalin.http.UnauthorizedResponse
 
-
 class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: UsuarioService) : AccessManager {
 
     fun getUser(token: String): Usuario {
@@ -25,14 +24,12 @@ class JWTAccessManager(val tokenJWT: TokenJWT, val backendUsuarioService: Usuari
         }
     }
 
-
-
     override fun manage(handler: Handler, ctx: Context, roles: MutableSet<Role>) {
         val token = ctx.header("Authorization")
         when {
-            token == null && roles.contains(Roles.ANYONE) -> handler.handle(ctx) //si tiene o no tiene decide pasarlo igual?
-            token == null -> throw UnauthorizedResponse("Token not found")          //tambien lo lanzaria en el validate
-            roles.contains(Roles.ANYONE) -> handler.handle(ctx)                 //asociado a la pregunta de la primer linea
+            token == null && roles.contains(Roles.ANYONE) -> handler.handle(ctx)
+            token == null -> throw UnauthorizedResponse("Token not found")
+            roles.contains(Roles.ANYONE) -> handler.handle(ctx)
             roles.contains(Roles.USER) -> {
                 getUser(token)
                 handler.handle(ctx)
