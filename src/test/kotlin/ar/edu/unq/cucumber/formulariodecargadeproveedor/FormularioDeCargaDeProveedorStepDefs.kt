@@ -20,7 +20,7 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @Given("^Un proveedor con los siguientes datos")
     fun unNombreDeProveedor(proveedorData: Map<String, String>) {
-        this.proveedor1 = Proveedor(proveedorData["companyName"]!!, proveedorData["companyImage"]!!,proveedorData["companyBanner"]!! , proveedorData["facebook"]!!, proveedorData["instagram"]!!, proveedorData["web"]!!)
+        this.proveedor1 = Proveedor(proveedorData["companyName"]!!, proveedorData["companyImage"]!!, proveedorData["companyBanner"]!! , proveedorData["facebook"]!!, proveedorData["instagram"]!!, proveedorData["web"]!!)
     }
 
     @When("^Creo al proveedor con esos datos$")
@@ -38,6 +38,7 @@ class FormularioDeCargaDeProveedorStepDefs {
     fun susDatosSon(proveedorData: Map<String, String>) {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())
         assertEquals(proveedorData["companyImage"], proveedorRecuperado.companyImage)
+        assertEquals(proveedorData["companyBanner"], proveedorRecuperado.companyBanner)
         assertEquals(proveedorData["facebook"], proveedorRecuperado.facebook)
         assertEquals(proveedorData["instagram"], proveedorRecuperado.instagram)
         assertEquals(proveedorData["web"], proveedorRecuperado.web)
