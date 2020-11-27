@@ -1,7 +1,6 @@
 package ar.edu.unq.services
 
 import ar.edu.unq.modelo.Producto
-import org.bson.types.ObjectId
 
 interface ProductoService {
     fun buscarProductos(texto: String): MutableList<Producto>
@@ -12,5 +11,4 @@ interface ProductoService {
     fun borrarProducto(id: String)
     fun recuperarProducto(id: String): Producto
     fun deleteAll()
-   // fun buscarProducto(palabra : String): ArrayList<Producto> //metodo mistico de busqueda
 }

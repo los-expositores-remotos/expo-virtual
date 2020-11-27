@@ -19,9 +19,9 @@ import kotlin.test.assertNotNull
 class LoginDeUsuarioStepDefs {
 
     val usuario = Usuario("Tobias", "Towers", 39484178)
-    val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
+    private val usuarioService: UsuarioService = UsuarioServiceImpl(MongoUsuarioDAOImpl(), DataBaseType.TEST)
     var exceptionUsuarioInexistenteException: UsuarioInexistenteException? = null
-    lateinit var usuarioRecuperado: Usuario
+    private lateinit var usuarioRecuperado: Usuario
 
     @Before
     fun registrarUsuario(){

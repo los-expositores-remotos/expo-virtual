@@ -16,15 +16,15 @@ const Footer = () => {
           <h5 className="white-text" id="footerT">Categorias</h5>
           <ul>
             <li><Link id="linkList"to="/contact">Contacto</Link></li>
-            <li><Link id="linkList"to="/aboutus">Quienes Somos?</Link></li>
+            <li><Link id="linkList"to="/aboutus">¿Quiénes somos?</Link></li>
             <li><Link id="linkList"to="/suppliers">Empresas</Link></li>
-            <li><Link id="linkList"to="/live">En Vivo</Link></li>
-            <li><Link id="linkList"to="/faqs">Preguntas Frecuentes</Link></li>
-            <li><Link id="linkList"to="/howtobuy">Como comprar?</Link></li>
+            <li><Link id="linkList"to="/live">En vivo</Link></li>
+            <li><Link id="linkList"to="/faqs">Preguntas frecuentes</Link></li>
+            <li><Link id="linkList"to="/howtobuy">¿Cómo comprar?</Link></li>
           </ul>
         </div>
         <div className="col s4">
-          <h5 className="white-text" id="footerT">Contactenos</h5>
+          <h5 className="white-text" id="footerT">Contáctenos</h5>
           <ul>
             <li>
               <div>

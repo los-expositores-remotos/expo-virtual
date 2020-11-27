@@ -16,7 +16,7 @@ import org.bson.types.ObjectId
 
 class ProductController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions()
 
     fun deleteProduct(ctx: Context){
         try {
@@ -110,9 +110,9 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
-            mapOf(
-                "Products" to allP
-            )
+                mapOf(
+                        "Products" to allP
+                )
         )
     }
     fun createMassive(ctx: Context){
@@ -138,33 +138,31 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     fun decreaseProduct(ctx: Context){
         try {
             val ventas = ctx.body<SalesMapper>().sales
-            val productos = emptyList<Producto>().toMutableList()
-            val productosSinStock = emptyList<Producto>().toMutableList()
-            var estado = true
+            val paresVenta = emptyList<Pair<Producto, Int>>().toMutableList()
+            val productosSinStock = emptyList<String>().toMutableList()
+            var todosTienenStock = true
             for(venta in ventas) {
                 val producto = backendProductoService.recuperarProducto(venta.idProducto)
-                productos.add(producto)
+                paresVenta.add(Pair(producto, venta.cantidadVendida))
                 val tieneStockSuficiente = (producto.stock >= venta.cantidadVendida)
                 if(!tieneStockSuficiente) {
-                    productosSinStock.add(producto)
+                    todosTienenStock = false
+                    productosSinStock.add(producto.itemName)
                 }
-                estado = estado && tieneStockSuficiente
             }
-            if(estado) {
-                var indice = 0
-                for (producto in productos) {
-                    producto.cargarVenta(ventas[indice].cantidadVendida)
-                    backendProductoService.actualizarProducto(producto)
-                    indice += 1
+            if(todosTienenStock) {
+                for(par in paresVenta) {
+                    par.first.cargarVenta(par.second)
+                    backendProductoService.actualizarProducto(par.first)
                 }
                 ctx.status(201)
                 ctx.json(OkResultMapper("ok"))
             } else {
                 ctx.status(500)
                 ctx.json(OkResultMapper(
-                                    "Los siguientes productos no tienen el stock requerido: " +
-                                            productosSinStock.map { it.itemName }.toString()
-                                        )
+                        "Los siguientes productos no tienen el stock requerido: " +
+                                productosSinStock.toString()
+                )
                 )
             }
         } catch(e: ProductoSinStockException) {

@@ -5,7 +5,6 @@ import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
 import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
-import ar.edu.unq.mongodb.GenericMongoDAOTest
 import ar.edu.unq.services.runner.DataBaseType
 import ar.edu.unq.services.runner.TransactionRunner
 import ar.edu.unq.services.runner.TransactionRunner.runTrx

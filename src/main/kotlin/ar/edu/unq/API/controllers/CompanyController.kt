@@ -11,10 +11,9 @@ import ar.edu.unq.services.impl.exceptions.ProveedorInexistenteException
 import io.javalin.http.BadRequestResponse
 import io.javalin.http.NotFoundResponse
 
+class CompanyController(val backendProveedorService: ProveedorService) {
 
-class CompanyController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
-
-    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions()
 
     fun createSupplier(ctx: Context) {
         try {
@@ -24,7 +23,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             backendProveedorService.crearProveedor(supplier)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
-        } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
+        } catch (e: ProveedorExistenteException) {
             throw BadRequestResponse(e.message.toString())
         }
     }
@@ -44,7 +43,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
             }
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
-        } catch (e: ProveedorExistenteException) {//seria bueno que contemple excepcion por nombre
+        } catch (e: ProveedorExistenteException) {
             throw BadRequestResponse(e.message.toString())
         }
     }
@@ -52,8 +51,7 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
     fun getSupplierById(ctx: Context) {
         try {
             val supplierId: String = ctx.pathParam("supplierId")
-            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)// aux.searchProveedorById(supplierId)
-
+            val supplier: Proveedor = backendProveedorService.recuperarProveedor(supplierId)
             ctx.status(200)
             ctx.json(aux.proveedorClassToProveedorView(supplier))
         } catch (e: ProveedorInexistenteException) {
@@ -108,41 +106,4 @@ class CompanyController(val backendProveedorService: ProveedorService, val backe
         ctx.status(200)
         ctx.json(namesC)
     }
-
-    fun productsBestSellers(ctx: Context) {
-        /*traer los productos mas vendidos  EN ESTE CASO ME TRAE EL PRIMERO DE CADA EMPRESA
-    * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        val bestSellersP = backendProveedorService.recuperarATodosLosProveedores().map{ aux.productoClassToProductoView(it.productos.first())}
-        ctx.status(200)
-        ctx.json(bestSellersP)
-    }
-
-    fun productsNewest(ctx: Context) {
-        /*traer los productos mas nuevos  EN ESTE CASO ME TRAE EL ULTIMO DE CADA EMPRESA
-        * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        val newestP = backendProveedorService.recuperarATodosLosProveedores().map{ aux.productoClassToProductoView(it.productos.last()) }
-        ctx.status(200)
-        ctx.json(newestP)
-    }
-
-    fun productsWPromoPrice(ctx: Context) {
-        /*traer los productos con precio promocional  EN ESTE CASO ME TRAE UNO RANDOM DE CADA EMPRESA
-        * DEBE IMPLEMENTARSE DESDE EL BACKEND*/
-        val newestP = backendProveedorService.recuperarATodosLosProveedores().map{ aux.productoClassToProductoView(it.productos.random()) }
-        ctx.status(200)
-        ctx.json(newestP)
-    }
 }
-
-//data class BannersRelatedViewMapper(val banners: Collection<BannerRelatedData>)
-//    open fun toBannerData(lista: MutableCollection<Content>): List<BannerRelatedData> {
-//        return lista.map { BannerRelatedData(it.id, it.description, it.title, evalBool(it.state), it.poster) }
-//}
-//data class BannerRelatedData (val id: String, val description: String, val title: String, val state: Boolean, val poster: String)
-// orderByLowerPrice
-//orderByHigherPrice
-//orderByOldest
-//orderByNewest
-//orderByBestSellers
-//orderByAlphabeticDesc
-//orderByAlphabeticAsc
