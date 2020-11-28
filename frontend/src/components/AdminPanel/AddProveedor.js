@@ -41,7 +41,7 @@ const AddProveedor = (props)  => {
     })
     .then((res) => res.json())
       .then((data) => {
-        //console.log(data);
+        console.log(data);
         setUrlLogo(data.url);
         postear()
       })
@@ -78,8 +78,8 @@ const AddProveedor = (props)  => {
 
     const postear = () => {
       if(urlLogo && urlBanner){
-        postearAdd()
         console.log("se hizo el posteo")
+        postearAdd()
       }else(
         console.log("no se hizo el posteo por que urlLogo es "  + {urlLogo} +  " y urlBanner es " + {urlBanner})
       )
