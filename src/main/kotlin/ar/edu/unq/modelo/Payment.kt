@@ -31,10 +31,6 @@ object Payment {
         payer.setEmail(pago.email).identification = identification
         payment.payer = payer
 
-        val response = payment.save()
-        println(response.feeDetails)
-
-        Payment::class.java.kotlin.memberProperties.filter { it.visibility == KVisibility.PUBLIC }.forEach { println(it.name + ": " + it.getter.call(response)) }
-        return payment
+        return payment.save()
     }
 }
