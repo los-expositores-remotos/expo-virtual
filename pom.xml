@@ -158,8 +158,7 @@
                     <excludes>
                         <exclude>**/controllers/*</exclude>
                         <exclude>**/API/*</exclude>
-                        <exclude>**/controllers/*</exclude>
-                        <exclude>**/runner/MongoSessionFactoryProvider.kt</exclude>
+                        <exclude>**/runner/*</exclude>
                     </excludes>
                 </configuration>
 
