@@ -16,7 +16,7 @@ import org.bson.types.ObjectId
 
 class ProductController(val backendProveedorService: ProveedorService, val backendProductoService: ProductoService) {
 
-    val aux: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    val aux: AuxiliaryFunctions = AuxiliaryFunctions()
 
     fun deleteProduct(ctx: Context){
         try {
@@ -110,9 +110,9 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
         val allP = aux.productoClassListToProductoViewList(productsResult as MutableCollection<Producto>)
         ctx.status(200)
         ctx.json(
-            mapOf(
-                "Products" to allP
-            )
+                mapOf(
+                        "Products" to allP
+                )
         )
     }
     fun createMassive(ctx: Context){
@@ -160,9 +160,9 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
             } else {
                 ctx.status(500)
                 ctx.json(OkResultMapper(
-                                    "Los siguientes productos no tienen el stock requerido: " +
-                                            productosSinStock.toString()
-                                        )
+                        "Los siguientes productos no tienen el stock requerido: " +
+                                productosSinStock.toString()
+                )
                 )
             }
         } catch(e: ProductoSinStockException) {

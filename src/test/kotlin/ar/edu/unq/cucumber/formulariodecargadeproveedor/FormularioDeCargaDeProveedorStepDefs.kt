@@ -20,7 +20,7 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @Given("^Un proveedor con los siguientes datos")
     fun unNombreDeProveedor(proveedorData: Map<String, String>) {
-        this.proveedor1 = Proveedor(proveedorData["companyName"]!!, proveedorData["companyImage"]!!, proveedorData["facebook"]!!, proveedorData["instagram"]!!, proveedorData["web"]!!)
+        this.proveedor1 = Proveedor(proveedorData["companyName"]!!, proveedorData["companyImage"]!!, proveedorData["companyBanner"]!! , proveedorData["facebook"]!!, proveedorData["instagram"]!!, proveedorData["web"]!!)
     }
 
     @When("^Creo al proveedor con esos datos$")
@@ -38,6 +38,7 @@ class FormularioDeCargaDeProveedorStepDefs {
     fun susDatosSon(proveedorData: Map<String, String>) {
         val proveedorRecuperado = this.proveedorService.recuperarProveedor(this.proveedor1.id.toString())
         assertEquals(proveedorData["companyImage"], proveedorRecuperado.companyImage)
+        assertEquals(proveedorData["companyBanner"], proveedorRecuperado.companyBanner)
         assertEquals(proveedorData["facebook"], proveedorRecuperado.facebook)
         assertEquals(proveedorData["instagram"], proveedorRecuperado.instagram)
         assertEquals(proveedorData["web"], proveedorRecuperado.web)
@@ -45,7 +46,7 @@ class FormularioDeCargaDeProveedorStepDefs {
 
     @Given("^Un proveedor \"([^\"]*)\" sin ningun producto$")
     fun unProveedorSinNingunProducto(nombreProveedor: String?) {
-        this.proveedor2 = Proveedor(nombreProveedor!!, "www.images.com/${nombreProveedor}.png", "www.facebook.com/$nombreProveedor", "www.instagram.com/$nombreProveedor", "www.${nombreProveedor}.com")
+        this.proveedor2 = Proveedor(nombreProveedor!!, "www.images.com/${nombreProveedor}.png", "www.banners.com/${nombreProveedor}.png", "www.facebook.com/$nombreProveedor", "www.instagram.com/$nombreProveedor", "www.${nombreProveedor}.com")
         this.proveedorService.crearProveedor(this.proveedor2)
     }
 

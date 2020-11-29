@@ -12,19 +12,19 @@ const Suppliers = () => {
   const [companies, setCompanies] = useState(null)
   useEffect(() => {
     if(!companies){
-    fetch(`http://localhost:7000/companies`, {
+    fetch("http://localhost:7000/companies", {
       headers: {
     
       }
     }) 
       .then((res)=> {
-      //console.log(res)
+      console.log(res)
       if(res.ok){
         return res.json()
       }
     })
     .then((result)=>{
-      //console.log(result)
+      console.log(result)
 
         setCompanies(result)        
  

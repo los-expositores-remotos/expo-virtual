@@ -18,7 +18,6 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
         productoService.deleteAll()
     }
 
-
     @Given("^un nombre de un producto \"([^\"]*)\"$")
     fun unNombreDeUnProducto(nombreProducto: String?) {
         this.productoA.itemName = nombreProducto!!
@@ -47,7 +46,6 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
     @Given("^una longitud (\\d+)$")
     fun unaLongitud(long: Int){
         this.productoA.longitud = long
-        println("Longitud: " + long)
     }
 
     @Given("^un ancho (\\d+)$")
@@ -69,26 +67,17 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
     fun creoUnProductoConEstosDatos() {
         this.proveedorService.crearProveedor(this.proveedorA)
         this.productoService.nuevoProducto(this.productoA)
-        val productoRecuperado = productoService.obtenerProducto(this.proveedorA.id.toString(), this.productoA.itemName)
-        println("longitudRecup: " + productoRecuperado.longitud)
-        println(productoRecuperado.promotionalPrice)
-        println(productoRecuperado.pesoKg)
     }
 
     @Then("^el producto cargado \"([^\"]*)\" se encuentra en la base de datos$")
     fun elProductoSeEncuentraEnLaBaseDeDatos(nombreProducto: String?) {
         val productoRecuperado = productoService.obtenerProducto(this.proveedorA.id.toString(), this.productoA.itemName)
-        println("longitudRec: " + productoRecuperado.longitud)
         assertEquals(nombreProducto, productoRecuperado.itemName)
     }
 
     @And("^Sus datos son \"([^\"]*)\", \"([^\"]*)\", (\\d+), (\\d+), (\\d+), (\\d+), (\\d+), (\\d+), (\\d+)$")
     fun susDatosSon(nombreProducto: String?, descripcion: String?, stock: Int, precioNormal: Int, precioPromocional: Int, longitud: Int, ancho: Int, alto: Int, peso: Int) {
         val productoRecuperado = productoService.obtenerProducto(this.proveedorA.id.toString(), this.productoA.itemName)
-
-        println("longitudRecuperada: " + productoRecuperado.longitud)
-        println("alturaRecuperada: " + productoRecuperado.alto)
-        println("nombre: " + productoRecuperado.itemName)
 
         assertEquals(nombreProducto, productoRecuperado.itemName)
         assertEquals(descripcion, productoRecuperado.description)

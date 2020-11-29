@@ -42,11 +42,11 @@ class ProductoTest : ModelObjectWithBsonIdTest<Producto>(Producto::class.java) {
 
     @Test
     fun testCalcularVolumenYPeso() {
-        var volumenResultante = 0;
-        var pesoTotal = 0;
+        var volumenResultante = 0
+        var pesoTotal = 0
         val productoB = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 10, 10, 10, 200)
         val productoC = Producto(ObjectId(), "ElProducto", "SoyElProducto", 50, 22, 1000, 5, 30, 10, 10)
-        listOf(producto, productoB, productoC).map { volumenResultante += it.longitud!! * it.ancho!! * it.alto!!; pesoTotal += it.pesoKg!! }
+        listOf(producto, productoB, productoC).map { volumenResultante += it.longitud * it.ancho * it.alto; pesoTotal += it.pesoKg }
         assertEquals(3500, volumenResultante)
         assertEquals(310, pesoTotal)
     }

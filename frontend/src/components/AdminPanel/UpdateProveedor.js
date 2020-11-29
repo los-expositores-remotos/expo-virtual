@@ -145,9 +145,9 @@ const UpdateProveedor = () =>{
                   </form>
                   </div>
                   <div className='col s2'>
-                  <Link>
+                  
                   <i className="small material-icons left" id="iconSearchFormAdmin">search</i>
-                  </Link>     
+                       
                   </div>
                   <div>
                   {

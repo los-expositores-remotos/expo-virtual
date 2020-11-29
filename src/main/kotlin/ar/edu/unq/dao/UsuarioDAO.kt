@@ -1,8 +1,6 @@
 package ar.edu.unq.dao
 
-import ar.edu.unq.modelo.Proveedor
 import ar.edu.unq.modelo.Usuario
-import ar.edu.unq.modelo.banner.Banner
 
 interface UsuarioDAO {
     fun save(anObject: Usuario)

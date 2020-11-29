@@ -17,24 +17,12 @@ const ProveedorConProductos = (props) => {
 
 const listOfProducts = () => {
   const products = company.products
-  //console.log(products)
   if(products.length > 0)  {
   const res = []
       for (let index = (page * 4); index < ((page + 1) * 4); index++) {
-
-        //console.log(products)
-        //console.log(index)
-
-          //console.log(products[index])
           const element = products[index];
-          //console.log(element)
-          if(products[index] === undefined){
-            
-            //console.log("el elemnto es undefined")
-            
-          }else{
+          if(products[index] !== undefined){
             res.push(element)
-            //console.log(res)
           }
       }
   
@@ -87,13 +75,14 @@ const listOfProducts = () => {
       )
     }
   }
-  console.log(company.companyImage)
+  console.log(company.companyBanner)
     let styles = {
-            backgroundImage: `url(${company.companyImage})`,
-            backgroundSize: '14%',
-            minHeight: " 14.4rem",
-            backgroundRepeat: "repeat-x"
+      backgroundImage: `url(${company.companyBanner})`,
+      backgroundSize: '100%',
+      minHeight: " 11.9rem",
+      backgroundRepeat: "no-repeat"
         }
+        console.log({styles})
   return (
     <div>
           {

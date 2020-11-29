@@ -16,31 +16,32 @@ const Login = () => {
     if (dni < 1000000) {
       M.toast({ html: "DNI Inválido", classes: "#c62828 red darken-3" });
     } else {
-      axios.post("http://localhost:7000/login",
-      {
-        dni: dni
-      },
-      )
-      .then(success =>{
-        if(!success.status === 200){
-            M.toast({ html:"Datos inválidos o el usuario no existe", classes: "#c62828 red darken-3" });
-        } else {
-          localStorage.setItem('tokenValido', success.headers.authorization);
-          console.log(success.headers.authorization)
-          axios.defaults.headers['authorization'] = localStorage.getItem('tokenValido')
-          localStorage.setItem("user", "usuario");
-          dispatch({ type: "USER", payload: "user" });
-          M.toast({
-            html: "Ingreso exitoso",
-            classes: "#388e3c green darken-2",
-          });
-          history.push("/");
-        }
-      })
-      .catch(error => {
-          console.log(error);    
-      });
-    }}
+        axios.post("http://localhost:7000/login",
+        {
+            dni: dni
+        },
+        )
+        .then(success =>{
+                
+                localStorage.setItem('tokenValido', success.headers.authorization);
+                axios.defaults.headers['authorization'] = localStorage.getItem('tokenValido')
+                localStorage.setItem("user", "usuario");
+                dispatch({ type: "USER", payload: "user" });
+                M.toast({
+                  html: "Loggeado exitosamente",
+                  classes: "#388e3c green darken-2",
+                });
+                console.log("success", success.headers.authorization);
+                history.push("/");
+            }
+        )
+        .catch(error => {
+            console.log(error);
+            M.toast({ html:"datos invalidos o el usuario no existe", classes: "#c62828 red darken-3" });
+
+        });
+    }
+  };
 
   return (
     <div className="mycard">

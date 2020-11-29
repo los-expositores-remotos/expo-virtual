@@ -6,6 +6,7 @@ Característica: Formulario de carga de proveedor
     Dado Un proveedor con los siguientes datos
           | companyName   | proveedor         |
           | companyImage  | www.imagen.com    |
+          | companyBanner | www.imagen.com    |
           | facebook      | www.facebook.com  |
           | instagram     | www.instagram.com |
           | web           | www.proveedor.com |
@@ -13,6 +14,7 @@ Característica: Formulario de carga de proveedor
     Entonces El proveedor "proveedor" se encuentra en la base de datos
     Y Sus datos son
          | companyImage  | www.imagen.com    |
+         | companyBanner | www.imagen.com    |
          | facebook      | www.facebook.com  |
          | instagram     | www.instagram.com |
          | web           | www.proveedor.com |

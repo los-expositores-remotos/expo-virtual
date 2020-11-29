@@ -23,7 +23,7 @@ class ModuloDeCargaDelAdministradorStepDef {
     @When("^Cargo a los proveedores")
     fun cargoUnProveedor(proveedores: List<String>) {
         proveedores.forEach {
-            this.proveedorService.crearProveedor(Proveedor(it, "www.images.com/${it}.png", "www.facebook.com/$it", "ww.instagram.com/$it", "www.${it}.com"))
+            this.proveedorService.crearProveedor(Proveedor(it, "www.images.com/${it}.png", "www.banners.com/${it}.png", "www.facebook.com/$it", "ww.instagram.com/$it", "www.${it}.com"))
         }
     }
 

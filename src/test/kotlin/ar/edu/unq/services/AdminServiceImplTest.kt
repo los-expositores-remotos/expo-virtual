@@ -1,15 +1,10 @@
 package ar.edu.unq.services
 
 import ar.edu.unq.dao.mongodb.MongoAdminDAOImpl
-import ar.edu.unq.dao.mongodb.MongoUsuarioDAOImpl
 import ar.edu.unq.modelo.Admin
-import ar.edu.unq.modelo.Usuario
 import ar.edu.unq.services.impl.AdminServiceImpl
-import ar.edu.unq.services.impl.UsuarioServiceImpl
 import ar.edu.unq.services.impl.exceptions.AdministradorExistenteException
 import ar.edu.unq.services.impl.exceptions.AdministradorInexistenteException
-import ar.edu.unq.services.impl.exceptions.UsuarioExistenteException
-import ar.edu.unq.services.impl.exceptions.UsuarioInexistenteException
 import ar.edu.unq.services.runner.DataBaseType
 import org.bson.types.ObjectId
 import org.junit.After

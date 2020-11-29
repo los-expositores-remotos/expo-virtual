@@ -3,43 +3,35 @@ package ar.edu.unq.api
 import ar.edu.unq.API.CompanyViewMapper
 import ar.edu.unq.API.ProductViewMapper
 import ar.edu.unq.API.controllers.AuxiliaryFunctions
-import ar.edu.unq.dao.mongodb.MongoProductoDAOImpl
-import ar.edu.unq.dao.mongodb.MongoProveedorDAOImpl
 import ar.edu.unq.modelo.Producto
 import ar.edu.unq.modelo.Proveedor
-import ar.edu.unq.services.impl.ProductoServiceImpl
-import ar.edu.unq.services.impl.ProveedorServiceImpl
-import ar.edu.unq.services.runner.DataBaseType
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import kotlin.test.assertEquals
 
 class ApiTest {
 
     lateinit var proveedorA: Proveedor
-    lateinit var proveedorB: Proveedor
-    lateinit var proveedorC: Proveedor
+    private lateinit var proveedorB: Proveedor
+    private lateinit var proveedorC: Proveedor
     lateinit var productoA: Producto
     lateinit var productoB: Producto
-    var listaProv: MutableCollection<Proveedor> = mutableListOf()
-    var listaProd: MutableCollection<Producto> = mutableListOf()
-    var listaDeListaProd: MutableList<MutableList<Producto>> = mutableListOf()
-
-    val backendProductoService = ProductoServiceImpl(MongoProveedorDAOImpl(), MongoProductoDAOImpl(), DataBaseType.TEST)
-    val backendProveedorService = ProveedorServiceImpl(MongoProveedorDAOImpl(), DataBaseType.TEST)
-    var auxFuc: AuxiliaryFunctions = AuxiliaryFunctions(backendProveedorService, backendProductoService)
+    private var listaProv: MutableCollection<Proveedor> = mutableListOf()
+    private var listaProd: MutableCollection<Producto> = mutableListOf()
+    private var listaDeListaProd: MutableList<MutableList<Producto>> = mutableListOf()
+    private var auxFuc: AuxiliaryFunctions = AuxiliaryFunctions()
 
 
     @Before
     fun setUp() {
 
-        proveedorA = Proveedor("AA","data:image" ,"https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
-        proveedorB = Proveedor("BB", "data:image", "https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
-        proveedorC = Proveedor("CC","data:image","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorA = Proveedor("AA","data:image" ,"data:banner", "https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorB = Proveedor("BB", "data:image", "data.banner", "https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorC = Proveedor("CC","data:image","data.banner","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
         productoA = Producto(proveedorB.id, "Les Paul", "A electric guitar.", 7, 1000000, 800000, 10, 10, 10, 10)
         productoB = Producto(proveedorB.id, "Les PaulB", "A electric guitar.", 7, 1000000, 800000, 10, 10, 10, 10)
+
         listaProv.add(proveedorA)
         listaProv.add(proveedorB)
         listaProd.add(productoA)
@@ -63,16 +55,16 @@ class ApiTest {
 
     @Test
     fun convertAProductoListToViewMapperList() {
-        val prodMappList: List<Any>? = auxFuc.productoClassListToProductoViewList(listaProd)
+        val prodMappList: List<Any> = auxFuc.productoClassListToProductoViewList(listaProd)
         Assert.assertTrue(prodMappList is MutableList<*>)
-        Assert.assertTrue(prodMappList!!.random() is ProductViewMapper)
+        Assert.assertTrue(prodMappList.random() is ProductViewMapper)
     }
 
     @Test
     fun convertAProveedorListToViewMapperList() {
-        val provMappList: List<Any>? = auxFuc.proveedorClassListToProveedorViewList(listaProv)
+        val provMappList: List<Any> = auxFuc.proveedorClassListToProveedorViewList(listaProv)
         Assert.assertTrue(provMappList is MutableList<*>)
-        Assert.assertTrue(provMappList!!.random() is CompanyViewMapper)
+        Assert.assertTrue(provMappList.random() is CompanyViewMapper)
     }
 
   /*  @Test(expected = ConstraintViolationException::class)

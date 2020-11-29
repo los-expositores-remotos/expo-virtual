@@ -1,7 +1,6 @@
 package ar.edu.unq.services
 
 import ar.edu.unq.modelo.Proveedor
-import org.bson.types.ObjectId
 
 interface ProveedorService {
     fun crearProveedor(proveedor: Proveedor)
