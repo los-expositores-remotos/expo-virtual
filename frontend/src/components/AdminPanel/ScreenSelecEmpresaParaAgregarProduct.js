@@ -81,7 +81,7 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
               <div className="card" id='cardDelete'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
-                  <span className="card-title">{company.companyName}</span>
+                  
                   <a onClick={ ()=> setClicked(<AddProduct company={company}/>) } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">mode_edit</i></a>
                 </div>
                 <div className="card-content">
