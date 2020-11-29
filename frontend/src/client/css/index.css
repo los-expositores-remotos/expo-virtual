@@ -6,7 +6,7 @@
   display: inline;
 } */
 
-.select-visible{
+.select-visible {
   display: inline;
 }
 
@@ -19,8 +19,8 @@ body {
   size: 100%;
   width: auto;
   height: auto;
-  font-family: "Helvetica Neue",Helvetica,sans-serif;
-  color: RGBA(0,0,0,0.8);
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  color: RGBA(0, 0, 0, 0.8);
 }
 
 main {
@@ -31,13 +31,13 @@ main {
 }
 
 .hidden {
-  display: none
+  display: none;
 }
 
 /* Shopping Cart Section - Start */
 .shopping-cart {
   padding-bottom: 10px;
-  overflow:hidden;
+  overflow: hidden;
   transition: max-height 5s ease-in-out;
 }
 
@@ -61,14 +61,14 @@ main {
   text-align: center;
   max-width: 600px;
   margin: auto;
-  color: RGBA(0,0,0,0.45);
+  color: RGBA(0, 0, 0, 0.45);
 }
 
 .shopping-cart .block-heading h1,
 .shopping-cart .block-heading h2,
 .shopping-cart .block-heading h3 {
   margin-bottom: 1.2rem;
-  color: #009EE3;
+  color: #009ee3;
 }
 
 .shopping-cart .items {
@@ -92,7 +92,7 @@ main {
 }
 
 .shopping-cart .items .product .info .product-details h5 {
-  color: #009EE3;
+  color: #009ee3;
   font-size: 19px;
 }
 
@@ -103,7 +103,7 @@ main {
 
 .shopping-cart .items .product .info .product-details label {
   width: 50px;
-  color: #009EE3;
+  color: #009ee3;
   font-size: 19px;
 }
 
@@ -118,7 +118,7 @@ main {
 }
 
 .shopping-cart .summary {
-  border-top: 2px solid #C6E9FA;
+  border-top: 2px solid #c6e9fa;
   background-color: #f7fbff;
   height: 100%;
   padding: 30px;
@@ -150,11 +150,10 @@ main {
 
 .shopping-cart .summary button {
   margin-top: 20px;
-  background-color: #009EE3;
+  background-color: #009ee3;
 }
 
 @media (min-width: 768px) {
-
   .shopping-cart .items .product .info .product-details .product-detail {
     padding-top: 40px;
     padding-left: 40px;
@@ -185,47 +184,47 @@ main {
   padding-bottom: 10px;
   margin-right: 15px;
   margin-left: 15px;
-	font-family: "Helvetica Neue",Helvetica,sans-serif;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
-  
+
 .payment-form.dark {
-	background-color: #f6f6f6;
+  background-color: #f6f6f6;
 }
-  
+
 .payment-form .content {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
   background-color: white;
 }
-  
+
 .payment-form .block-heading {
   padding-top: 40px;
   margin-bottom: 30px;
   text-align: center;
 }
-  
+
 .payment-form .block-heading p {
   text-align: center;
   max-width: 420px;
   margin: auto;
-  color: RGBA(0,0,0,0.45);
+  color: RGBA(0, 0, 0, 0.45);
 }
-  
+
 .payment-form .block-heading h1,
 .payment-form .block-heading h2,
 .payment-form .block-heading h3 {
   margin-bottom: 1.2rem;
-  color: #009EE3;
+  color: #009ee3;
 }
-  
+
 .payment-form .form-payment {
-  border-top: 2px solid #C6E9FA;
+  border-top: 2px solid #c6e9fa;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075);
   background-color: #ffffff;
   padding: 0;
   max-width: 600px;
   margin: auto;
 }
-  
+
 .payment-form .title {
   font-size: 1em;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -233,7 +232,7 @@ main {
   font-weight: 400;
   padding-bottom: 8px;
 }
-  
+
 .payment-form .products {
   background-color: #f7fbff;
   padding: 25px;
@@ -242,27 +241,27 @@ main {
 .payment-form .products .item {
   margin-bottom: 1em;
 }
-  
+
 .payment-form .products .item-name {
   font-weight: 500;
   font-size: 0.9em;
 }
-  
+
 .payment-form .products .item-description {
   font-size: 0.8em;
   opacity: 0.6;
 }
-  
+
 .payment-form .products .item p {
   margin-bottom: 0.2em;
 }
-  
+
 .payment-form .products .price {
   float: right;
   font-weight: 500;
   font-size: 0.9em;
 }
-  
+
 .payment-form .products .total {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   margin-top: 10px;
@@ -270,7 +269,7 @@ main {
   font-weight: 500;
   line-height: 1;
 }
-  
+
 .payment-form .payment-details {
   padding: 25px 25px 15px;
   height: 100%;
@@ -280,35 +279,36 @@ main {
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #8C8C8C;
+  color: #8c8c8c;
   text-transform: uppercase;
 }
-  
+
 .payment-form .payment-details button {
   margin-top: 0.6em;
   padding: 12px 0;
   font-weight: 500;
-  background-color: #009EE3;
+  background-color: #009ee3;
   margin-bottom: 10px;
 }
-  
+
 .payment-form .date-separator {
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 5px;
 }
 
-.payment-form a, .payment-form a:not([href]) {
+.payment-form a,
+.payment-form a:not([href]) {
   margin: 0;
   padding: 0;
   font-size: 13px;
   color: #009ee3;
-  cursor:pointer;
+  cursor: pointer;
 }
 
-.payment-form a:not([href]):hover{
-  color: #3483FA;
-  cursor:pointer;
+.payment-form a:not([href]):hover {
+  color: #3483fa;
+  cursor: pointer;
 }
 
 .input-background {
@@ -324,7 +324,7 @@ footer {
 }
 
 #horizontal_logo {
-	width: 150px;
+  width: 150px;
   margin: 0;
 }
 
@@ -334,34 +334,34 @@ footer p a {
 }
 
 footer p a:hover {
-  color: #3483FA;
+  color: #3483fa;
   text-decoration: none;
 }
-  
+
 @media (min-width: 576px) {
-	.payment-form .title {
-	  font-size: 1.2em;
-	}
-  
-	.payment-form .products {
-	  padding: 40px;
-	}
-  
-	.payment-form .products .item-name {
-	  font-size: 1em;
-	}
-  
-	.payment-form .products .price {
-	  font-size: 1em;
-	}
-  
-	.payment-form .payment-details {
-	  padding: 40px 40px 30px;
-	}
-  
-	.payment-form .payment-details button {
-	  margin-top: 1em;
-	  margin-bottom: 15px;
+  .payment-form .title {
+    font-size: 1.2em;
+  }
+
+  .payment-form .products {
+    padding: 40px;
+  }
+
+  .payment-form .products .item-name {
+    font-size: 1em;
+  }
+
+  .payment-form .products .price {
+    font-size: 1em;
+  }
+
+  .payment-form .payment-details {
+    padding: 40px 40px 30px;
+  }
+
+  .payment-form .payment-details button {
+    margin-top: 1em;
+    margin-bottom: 15px;
   }
 
   .footer_logo {
@@ -375,13 +375,13 @@ footer p a:hover {
     margin: 0 0 0 65%;
     width: 200px;
     text-align: left;
-    position: absolute
+    position: absolute;
   }
 
   footer p {
     padding: 1px;
     font-size: 13px;
-    color: RGBA(0,0,0,0.45);
+    color: RGBA(0, 0, 0, 0.45);
     margin-bottom: 0;
   }
 }
@@ -400,11 +400,43 @@ footer p a:hover {
   .footer_text {
     margin: 0 0 0 45%;
     width: 180px;
-    position: absolute
+    position: absolute;
   }
 
   .footer_logo {
     margin: 0 0 0 0;
     position: absolute;
   }
+}
+.select-wrapper input.select-dropdown {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  outline: none;
+  height: 3rem;
+  line-height: 3rem;
+  width: 100%;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  padding: 0;
+  display: block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.select-wrapper .caret {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  z-index: 0;
+  fill: rgba(0, 0, 0, 0.87);
+  visibility: hidden;
 }
