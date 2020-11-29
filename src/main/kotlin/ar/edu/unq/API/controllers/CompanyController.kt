@@ -38,7 +38,8 @@ class CompanyController(val backendProveedorService: ProveedorService) {
                 .get()
             newSuppliers.forEach {
                 val supplier = Proveedor(
-                    it.companyName!!, it.companyImage!!, it.companyBanner!!,it.facebook!!, it.instagram!!, it.web!!)
+                    it.companyName!!, it.companyImage!!, it.companyBanner!!,it.facebook!!, it.instagram!!, it.web!!
+                )
                 backendProveedorService.crearProveedor(supplier)
             }
             ctx.status(201)
@@ -83,7 +84,6 @@ class CompanyController(val backendProveedorService: ProveedorService) {
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
             supplier.companyBanner = newSupplier.companyBanner!!
-            println("banner: " + newSupplier.companyBanner)
             supplier.facebook = newSupplier.facebook!!
             supplier.instagram = newSupplier.instagram!!
             supplier.web = newSupplier.web!!
