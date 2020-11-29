@@ -46,7 +46,6 @@ const ShoppingCart = () => {
 
   function calcularEnvio(){
     if(codigoPostal >= 1000 && codigoPostal <= 9999){
-      console.log("Hola")
       console.log(codigoPostal)
       console.log(volumenTotal(context.cart))
       console.log(pesoTotal(context.cart))
@@ -55,11 +54,11 @@ const ShoppingCart = () => {
         "Content-type": "application/json",
       }
     }) 
-      .then((res)=> {
-        console.log(res)
-      if(res.ok) {
-        return res.json()
-      }
+    .then((res)=> {
+      console.log(res)
+    if(res.ok) {
+      return res.json()
+    }
     }).then((response)=>{
       console.log(response)
       let option = response.options.find(option => option.shipping_method_id === 503045)
@@ -71,13 +70,22 @@ const ShoppingCart = () => {
       console.log(option.cost)
     })
     .catch((err => {
+      sendMethodNameTopLevel = "No se pudo calcular el envio."
+      setSendMethodName("No se pudo calcular el envio.")
+      sendMethodCostTopLevel = "No definido."
+      setSendMethodCost("No definido.")
+      console.log(err)
       console.log(err)
     }))
   }
   }
 
   function precioTotalConEnvio(){
-    return sendMethodCost ? "$ " + (precioTotal(context.cart) + sendMethodCost) : "" 
+    if(sendMethodCost !== "No definido.") {
+      return sendMethodCost ? "$ " + (precioTotal(context.cart) + sendMethodCost) : ""
+    } else {
+      return sendMethodCost
+    }
   }
   
 
@@ -95,7 +103,7 @@ const ShoppingCart = () => {
         {
           context.cart.length <= 0 ? 
           <div id="noHayElementos" class="numero">
-              No hay Productos en el carrito!
+              ¡No hay productos en el carrito!
           </div>
           :
         <main className="cart">
@@ -143,7 +151,7 @@ const ShoppingCart = () => {
               <div className="row">
                 <h4>
                   <strong>
-                      Precio Total (Sin envío): $ {precioTotal(context.cart)}
+                      Precio total (sin envío): $ {precioTotal(context.cart)}
                   </strong>
                 </h4>
            </div>
@@ -151,7 +159,7 @@ const ShoppingCart = () => {
           <div className="row">
             <div className="col s6 offset-6">
                     <input id = "inptCartCant" placeholder="Código Postal" value={codigoPostal} onChange={(e) => setCodigoPostal(e.target.value)}/>
-                    <a className="waves-effect waves-light btn" onClick={calcularEnvio}>Calcular envío</a>
+                    <a className="waves-effect waves-light btn" onClick={calcularEnvio} style={{marginLeft: 20}}>Calcular envío</a>
            </div>
           </div>
           <div className="row">
@@ -171,21 +179,28 @@ const ShoppingCart = () => {
           </div>
          </div>
          
-          <div className="row">
-           <h3>
-              <strong> 
-                   Precio Total: {precioTotalConEnvio()}
-              </strong>
-            </h3>
-           <div className="col s6 offset-s6">
-             <Link to={localStorage.getItem('user') === "admin" || localStorage.getItem('user') === "usuario" ? "/testform" : "/login"}>
-                <button>
+            <div className="row">
+              <h3>
+                <strong> 
+                  Precio total: {precioTotalConEnvio()}
+                </strong>
+              </h3>
+              <div className="col s6 offset-s6">
+                {sendMethodCost === "No definido." ?
+                  <button disabled={true} className="waves-effect waves-light btn">
+                    Revisar envio
+                  </button>
+                  :
+                  <Link to={localStorage.getItem('user') === "admin" || localStorage.getItem('user') === "usuario" ? "/testform" : "/login"}>
+                    <button className="waves-effect waves-light btn">
                       Comprar
-                </button>
-             </Link>
-           </div>
+                    </button>
+                  </Link>
+                }
+                  
+              </div>
+            </div>
           </div>
-         </div>
         </main>
         }
     </React.Fragment>
