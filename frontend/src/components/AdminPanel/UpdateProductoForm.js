@@ -229,12 +229,12 @@ const UpdateProductoForm = (props)  => {
             </div>
                  
                 <a  onClick={() => {
-                  if(!postear){
-                    console.log("ENTRE AL POSTEAR FALSO")
+                  if(subir){
+                    console.log("ENTRE AL SUBIR VERDADERO")
                     agregarProducto();
                     setpostear(true)  
                   }else{
-                    console.log("ENTRE AL POSTEAR VERDADERO")
+                    console.log("ENTRE AL SUBIR FALSO")
                     postearUpdate()
                   }
                     //  postearUpdate()
