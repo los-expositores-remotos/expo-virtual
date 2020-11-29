@@ -27,13 +27,14 @@ const UpdateProductoForm = (props)  => {
   const history = useHistory()
 
   useEffect(() => {
-if (postear) {
+    if(postear){
       postearUpdate();
     }
-  });
+    },[url]);
 
   const agregarProducto = () => {
     if(subir){
+      console.log("ENTRE AL SUBIR")
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
         //console.log(image)
@@ -47,8 +48,12 @@ if (postear) {
           })
             .then((res) => res.json())
             .then((data) => {
-              //console.log(data);
-              setUrl(url.concat([data.url]));
+              console.log(data.url);
+              console.log(url);
+              let newURl = [data.url].concat(url)
+              console.log(newURl)
+              setUrl(newURl);
+              console.log(url);
               setpostear(true)
             })
             .catch((err) => {
@@ -71,6 +76,7 @@ if (postear) {
         "description": description,
         "images": url ,
         "stock": stock,
+        "vendidos": product.vendidos,
         "itemPrice": itemPrice,
         "promotionalPrice": promotionalPrice,
         "longitud": longitud ,
@@ -79,22 +85,21 @@ if (postear) {
         "pesoKg": pesoKg 
       })
     })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          M.toast({ html: data.error, classes: "#c62828 red darken-3" });
-        } else {
+      .then((res) => {
+        console.log(res)
+        if(res.ok){
           M.toast({
             html: "Producto modificado exitosamente",
             classes: "#388e3c green darken-2",
           });
           history.push("/admin");
+        }else{
+          M.toast({ html: res.statusText, classes: "#c62828 red darken-3" });
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    
   };
 
   const eliminarImagen = (item) => {
@@ -102,6 +107,7 @@ if (postear) {
     var i = newUrls.indexOf( item );
     newUrls.splice( i, 1 );
     setUrl(newUrls)
+    setpostear(true)  
   }
   const nosePuedeEliminarImagen = () =>{
     return(
@@ -127,6 +133,7 @@ if (postear) {
                   nosePuedeEliminarImagen()
                   :
                   eliminarImagen(elem)
+
                 }
                 } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
               </div>
@@ -222,20 +229,17 @@ if (postear) {
             </div>
                  
                 <a  onClick={() => {
-
-                    setpostear(true)
+                  if(!postear){
+                    console.log("ENTRE AL POSTEAR FALSO")
                     agregarProducto();
-                    if (!itemName ||
-                      !images ||
-                      !description ||
-                      !stock||
-                      !promotionalPrice||
-                      !itemPrice) {
-                        
-                      postearUpdate()
+                    setpostear(true)  
+                  }else{
+                    console.log("ENTRE AL POSTEAR VERDADERO")
+                    postearUpdate()
+                  }
+                    //  postearUpdate()
                   }
                   }
-                } 
                 className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Producto</a>
               
           </div>
