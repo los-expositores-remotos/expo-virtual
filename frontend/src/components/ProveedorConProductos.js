@@ -79,7 +79,7 @@ const listOfProducts = () => {
     let styles = {
       backgroundImage: `url(${company.companyBanner})`,
       backgroundSize: '100%',
-      minHeight: " 11.9rem",
+      minHeight: " 14.9rem",
       backgroundRepeat: "no-repeat"
         }
         console.log({styles})

@@ -2,6 +2,7 @@ import React from "react";
 import {useEffect, useState} from "react";
 import M from 'materialize-css'
 import ProveedorConProductos from '../ProveedorConProductos'
+import "../../styles/Suppliers.css"
 
 document.addEventListener('DOMContentLoaded', function() {
   var elems = document.querySelectorAll('.slider');
@@ -42,7 +43,7 @@ const Suppliers = () => {
       const listOfCompanies = companies.map((company)=> {
          
         return  (
-                  <li>
+                  <li key={company.id}  id="listaDeProductos">
                       <ProveedorConProductos company={company}/>
                   </li>
                 )
