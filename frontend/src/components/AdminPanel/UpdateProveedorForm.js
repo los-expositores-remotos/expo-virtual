@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function () {
 const UpdateProveedorForm = (props) => {
   const history = useHistory();
   const company = props.company
-  const [url, setUrl] = useState(null);
+  const [urlimage, setUrlimage] = useState(null);
+  const [urlBanner, setUrlBanner] = useState(null);
   const [companyName, setcompanyName] = useState(company.companyName)
   const [companyImage, setcompanyImage] = useState(company.companyImage)
   const [companyBanner, setcompanyBanner] = useState(company.companyBanner)
@@ -20,10 +21,10 @@ const UpdateProveedorForm = (props) => {
   const [web, setweb] = useState(company.web)
 
   useEffect(() => {
-    if (url) {
+    if (urlimage && urlBanner) {
       postearUpdate();
     }
-  }, [url]);
+  }, [urlimage, urlBanner]);
 
   const agregarProveedor = () => {
     console.log("preguntandoSiSubeImagen")
@@ -40,14 +41,14 @@ const UpdateProveedorForm = (props) => {
         .then((res) => res.json())
         .then((data) => {
           //console.log(data);
-          setUrl(data.url);
+          setUrlimage(data.url);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
       console.log("NEGATIVOiSubeImagen")
-      setUrl(companyImage)
+      setUrlimage(companyImage)
     }
     console.log("preguntandoSiSubeBanner")
     if(SubirAlaNubeBanner()){
@@ -62,13 +63,13 @@ const UpdateProveedorForm = (props) => {
       })
     .then((res) => res.json())
     .then((data) => {
-      setUrl(data.url);
+      setUrlBanner(data.url);
     })
     .catch((err) => {
       console.log(err);
     });
   }else{
-    setUrl(companyBanner)
+    setUrlBanner(companyBanner)
   }
   };
 
@@ -82,7 +83,7 @@ const UpdateProveedorForm = (props) => {
 
   const postComapanyImage = () => {
     if(SubirAlaNubeImagen()){
-      return url
+      return urlimage
     } else {
       return companyImage
     }
@@ -90,7 +91,7 @@ const UpdateProveedorForm = (props) => {
 
   const postCompanyBanner = () =>{
     if(SubirAlaNubeBanner()){
-      return url
+      return urlBanner
     }else{
       return companyBanner
     }
@@ -170,7 +171,7 @@ const UpdateProveedorForm = (props) => {
               <input type="file" onChange={(e) => setcompanyImage(e.target.files[0])} />
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={url || companyImage} />
+              <input class="file-path validate" type="text" value={urlimage || companyImage} />
             </div>
           </div>
         </form>
@@ -181,7 +182,7 @@ const UpdateProveedorForm = (props) => {
               <input type="file" onChange={(e) => setcompanyBanner(e.target.files[0])}/>
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={url || companyBanner} />
+              <input class="file-path validate" type="text" value={urlBanner || companyBanner} />
             </div>
           </div>
         </form>
@@ -190,8 +191,8 @@ const UpdateProveedorForm = (props) => {
 
             <a onClick={() => {
               //console.log(companyImage)
-              //console.log(url)
-              //console.log(companyImage === url)        
+              //console.log(urlimage)
+              //console.log(companyImage === urlimage)        
               agregarProveedor();
               if (!companyName ||
                 !companyImage ||
