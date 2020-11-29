@@ -136,9 +136,6 @@ class ProductController(val backendProveedorService: ProveedorService, val backe
     }
 
     fun decreaseProduct(ctx: Context){
-        println("##########################################")
-        println(ctx.body())
-        println("##########################################")
         try {
             val ventas = ctx.body<SalesMapper>().sales
             val paresVenta = emptyList<Pair<Producto, Int>>().toMutableList()
