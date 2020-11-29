@@ -54,13 +54,12 @@ const ShoppingCart = () => {
         "Content-type": "application/json",
       }
     }) 
-    .then((res)=> {
-      console.log(res)
-    if(res.ok) {
-      return res.json()
-    }
-    }).then((response)=>{
-      console.log(response)
+    .then((res) => {
+      if(res.ok) {
+        return res.json()
+      }
+    })
+    .then((response) => {
       let option = response.options.find(option => option.shipping_method_id === 503045)
       sendMethodNameTopLevel = option.name
       setSendMethodName(option.name)
