@@ -19,7 +19,7 @@ class CompanyController(val backendProveedorService: ProveedorService) {
         try {
             val newSupplier = aux.companyBodyValidation(ctx)
             val supplier = Proveedor(
-                newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
+                newSupplier.companyName!!, newSupplier.companyImage!!, newSupplier.companyBanner!!, newSupplier.facebook!!, newSupplier.instagram!!, newSupplier.web!!)
             backendProveedorService.crearProveedor(supplier)
             ctx.status(201)
             ctx.json(OkResultMapper("ok"))
@@ -38,7 +38,7 @@ class CompanyController(val backendProveedorService: ProveedorService) {
                 .get()
             newSuppliers.forEach {
                 val supplier = Proveedor(
-                    it.companyName!!, it.companyImage!!, it.facebook!!, it.instagram!!, it.web!!)
+                    it.companyName!!, it.companyImage!!, it.companyBanner!!, it.facebook!!, it.instagram!!, it.web!!)
                 backendProveedorService.crearProveedor(supplier)
             }
             ctx.status(201)
@@ -82,6 +82,7 @@ class CompanyController(val backendProveedorService: ProveedorService) {
             val supplier = backendProveedorService.recuperarProveedor(id)//aux.searchProveedorById(id)
             supplier.companyName = newSupplier.companyName!!
             supplier.companyImage = newSupplier.companyImage!!
+            supplier.companyBanner = newSupplier.companyBanner!!
             supplier.facebook = newSupplier.facebook!!
             supplier.instagram = newSupplier.instagram!!
             supplier.web = newSupplier.web!!

@@ -25,7 +25,7 @@ class MostrarTodosLosProveedoresDesdeElMenuStepDefs {
 
     @When("^Agrego un proveedor \"([^\"]*)\"$")
     fun agregoUnProveedor(proveedor1: String?) {
-        listaDeProveedores.add(Proveedor(proveedor1!!,"hola.imagen","www.facebook.com/empresa1","www.instragram.com/empresa1","www.empresa1.com.ar"))
+        listaDeProveedores.add(Proveedor(proveedor1!!,"hola.imagen","hola.banner ","www.facebook.com/empresa1","www.instragram.com/empresa1","www.empresa1.com.ar"))
         proveedorService.crearProveedor(listaDeProveedores.last())
     }
 

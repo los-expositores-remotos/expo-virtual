@@ -26,9 +26,9 @@ class ApiTest {
     @Before
     fun setUp() {
 
-        proveedorA = Proveedor("AA","data:image" ,"https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
-        proveedorB = Proveedor("BB", "data:image", "https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
-        proveedorC = Proveedor("CC","data:image","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorA = Proveedor("AA","data:image" ,"data:banner","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorB = Proveedor("BB", "data:image", "data:banner","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
+        proveedorC = Proveedor("CC","data:image","data:banner","https://www.facebook.com/GibsonES/", "https://www.instagram.com/gibsonguitar/?hl=es-la", "https://www.gibson.com/")
         productoA = Producto(proveedorB.id, "Les Paul", "A electric guitar.", 7, 1000000, 800000, 10, 10, 10, 10)
         productoB = Producto(proveedorB.id, "Les PaulB", "A electric guitar.", 7, 1000000, 800000, 10, 10, 10, 10)
         listaProv.add(proveedorA)

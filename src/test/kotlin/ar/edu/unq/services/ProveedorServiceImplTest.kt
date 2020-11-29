@@ -23,7 +23,7 @@ class ProveedorServiceImplTest {
 
     @Before
     fun setUp(){
-        this.proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.facebook.com/LaCompany"
+        this.proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.banner.com/lacompany.png", "www.facebook.com/LaCompany"
                 , "www.instagram.com/LaCompany", "www.lacompany.com")
         this.proveedorService.crearProveedor(this.proveedor)
         this.proveedores = setOf(this.proveedor).toMutableSet()
@@ -33,7 +33,7 @@ class ProveedorServiceImplTest {
     fun testCreacionProveedor(){
         var proveedoresRecuperados = this.proveedorService.recuperarATodosLosProveedores().toSet()
         assertEquals(this.proveedores, proveedoresRecuperados)
-        val proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png", "www.facebook.com/LaCompany"
+        val proveedor = Proveedor("LaCompany", "www.images.com/lacompany.png",  "www.images.com/lacompany.png","www.facebook.com/LaCompany"
                 , "www.instagram.com/LaCompany", "www.lacompany.com")
         this.proveedorService.crearProveedor(proveedor)
         this.proveedores.add(proveedor)
