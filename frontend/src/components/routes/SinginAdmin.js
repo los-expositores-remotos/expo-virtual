@@ -50,14 +50,14 @@ const Login = () => {
             <input
               type="text"
               id='inputLogin'
-              placeholder="Ingrese su Mail"
+              placeholder="Ingrese su email"
               value={mail}
               onChange={(e) => setmail(e.target.value)}
             />
             <input
               type="password"
               id='inputLogin'
-              placeholder="Ingrese su Password"
+              placeholder="Ingrese su contraseña"
               value={password}
               onChange={(e) => setpassword(e.target.value)}
             />
@@ -66,10 +66,10 @@ const Login = () => {
               className="btn waves-effect waves-light #64b5f6 red darken-1"
               onClick={() => PostData()}
             >
-              Singin
+              Ingresar
             </button>
             <h5 id="H5Register">
-              <Link id="linkRegister" to="/login">Logearse como usuario</Link>
+              <Link id="linkRegister" to="/login">Ingresar como usuario</Link>
               <tr/>
               <Link id="linkRegister" to="/register">Registrate acá</Link>
             </h5>

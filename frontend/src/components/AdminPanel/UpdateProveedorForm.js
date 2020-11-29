@@ -163,12 +163,6 @@ const UpdateProveedorForm = (props) => {
             <label class="active" for="Facebook">Facebook</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="email" type="email" class="validate" value={company ? company.email : undefined} />
-            <label class="active" for="email">Email</label>
-          </div>
-        </div>
         <form action="#">
           <div class="file-field input-field">
             <div class="btn" id='buttonUploadImages'>
