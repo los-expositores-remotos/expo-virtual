@@ -145,7 +145,7 @@ const UpdateProducto = () =>{
         <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
-              <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
+              <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Buscar" aria-label="Search"/>
               </form>
           </div>
           <div class='col s2'>
@@ -156,7 +156,7 @@ const UpdateProducto = () =>{
         <div>
           {
             !companies ?
-              <p>Loading...</p>
+              <p>Cargando...</p>
             :
                search ? 
                   filterCompanies()

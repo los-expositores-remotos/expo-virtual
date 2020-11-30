@@ -111,12 +111,12 @@ const AddProduct = (props)  => {
         <div className="row">
           <div className="input-field col s12">
               <input value={company.companyName} required />
-               <label className="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
+               <label className="active" for="Nombre_de_la_Empresa">Nombre de la empresa</label>
           </div>
           <div className="input-field col s12">
               <input 
               id="Nombre_de_la_Empresa" onChange={(e) => setitemName(e.target.value)} type="text" className="validate" required />
-               <label className="active" for="Nombre_de_la_Empresa">Nombre de la Producto</label>
+               <label className="active" for="Nombre_de_la_Empresa">Nombre del producto</label>
           </div>
               <div className="input-field col s6">
               <input id="Web" onChange={(e) => setitemPrice(e.target.value)} type="number" className="validate" required />
@@ -126,13 +126,13 @@ const AddProduct = (props)  => {
         <div className="row">
           <div className="input-field col s6">
               <input id="instagram" onChange={(e) => setpromotionalPrice(e.target.value)} type="number" className="validate" required />
-               <label className="active" for="instagram">Precio Promocional</label>
+               <label className="active" for="instagram">Precio promocional</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
               <input id="Facebook" onChange={(e) => setdescription(e.target.value)} type="text" className="validate" required />
-               <label className="active" for="Facebook">Descripcion</label>
+               <label className="active" for="Facebook">Descripción</label>
           </div>
         </div>
         <div className="row">
@@ -144,7 +144,7 @@ const AddProduct = (props)  => {
         <form action="#">
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
-              <span>Cargar Imagenes</span>
+              <span>Cargar imagenes</span>
               <input type="file" onChange={(e) => setimages(e.target.files)} multiple required/>
             </div>
             <div className="file-path-wrapper">

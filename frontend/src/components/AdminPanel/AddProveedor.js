@@ -158,7 +158,7 @@ const AddProveedor = (props)  => {
           <div className="input-field col s6">
               <input 
               id="Nombre_de_la_Empresa" onChange={(e) => setcompanyName(e.target.value)} type="text" className="validate" value={companyName} required/>
-               <label className="active" for="Nombre_de_la_Empresa">Nombre de la Empresa</label>
+               <label className="active" for="Nombre_de_la_Empresa">Nombre de la empresa</label>
           </div>
               <div className="input-field col s6">
               <input id="Web" onChange={(e) => setweb(e.target.value)} type="text" className="validate" value={web } required/>
@@ -186,7 +186,7 @@ const AddProveedor = (props)  => {
         <form action="#">
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
-              <span>Cargar Imagen</span>
+              <span>Cargar imagen</span>
               <input type="file" onChange={(e) => setcompanyImage(e.target.files[0])} required/>
             </div>
             <div className="file-path-wrapper">
@@ -197,7 +197,7 @@ const AddProveedor = (props)  => {
         <form action="#">
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
-              <span>Cargar Banner</span>
+              <span>Cargar banner</span>
               <input type="file" onChange={(e) => setcompanyBanner(e.target.files[0])} required/>
             </div>
             <div className="file-path-wrapper">
@@ -210,7 +210,7 @@ const AddProveedor = (props)  => {
                 <a onClick={() => {
                   agregarProveedor();
                   subirBanner()
-                }} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Proveedor</a>
+                }} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar proveedor</a>
           </div>
         </div>
       </form>

@@ -10,10 +10,10 @@ const Footer = () => {
       <div className="row">
         <div className="col s4">
           <h5 className="white-text"  id="footerT">Expo Arte Virtual</h5>
-          <p>3, 4 y 5 de octubre!</p>
+          <p>¡3, 4 y 5 de Octubre!</p>
         </div>
         <div className="col s4">
-          <h5 className="white-text" id="footerT">Categorias</h5>
+          <h5 className="white-text" id="footerT">Categorías</h5>
           <ul>
             <li><Link id="linkList"to="/contact">Contacto</Link></li>
             <li><Link id="linkList"to="/aboutus">¿Quiénes somos?</Link></li>

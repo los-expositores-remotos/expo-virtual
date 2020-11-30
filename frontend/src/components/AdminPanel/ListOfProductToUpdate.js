@@ -80,7 +80,7 @@ const ListOfProductToUpdate = (props) =>{
         <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
-                <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
+                <input className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Buscar" aria-label="Search"/>
               </form>
           </div>
           <div className='col s2'>
