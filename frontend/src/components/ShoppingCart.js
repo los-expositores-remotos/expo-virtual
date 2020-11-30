@@ -101,7 +101,7 @@ const ShoppingCart = () => {
      
         {
           context.cart.length <= 0 ? 
-          <div id="noHayElementos" class="numero">
+          <div id="noHayElementos" className="numero">
               ¡No hay productos en el carrito!
           </div>
           :

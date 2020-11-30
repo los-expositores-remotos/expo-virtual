@@ -71,7 +71,10 @@ const listOfProducts = () => {
       )
     }else{
       return(
-      <h5> Por el Momento la empresa: <strong>{company.companyName}</strong> no tiene productos para mostrar </h5>
+        <div id="noHayElementos" className="numero">
+          <h3> Por el Momento la empresa: <strong>{company.companyName}</strong> no tiene productos para mostrar </h3>
+        </div>
+      
       )
     }
   }
@@ -93,7 +96,6 @@ const listOfProducts = () => {
               <div id="divEmpresaConProd" style={styles}>
                 </div>
                 <br/>
-                <h2 id="nombreEmpresa">{company.companyName}</h2>
                 {listOfProducts(company)}
                 <hr/>
               </div>

@@ -4,5 +4,9 @@
   left: auto;
   right: auto;
   height: 44rem;
-  min-height: 44rem;
+  min-height: 48rem;
+}
+
+#listaDeProductosul {
+  margin-top: 0px;
 }

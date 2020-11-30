@@ -23,6 +23,7 @@ const NavBar = () => {
         }else{
             history.push("/resultsearch/ ")
         }
+        setTextSearch("")
       };
 
 
@@ -88,7 +89,7 @@ const NavBar = () => {
                </div>
                <div className="col s1">
                    <Link to={textsearch ? `/resultsearch/${textsearch}` : "/resultsearch/ " }>
-                       <i className="small material-icons left" id="iconSearch">search</i>
+                       <i className="small material-icons left" id="iconSearch" onClick={()=> setTextSearch("")}>search</i>
                    </Link>     
                </div>
                <div className="col s1">
