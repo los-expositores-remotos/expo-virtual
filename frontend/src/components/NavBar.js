@@ -16,6 +16,22 @@ const NavBar = () => {
     const [textsearch, setTextSearch ] = useState(null)
     const history = useHistory()
     const { state, dispatch } = useContext(userContext);
+    const [mouse, setMouse] = useState(false)
+    const [Inicio, setInicio] = useState(false)
+    const [Empresas, setEmpresas] = useState(false)
+    const [EnVivo, setEnVivo] = useState(false)
+    const [Preguntas, setPreguntas] = useState(false)
+    const [CómoComprar, setCómoComprar] = useState(false)
+    const [QuiénesSomos, setQuiénesSomos] = useState(false)
+    const [Contacto, setContacto] = useState(false)
+
+
+
+
+
+
+
+
     const handleSubmit = event => {
         event.preventDefault();
         if(textsearch){
@@ -96,9 +112,9 @@ const NavBar = () => {
                     {renderPanelAdmin()}
                </div>
                <div className="col s1">
-                   <Link to="/myaccount">
-                       <i className="small material-icons left" id="iconSearch">account_box</i>
-                   </Link>     
+                   <div id= "usuario" className={mouse ? "animate__animated animate__tada animate__infinite infinite" : " "} onMouseEnter={() => setMouse(true)} onMouseLeave={() =>setMouse(false)}>
+                        {localStorage.getItem('nombre')} {localStorage.getItem('apellido')}   
+                   </div>
                </div>
                <div className="col s1">
                    <Link to="/shoppingcart">
@@ -120,25 +136,25 @@ const NavBar = () => {
                 <div className="nav-wrapper">
                 <a href="" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                 <ul className="left hide-on-med-and-down">
-                    <li><Link to="/">Inicio</Link></li>
-                    <li><Link to="/suppliers">Empresas</Link></li>
-                    <li><Link to="/live">En vivo</Link></li>
-                    <li><Link to="/faqs">Preguntas frecuentes</Link></li>
-                    <li><Link to="/howtobuy">¿Cómo comprar?</Link></li>
-                    <li><Link to="/aboutus">¿Quiénes somos?</Link></li>
-                    <li><Link to="/contact">Contacto</Link></li>
+                    <li><Link className={Inicio ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setInicio(true)} onMouseLeave={() =>setInicio(false)} to="/">Inicio</Link></li>
+                    <li><Link className={Empresas ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setEmpresas(true)} onMouseLeave={() =>setEmpresas(false)} to="/suppliers">Empresas</Link></li>
+                    <li><Link className={EnVivo ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setEnVivo(true)} onMouseLeave={() =>setEnVivo(false)} to="/live">En vivo</Link></li>
+                    <li><Link className={Preguntas ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setPreguntas(true)} onMouseLeave={() =>setPreguntas(false)} to="/faqs">Preguntas frecuentes</Link></li>
+                    <li><Link className={CómoComprar ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setCómoComprar(true)} onMouseLeave={() =>setCómoComprar(false)} to="/howtobuy">¿Cómo comprar?</Link></li>
+                    <li><Link className={QuiénesSomos ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setQuiénesSomos(true)} onMouseLeave={() =>setQuiénesSomos(false)} to="/aboutus">¿Quiénes somos?</Link></li>
+                    <li><Link className={Contacto ? "animate__animated animate__heartBeat animate__repeat-1	1" : " "} onMouseEnter={() => setContacto(true)} onMouseLeave={() =>setContacto(false)} to="/contact">Contacto</Link></li>
                 </ul>
                 </div>
             </nav>
 
             <ul className="sidenav" id="mobile-demo">
-                <li><Link to="/">Inicio</Link></li>
-                <li><Link to="/suppliers">Empresas</Link></li>
-                <li><Link to="/live">En vivo</Link></li>
-                <li><Link to="/faqs">Preguntas frecuentes</Link></li>
-                <li><Link to="/howtobuy">¿Cómo comprar?</Link></li>
-                <li><Link to="/aboutus">¿Quiénes Somos?</Link></li>
-                <li><Link to="/contact">Contacto</Link></li>
+                <li ><Link to="/">Inicio</Link></li>
+                <li ><Link to="/suppliers">Empresas</Link></li>
+                <li ><Link to="/live">En vivo</Link></li>
+                <li ><Link to="/faqs">Preguntas frecuentes</Link></li>
+                <li ><Link to="/howtobuy">¿Cómo comprar?</Link></li>
+                <li ><Link to="/aboutus">¿Quiénes Somos?</Link></li>
+                <li ><Link to="/contact">Contacto</Link></li>
             </ul>
     </div>
     </React.Fragment>
