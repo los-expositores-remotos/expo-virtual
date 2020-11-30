@@ -123,18 +123,15 @@ const ShoppingCart = () => {
               <td id="tdCart">{cartItem.itemName}</td>
               <td id="tdCart">
               <div className="input-field col s12">
-              {
-                cartItem.quantity > 1 ?
-                  <button onClick={context.removeProductFromCart.bind(this,cartItem.id)}>-</button>
-                :
-                  <button disabled>-</button>}
+              <button
+                    onClick={context.removeProductFromCart.bind(
+                      this,
+                      cartItem.id
+                    )}
+                  >-</button>
                   <input id="inptCartCant" className="validate" value={cartItem.quantity}/>
-                  {
-                    cartItem.quantity < cartItem.stock ?
-                      <button onClick={context.addProductToCart.bind(this, cartItem)}>+</button>
-                    :
-                      <button disabled>+</button>
-                  }
+                  
+                  <button onClick={context.addProductToCart.bind(this, cartItem)}>+</button>
               </div>    
               </td>
               <td id="tdCart">$ {cartItem.itemPrice * cartItem.quantity}</td>

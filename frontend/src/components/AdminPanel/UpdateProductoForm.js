@@ -172,7 +172,7 @@ const UpdateProductoForm = (props)  => {
         </div>
         <div className="row">
           <div className="input-field col s12">
-              <input id="Stock" type="number" onChange={(e) => setstock(e.target.value)} className="validate" value={stock}/>
+              <input id="Stock" type="number" onChange={(e) => setstock(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={stock}/>
                <label className="active" for="Stock">Stock</label>
           </div>
         </div>
@@ -190,20 +190,20 @@ const UpdateProductoForm = (props)  => {
         </div>
         <div className="row">
           <div className="input-field col s2">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setlongitud(e.target.value)} className="validate" value={longitud}/> 
-               <label className="active" for="PromotionalPrice">Longitud</label>
+              <input id="PromotionalPrice" type="number" onChange={(e) => setlongitud(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={longitud}/> 
+               <label className="active" for="PromotionalPrice">Longitud (cm)</label>
           </div>
           <div className="input-field col s2">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setancho(e.target.value)} className="validate" value={ancho}/> 
-               <label className="active" for="PromotionalPrice">Ancho</label>
+              <input id="PromotionalPrice" type="number" onChange={(e) => setancho(e.target.value > 0 ? e.target.value : 1)} className="validate" value={ancho}/> 
+               <label className="active" for="PromotionalPrice">Ancho (cm)</label>
           </div>
           <div className="input-field col s2">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setalto(e.target.value)} className="validate" value={alto}/> 
-               <label className="active" for="PromotionalPrice">Alto</label>
+              <input id="PromotionalPrice" type="number" onChange={(e) => setalto(e.target.value > 0 ? e.target.value : 1)} className="validate" value={alto}/> 
+               <label className="active" for="PromotionalPrice">Alto (cm)</label>
           </div>
           <div className="input-field col s2">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setpesoGr(e.target.value)} className="validate" value={pesoGr}/> 
-               <label className="active" for="PromotionalPrice">Peso en gr</label>
+              <input id="PromotionalPrice" type="number" onChange={(e) => setpesoGr(e.target.value > 0 ? e.target.value : 1)} className="validate" value={pesoGr}/> 
+               <label className="active" for="PromotionalPrice">Peso (gramos)</label>
           </div>
         </div>
         <form action="#">

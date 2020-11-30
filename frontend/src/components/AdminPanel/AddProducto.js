@@ -127,29 +127,29 @@ const AddProduct = (props)  => {
 
            <div className="row">
                     <div className="input-field col s2">
-                        <input id="Longitud" type="number" onChange={(e) => setLongitud(e.target.value)} className="validate" value={longitud}/>
-                         <label className="active" for="Longitud">Longitud</label>
+                        <input id="Longitud" type="number" onChange={(e) => setLongitud(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={longitud}/>
+                         <label className="active" for="Longitud">Longitud (cm)</label>
                     </div>
                     <div className="input-field col s2">
-                        <input id="Ancho" type="number" onChange={(e) => setAncho(e.target.value)} className="validate" value={ancho}/>
-                         <label className="active" for="Ancho">Ancho</label>
+                        <input id="Ancho" type="number" onChange={(e) => setAncho(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={ancho}/>
+                         <label className="active" for="Ancho">Ancho (cm)</label>
                     </div>
                     <div className="input-field col s2">
-                        <input id="Alto" type="number" onChange={(e) => setAlto(e.target.value)} className="validate" value={alto}/>
-                         <label className="active" for="Alto">Alto</label>
+                        <input id="Alto" type="number" onChange={(e) => setAlto(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={alto}/>
+                         <label className="active" for="Alto">Alto (cm)</label>
                     </div>
                     <div className="input-field col s2">
-                        <input id="PesoGr" type="number" onChange={(e) => setPesoGr(e.target.value)} className="validate" value={pesoGr}/>
-                         <label className="active" for="PesoGr">Peso en gr</label>
+                        <input id="PesoGr" type="number" onChange={(e) => setPesoGr(e.target.value > 0 ? e.target.value : 1 )} className="validate" value={pesoGr}/>
+                         <label className="active" for="PesoGr">Peso (gramos)</label>
                     </div>
+                    <div className="input-field col s2">
+                      <input id="email" type="number" onChange={(e) => setstock(e.target.value > 0 ? e.target.value : 1)} className="validate" value={stock}/> 
+                      <label className="active" for="email">Stock</label>
+                  </div>
                   </div>
 
         </div>
         <div className="row">
-          <div className="input-field col s12">
-              <input id="email" onChange={(e) => setstock(e.target.value)} type="number" className="validate" required/> 
-               <label className="active" for="email">Stock</label>
-          </div>
         </div>
         <form action="#">
         <select type = "hidden">
