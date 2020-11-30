@@ -45,12 +45,14 @@ const ListOfProductToUpdate = (props) =>{
               <div className="card" id='cardDelete'>
                 <div className="card-image">
                   <img src={product.images[0]}/>
-                  <span className="card-title">{product.itemName}</span>
+                  <span className="card-title"></span>
                   <a onClick={()=> {
                     setCliked(<UpdateProductoForm product={product}/>)
                     }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">edit</i></a>
                 </div>
                 <div className="card-content">
+                   <strong><p> {product.itemName}</p></strong>
+                   <hr/>
                   <p > stock : {product.stock} </p>
                   <p > precio : {product.itemPrice} </p>
                   <p > precio Promocional : {product.promotionalPrice} </p>

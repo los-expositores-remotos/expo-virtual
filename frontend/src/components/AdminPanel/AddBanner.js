@@ -129,9 +129,7 @@ const AddBanner = ()  => {
     <div class="row" onLoad={loadCategories}>
           <form class="col s12" id="bannerform">
           <div class="row">
-              <div class="col s12">
-                   Agregar Banner
-              </div>
+
               <div class="input-field col s12">
                 <select id="Category" form="bannerform" type="text" onChange={(e) => setcategory(e.target.value)} class="validate" value={category}>
                     <option>Seleccione una categoría...</option>
