@@ -6,17 +6,24 @@ import ResultSearchProduct from './ResultSearchProduct'
 
 const ResultSearch = () => {
 
-    const [products, setProductos] = useState(null) 
+    const [products, setProductos] = useState([]) 
     let {textsearch} = useParams()
     
     const textoBusqueda = () => {
-        if(products){
+        if(products.length > 0){
             return (
                 <h2>
                    Resultado de búsqueda para "{textsearch}" 
                 </h2>
             )
         }else{
+          if(textsearch === "_"){
+            return(
+            <h2>
+              No existen Resultados de búsqueda para " " 
+            </h2>)
+          }else{
+
             return (
               <div className="preloader-wrapper active">
                 <div className="spinner-layer spinner-red-only">
@@ -30,6 +37,7 @@ const ResultSearch = () => {
                 </div>
               </div>
             )
+          }
         }
     }
 

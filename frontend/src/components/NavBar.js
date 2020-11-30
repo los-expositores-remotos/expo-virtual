@@ -37,7 +37,7 @@ const NavBar = () => {
         if(textsearch){
             history.push(`/resultsearch/${textsearch}`)
         }else{
-            history.push("/resultsearch/ ")
+            history.push("/resultsearch/_")
         }
         setTextSearch("")
       };
@@ -104,7 +104,7 @@ const NavBar = () => {
                    </form>
                </div>
                <div className="col s1">
-                   <Link to={textsearch ? `/resultsearch/${textsearch}` : "/resultsearch/ " }>
+                   <Link to={textsearch ? `/resultsearch/${textsearch}` : "/resultsearch/_" }>
                        <i className="small material-icons left" id="iconSearch" onClick={()=> setTextSearch("")}>search</i>
                    </Link>     
                </div>

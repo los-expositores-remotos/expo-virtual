@@ -17,3 +17,7 @@
   margin-left: 13%;
   min-height: 30rem;
 }
+
+button {
+  cursor: pointer;
+}

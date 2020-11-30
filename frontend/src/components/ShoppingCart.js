@@ -19,7 +19,7 @@ export const precioTotal = (products) => {
 export const pesoTotal = (products) => {
   let acumulador = 0
   products.forEach((cartItem)=>{
-    acumulador = acumulador + (cartItem.pesoGr/100 * cartItem.quantity)
+    acumulador = acumulador + (cartItem.pesoKg * cartItem.quantity)
   })
   return acumulador
 }
@@ -123,14 +123,18 @@ const ShoppingCart = () => {
               <td id="tdCart">{cartItem.itemName}</td>
               <td id="tdCart">
               <div className="input-field col s12">
-              <button
-                    onClick={context.removeProductFromCart.bind(
-                      this,
-                      cartItem.id
-                    )}
-                  >-</button>
+              {
+                cartItem.quantity > 1 ?
+                  <button onClick={context.removeProductFromCart.bind(this,cartItem.id)}>-</button>
+                :
+                  <button disabled>-</button>}
                   <input id="inptCartCant" className="validate" value={cartItem.quantity}/>
-                  <button onClick={context.addProductToCart.bind(this, cartItem)}>+</button>
+                  {
+                    cartItem.quantity < cartItem.stock ?
+                      <button onClick={context.addProductToCart.bind(this, cartItem)}>+</button>
+                    :
+                      <button disabled>+</button>
+                  }
               </div>    
               </td>
               <td id="tdCart">$ {cartItem.itemPrice * cartItem.quantity}</td>
