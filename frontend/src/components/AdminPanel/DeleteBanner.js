@@ -64,7 +64,6 @@ const DeleteBanner = () =>{
               <div className="card" id='cardDeleteBD'>
                 <div className="card-image">
                   <img src={banner.image}/>
-                  <span className="card-title">{banner.category}</span>
                   <a onClick={()=> {
                     deleteBanner(banner.id)
                     }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
@@ -92,8 +91,8 @@ const DeleteBanner = () =>{
                   <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
                       <div className="collapsible-body">
                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>
                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
-                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
                       </div>
               </li>
               <li>
