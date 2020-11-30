@@ -4,21 +4,15 @@ import '../../client/css/index.css';
 import $ from 'jquery'
 import { useHistory } from "react-router-dom";
 import M from 'materialize-css'
-// import MercadoPagoProducto from '../../components/MercadoPagoProducto';
 import ShopContext from '../../components/context/shop-context'
 import { precioTotal, sendMethodCostTopLevel, sendMethodNameTopLevel } from '../../components/ShoppingCart'
 
-// document.addEventListener('DOMContentLoaded', function() {
-//   var elems = document.querySelectorAll('.autocomplete');
-//   M.Autocomplete.init(elems, {});
-// });
 
 
 const TestForm = () => {
   const history = useHistory();
   //    //REPLACE WITH YOUR PUBLIC KEY AVAILABLE IN: https://developers.mercadopago.com/panel/credentials
   window.Mercadopago.setPublishableKey("TEST-5429f1b7-5db8-46fd-bf95-26ae8fcd39fe");
-  // window.Mercadopago.getIdentificationTypes();
   const context = useContext(ShopContext);
   const [quantity, setQuantity] = useState(1);
   const [unitPrice] = useState(10);
@@ -33,34 +27,6 @@ const TestForm = () => {
   const [cartTotal, setCartTotal] = useState("$ 10");
   const [email, setEmail] = useState("");
   const [docTypes, setDocTypes] = useState([])
-
-  // const [token, setToken] = useState(null);
-  // const [docTypes, setDocTypes] = useState(null);
-
-  // useEffect(() => {
-  //   if(!docTypes){
-  //     fetch("https://api.mercadopago.com/v1/identification_types?public_key=TEST-147fd98d-a235-429b-aa09-a5b157a1fe61", {
-  //       headers: {
-  //         "Content-type": "application/json",
-  //       }
-  //       }).then((res) => {
-  //         console.log(res)
-  //         if (res.ok) {
-  //           return res.json()
-  //         }
-  //       }).then((response)=>{
-  //         var hola = document.createElement("option")
-  //       hola.text = "hola"
-  //       document.getElementById("docType").add(hola)
-  //       var hola = document.createElement("option")
-  //       hola.text = "hola1"
-  //       // document.getElementById("docType").add(hola)
-  //         // console.log("gggfgfgfg"+response)
-  //         setDocTypes(response)
-  //         console.log(docTypes)
-  //       }, [docTypes])
-  //   }
-  // })
 
   function guessPaymentMethod(event) {
     cleanCardInfo();
@@ -157,7 +123,7 @@ const TestForm = () => {
     }
   }
 
-  // //Update offered installments when issuer changes
+  //Update offered installments when issuer changes
   function updateInstallmentsForIssuer(event) {
     window.Mercadopago.getInstallments({
       "payment_method_id": document.getElementById('paymentMethodId').value,
@@ -166,7 +132,7 @@ const TestForm = () => {
     }, setInstallments);
   }
 
-  // //Proceed with payment
+  //Proceed with payment
   var doSubmit = false;
   function getCardToken(event) {
     event.preventDefault();
@@ -186,15 +152,7 @@ const TestForm = () => {
 
   function setCardTokenAndPay(status, response) {
     if (status === 200 || status === 201) {
-      // let form = document.getElementById('paymentForm');
-      // let card = document.createElement('input');
-      // card.setAttribute('name', 'token');
-      // card.setAttribute('type', 'hidden');
-      // card.setAttribute('value', response.id);
-      // setToken(response.id)
-      // form.appendChild(card);
       doSubmit = true;
-      // form.submit(); //Submit form data to your backend
       postearPago(response.id)
     } else {
       alert("Verify filled data!\n" + JSON.stringify(response, null, 4));
@@ -214,7 +172,7 @@ const TestForm = () => {
     document.getElementById('installments').options.length = 0;
   }
 
-  // //Handle transitions
+  //Handle transitions
   function checkoutShoppingCart() {
     $('.shopping-cart').fadeOut(500);
     setTimeout(() => { $('.container_payment').show(500).fadeIn(); }, 500);
@@ -338,19 +296,6 @@ const TestForm = () => {
       }))}
     </select>)
   }
-
-  // function select(){
-  //   return(
-  //     // <select  id="Category" form="bannerform" type="text" class="validate">
-  //     //   {list.map(opt => {
-
-
-
-  //       // })}
-  //     // </select>
-  //   )
-
-
 
 
   return (

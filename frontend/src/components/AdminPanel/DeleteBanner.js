@@ -25,20 +25,15 @@ const DeleteBanner = () =>{
       }
     })
     .then((result)=>{
-     // console.log(result)
-
         setBanners(result)        
- 
-      //console.log(companies)
-    })
+  })
     .catch((err => {
       console.log(err)
     }))
   }, [banners])
     
   const deleteBanner = (id) =>{
-    //console.log(id)
-    fetch(`http://localhost:7000/banners/${id}`, {
+      fetch(`http://localhost:7000/banners/${id}`, {
       method: 'DELETE',
       headers: {
       }

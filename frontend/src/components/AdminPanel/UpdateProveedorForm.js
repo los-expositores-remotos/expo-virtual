@@ -42,7 +42,6 @@ const UpdateProveedorForm = (props) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          //console.log(data);
           setUrlimage(data.url);
           setpostear(true)
         })
@@ -210,19 +209,7 @@ const UpdateProveedorForm = (props) => {
                 console.log("ENTRE AL SUBIR FALSO")
                 postearUpdate()
               }
-              //console.log(companyImage)
-              //console.log(urlimage)
-              //console.log(companyImage === urlimage)        
-              
-              //if (!companyName ||
-              //  !companyImage ||
-              //  !companyBanner ||
-              //  !facebook ||
-              //  !instagram ||
-              //  !web) {
-              //  postearUpdate()
-              //}
-            }
+             }
             }
               class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>
 

@@ -15,9 +15,7 @@ const Banner = () => {
             return res.json()
         }})
         .then((result)=>{
-          //console.log(result)
-          
-          setbanners(result)        
+          setbanners(result)
         })
         .catch((err => {
           console.log(err)

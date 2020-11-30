@@ -6,8 +6,8 @@ import '../styles/ProductCard.css'
 const ProductCard = (props) => {
 const product = props.product
 const imagesOfProducts = (product) =>{
-    //console.log(product)
-  const images = product.images
+
+const images = product.images
   
   return (
      

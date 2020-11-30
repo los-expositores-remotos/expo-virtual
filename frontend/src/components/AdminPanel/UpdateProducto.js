@@ -16,18 +16,13 @@ const UpdateProducto = () =>{
       }
     }) 
       .then((res)=> {
-      //console.log(res)
-      if(res.ok){
+        if(res.ok){
         return res.json()
       }
     })
     .then((result)=>{
-     // console.log(result)
-
-        setCompanies(result)        
- 
-      //console.log(companies)
-    })
+      setCompanies(result)
+     })
     .catch((err => {
       console.log(err)
     }))

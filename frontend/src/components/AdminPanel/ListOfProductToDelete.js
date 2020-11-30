@@ -16,17 +16,12 @@ const ListOfProductToDelete = (props) =>{
             }
             }) 
             .then((res)=> {
-            //console.log(res)
             if(res.ok){
                 return res.json()
             }
             })
             .then((result)=>{
-            // console.log(result)
-
-                setproducts(result)        
-        
-            //console.log(companies)
+                setproducts(result)
             })
             .catch((err => {
             console.log(err)
@@ -35,7 +30,6 @@ const ListOfProductToDelete = (props) =>{
         }, [products])
 
   const deleteProduct = (id) =>{
-    //console.log(id)
     fetch(`http://localhost:7000/products/${id}`, {
       method: 'DELETE',
       headers: {

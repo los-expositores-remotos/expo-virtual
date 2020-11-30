@@ -52,11 +52,10 @@ const removeProductFromCart = (productId, state) => {
   updatedItem.quantity--;
   if (! updatedItem.quantity <= 0) {
     updatedCart[updatedItemIndex] = updatedItem;
-    
-    //console.log(updatedCart)
-    //console.log(updatedItem)
-  } 
+  }
+
   localStorage.setItem('cart', JSON.stringify(updatedCart))
+
   return { ...state, cart: updatedCart };
 };
 

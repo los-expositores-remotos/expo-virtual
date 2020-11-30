@@ -18,9 +18,7 @@ const Live = () => {
             return res.json()
         }})
         .then((result)=>{
-          //console.log(result)
-
-          setschedule(result)        
+          setschedule(result)
         })
         .catch((err => {
           console.log(err)
@@ -37,8 +35,7 @@ const Live = () => {
             return res.json()
         }})
         .then((result)=>{
-          //console.log(result)
-          setClasses(result)        
+          setClasses(result)
         })
         .catch((err => {
           console.log(err)

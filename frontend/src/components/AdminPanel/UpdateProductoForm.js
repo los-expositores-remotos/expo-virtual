@@ -37,7 +37,6 @@ const UpdateProductoForm = (props)  => {
       console.log("ENTRE AL SUBIR")
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
-        //console.log(image)
         const data = new FormData();
           data.append("file", image);
           data.append("upload_preset", "insta-clon-GB");
@@ -153,7 +152,6 @@ const UpdateProductoForm = (props)  => {
 
   }
 
-  //console.log(product)
   return (
             <div className='col s8'>
             <div className="row">

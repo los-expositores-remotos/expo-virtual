@@ -17,7 +17,6 @@ const AddBanner = ()  => {
 
 
   useEffect(() => {
-    //console.log(url)
     if (url) {
       postearAdd();
     }
@@ -36,12 +35,10 @@ const AddBanner = ()  => {
     })
     .then((res) => res.json())
       .then((data) => {
-        //console.log(data);
         const urlb = data.url
         seturl(urlb);
       })
       .catch((err) => {
-        //console.log(err);
       });
     }else{
       M.toast({ html: "cargar imagen", classes: "#c62828 red darken-3" });
@@ -62,7 +59,6 @@ const AddBanner = ()  => {
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data)
         if (data.error) {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {

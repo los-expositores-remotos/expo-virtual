@@ -28,8 +28,6 @@ const Suppliers = () => {
       console.log(result)
 
         setCompanies(result)        
- 
-      //console.log(companies)
     })
     .catch((err => {
       //console.log(err)

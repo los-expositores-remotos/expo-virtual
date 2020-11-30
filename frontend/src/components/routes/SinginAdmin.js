@@ -23,7 +23,6 @@ const Login = () => {
         }),
       })
         .then((res) => {
-          //console.log(res)
           if(!res.ok){
             M.toast({ html:"datos invalidos o el Administrador no existe", classes: "#c62828 red darken-3" });
           }else{
