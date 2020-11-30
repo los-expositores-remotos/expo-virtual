@@ -79,7 +79,7 @@ const UpdateProveedor = () =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProveedor'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
                   

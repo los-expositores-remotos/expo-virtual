@@ -46,7 +46,7 @@ const UpdateProducto = () =>{
       return (
         <li>
         <div className="col s1" id='colCard'>
-          <div className="card" id='cardDelete'>
+          <div className="card" id='cardDeleteProveedor'>
             <div className="card-image">
               <img src={company.companyImage}/>
               <span className="card-title">{company.companyName}</span>
@@ -82,14 +82,14 @@ const UpdateProducto = () =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProveedor'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
                   
                   <a onClick={ ()=> setClicked(<ListOfProductToUpdate company={company}/>) } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">edit</i></a>
                 </div>
                 <div className="card-content">
-                  <a href={"http://"+company.facebook} target="_blank"><p>Facebook</p></a>
+                  <a href={"http://"+ company.facebook} target="_blank"><p>Facebook</p></a>
                   <a href={"http://"+ company.instagram} target="_blank"><p>Instagram</p></a>
                   <a href={"http://"+ company.web} target="_blank"><p>Web</p></a>
                 </div>

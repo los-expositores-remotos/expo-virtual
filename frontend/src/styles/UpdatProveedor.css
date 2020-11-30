@@ -4,9 +4,14 @@
   right: auto;
 }
 
-#cardDelete {
+#cardDeleteProveedor {
   width: 86%;
   height: 27rem;
+}
+
+#cardDeleteProducto {
+  width: 86%;
+  height: 30rem;
 }
 
 #iconSearchFormAdmin {

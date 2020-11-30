@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom'
 import M from 'materialize-css'
 
 const ListOfProductToDelete = (props) =>{
-    const company = props.company
+  const company = props.company
   const history = useHistory()
   const [products, setproducts] = useState([])
   const [prevProducts, setprevProducts] = useState([]) 
@@ -62,10 +62,9 @@ const ListOfProductToDelete = (props) =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProducto'>
                 <div className="card-image">
                   <img src={product.images[0]}/>
-                  <span className="card-title">{product.itemName}</span>
                   <a onClick={()=> {
                     setprevProducts(products)
                     
@@ -73,6 +72,8 @@ const ListOfProductToDelete = (props) =>{
                     }} className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
                 </div>
                 <div className="card-content">
+                   <strong><p> {product.itemName}</p></strong>
+                   <hr/>
                   <p > stock : {product.stock} </p>
                   <p > precio : {product.itemPrice} </p>
                   <p > precio Promocional : {product.promotionalPrice} </p>
@@ -94,7 +95,6 @@ const ListOfProductToDelete = (props) =>{
     }
     return (
       
-      <div className='col s8'>
       <div className="row">
           <div className="col s10" id="formimputSearch">
               <form className="form-inline">
@@ -114,8 +114,7 @@ const ListOfProductToDelete = (props) =>{
               listOfProducts()
           }
         </div>
-      </div>
-      </div>      
+      </div>    
     )
 }
 

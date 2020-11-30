@@ -46,7 +46,7 @@ const DeleteProducto = () =>{
       return (
         <li>
         <div className="col s1" id='colCard'>
-          <div className="card" id='cardDelete'>
+          <div className="card" id='cardDeleteProveedor'>
             <div className="card-image">
               <img src={company.companyImage}/>
               <span className="card-title">{company.companyName}</span>
@@ -83,10 +83,9 @@ const DeleteProducto = () =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeletePoveedor'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
-                  
                   <a onClick={ ()=> setClicked(<ListOfProductToDelete company={company}/>) } className="btn-floating halfway-fab waves-effect waves-light red"><i className="material-icons">delete</i></a>
                 </div>
                 <div className="card-content">

@@ -42,7 +42,7 @@ const ListOfProductToUpdate = (props) =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProducto'>
                 <div className="card-image">
                   <img src={product.images[0]}/>
                   <span className="card-title"></span>

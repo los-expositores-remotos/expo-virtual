@@ -44,7 +44,7 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
       return (
         <li>
         <div className="col s1" id='colCard'>
-          <div className="card" id='cardDelete'>
+          <div className="card" id='cardDeleteProveedor'>
             <div className="card-image">
               <img src={company.companyImage}/>
               <span className="card-title">{company.companyName}</span>
@@ -78,7 +78,7 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProveedor'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
                   
@@ -112,8 +112,8 @@ const ScreenSelecEmpresaParaAgregarProduct = () =>{
                   <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
                       <div className="collapsible-body">
                        <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
-                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
-                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>
+                       <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link> 
                       </div>
               </li>
               <li>
