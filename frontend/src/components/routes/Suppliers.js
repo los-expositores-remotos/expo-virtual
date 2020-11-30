@@ -49,7 +49,7 @@ const Suppliers = () => {
                 )
       })
       return (
-        <ul>
+        <ul id="listaDeProductosul">
           {listOfCompanies}
         </ul>
       )
