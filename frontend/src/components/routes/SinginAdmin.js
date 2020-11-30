@@ -50,7 +50,7 @@ const Login = () => {
             <input
               type="text"
               id='inputLogin'
-              placeholder="Ingrese su email"
+              placeholder="Ingrese su Usuario"
               value={mail}
               onChange={(e) => setmail(e.target.value)}
             />

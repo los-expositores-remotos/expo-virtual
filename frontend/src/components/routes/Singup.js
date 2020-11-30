@@ -78,7 +78,7 @@ const Singup = () => {
           className="btn waves-effect waves-light #64b5f6 red darken-1"
           onClick={() => PostData()}
         >
-          Singup
+          Registrar
         </button>
         <h5 id="H5Register">
           <Link id="linkRegister" to="/login">Ya te encuentras registrado ?</Link>

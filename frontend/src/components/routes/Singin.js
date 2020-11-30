@@ -22,7 +22,8 @@ const Login = () => {
         },
         )
         .then(success =>{
-                
+                localStorage.setItem('nombre', success.data.nombre);
+                localStorage.setItem('apellido', success.data.apellido);
                 localStorage.setItem('tokenValido', success.headers.authorization);
                 axios.defaults.headers['authorization'] = localStorage.getItem('tokenValido')
                 localStorage.setItem("user", "usuario");

@@ -46,11 +46,11 @@ const Home = () => {
     <div>
     <Banner/>
    <div>
-      <h5 className='productos'>Productos Destacados</h5>
+      <h5 id= "googleFont" className='productos'>Productos Destacados</h5>
    </div>
     <SliderProducts />
     <div>
-        <h5 className='productos'> Nuestras Empresas</h5>
+        <h5 id="googleFont" className='productos'> Nuestras Empresas</h5>
     </div>
    <div>
       {

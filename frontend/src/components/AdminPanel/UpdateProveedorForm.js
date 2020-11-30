@@ -178,7 +178,7 @@ const UpdateProveedorForm = (props) => {
                                                     }} />
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={urlimage || companyImage} />
+              <input class="file-path validate" type="text" value={typeof companyImage !== 'string' ? companyImage.name : companyImage } />
             </div>
           </div>
         </form>
@@ -193,7 +193,7 @@ const UpdateProveedorForm = (props) => {
               }}/>
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" value={urlBanner || companyBanner} />
+              <input class="file-path validate" type="text" value={typeof companyBanner !== 'string' ? companyBanner.name : companyBanner} />
             </div>
           </div>
         </form>

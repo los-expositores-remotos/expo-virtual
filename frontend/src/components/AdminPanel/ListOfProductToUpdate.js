@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import {Link} from 'react-router-dom'
 import M from 'materialize-css'
 import UpdateProductoForm from './UpdateProductoForm'
+import '../../styles/ListOfProductToUpdate.css'
 
 const ListOfProductToUpdate = (props) =>{
     const company = props.company

@@ -62,7 +62,7 @@ const DeleteBanner = () =>{
             <li>
             <div className="col s1" id='colCard'>
               <div className="card" id='cardDeleteBD'>
-                <div className="card-image">
+                <div className="card-image" id="imageDB">
                   <img src={banner.image}/>
                   <a onClick={()=> {
                     deleteBanner(banner.id)

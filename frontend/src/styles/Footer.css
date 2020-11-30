@@ -21,5 +21,10 @@
 #linkList {
   color: aliceblue !important;
 }
-.container {
+
+.page-footer {
+  padding-top: 20px;
+  color: #fff;
+  background-color: #ee6e73;
+  min-height: 28rem;
 }

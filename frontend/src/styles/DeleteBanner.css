@@ -7,11 +7,13 @@
 #cardDeleteBD {
   width: 86%;
   height: 100%;
+  min-height: 0rem;
 }
 
 #cardDeleteUP {
   width: 86%;
   height: 100%;
+  min-height: 0rem;
 }
 
 #iconSearchFormAdmin {
@@ -26,4 +28,16 @@
 
 #formProduct {
   margin-top: 0%;
+}
+
+#iconoDeleteUP {
+  position: absolute;
+}
+
+#imageUP {
+  min-height: 0px;
+}
+
+#imageDB {
+  min-height: 0px;
 }

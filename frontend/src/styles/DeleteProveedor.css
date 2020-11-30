@@ -7,6 +7,7 @@
 #cardDeleteProveedor {
   width: 86%;
   height: 27rem;
+  min-height: 28rem !important;
 }
 
 #cardDeleteProducto {
@@ -22,4 +23,21 @@
 
 #formimputSearch {
   margin-bottom: 60px;
+}
+
+.card {
+  position: relative;
+  margin: 0.5rem 0 1rem 0;
+  background-color: #fff;
+  -webkit-transition: -webkit-box-shadow 0.25s;
+  transition: -webkit-box-shadow 0.25s;
+  transition: box-shadow 0.25s;
+  transition: box-shadow 0.25s, -webkit-box-shadow 0.25s;
+  border-radius: 2px;
+  min-height: 28rem;
+}
+
+.card .card-image {
+  position: relative;
+  min-height: 19rem;
 }

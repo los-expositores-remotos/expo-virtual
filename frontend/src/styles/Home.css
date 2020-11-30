@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
+
 .img {
   height: 100% !important;
   width: 100% !important;
@@ -52,4 +54,10 @@
   bottom: 0;
   margin: 0;
   background-color: #ee6e73;
+}
+#googleFont {
+  margin-bottom: 2rem;
+  font-family: "Dancing Script", cursive;
+  font-size: 4rem;
+  margin-top: 8rem;
 }

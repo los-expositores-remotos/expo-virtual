@@ -178,19 +178,18 @@ const AddProveedor = (props)  => {
           </div>
         </div>
         <div className="row">
-          <div className="input-field col s12">
-              <input id="email" type="email" className="validate" value={company? company.email : undefined } required/> 
-               <label className="active" for="email">Email</label>
-          </div>
+          
         </div>
         <form action="#">
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
               <span>Cargar imagen</span>
-              <input type="file" onChange={(e) => setcompanyImage(e.target.files[0])} required/>
+              <input type="file" onChange={(e) => {
+                                                    setcompanyImage(e.target.files[0])
+                                                    console.log(e.target.files[0])}} required/>
             </div>
             <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" value={companyImage}/>
+              <input className="file-path validate" type="text" value={companyImage ? companyImage.name : "" }/>
             </div>
           </div>
         </form>
@@ -201,7 +200,7 @@ const AddProveedor = (props)  => {
               <input type="file" onChange={(e) => setcompanyBanner(e.target.files[0])} required/>
             </div>
             <div className="file-path-wrapper">
-              <input className="file-path validate" type="text" value={companyBanner}/>
+              <input className="file-path validate" type="text" value={companyBanner ? companyBanner.name : ""}/>
             </div>
           </div>
         </form>
