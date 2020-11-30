@@ -152,7 +152,7 @@ const ResultSearchProduct = (props) => {
                     </div>
                 </div>
             :
-            <p>No existen resultados para "{textsearch}"</p>
+            <p></p>
         )
     }
 
