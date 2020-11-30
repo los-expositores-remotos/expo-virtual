@@ -23,23 +23,12 @@ const AddProduct = (props)  => {
   const [alto, setAlto] = useState(null)
   const [ancho, setAncho] = useState(null)
   const [pesoGr, setPesoGr] = useState(null)
-  const [postear, setPostear] = useState(false)
 
-
-  useEffect(() => {
-//    if (postear) {
-//      postearAdd();
-//    }
-  }, []);
-
-  const agregarProveedor = () => {
-    let urlImag = []
+  const subirYPostearAdd = () => {
+    var listimages = []
     if(images && images.length >= 0){
-      //console.log(images)
-
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
-        //console.log(image)
         const data = new FormData();  
         data.append("file", image);
         data.append("upload_preset", "insta-clon-GB");
@@ -50,42 +39,23 @@ const AddProduct = (props)  => {
         })
         .then((res) => res.json())
         .then((data) => {
-            let newURl = [data.url].concat(url)
-              console.log(newURl)
-              urlImag.push(data.url)
-              setUrl(newURl);
-            //console.log(data);
-//          setUrl(url.concat([data.url]));
-//          urlImag.push(data.url)
-//          setPostear(true)
+            listimages.push(data.url)
+            if(index === (images.length - 1)){
+              postearAdd(listimages)
+            }
         })
-
         .catch((err) => {
           console.log(err);
         });
       };
-      //console.log(url)
-      
     }else{
       M.toast({ html: "cargar imagen", classes: "#c62828 red darken-3" });
     }
-    console.log("urlImage: ")
-    console.log(urlImag)
-    return urlImag
-    };
+  };
 
-  const postearAdd = (listImage) => {
-    console.log("URL: " + url)
-    console.log(url)
-    if( itemName &&
-      description &&
-      url &&
-      stock &&
-      itemPrice &&
-      promotionalPrice){
-
-      //console.log(url)
-    fetch("http://localhost:7000/products", {
+  const postearAdd = (listimages) => {
+    if(itemName && description && stock && itemPrice && promotionalPrice && listimages){
+      fetch("http://localhost:7000/products", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
@@ -94,7 +64,7 @@ const AddProduct = (props)  => {
         "idProveedor": company.id,
         "itemName": itemName ,
         "description": description ,
-        "images": listImage,
+        "images": listimages,
         "stock": stock ,
         "vendidos": 0,
         "itemPrice": itemPrice,
@@ -107,7 +77,6 @@ const AddProduct = (props)  => {
     })
       .then((res) => res.json())
       .then((data) => {
-        //console.log(data)
         if (data.error) {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
@@ -119,7 +88,7 @@ const AddProduct = (props)  => {
         }
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
       });
     }else{
       M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });
@@ -201,9 +170,7 @@ const AddProduct = (props)  => {
         <div className="row">
           <div className="col s12">
                 <a onClick={() => {
-                  setPostear(true)
-
-                    postearAdd(agregarProveedor());
+                  subirYPostearAdd()
                 }} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Producto</a>
           </div>
         </div>
