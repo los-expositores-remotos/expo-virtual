@@ -191,19 +191,19 @@ const UpdateProductoForm = (props)  => {
         <div className="row">
           <div className="input-field col s2">
               <input id="PromotionalPrice" type="number" onChange={(e) => setlongitud(e.target.value)} className="validate" value={longitud}/> 
-               <label className="active" for="PromotionalPrice">Longitud</label>
+               <label className="active" for="PromotionalPrice">Longitud (cm)</label>
           </div>
           <div className="input-field col s2">
               <input id="PromotionalPrice" type="number" onChange={(e) => setancho(e.target.value)} className="validate" value={ancho}/> 
-               <label className="active" for="PromotionalPrice">Ancho</label>
+               <label className="active" for="PromotionalPrice">Ancho (cm)</label>
           </div>
           <div className="input-field col s2">
               <input id="PromotionalPrice" type="number" onChange={(e) => setalto(e.target.value)} className="validate" value={alto}/> 
-               <label className="active" for="PromotionalPrice">Alto</label>
+               <label className="active" for="PromotionalPrice">Alto (cm)</label>
           </div>
           <div className="input-field col s2">
               <input id="PromotionalPrice" type="number" onChange={(e) => setpesoGr(e.target.value)} className="validate" value={pesoGr}/> 
-               <label className="active" for="PromotionalPrice">Peso en gr</label>
+               <label className="active" for="PromotionalPrice">Peso (gramos)</label>
           </div>
         </div>
         <form action="#">

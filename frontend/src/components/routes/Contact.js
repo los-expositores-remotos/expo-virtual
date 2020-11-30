@@ -31,9 +31,9 @@ const Contact = () => {
     <div className="container pt-2 text-center">
 		<div className="alert alert-light" role="alert">
 		</div>
-		{ showMessage ? <div className="alert alert-success col-md-5 mx-auto" role="alert">Email enviado, pronto te responderemos. Gracias por ser parte de Expo Arte Virtual!!</div> : ``}
+		{ showMessage ? <div className="alert alert-success col-md-5 mx-auto" role="alert">Email enviado, pronto te responderemos. ¡Gracias por ser parte de Expo Arte Virtual!</div> : ``}
 		<form onSubmit={handleSubmit}>
-			  <div className="pt-3"><h3 className="font-weight-bold"> Dejanos tu mensaje !! </h3></div>
+			  <div className="pt-3"><h3 className="font-weight-bold"> ¡Dejanos tu mensaje! </h3></div>
 			  <div className="input-field col s12">
 					<div id="header" className="form-group text-left"> 
 						<i className="material-icons prefix">account_circle</i>
@@ -44,15 +44,15 @@ const Contact = () => {
 			  <div className="input-field col s12">
 					<div className="form-group text-left">
 						<i className="material-icons prefix">email</i>
-						<input required type="text" value={contact.userEmail} name="userEmail" onChange={handleChange} className="form-control" placeholder="Tu Email" />
+						<input required type="text" value={contact.userEmail} name="userEmail" onChange={handleChange} className="form-control" placeholder="Tu email" />
 						<label for="icon_telephone">Email</label>
 					</div>
 			  </div>
 			  <div className="input-field col s12">
 					<div className="form-group text-left"> 
 						<i className="material-icons prefix">phone</i>
-						<input value={contact.userTel} required type="text" name="userTel" onChange={handleChange}  className="form-control" placeholder="Tu Telefono" />
-						<label for="icon_telephone">Telefono</label>
+						<input value={contact.userTel} required type="text" name="userTel" onChange={handleChange}  className="form-control" placeholder="Tu teléfono" />
+						<label for="icon_telephone">Teléfono</label>
 					</div>
 			  </div>
 			  <div className="input-field col s12">

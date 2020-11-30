@@ -103,9 +103,9 @@ const AddBanner = ()  => {
             <li>
                 <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
                     <div className="collapsible-body">
-                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
-                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link> 
                      <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                     <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
                     </div>
             </li>
             <li>
@@ -145,7 +145,7 @@ const AddBanner = ()  => {
            <form action="#">
               <div class="file-field input-field">
                <div class="btn" id='buttonUploadImages'>
-                 <span>Cargar Imagen</span>
+                 <span>Cargar imagen</span>
                  <input type="file" onChange={(e) => setimage(e.target.files[0])}/>
                </div>
                <div class="file-path-wrapper">

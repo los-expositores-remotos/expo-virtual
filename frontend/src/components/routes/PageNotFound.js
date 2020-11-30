@@ -15,7 +15,7 @@ const PageNotFound = () =>{
             </div>
             <div className='col s12'>
                 <div class="leyenda">
-                    Perdón! La pagina no existe
+                    ¡Perdón! La página no existe.
                 </div>
             </div>
         </div>

@@ -79,7 +79,7 @@ const UpdateProveedor = () =>{
           return (
             <li>
             <div className="col s1" id='colCard'>
-              <div className="card" id='cardDelete'>
+              <div className="card" id='cardDeleteProveedor'>
                 <div className="card-image">
                   <img src={company.companyImage}/>
                   
@@ -112,9 +112,9 @@ const UpdateProveedor = () =>{
                     <li>
                         <div className="collapsible-header"><i className="material-icons">Proveedores</i>Proveedores</div>
                             <div className="collapsible-body">
-                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>   
-                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link>  
+                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/agregarproveedor">Agregar Proveedor</Link>  
                              <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/modificarproveedor">Modificar Proveedor</Link>  
+                             <Link  className="waves-effect waves-light red lighten-2 btn-large" to="/admin/borrarproveedor">Eliminar Proveedor</Link> 
                             </div>
                     </li>
                     <li>
@@ -141,7 +141,7 @@ const UpdateProveedor = () =>{
                 <div className="row">
                   <div className="col s10" id="formimputSearch">
                       <form className="form-inline">
-                      <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Search" aria-label="Search"/>
+                      <input onChange={(e)=> setsearch(e.target.value)} value={search} className="form-control sm-2" id='inputSearchFormAdmin' type="search" placeholder="Buscar" aria-label="Search"/>
                   </form>
                   </div>
                   <div className='col s2'>
@@ -152,7 +152,7 @@ const UpdateProveedor = () =>{
                   <div>
                   {
                     !companies ?
-                    <p>Loading...</p>
+                    <p>Cargando...</p>
                     :
                     search ? 
                         filterCompanies()
