@@ -19,6 +19,8 @@ const UpdateProveedorForm = (props) => {
   const [facebook, setfacebook] = useState(company.facebook)
   const [instagram, setinstagram] = useState(company.instagram)
   const [web, setweb] = useState(company.web)
+  const [subir, setSubir] = useState(false)
+  const [postear, setpostear] = useState(false)
 
   useEffect(() => {
     if (urlimage && urlBanner) {
@@ -42,6 +44,7 @@ const UpdateProveedorForm = (props) => {
         .then((data) => {
           //console.log(data);
           setUrlimage(data.url);
+          setpostear(true)
         })
         .catch((err) => {
           console.log(err);
@@ -64,6 +67,7 @@ const UpdateProveedorForm = (props) => {
     .then((res) => res.json())
     .then((data) => {
       setUrlBanner(data.url);
+      setpostear(true)
     })
     .catch((err) => {
       console.log(err);
@@ -168,7 +172,10 @@ const UpdateProveedorForm = (props) => {
           <div class="file-field input-field">
             <div class="btn" id='buttonUploadImages'>
               <span>Cargar Imagen</span>
-              <input type="file" onChange={(e) => setcompanyImage(e.target.files[0])} />
+              <input type="file" onChange={(e) => {
+                                                    setcompanyImage(e.target.files[0])
+                                                    setSubir(true)
+                                                    }} />
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" value={urlimage || companyImage} />
@@ -179,7 +186,11 @@ const UpdateProveedorForm = (props) => {
           <div class="file-field input-field">
             <div class="btn" id='buttonUploadBanner'>
               <span>Cargar Banner</span>
-              <input type="file" onChange={(e) => setcompanyBanner(e.target.files[0])}/>
+              <input type="file" onChange={(e) => {
+                                                    setcompanyBanner(e.target.files[0])
+                                                    setSubir(true)
+              
+              }}/>
             </div>
             <div class="file-path-wrapper">
               <input class="file-path validate" type="text" value={urlBanner || companyBanner} />
@@ -190,18 +201,27 @@ const UpdateProveedorForm = (props) => {
           <div class="col s12">
 
             <a onClick={() => {
+
+              if(subir){
+                console.log("ENTRE AL SUBIR VERDADERO")
+                agregarProveedor();
+                setpostear(true)  
+              }else{
+                console.log("ENTRE AL SUBIR FALSO")
+                postearUpdate()
+              }
               //console.log(companyImage)
               //console.log(urlimage)
               //console.log(companyImage === urlimage)        
-              agregarProveedor();
-              if (!companyName ||
-                !companyImage ||
-                !companyBanner ||
-                !facebook ||
-                !instagram ||
-                !web) {
-                postearUpdate()
-              }
+              
+              //if (!companyName ||
+              //  !companyImage ||
+              //  !companyBanner ||
+              //  !facebook ||
+              //  !instagram ||
+              //  !web) {
+              //  postearUpdate()
+              //}
             }
             }
               class="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Modificar Proveedor</a>
