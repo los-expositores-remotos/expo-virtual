@@ -227,7 +227,7 @@ const TestForm = () => {
 
   const postearPago = (tokenString) => {
     if (cartTotal && unitPrice && email && description && amount && quantity) {//cartTotal && unitPrice && email && description && amount && quantity && token){
-      fetch("http://localhost:7000/process_payment/", {
+      fetch("http://localhost:7000/process_payment", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
