@@ -427,7 +427,6 @@ footer p a:hover {
   -ms-user-select: none;
   user-select: none;
   z-index: 1;
-  visibility: hidden;
 }
 
 .select-wrapper .caret {
@@ -438,5 +437,4 @@ footer p a:hover {
   margin: auto 0;
   z-index: 0;
   fill: rgba(0, 0, 0, 0.87);
-  visibility: hidden;
 }

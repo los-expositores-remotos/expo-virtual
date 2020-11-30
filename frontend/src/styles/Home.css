@@ -29,7 +29,7 @@
 }
 
 .slider .slides li .caption {
-  color: lightslategray !important;
+  color: black !important;
   position: absolute;
   top: 15%;
   left: 15%;
@@ -42,7 +42,7 @@
   line-height: 110%;
   margin: 2.093333rem 0 1.656rem 0;
   text-align: center;
-  color: blueviolet;
+  color: burlywood;
   text-decoration: underline;
 }
 

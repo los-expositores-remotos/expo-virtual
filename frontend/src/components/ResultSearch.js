@@ -20,7 +20,7 @@ const ResultSearch = () => {
           if(textsearch === "_"){
             return(
             <h2>
-              No existen Resultados de búsqueda para " " 
+              No existen resultados para la búsqueda 
             </h2>)
           }else{
 

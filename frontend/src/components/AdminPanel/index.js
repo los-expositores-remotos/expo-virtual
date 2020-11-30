@@ -226,7 +226,6 @@ const TestForm = () => {
   }
 
   const postearPago = (tokenString) => {
-    console.log(installments)
     if (cartTotal && unitPrice && email && description && amount && quantity) {//cartTotal && unitPrice && email && description && amount && quantity && token){
       fetch("http://localhost:7000/process_payment/", {
         method: "POST",
@@ -249,16 +248,17 @@ const TestForm = () => {
         })
       })
         .then((res) => {
-          window.Mercadopago.clearSession()
+          console.log(res)
           if (res.ok) {
             return res.json()
           }
           else {
             M.toast({ html: "Error inesperado", classes: "#c62828 red darken-3" });
+            window.Mercadopago.clearSession()
           }
         })
         .then((data) => {
-          if (data.status_detail === "accredited" || data.status_detail === "pending_contingency" || data.status_detail === "pending_review_manual") {
+          if (data && (data.status_detail === "accredited" || data.status_detail === "pending_contingency" || data.status_detail === "pending_review_manual")) {
             console.log(data.comunicacion_sugerida)
             console.log("realizandoPAGO")
             M.toast({ html: data.comunicacion_sugerida, classes: "#388e3c green darken-2" });
@@ -269,9 +269,11 @@ const TestForm = () => {
             M.toast({ html: data.comunicacion_sugerida, classes: "#c62828 red darken-3" });
           }
           history.push("/");
+          window.Mercadopago.clearSession()
         })
         .catch((err) => {
           console.log(err);
+          window.Mercadopago.clearSession()
         });
     } else {
       M.toast({ html: "Llenar todos los campos", classes: "#c62828 red darken-3" });
