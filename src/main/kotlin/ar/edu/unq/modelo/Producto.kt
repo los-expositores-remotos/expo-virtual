@@ -16,7 +16,7 @@ class Producto : ModelObjectWithBsonId{
     var longitud: Int = 0
     var ancho: Int = 0
     var alto : Int = 0
-    var pesoKg: Int = 0
+    var pesoGr: Int = 0
 
     constructor()
 
@@ -41,7 +41,7 @@ class Producto : ModelObjectWithBsonId{
         this.longitud = longitud
         this.ancho = ancho
         this.alto = alto
-        this.pesoKg = peso
+        this.pesoGr = peso
     }
 
     fun addImage(imageUrl: String) {

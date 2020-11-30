@@ -60,7 +60,7 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
 
     @Given("^un peso en kilos (\\d+)$")
     fun unPeso(peso: Int){
-        this.productoA.pesoKg = peso
+        this.productoA.pesoGr = peso
     }
 
     @When("^creo un producto con estos datos$")
@@ -87,7 +87,7 @@ class CargaDeUnProductoStepdefs: AuxProdStepDefs() {
         assertEquals(longitud, productoRecuperado.longitud)
         assertEquals(alto, productoRecuperado.alto)
         assertEquals(ancho,productoRecuperado.ancho )
-        assertEquals(peso, productoRecuperado.pesoKg)
+        assertEquals(peso, productoRecuperado.pesoGr)
 
     }
 

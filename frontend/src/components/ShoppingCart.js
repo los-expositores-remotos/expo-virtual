@@ -19,7 +19,7 @@ export const precioTotal = (products) => {
 export const pesoTotal = (products) => {
   let acumulador = 0
   products.forEach((cartItem)=>{
-    acumulador = acumulador + (cartItem.pesoKg * cartItem.quantity)
+    acumulador = acumulador + (cartItem.pesoGr/100 * cartItem.quantity)
   })
   return acumulador
 }

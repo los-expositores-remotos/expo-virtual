@@ -39,7 +39,7 @@ data class ProductViewMapper(val id: String,
                              val longitud: Int,
                              val ancho: Int,
                              val alto: Int,
-                             val pesoKg: Int)
+                             val pesoGr: Int)
 
 data class BannerRegisterMapper(val banner: String?, val category: String?)
 
@@ -62,7 +62,7 @@ data class ProductRegisterMapper(val idProveedor: String?,
                                  val longitud: Int?,
                                  val ancho: Int?,
                                  val alto: Int?,
-                                 val pesoKg: Int?)
+                                 val pesoGr: Int?)
 
 data class SaleMapper(val idProducto: String, val cantidadVendida: Int)
 

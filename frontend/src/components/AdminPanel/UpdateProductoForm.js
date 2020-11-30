@@ -21,7 +21,7 @@ const UpdateProductoForm = (props)  => {
   const [longitud,setlongitud] = useState(product.longitud)
   const [ancho,setancho] = useState(product.ancho)
   const [alto,setalto] = useState(product.alto)
-  const [pesoKg,setpesoKg] = useState(product.pesoKg)
+  const [pesoGr,setpesoGr] = useState(product.pesoGr)
   const [subir, setSubir] = useState(false)
   const [postear, setpostear] = useState(false)
   const history = useHistory()
@@ -82,7 +82,7 @@ const UpdateProductoForm = (props)  => {
         "longitud": longitud ,
         "ancho": ancho ,
         "alto": alto ,
-        "pesoKg": pesoKg 
+        "pesoGr": pesoGr
       })
     })
       .then((res) => {
@@ -202,8 +202,8 @@ const UpdateProductoForm = (props)  => {
                <label className="active" for="PromotionalPrice">Alto</label>
           </div>
           <div className="input-field col s2">
-              <input id="PromotionalPrice" type="number" onChange={(e) => setpesoKg(e.target.value)} className="validate" value={pesoKg}/> 
-               <label className="active" for="PromotionalPrice">Peso en Kg</label>
+              <input id="PromotionalPrice" type="number" onChange={(e) => setpesoGr(e.target.value)} className="validate" value={pesoGr}/> 
+               <label className="active" for="PromotionalPrice">Peso en gr</label>
           </div>
         </div>
         <form action="#">

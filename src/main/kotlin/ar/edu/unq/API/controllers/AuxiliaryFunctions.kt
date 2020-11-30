@@ -10,7 +10,7 @@ class AuxiliaryFunctions {
     //TODO: toda la funcion es reemplazable por iter.flatten() jaja
 
     fun productoClassToProductoView(p: Producto): ProductViewMapper {
-        return ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.vendidos, p.itemPrice, p.promotionalPrice, p.longitud, p.ancho, p.alto, p.pesoKg)
+        return ProductViewMapper(p.id.toString(), p.idProveedor.toString(), p.itemName, p.description, p.listImages, p.stock, p.vendidos, p.itemPrice, p.promotionalPrice, p.longitud, p.ancho, p.alto, p.pesoGr)
     }
 
     fun proveedorClassToProveedorView(p: Proveedor): CompanyViewMapper {
@@ -28,7 +28,7 @@ class AuxiliaryFunctions {
     fun productBodyValidation(ctx: Context): ProductRegisterMapper {
         return ctx.bodyValidator<ProductRegisterMapper>()
                 .check(
-                        { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.vendidos != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoKg != null },
+                        { it.idProveedor != null && it.itemName != null && it.description != null && it.images != null && it.stock != null && it.vendidos != null && it.itemPrice != null && it.promotionalPrice != null && it.longitud != null && it.ancho != null && it.alto != null && it.pesoGr != null },
                         "Invalid body : idProveedor, itemName, description, images, stock, itemPrice and promotionalPrice are required"
                 )
                 .get()
