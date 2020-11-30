@@ -19,18 +19,24 @@ const AddProduct = (props)  => {
   const [stock, setstock] = useState(null)
   const [itemPrice, setitemPrice] = useState(null)
   const [promotionalPrice, setpromotionalPrice] = useState(null)
+  const [longitud, setLongitud] = useState(null)
+  const [alto, setAlto] = useState(null)
+  const [ancho, setAncho] = useState(null)
+  const [pesoGr, setPesoGr] = useState(null)
   const [postear, setPostear] = useState(false)
 
 
   useEffect(() => {
-    if (postear) {
-      postearAdd();
-    }
+//    if (postear) {
+//      postearAdd();
+//    }
   }, []);
 
   const agregarProveedor = () => {
+    let urlImag = []
     if(images && images.length >= 0){
       //console.log(images)
+
       for (let index = 0; index < images.length; index++) {
         const image = images[index];
         //console.log(image)
@@ -44,10 +50,16 @@ const AddProduct = (props)  => {
         })
         .then((res) => res.json())
         .then((data) => {
-          //console.log(data);
-          setUrl(url.concat([data.url]));
-          setPostear(true)
+            let newURl = [data.url].concat(url)
+              console.log(newURl)
+              urlImag.push(data.url)
+              setUrl(newURl);
+            //console.log(data);
+//          setUrl(url.concat([data.url]));
+//          urlImag.push(data.url)
+//          setPostear(true)
         })
+
         .catch((err) => {
           console.log(err);
         });
@@ -57,10 +69,14 @@ const AddProduct = (props)  => {
     }else{
       M.toast({ html: "cargar imagen", classes: "#c62828 red darken-3" });
     }
+    console.log("urlImage: ")
+    console.log(urlImag)
+    return urlImag
     };
 
-  const postearAdd = () => {
-
+  const postearAdd = (listImage) => {
+    console.log("URL: " + url)
+    console.log(url)
     if( itemName &&
       description &&
       url &&
@@ -78,10 +94,15 @@ const AddProduct = (props)  => {
         "idProveedor": company.id,
         "itemName": itemName ,
         "description": description ,
-        "images": url,
+        "images": listImage,
         "stock": stock ,
+        "vendidos": 0,
         "itemPrice": itemPrice,
-        "promotionalPrice": promotionalPrice
+        "promotionalPrice": promotionalPrice,
+        "longitud": longitud,
+        "ancho": ancho,
+        "alto": alto,
+        "pesoGr": pesoGr
       })
     })
       .then((res) => res.json())
@@ -134,6 +155,26 @@ const AddProduct = (props)  => {
               <input id="Facebook" onChange={(e) => setdescription(e.target.value)} type="text" className="validate" required />
                <label className="active" for="Facebook">Descripcion</label>
           </div>
+
+           <div className="row">
+                    <div className="input-field col s2">
+                        <input id="Longitud" type="number" onChange={(e) => setLongitud(e.target.value)} className="validate" value={longitud}/>
+                         <label className="active" for="Longitud">Longitud</label>
+                    </div>
+                    <div className="input-field col s2">
+                        <input id="Ancho" type="number" onChange={(e) => setAncho(e.target.value)} className="validate" value={ancho}/>
+                         <label className="active" for="Ancho">Ancho</label>
+                    </div>
+                    <div className="input-field col s2">
+                        <input id="Alto" type="number" onChange={(e) => setAlto(e.target.value)} className="validate" value={alto}/>
+                         <label className="active" for="Alto">Alto</label>
+                    </div>
+                    <div className="input-field col s2">
+                        <input id="PesoGr" type="number" onChange={(e) => setPesoGr(e.target.value)} className="validate" value={pesoGr}/>
+                         <label className="active" for="PesoGr">Peso en gr</label>
+                    </div>
+                  </div>
+
         </div>
         <div className="row">
           <div className="input-field col s12">
@@ -142,6 +183,11 @@ const AddProduct = (props)  => {
           </div>
         </div>
         <form action="#">
+        <select type = "hidden">
+            {url.map(image => {
+                return (<option>{image}</option>)
+            })}
+        </select>
           <div className="file-field input-field">
             <div className="btn" id='buttonUploadImages'>
               <span>Cargar Imagenes</span>
@@ -156,8 +202,8 @@ const AddProduct = (props)  => {
           <div className="col s12">
                 <a onClick={() => {
                   setPostear(true)
-                  agregarProveedor();
-                    postearAdd();
+
+                    postearAdd(agregarProveedor());
                 }} className="waves-effect waves-light red lighten-2 btn-large" id="butonSubmit">Agregar Producto</a>
           </div>
         </div>
